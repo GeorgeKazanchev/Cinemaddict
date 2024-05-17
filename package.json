@@ -1,0 +1,17 @@
+{
+  "name": "cinemaddict",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgeKazanchev/Cinemaddict.git"
+  },
+  "author": "George Kazanchev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeorgeKazanchev/Cinemaddict/issues"
+  },
+  "homepage": "https://github.com/GeorgeKazanchev/Cinemaddict#readme"
+}
