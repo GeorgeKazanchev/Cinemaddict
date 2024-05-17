@@ -1,0 +1,12 @@
+# Файлы и папки операционной системы
+.DS_Store
+Thumbs.db
+
+# Файлы редакторов кода
+.idea
+*.sublime*
+.vscode
+
+# Прочее
+*.log*
+node_modules/
