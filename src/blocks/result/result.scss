@@ -1,0 +1,13 @@
+.result {
+    display: flex;
+    flex-basis: 100%;
+    font-size: $font-size-bigger;
+    font-weight: 800;
+    border-bottom: 2px solid $outline-color;
+
+    &__text {
+        margin: 0;
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+}

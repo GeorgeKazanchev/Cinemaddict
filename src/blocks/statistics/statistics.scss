@@ -1,0 +1,96 @@
+.statistic {
+    padding-top: 30px;
+    padding-bottom: 100px;
+
+    &__rank {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        margin-bottom: 34px;
+        font-size: 50px;
+        font-weight: 700;
+    }
+
+    &__img {
+        display: inline-block;
+        margin-left: 30px;
+        margin-right: 24px;
+    }
+
+    &__rank-label {
+        color: $text-color-active;
+    }
+
+    &__filters {
+        display: flex;
+        margin-bottom: 110px;
+        border-bottom: 2px solid $outline-color;
+    }
+
+    &__filters-description {
+        margin: 0;
+        margin-right: 30px;
+    }
+
+    &__filters-label {
+        margin-right: 30px;
+        padding-bottom: 30px;
+        cursor: pointer;
+
+        &:hover {
+            color: $text-color-active;
+            opacity: 0.8;
+        }
+    }
+
+    &__filters-input {
+        &:checked {
+            &+.statistic__filters-label {
+                position: relative;
+                color: $text-color-active;
+
+                &::before {
+                    position: absolute;
+                    bottom: -2px;
+                    width: 100%;
+                    height: 2px;
+                    background-color: $text-color-active;
+                    content: '';
+                }
+            }
+        }
+    }
+
+    &__text-list {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 100px;
+        list-style: none;
+    }
+
+    &__item-title {
+        margin: 0;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: $font-size-bigger;
+        font-weight: 400;
+    }
+
+    &__item-text {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        font-size: 50px;
+        font-weight: 700;
+    }
+
+    &__item-description {
+        padding: 0 5px;
+        font-size: $font-size-bigger;
+    }
+
+    &__chart-wrap {
+        width: 1000px;
+        margin-left: 30px;
+    }
+}

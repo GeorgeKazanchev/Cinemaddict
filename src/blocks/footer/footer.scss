@@ -1,0 +1,10 @@
+.footer {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    background: url('/public/img/background.png') no-repeat 50% 0;
+
+    &__logo {
+        margin-right: auto;
+    }
+}

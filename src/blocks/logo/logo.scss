@@ -1,0 +1,14 @@
+.logo {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    cursor: default;
+
+    &--smaller {
+        font-size: $font-size;
+        letter-spacing: normal;
+        animation: none;
+    }
+}
