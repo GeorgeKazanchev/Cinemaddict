@@ -1,0 +1,538 @@
+.film-details {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 10%;
+    height: 100vh;
+    z-index: 1;
+    background-color: #212126;
+    box-shadow: -3px 2px 13px 0 #141628;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.film-details__inner {
+    background-color: #212126;
+}
+
+.film-details__top-container {
+    padding-top: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.film-details__middle-container {
+    padding: 0 10px;
+    background-color: #121213;
+}
+
+.film-details__bottom-container {
+    width: 1070px;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 64px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.film-details__close {
+    display: flex;
+    width: 1070px;
+    margin: 0 auto;
+}
+
+.film-details__close-btn {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 30px;
+    margin-left: auto;
+    padding: 0;
+    font-size: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &:hover {
+        &::before {
+            opacity: 0.7;
+        }
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 1em;
+        color: #8da5aa;
+        cursor: pointer;
+        content: "✕";
+    }
+}
+
+.film-details__info-wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 1070px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 37px;
+}
+
+.film-details__poster {
+    display: flex;
+    flex-direction: column;
+}
+
+.film-details__age {
+    margin: 0;
+    margin-top: 50px;
+    font-size: 21px;
+}
+
+.film-details__poster-img {
+    display: flex;
+    width: 338px;
+    height: 500px;
+    object-fit: contain;
+}
+
+.film-details__info {
+    width: 680px;
+}
+
+.film-details__info-head {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.film-details__title-wrap {
+    width: 540px;
+}
+
+.film-details__title {
+    margin: 0;
+    font-size: 50px;
+}
+
+.film-details__title-original {
+    margin: 0;
+    font-size: 21px;
+}
+
+.film-details__rating {
+    width: 120px;
+    margin-left: auto;
+}
+
+.film-details__total-rating {
+    margin: 0;
+    font-weight: 700;
+    font-size: 50px;
+    color: #42cd51;
+}
+
+.film-details__user-rating {
+    margin: 0;
+    font-size: 21px;
+    color: #687fad;
+}
+
+.film-details__table {
+    margin-bottom: 37px;
+}
+
+.film-details__row {
+    margin: 7px 0;
+    box-sizing: content-box;
+    font-size: 21px;
+
+    td {
+        // TODO: Use class here
+        padding-top: 6px;
+        padding-bottom: 6px;
+        vertical-align: top;
+    }
+}
+
+.film-details__term {
+    width: 140px;
+    padding-right: 15px;
+}
+
+.film-details__cell {
+    width: 330px;
+    font-weight: 600;
+}
+
+.film-details__genre {
+    padding-right: 15px;
+}
+
+.film-details__film-description {
+    width: 650px;
+    margin: 0;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.57em;
+}
+
+.film-details__controls {
+    display: flex;
+    width: 1070px;
+    margin: 0 auto;
+    padding: 22px 50px;
+    border-top: 1px solid $outline-color;
+    border-bottom: 1px solid $outline-color;
+}
+
+.film-details__control-label {
+    position: relative;
+    width: 280px;
+    padding-left: 80px;
+    font-size: 21px;
+    cursor: pointer;
+
+    &:not(:first-of-type) {
+        border-left: 1px solid $outline-color;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &::before {
+        position: absolute;
+        top: 3px;
+        left: 40px;
+        width: 17px;
+        height: 17px;
+        background-color: transparent;
+        content: '';
+    }
+
+    &--watchlist {
+        &::before {
+            background: url("/public/img/icons/icon-watchlist.svg") no-repeat;
+            background-size: 17px 15px;
+        }
+    }
+
+    &--watched {
+        &::before {
+            top: 7px;
+            background: url('/public/img/icons/icon-watched.svg') no-repeat;
+            background-size: 17px 10px;
+        }
+    }
+
+    &--favorite {
+        &::before {
+            background: url('/public/img/icons/icon-favorite.svg') no-repeat;
+            background-size: 18px 18px;
+        }
+    }
+}
+
+.film-details__control-input {
+    &:checked {
+        &+.film-details__control-label {
+            color: #f5df00;
+
+            &--watchlist {
+                &::before {
+                    background-image: url('/public/img/icons/icon-watchlist-active.svg');
+                }
+            }
+
+            &--watched {
+                &::before {
+                    background-image: url('/public/img/icons/icon-watched-active.svg');
+                }
+            }
+
+            &--favorite {
+                &::before {
+                    background-image: url('/public/img/icons/icon-favorite-active.svg');
+                }
+            }
+        }
+    }
+}
+
+.film-details__comment {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.film-details__comment-emoji {
+    margin-right: 20px;
+    margin-left: 7px;
+    font-size: 50px;
+}
+
+.film-details__new-comment {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.film-details__add-emoji-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 79px;
+    height: 68px;
+    margin-right: 14px;
+    font-size: 55px;
+    line-height: 1em;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: dashed 1px #979797;
+    border-radius: 50%;
+}
+
+.film-details__emoji-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    font-size: 55px;
+    border-radius: 50%;
+    opacity: 0.5;
+    transition: all 0.4s;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1.0;
+    }
+}
+
+.film-details__emoji-item {
+    &:checked {
+        &+.film-details__emoji-label {
+            opacity: 1;
+        }
+    }
+}
+
+.film-details__comments-wrap {
+    width: 630px;
+    color: #f6f6f6;
+}
+
+.film-details__comments-title {
+    margin: 0;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.film-details__comments-list {
+    margin: 0;
+    margin-bottom: 30px;
+    padding: 0;
+    list-style: none;
+}
+
+.film-details__comment-text {
+    margin: 0;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: $font-size-bigger;
+}
+
+.film-details__comment-info {
+    margin: 0;
+    margin-bottom: 15px;
+    font-size: $font-size;
+}
+
+.film-details__comment-author,
+.film-details__comment-day {
+    position: relative;
+    padding-right: 20px;
+
+    &::after {
+        position: absolute;
+        top: 8px;
+        right: 5px;
+        width: 6px;
+        height: 6px;
+        background-color: #d8d8d8;
+        border-radius: 50%;
+        content: '';
+    }
+}
+
+.film-details__comment-delete {
+    padding: 0;
+    text-decoration: underline;
+    color: #687fad;
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.film-details__comment-input {
+    width: 100%;
+    height: 50px;
+    padding: 11px 10px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: $font-size-bigger;
+    color: #212126;
+    background-color: #f6f6f6;
+    border: solid 1px #979797;
+    border-radius: 5px;
+    outline: none;
+    resize: none;
+
+    &::placeholder {
+        color: #212126;
+    }
+}
+
+.film-details__comment-label {
+    width: 100%;
+}
+
+.film-details__emoji-list {
+    position: absolute;
+    bottom: 5px;
+    margin-left: 81px;
+}
+
+.film-details__user-rating-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 1070px;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+.film-details__user-rating-controls {
+    margin-left: auto;
+    margin-bottom: 15px;
+}
+
+.film-details__watched-status {
+    margin-right: 26px;
+    font-size: $font-size-bigger;
+
+    &--active {
+        color: $text-color-active;
+    }
+}
+
+.film-details__watched-reset {
+    margin: 0;
+    padding: 0;
+    color: #9da4aa;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        color: $text-color;
+    }
+}
+
+.film-details__user-rating-img {
+    width: 230px;
+    height: 330px;
+    object-fit: contain;
+}
+
+.film-details__user-score {
+    display: flex;
+}
+
+.film-details__user-rating-poster {
+    margin-right: 60px;
+}
+
+.film-details__user-rating-title {
+    margin: 0;
+    margin-top: 25px;
+    margin-bottom: 2px;
+    font-size: 60px;
+}
+
+.film-details__user-rating-feelings {
+    margin: 0;
+    margin-bottom: 50px;
+    font-weight: 600;
+    font-size: $font-size-bigger;
+    color: $text-color-active;
+}
+
+.film-details__user-rating-score {
+    display: flex;
+    position: relative;
+    width: 546px;
+    padding-top: 50px;
+
+    &::before,
+    &::after {
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 90%;
+        content: '';
+    }
+
+    &::before {
+        left: 10px;
+        background-image: url('/public/img/emoji/puke.png');
+    }
+
+    &::after {
+        right: 10px;
+        background-image: url('/public/img/emoji/trophy.png'); //  TODO: Add the image to public
+    }
+}
+
+.film-details__user-rating-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    font-weight: 700;
+    font-size: 30px;
+    color: #010101;
+    background-color: #d8d8d8;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:not(:last-child) {
+        margin-right: 12px;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.film-details__user-rating-input {
+    &:checked {
+        &+.film-details__user-rating-label {
+            background-color: $text-color-active;
+        }
+    }
+}

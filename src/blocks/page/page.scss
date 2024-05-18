@@ -1,0 +1,22 @@
+.page {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-width: 1240px;
+    min-height: 100%;
+    font-family: $font;
+    font-size: $font-size;
+    color: $text-color;
+    background: #121213 url('/public/img/background.png') no-repeat 60% 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.page__body {
+    width: 100%;
+    max-width: 1240px;
+    padding-top: $vertical-gap;
+    padding-bottom: 0;
+    padding-left: $horizontal-gap;
+    padding-right: $horizontal-gap;
+    box-sizing: border-box;
+}
