@@ -1,1 +1,26 @@
 @import 'variables.scss';
+
+@import '../blocks/page/page.scss';
+@import '../blocks/link/link.scss';
+@import '../blocks/button/button.scss';
+
+@import '../blocks/visually-hidden/visually-hidden.scss';
+@import '../blocks/hide-overflow/hide-overflow.scss';
+
+@import '../blocks/header/header.scss';
+@import '../blocks/logo/logo.scss';
+@import '../blocks/search/search.scss';
+@import '../blocks/profile/profile.scss';
+@import '../blocks/main-navigation/main-navigation.scss';
+@import '../blocks/result/result.scss';
+@import '../blocks/sort/sort.scss';
+
+@import '../blocks/films/films.scss';
+@import '../blocks/films-list/films-list.scss';
+@import '../blocks/film-card/film-card.scss';
+@import '../blocks/film-details/film-details.scss';
+
+@import '../blocks/footer/footer.scss';
+@import '../blocks/details/details.scss';
+@import '../blocks/statistics/statistics.scss';
+@import '../blocks/no-result/no-result.scss';
