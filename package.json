@@ -4,7 +4,9 @@
   "description": "",
   "type": "module",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "gulp": "gulp build"
+  },
   "devDependencies": {
     "gulp": "5.0.0",
     "gulp-rename": "2.0.0",
