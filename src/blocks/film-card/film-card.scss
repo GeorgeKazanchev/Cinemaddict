@@ -141,15 +141,15 @@
         background-size: 18px 18px;
     }
 
-    &--active&--add-to-watchlist {
+    &--active.film-card__controls-item--add-to-watchlist {
         background-image: url('/public/img/icons/icon-watchlist-active.svg');
     }
 
-    &--active&--mark-as-watched {
+    &--active.film-card__controls-item--mark-as-watched {
         background-image: url('/public/img/icons/icon-watched-active.svg');
     }
 
-    &--active&--favorite {
+    &--active.film-card__controls-item--favorite {
         background-image: url('/public/img/icons/icon-favorite-active.svg');
     }
 }
