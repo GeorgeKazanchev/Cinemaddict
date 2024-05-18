@@ -2,24 +2,24 @@
     display: flex;
     padding-left: 0;
     list-style: none;
+}
 
-    &__button {
-        display: block;
-        margin-right: 32px;
-        padding: 0;
-        color: $text-color;
-        text-decoration: none;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        cursor: pointer;
+.sort__button {
+    display: block;
+    margin-right: 32px;
+    padding: 0;
+    color: $text-color;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
 
-        &:hover {
-            opacity: 0.7;
-        }
+    &:hover {
+        opacity: 0.7;
+    }
 
-        &--active {
-            color: $text-color-active;
-        }
+    &--active {
+        color: $text-color-active;
     }
 }
