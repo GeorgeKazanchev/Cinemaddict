@@ -5,9 +5,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp build"
+    "gulp": "gulp build",
+    "eslint": "eslint",
+    "test": "npm run eslint"
   },
   "devDependencies": {
+    "eslint": "9.3.0",
+    "@eslint/js": "9.3.0",
     "gulp": "5.0.0",
     "gulp-rename": "2.0.0",
     "gulp-sass": "5.1.0",
