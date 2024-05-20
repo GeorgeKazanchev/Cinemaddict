@@ -217,7 +217,7 @@
 
     &--watchlist {
         &::before {
-            background: url("/public/img/icons/icon-watchlist.svg") no-repeat;
+            background: url("./../img/icons/icon-watchlist.svg") no-repeat;
             background-size: 17px 15px;
         }
     }
@@ -225,14 +225,14 @@
     &--watched {
         &::before {
             top: 7px;
-            background: url('/public/img/icons/icon-watched.svg') no-repeat;
+            background: url('./../img/icons/icon-watched.svg') no-repeat;
             background-size: 17px 10px;
         }
     }
 
     &--favorite {
         &::before {
-            background: url('/public/img/icons/icon-favorite.svg') no-repeat;
+            background: url('./../img/icons/icon-favorite.svg') no-repeat;
             background-size: 18px 18px;
         }
     }
@@ -245,19 +245,19 @@
 
             &--watchlist {
                 &::before {
-                    background-image: url('/public/img/icons/icon-watchlist-active.svg');
+                    background-image: url('./../img/icons/icon-watchlist-active.svg');
                 }
             }
 
             &--watched {
                 &::before {
-                    background-image: url('/public/img/icons/icon-watched-active.svg');
+                    background-image: url('./../img/icons/icon-watched-active.svg');
                 }
             }
 
             &--favorite {
                 &::before {
-                    background-image: url('/public/img/icons/icon-favorite-active.svg');
+                    background-image: url('./../img/icons/icon-favorite-active.svg');
                 }
             }
         }
@@ -498,12 +498,12 @@
 
     &::before {
         left: 10px;
-        background-image: url('/public/img/emoji/puke.png');
+        background-image: url('./../img/emoji/puke.png');
     }
 
     &::after {
         right: 10px;
-        background-image: url('/public/img/emoji/trophy.png'); //  TODO: Add the image to public
+        background-image: url('./../img/emoji/trophy.png'); //  TODO: Add the image to public
     }
 }
 
