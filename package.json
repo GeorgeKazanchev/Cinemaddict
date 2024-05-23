@@ -7,7 +7,8 @@
   "scripts": {
     "gulp": "gulp build",
     "eslint": "eslint",
-    "test": "npm run eslint"
+    "test": "npm run eslint",
+    "ts": "tsc"
   },
   "devDependencies": {
     "eslint": "9.3.0",
@@ -15,7 +16,8 @@
     "gulp": "5.0.0",
     "gulp-rename": "2.0.0",
     "gulp-sass": "5.1.0",
-    "node-sass": "9.0.0"
+    "node-sass": "9.0.0",
+    "typescript": "5.4.5"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,17 @@
+{
+    "include": [
+        "./src/"
+    ],
+    "exclude": [
+        "**/*.test.*",
+        "node_modules/"
+    ],
+    "compilerOptions": {
+        "moduleResolution": "Node",
+        "outFile": "./public/main.js",
+        "target": "ES6",
+        "removeComments": true,
+        "sourceMap": true,
+        "strict": true
+    },
+}
