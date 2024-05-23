@@ -8,7 +8,7 @@
     "gulp": "gulp build",
     "eslint": "eslint",
     "test": "npm run eslint",
-    "ts": "tsc"
+    "tsc": "tsc"
   },
   "devDependencies": {
     "eslint": "9.3.0",
