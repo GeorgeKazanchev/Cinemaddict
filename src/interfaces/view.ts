@@ -1,4 +1,4 @@
 interface View {
-    getTemplate() : Node;
-    getElement() : Node;
+    getTemplate(): Node;
+    getElement(): Node;
 }
