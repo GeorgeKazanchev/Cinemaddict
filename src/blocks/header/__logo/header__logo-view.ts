@@ -1,4 +1,6 @@
-class HeaderLogoView implements View {
+import View from '../../../interfaces/view';
+
+export default class HeaderLogoView implements View {
     constructor(content: Node) {
         this.content = content;
     }

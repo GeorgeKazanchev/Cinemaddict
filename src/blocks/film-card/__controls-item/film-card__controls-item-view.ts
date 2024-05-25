@@ -1,4 +1,7 @@
-class FilmCardControlsItemView implements View {
+import View from '../../../interfaces/view';
+import FilmCardControlsItemType from './film-card__controls-item-types';
+
+export default class FilmCardControlsItemView implements View {
     constructor(content: string, isActive: boolean, type: FilmCardControlsItemType) {
         this.content = content;
         this.isActive = isActive;

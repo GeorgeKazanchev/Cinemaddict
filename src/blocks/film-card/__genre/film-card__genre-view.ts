@@ -1,4 +1,6 @@
-class FilmCardGenreView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardGenreView implements View {
     constructor(genre: string) {
         this.genre = genre;
     }

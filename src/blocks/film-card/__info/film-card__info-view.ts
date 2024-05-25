@@ -1,4 +1,6 @@
-class FilmCardInfoView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardInfoView implements View {
     constructor(yearNode: Node, durationNode: Node, genreNode: Node) {
         this.yearNode = yearNode;
         this.durationNode = durationNode;

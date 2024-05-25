@@ -1,6 +1,6 @@
 {
-    "include": [
-        "./src/"
+    "files": [
+        "./src/main.ts"
     ],
     "exclude": [
         "**/*.test.*",
@@ -8,7 +8,7 @@
     ],
     "compilerOptions": {
         "moduleResolution": "Node",
-        "outFile": "./public/main.js",
+        "module": "ES6",
         "target": "ES6",
         "removeComments": true,
         "sourceMap": true,

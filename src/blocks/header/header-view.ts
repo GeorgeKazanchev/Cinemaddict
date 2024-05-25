@@ -1,4 +1,6 @@
-class HeaderView implements View {
+import View from '../../interfaces/view';
+
+export default class HeaderView implements View {
     constructor(logo: Node, profile?: Node) {
         this.logo = logo;
         if (profile !== undefined) {

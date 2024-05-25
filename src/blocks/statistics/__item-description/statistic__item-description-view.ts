@@ -1,4 +1,6 @@
-class StatisticsItemDescriptionView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsItemDescriptionView implements View {
     constructor(description: string) {
         this.description = description;
     }

@@ -1,4 +1,6 @@
-class FilmCardRatingView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardRatingView implements View {
     constructor(rating: string) {
         this.rating = rating;
     }

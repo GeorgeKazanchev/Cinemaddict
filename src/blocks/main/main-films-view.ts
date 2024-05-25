@@ -1,4 +1,6 @@
-class MainFilmsView extends MainView {
+import MainView from "./main-view";
+
+export default class MainFilmsView extends MainView {
     constructor(mainNavigation: Node, sort: Node, films: Node, isLoading: boolean) {
         super(mainNavigation);
         this.sort = sort;

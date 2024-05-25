@@ -1,4 +1,6 @@
-class StatisticsImgView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsImgView implements View {
     constructor(src: string, alt: string, size: number) {
         if (size <= 0) {
             throw new Error('Image\'s size should be positive.');

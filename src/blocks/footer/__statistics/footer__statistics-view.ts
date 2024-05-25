@@ -1,4 +1,6 @@
-class FooterStatisticsView implements View {
+import View from '../../../interfaces/view';
+
+export default class FooterStatisticsView implements View {
     constructor(filmsCount: number) {
         this.filmsCount = filmsCount;
     }

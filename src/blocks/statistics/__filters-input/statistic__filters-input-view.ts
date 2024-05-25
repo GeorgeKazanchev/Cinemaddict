@@ -1,4 +1,6 @@
-class StatisticsFiltersInputView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsFiltersInputView implements View {
     constructor(name: string, id: string, value: string, type: string = 'radio',
         isChecked: boolean = false, isInput: boolean = true) {
         this.name = name;

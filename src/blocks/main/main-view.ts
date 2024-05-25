@@ -1,4 +1,6 @@
-abstract class MainView implements View {
+import View from '../../interfaces/view';
+
+export default abstract class MainView implements View {
     constructor(mainNavigation: Node) {
         this.mainNavigation = mainNavigation;
     }

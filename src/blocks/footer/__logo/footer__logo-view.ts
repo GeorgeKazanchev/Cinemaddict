@@ -1,4 +1,6 @@
-class FooterLogoView implements View {
+import View from '../../../interfaces/view';
+
+export default class FooterLogoView implements View {
     constructor(content: Node) {
         this.content = content;
     }

@@ -1,4 +1,6 @@
-class FilmCardDurationView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardDurationView implements View {
     constructor(duration: string) {
         this.duration = duration;
     }

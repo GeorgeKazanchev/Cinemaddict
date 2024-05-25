@@ -1,4 +1,6 @@
-class SortButtonView implements View {
+import View from '../../../interfaces/view';
+
+export default class SortButtonView implements View {
     constructor(content: string, href: string, isActive: boolean) {
         this.content = content;
         this.href = href;

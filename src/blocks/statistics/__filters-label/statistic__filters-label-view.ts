@@ -1,4 +1,6 @@
-class StatisticsFiltersLabelView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsFiltersLabelView implements View {
     constructor(label: string, targetId: string) {
         this.label = label;
         this.targetId = targetId;

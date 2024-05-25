@@ -1,4 +1,6 @@
-class StatisticsFiltersDescriptionView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsFiltersDescriptionView implements View {
     constructor(description: string) {
         this.description = description;
     }

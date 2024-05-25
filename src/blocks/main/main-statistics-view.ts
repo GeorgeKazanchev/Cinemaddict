@@ -1,4 +1,6 @@
-class MainStatisticsView extends MainView {
+import MainView from "./main-view";
+
+export default class MainStatisticsView extends MainView {
     constructor(mainNavigation: Node, statistics: Node) {
         super(mainNavigation);
         this.statistics = statistics;

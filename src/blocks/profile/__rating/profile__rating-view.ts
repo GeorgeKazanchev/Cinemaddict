@@ -1,4 +1,6 @@
-class ProfileRatingView implements View {
+import View from '../../../interfaces/view';
+
+export default class ProfileRatingView implements View {
     constructor(rating: string) {
         this.rating = rating;
     }

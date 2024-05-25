@@ -1,4 +1,6 @@
-class FilmCardPosterView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardPosterView implements View {
     constructor(src: string, alt: string) {
         this.src = src;
         this.alt = alt;

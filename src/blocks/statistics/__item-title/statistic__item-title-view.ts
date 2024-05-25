@@ -1,4 +1,6 @@
-class StatisticsItemTitleView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsItemTitleView implements View {
     constructor(title: string) {
         this.title = title;
     }

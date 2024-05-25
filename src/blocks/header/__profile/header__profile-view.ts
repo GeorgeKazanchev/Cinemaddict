@@ -1,4 +1,6 @@
-class HeaderProfileView implements View {
+import View from '../../../interfaces/view';
+
+export default class HeaderProfileView implements View {
     constructor(ratingNode: Node, avatarNode: Node) {
         this.ratingNode = ratingNode;
         this.avatarNode = avatarNode;

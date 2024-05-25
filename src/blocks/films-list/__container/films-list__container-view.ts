@@ -1,4 +1,6 @@
-class FilmsListContainerView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmsListContainerView implements View {
     constructor(films: NodeList) {
         this.films = films;
     }
@@ -13,7 +15,7 @@ class FilmsListContainerView implements View {
 
     getElement(): Node {
         const element = this.getTemplate();
-        this.films.forEach(node => {
+        this.films.forEach((node) => {
             element.appendChild(node.cloneNode(true));
         });
         return element;

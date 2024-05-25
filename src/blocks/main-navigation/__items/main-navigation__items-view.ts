@@ -1,4 +1,6 @@
-class MainNavigationItemsView implements View {
+import View from '../../../interfaces/view';
+
+export default class MainNavigationItemsView implements View {
     constructor(items: NodeList) {
         this.items = items;
     }
@@ -13,7 +15,7 @@ class MainNavigationItemsView implements View {
 
     getElement(): Node {
         const element = this.getTemplate();
-        this.items.forEach(node => {
+        this.items.forEach((node) => {
             element.appendChild(node.cloneNode(true));
         });
         return element;

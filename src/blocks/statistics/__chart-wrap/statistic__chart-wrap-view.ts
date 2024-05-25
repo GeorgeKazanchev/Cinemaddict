@@ -1,4 +1,6 @@
-class StatisticsChartWrapView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsChartWrapView implements View {
     constructor(chart: Node) {
         this.chart = chart;
     }

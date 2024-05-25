@@ -1,4 +1,6 @@
-class FilmsListTitleView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmsListTitleView implements View {
     constructor(title: string, isHidden: boolean = false) {
         this.title = title;
         this.isHidden = isHidden;

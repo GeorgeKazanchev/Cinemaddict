@@ -1,4 +1,6 @@
-class SortView implements View {
+import View from '../../interfaces/view';
+
+export default class SortView implements View {
     constructor(listItems: NodeList) {
         this.listItems = listItems;
     }
@@ -13,7 +15,7 @@ class SortView implements View {
 
     getElement(): Node {
         const element = this.getTemplate();
-        this.listItems.forEach(node => {
+        this.listItems.forEach((node) => {
             element.appendChild(node.cloneNode(true));
         });
         return element;

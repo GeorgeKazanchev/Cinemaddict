@@ -1,4 +1,6 @@
-class StatisticsChartView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsChartView implements View {
     constructor(width: number) {
         if (width <= 0) {
             throw new Error('Chart\'s width should be positive.');

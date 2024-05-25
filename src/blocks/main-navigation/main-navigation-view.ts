@@ -1,4 +1,6 @@
-class MainNavigationView implements View {
+import View from '../../interfaces/view';
+
+export default class MainNavigationView implements View {
     constructor(navItems: Node, navAdditional: Node) {
         this.navItems = navItems;
         this.navAdditional = navAdditional;

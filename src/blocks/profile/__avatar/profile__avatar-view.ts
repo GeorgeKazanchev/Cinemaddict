@@ -1,4 +1,6 @@
-class ProfileAvatarView implements View {
+import View from '../../../interfaces/view';
+
+export default class ProfileAvatarView implements View {
     constructor(src: string, alt: string, size: number) {
         if (size <= 0) {
             throw new Error('Avatar\'s size should be positive.');

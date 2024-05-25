@@ -3,3 +3,5 @@ enum FilmCardControlsItemType {
     Watched,
     Favorite
 }
+
+export default FilmCardControlsItemType;

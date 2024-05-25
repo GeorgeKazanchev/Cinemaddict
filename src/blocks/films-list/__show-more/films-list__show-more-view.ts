@@ -1,4 +1,6 @@
-class FilmsListShowMoreView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmsListShowMoreView implements View {
     constructor(content: string) {
         this.content = content;
     }

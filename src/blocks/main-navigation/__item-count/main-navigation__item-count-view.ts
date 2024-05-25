@@ -1,4 +1,6 @@
-class MainNavigationItemCountView implements View {
+import View from '../../../interfaces/view';
+
+export default class MainNavigationItemCountView implements View {
     constructor(count: number) {
         if (!Number.isInteger(count)) {
             throw new Error('Movies count should be integer.');

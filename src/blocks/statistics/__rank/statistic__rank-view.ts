@@ -1,4 +1,6 @@
-class StatisticsRankView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsRankView implements View {
     constructor(image: Node, label: Node) {
         this.image = image;
         this.label = label;

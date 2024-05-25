@@ -1,4 +1,6 @@
-class FilmCardCommentsView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardCommentsView implements View {
     constructor(commentsCount: number) {
         if (!Number.isInteger(commentsCount)) {
             throw new Error('Comments count should be integer.');

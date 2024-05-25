@@ -1,4 +1,6 @@
-class FilmCardTitleView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardTitleView implements View {
     constructor(title: string) {
         this.title = title;
     }

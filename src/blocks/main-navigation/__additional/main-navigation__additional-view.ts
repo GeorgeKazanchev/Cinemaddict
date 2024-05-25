@@ -1,4 +1,6 @@
-class MainNavigationAdditionalView implements View {
+import View from '../../../interfaces/view';
+
+export default class MainNavigationAdditionalView implements View {
     constructor(content: Node, href: string, isActive: boolean) {
         this.content = content;
         this.href = href;

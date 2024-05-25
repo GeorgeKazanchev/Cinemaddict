@@ -1,4 +1,6 @@
-class StatisticsFiltersView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsFiltersView implements View {
     constructor(description: Node, options: NodeList, action: string = 'https://echo.htmlacademy.ru/') {
         this.description = description;
         this.action = action;

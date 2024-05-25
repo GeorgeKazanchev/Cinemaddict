@@ -1,4 +1,6 @@
-class StatisticsTextItemView implements View {
+import View from '../../../interfaces/view';
+
+export default class StatisticsTextItemView implements View {
     constructor(title: Node, text: Node) {
         this.title = title;
         this.text = text;

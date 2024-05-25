@@ -1,4 +1,6 @@
-class FilmCardYearView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardYearView implements View {
     constructor(year: string) {
         this.year = year;
     }

@@ -1,4 +1,6 @@
-class StatisticsView implements View {
+import View from '../../interfaces/view';
+
+export default class StatisticsView implements View {
     constructor(rank: Node, filters: Node, textList: Node, chart: Node) {
         this.rank = rank;
         this.filters = filters;

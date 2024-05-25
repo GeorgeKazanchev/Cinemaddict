@@ -1,4 +1,6 @@
-class FilmCardControlsView implements View {
+import View from '../../../interfaces/view';
+
+export default class FilmCardControlsView implements View {
     constructor(controls: NodeList) {
         this.controls = controls;
     }
@@ -13,7 +15,7 @@ class FilmCardControlsView implements View {
 
     getElement(): Node {
         const element = this.getTemplate();
-        this.controls.forEach(node => {
+        this.controls.forEach((node) => {
             element.appendChild(node.cloneNode(true));
         });
         return element;
