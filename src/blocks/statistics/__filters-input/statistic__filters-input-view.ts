@@ -2,13 +2,13 @@ import View from '../../../interfaces/view';
 
 export default class StatisticsFiltersInputView implements View {
     constructor(name: string, id: string, value: string, type: string = 'radio',
-        isChecked: boolean = false, isInput: boolean = true) {
+        isChecked: boolean = false, isHidden: boolean = true) {
         this.name = name;
         this.id = id;
         this.value = value;
         this.type = type;
         this.isChecked = isChecked;
-        this.isHidden = isInput;
+        this.isHidden = isHidden;
     }
 
     name: string;
