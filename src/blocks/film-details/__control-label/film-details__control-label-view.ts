@@ -19,7 +19,7 @@ export default class FilmDetailsControlLabelView implements View {
 
     getElement(): Node {
         const element = this.getLabelTemplate();
-        element.setAttribute('for', this.targetId);
+        element.htmlFor = this.targetId;
         element.textContent = this.content;
 
         switch (this.type) {

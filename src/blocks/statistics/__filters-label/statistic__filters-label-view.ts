@@ -17,7 +17,7 @@ export default class StatisticsFiltersLabelView implements View {
     getElement(): Node {
         const element = this.getLabelTemplate();
         element.appendChild(this.label);
-        element.setAttribute('for', this.targetId);
+        element.htmlFor = this.targetId;
         return element;
     }
 
