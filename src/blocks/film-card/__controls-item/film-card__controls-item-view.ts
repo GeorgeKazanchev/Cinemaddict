@@ -1,8 +1,8 @@
 import View from '../../../interfaces/view';
-import FilmCardControlsItemType from './film-card__controls-item-types';
+import FilmType from '../../../enums/film-type';
 
 export default class FilmCardControlsItemView implements View {
-    constructor(content: string, isActive: boolean, type: FilmCardControlsItemType) {
+    constructor(content: string, isActive: boolean, type: FilmType) {
         this.content = content;
         this.isActive = isActive;
         this.type = type;
@@ -10,7 +10,7 @@ export default class FilmCardControlsItemView implements View {
 
     content: string;
     isActive: boolean;
-    type: FilmCardControlsItemType;
+    type: FilmType;
 
     getTemplate(): Node {
         const template = document.createElement('button');
@@ -40,15 +40,15 @@ export default class FilmCardControlsItemView implements View {
         }
 
         switch (this.type) {
-            case FilmCardControlsItemType.Watchlist: {
+            case FilmType.Watchlist: {
                 element.classList.add('film-card__controls-item--add-to-watchlist');
                 break;
             }
-            case FilmCardControlsItemType.Watched: {
+            case FilmType.Watched: {
                 element.classList.add('film-card__controls-item--mark-as-watched');
                 break;
             }
-            case FilmCardControlsItemType.Favorite: {
+            case FilmType.Favorite: {
                 element.classList.add('film-card__controls-item--favorite');
                 break;
             }

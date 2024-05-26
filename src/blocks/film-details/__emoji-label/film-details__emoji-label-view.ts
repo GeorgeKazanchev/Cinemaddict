@@ -1,6 +1,6 @@
 import View from '../../../interfaces/view';
 
-export default class StatisticsFiltersLabelView implements View {
+export default class FilmDetailsEmojiLabelView implements View {
     constructor(label: Node, targetId: string) {
         this.label = label;
         this.targetId = targetId;
@@ -23,7 +23,7 @@ export default class StatisticsFiltersLabelView implements View {
 
     private getLabelTemplate() {
         const template = document.createElement('label');
-        template.classList.add('statistic__filters-label');
+        template.classList.add('film-details__emoji-label');
         return template;
     }
 }
