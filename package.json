@@ -11,12 +11,14 @@
     "tsc": "tsc"
   },
   "devDependencies": {
-    "eslint": "9.3.0",
     "@eslint/js": "9.3.0",
+    "@types/pug": "2.0.10",
+    "eslint": "9.3.0",
     "gulp": "5.0.0",
     "gulp-rename": "2.0.0",
     "gulp-sass": "5.1.0",
     "node-sass": "9.0.0",
+    "pug": "3.0.3",
     "typescript": "5.4.5"
   },
   "repository": {
