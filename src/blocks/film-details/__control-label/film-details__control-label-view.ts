@@ -1,5 +1,5 @@
 import View from '../../../interfaces/view';
-import FilmType from '../../../enums/film-type';
+import FilmType from '../../../types/film-type';
 
 export default class FilmDetailsControlLabelView implements View {
     constructor(content: string, type: FilmType, targetId: string) {
