@@ -1,40 +1,17 @@
-import View from '../../interfaces/view';
+import AbstractView from '../../types/abstract-view';
+import FilmCardData from '../../types/template-data/film-card-data';
+import { compileFile } from 'pug';
 
-export default class FilmCardView implements View {
-    constructor(title: Node, rating: Node, info: Node, poster: Node,
-        description: Node, comments: Node, controls: Node) {
-        this.title = title;
-        this.rating = rating;
-        this.info = info;
-        this.poster = poster;
-        this.description = description;
-        this.comments = comments;
-        this.controls = controls;
+export default class FilmCardView extends AbstractView {
+    constructor(element: HTMLElement, data: FilmCardData) {
+        super(element);
+        this.filmData = data;
     }
 
-    title: Node;
-    rating: Node;
-    info: Node;
-    poster: Node;
-    description: Node;
-    comments: Node;
-    controls: Node;
+    filmData: FilmCardData;
 
-    getTemplate(): Node {
-        const template = document.createElement('article');
-        template.classList.add('film-card');
-        return template;
-    }
-
-    getElement(): Node {
-        const element = this.getTemplate();
-        element.appendChild(this.title);
-        element.appendChild(this.rating);
-        element.appendChild(this.info);
-        element.appendChild(this.poster);
-        element.appendChild(this.description);
-        element.appendChild(this.comments);
-        element.appendChild(this.controls);
-        return element;
+    getMarkup(): string {
+        const renderFunction = compileFile('./film-card.pug');
+        return renderFunction(this.filmData);
     }
 }
