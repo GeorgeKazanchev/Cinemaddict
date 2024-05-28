@@ -1,32 +1,17 @@
-import Comment from "./comment";
+import Comment from './comment';
+import FilmInfo from './film-info';
+import UserDetails from './user-details';
 
 export default class Movie {
+    constructor(id: string, comments: Comment[], filmInfo: FilmInfo, userDetails: UserDetails) {
+        this.id = id;
+        this.comments = comments;
+        this.filmInfo = filmInfo;
+        this.userDetails = userDetails;
+    }
+
     id: string;
     comments: Comment[];
-
-    filmInfo: {
-        title: string;
-        alternativeTitle: string;
-        poster: string;
-        director: string;
-        description: string;
-        totalRating: number;
-        ageRating: number;
-        runtime: number;
-        writers: string[];
-        actors: string[];
-        genre: string[];
-
-        release: {
-            date: string;
-            releaseCountry: string;
-        };
-    };
-
-    userDetails: {
-        favorite: boolean;
-        watchlist: boolean;
-        alreadyWatched: boolean;
-        watchingDate: string;
-    }
+    filmInfo: FilmInfo;
+    userDetails: UserDetails;
 }
