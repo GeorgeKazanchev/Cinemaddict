@@ -1,17 +1,20 @@
 {
-    "files": [
-        "./src/main.ts"
-    ],
-    "exclude": [
-        "**/*.test.*",
-        "node_modules/"
-    ],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
     "compilerOptions": {
-        "moduleResolution": "Node",
+        "outDir": "./src/main.js",
         "module": "ES6",
         "target": "ES6",
+        "noImplicitAny": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "allowJs": true,
         "removeComments": true,
         "sourceMap": true,
         "strict": true
-    },
+    }
 }
