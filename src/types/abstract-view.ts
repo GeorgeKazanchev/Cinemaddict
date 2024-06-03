@@ -4,6 +4,24 @@ export default abstract class AbstractView {
     }
 
     element: HTMLElement;
+    abstract template: string;
 
-    abstract getMarkup(): string;
+    abstract getElement(): Element;
+
+    getMarkup(): string {
+        return this.getElement().outerHTML;
+    }
+
+    getTemplate(): Element {
+        const templateContainer = document.createElement('div');
+        templateContainer.insertAdjacentHTML('afterbegin', this.template);
+
+        const template = templateContainer.firstElementChild;
+
+        if (template !== null) {
+            return template;
+        } else {
+            throw new Error('Failed to create template!');
+        }
+    }
 }
