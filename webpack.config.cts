@@ -12,9 +12,8 @@ export default (env: EnvVariables) => {
         mode: env.mode ?? 'development',
         entry: path.resolve(__dirname, 'src', 'main.ts'),
         output: {
-            path: path.resolve(__dirname, 'build'),
-            filename: '[name].[contenthash].js',
-            clean: true
+            path: path.resolve(__dirname, 'public'),
+            filename: '[name].js'
         },
         module: {
             rules: [
