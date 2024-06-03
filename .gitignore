@@ -10,3 +10,4 @@ Thumbs.db
 # Прочее
 *.log*
 node_modules/
+public/*.js
