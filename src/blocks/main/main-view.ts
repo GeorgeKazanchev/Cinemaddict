@@ -1,17 +1,25 @@
-import View from '../../interfaces/view';
+import AbstractView from '../../types/abstract-view';
+import FilmsSectionType from '../../types/films-section-type';
+import Movie from '../../types/movie';
+import FilmsView from '../films/films-view';
 
-export default abstract class MainView implements View {
-    constructor(mainNavigation: Node) {
-        this.mainNavigation = mainNavigation;
+//  TODO: The first prototype version. It will be updated
+export default class MainView extends AbstractView {
+    constructor(films: Movie[] | null, filmsSectionType: FilmsSectionType) {
+        super();
+        this.films = films;
+        this.filmsSectionType = filmsSectionType;
     }
 
-    mainNavigation: Node;
+    films: Movie[] | null;
+    filmsSectionType: FilmsSectionType;
+    template: string =
+        `<main class="main"></main>`;
 
-    getTemplate(): Node {
-        const template = document.createElement('main');
-        template.classList.add('main');
-        return template;
+    getElement(): Element {
+        const element = this.getTemplate();
+        const filmsView = new FilmsView(this.films, this.filmsSectionType);
+        element.appendChild(filmsView.getElement());
+        return element;
     }
-
-    abstract getElement(): Node;
 }
