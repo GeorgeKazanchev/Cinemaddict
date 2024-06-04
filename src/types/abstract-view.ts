@@ -1,9 +1,9 @@
 export default abstract class AbstractView {
-    constructor(element: HTMLElement) {
-        this.element = element;
+    constructor() {
+        this.element = null;
     }
 
-    element: HTMLElement;
+    element: Element | null;
     abstract template: string;
 
     abstract getElement(): Element;

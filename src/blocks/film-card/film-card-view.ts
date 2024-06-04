@@ -2,8 +2,8 @@ import AbstractView from '../../types/abstract-view';
 import Movie from '../../types/movie';
 
 export default class FilmCardView extends AbstractView {
-    constructor(element: HTMLElement, movie: Movie) {
-        super(element);
+    constructor(movie: Movie) {
+        super();
         this.film = movie;
     }
 
@@ -13,7 +13,7 @@ export default class FilmCardView extends AbstractView {
     static get ELLIPSIS_CODE(): number { return 8230; };
 
     film: Movie;
-    template: string = 
+    template: string =
         `<article class="film-card">
             <h3 class="film-card__title"></h3>
             <p class="film-card__rating"></p>
