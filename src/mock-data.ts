@@ -108,7 +108,7 @@ const films: Movie[] = [
             true,
             true,
             false,
-            ''
+            null
         )
     ),
 
@@ -235,7 +235,7 @@ const films: Movie[] = [
             false,
             false,
             false,
-            ''
+            null
         )
     ),
 
@@ -283,7 +283,7 @@ const films: Movie[] = [
             false,
             true,
             false,
-            ''
+            null
         )
     ),
 
@@ -319,7 +319,7 @@ const films: Movie[] = [
             true,
             true,
             false,
-            ''
+            null
         )
     ),
 
@@ -373,7 +373,7 @@ const films: Movie[] = [
             true,
             true,
             false,
-            ''
+            null
         )
     )
 ];
