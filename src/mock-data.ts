@@ -9,6 +9,8 @@ import Emotion from './types/emotion';
 const userData: UserData = new UserData(
     'Frank Sinatra',
     25,
+    35,
+    20,
     './img/bitmap@2x.png'
 );
 
