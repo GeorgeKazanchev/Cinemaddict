@@ -5,7 +5,7 @@ import FilmsSectionType from './types/films-section-type';
 import { userData, films } from './mock-data';
 
 const isAuthorized = true;
-const filmsSectionType = FilmsSectionType.Movies;
+const filmsSectionType = FilmsSectionType.MoviesWithExtra;
 
 const headerView = new HeaderView(isAuthorized, userData);
 const mainView = new MainView(films, filmsSectionType);

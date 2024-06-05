@@ -80,7 +80,7 @@ export default class FilmsListView extends AbstractView {
     }
 
     private setShowMoreButton(element: Element): void {
-        const needToRender = this.checkShouldFilmsRendered();
+        const needToRender = this.checkShouldFilmsRendered() && this.listType === FilmsListType.AllMovies;
         if (needToRender) {
             const button = document.createElement('button');
             button.classList.add('films-list__show-more');
