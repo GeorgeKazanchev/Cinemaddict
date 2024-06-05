@@ -1,23 +1,60 @@
-import View from '../../interfaces/view';
+import AbstractView from '../../types/abstract-view';
+import SortCriterion from '../../types/sort-criterion';
 
-export default class SortView implements View {
-    constructor(listItems: NodeList) {
-        this.listItems = listItems;
+export default class SortView extends AbstractView {
+    constructor(activeSortCriterion: SortCriterion) {
+        super();
+        this.activeSortCriterion = activeSortCriterion;
     }
 
-    listItems: NodeList;
+    activeSortCriterion: SortCriterion;
+    template: string =
+        `<ul class="sort"></ul>`;
 
-    getTemplate(): Node {
-        const template = document.createElement('ul');
-        template.classList.add('sort');
-        return template;
-    }
+    static get ACTIVE_CRITERION_CLASSNAME(): string { return 'sort__button--active'; };
 
-    getElement(): Node {
+    getElement(): Element {
         const element = this.getTemplate();
-        this.listItems.forEach((node) => {
-            element.appendChild(node.cloneNode(true));
-        });
+        this.setActiveCriterion(element);
+        return element;
+    }
+
+    private setActiveCriterion(element: Element): void {
+        const defaultCriterionElement = this.getCriterionElement(SortCriterion.Default);
+        const dateCriterionElement = this.getCriterionElement(SortCriterion.Date);
+        const ratingCriterionElement = this.getCriterionElement(SortCriterion.Rating);
+
+        //  TODO: That must be simplified
+        switch (this.activeSortCriterion) {
+            case SortCriterion.Default: {
+                const innerElement = defaultCriterionElement.querySelector('.sort__button');
+                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+                break;
+            }
+            case SortCriterion.Date: {
+                const innerElement = dateCriterionElement.querySelector('.sort__button');
+                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+                break;
+            }
+            case SortCriterion.Rating: {
+                const innerElement = ratingCriterionElement.querySelector('.sort__button');
+                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+                break;
+            }
+        }
+
+        element.appendChild(defaultCriterionElement);
+        element.appendChild(dateCriterionElement);
+        element.appendChild(ratingCriterionElement);
+    }
+
+    private getCriterionElement(criterion: SortCriterion) {
+        const element = document.createElement('li');
+        const innerElement = document.createElement('a');
+        innerElement.href = '#';
+        innerElement.classList.add('sort__button');
+        innerElement.textContent = criterion;
+        element.appendChild(innerElement);
         return element;
     }
 }
