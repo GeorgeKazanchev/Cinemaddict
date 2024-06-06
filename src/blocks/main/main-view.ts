@@ -1,29 +1,26 @@
 import AbstractView from '../../types/abstract-view';
-import FilmsSectionType from '../../types/films-section-type';
-import Movie from '../../types/movie';
-import SortCriterion from '../../types/sort-criterion';
 import FilmsView from '../films/films-view';
 import SortView from '../sort/sort-view';
+import FilmsSection from '../../types/films-sections/films-section';
+import SortCriterionType from '../../types/sort-criterion-type';
 
 //  TODO: The first prototype version. It will be updated
 export default class MainView extends AbstractView {
-    constructor(films: Movie[] | null, filmsSectionType: FilmsSectionType, activeSortCriterion: SortCriterion) {
+    constructor(filmsSection: FilmsSection, selectedSortCriterion: SortCriterionType) {
         super();
-        this.films = films;
-        this.filmsSectionType = filmsSectionType;
-        this.activeSortCriterion = activeSortCriterion;
+        this.filmsSection = filmsSection;
+        this.selectedSortCriterion = selectedSortCriterion;
     }
 
-    films: Movie[] | null;
-    filmsSectionType: FilmsSectionType;
-    activeSortCriterion: SortCriterion;
+    filmsSection: FilmsSection;
+    selectedSortCriterion: SortCriterionType;
     template: string =
         `<main class="main"></main>`;
 
     getElement(): Element {
         const element = this.getTemplate();
-        const sortView = new SortView(this.activeSortCriterion);
-        const filmsView = new FilmsView(this.films, this.filmsSectionType);
+        const sortView = new SortView(this.selectedSortCriterion);
+        const filmsView = new FilmsView(this.filmsSection);
         element.appendChild(sortView.getElement());
         element.appendChild(filmsView.getElement());
         return element;
