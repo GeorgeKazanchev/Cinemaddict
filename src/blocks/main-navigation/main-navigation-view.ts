@@ -1,15 +1,15 @@
 import AbstractView from '../../types/abstract-view';
-import NavigationItemType from '../../types/navigation-item-type';
+import NavigationItem from '../../types/navigation-items/navigation-item';
 import UserData from '../../types/user-data';
 
 export default class MainNavigationView extends AbstractView {
-    constructor(selectedItem: NavigationItemType, userData: UserData) {
+    constructor(selectedItem: NavigationItem, userData: UserData) {
         super();
         this.selectedItem = selectedItem;
         this.userData = userData;
     }
 
-    selectedItem: NavigationItemType;
+    selectedItem: NavigationItem;
     userData: UserData;
     template: string =
         `<nav class="main-navigation">
@@ -45,11 +45,9 @@ export default class MainNavigationView extends AbstractView {
         if (watchlistItem) {
             this.setFilmsCount(watchlistItem, this.userData.filmsInWatchlist);
         }
-
         if (historyItem) {
             this.setFilmsCount(historyItem, this.userData.filmsWatched);
         }
-
         if (favoritesItem) {
             this.setFilmsCount(favoritesItem, this.userData.favoriteFilms);
         }
@@ -62,43 +60,7 @@ export default class MainNavigationView extends AbstractView {
         }
     }
 
-    //  TODO: Should be simplified
     private setActiveItem(element: Element): void {
-        switch (this.selectedItem) {
-            case NavigationItemType.AllMovies: {
-                this.addActiveClassToItem(element, 'main-navigation__item--all');
-                break;
-            }
-            case NavigationItemType.Watchlist: {
-                this.addActiveClassToItem(element, 'main-navigation__item--watchlist');
-                break;
-            }
-            case NavigationItemType.History: {
-                this.addActiveClassToItem(element, 'main-navigation__item--history');
-                break;
-            }
-            case NavigationItemType.Favorites: {
-                this.addActiveClassToItem(element, 'main-navigation__item--favorites');
-                break;
-            }
-            case NavigationItemType.Stats: {
-                this.addActiveClassToAdditional(element, 'main-navigation__additional');
-                break;
-            }
-        }
-    }
-
-    private addActiveClassToItem(navigationElement: Element, activeItemSelector: string): void {
-        const selectedItem = navigationElement.querySelector(activeItemSelector);
-        if (selectedItem) {
-            selectedItem.classList.add('main-navigation__item--active');
-        }
-    }
-
-    private addActiveClassToAdditional(navigationElement: Element, activeItemSelector: string): void {
-        const selectedItem = navigationElement.querySelector(activeItemSelector);
-        if (selectedItem) {
-            selectedItem.classList.add('main-navigation__additional--active');
-        }
+        this.selectedItem.setActiveItem(element);
     }
 }
