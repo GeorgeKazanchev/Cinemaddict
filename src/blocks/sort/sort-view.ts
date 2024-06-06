@@ -1,60 +1,51 @@
 import AbstractView from '../../types/abstract-view';
-import SortCriterion from '../../types/sort-criterion';
+import SortCriterionType from '../../types/sort-criterion-type';
+import DefaultSortCriterion from '../../types/sort-criterions/default-sort-criterion';
+import DateSortCriterion from '../../types/sort-criterions/date-sort-criterion';
+import RatingSortCriterion from '../../types/sort-criterions/rating-sort-criterion';
 
 export default class SortView extends AbstractView {
-    constructor(activeSortCriterion: SortCriterion) {
+    constructor(selectedSortCriterion: SortCriterionType) {
         super();
-        this.activeSortCriterion = activeSortCriterion;
+        this.selectedSortCriterion = selectedSortCriterion;
     }
 
-    activeSortCriterion: SortCriterion;
+    selectedSortCriterion: SortCriterionType;
     template: string =
         `<ul class="sort"></ul>`;
 
-    static get ACTIVE_CRITERION_CLASSNAME(): string { return 'sort__button--active'; };
-
     getElement(): Element {
         const element = this.getTemplate();
-        this.setActiveCriterion(element);
+        this.renderCriterionsToElement(element);
         return element;
     }
 
-    private setActiveCriterion(element: Element): void {
-        const defaultCriterionElement = this.getCriterionElement(SortCriterion.Default);
-        const dateCriterionElement = this.getCriterionElement(SortCriterion.Date);
-        const ratingCriterionElement = this.getCriterionElement(SortCriterion.Rating);
+    private renderCriterionsToElement(element: Element) {
+        const defaultCriterion = new DefaultSortCriterion();
+        const dateCriterion = new DateSortCriterion();
+        const ratingCriterion = new RatingSortCriterion();
 
-        //  TODO: That must be simplified
-        switch (this.activeSortCriterion) {
-            case SortCriterion.Default: {
-                const innerElement = defaultCriterionElement.querySelector('.sort__button');
-                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+        defaultCriterion.createElement();
+        dateCriterion.createElement();
+        ratingCriterion.createElement();
+
+        switch (this.selectedSortCriterion) {
+            case SortCriterionType.Default: {
+                defaultCriterion.active = true;
                 break;
             }
-            case SortCriterion.Date: {
-                const innerElement = dateCriterionElement.querySelector('.sort__button');
-                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+            case SortCriterionType.Date: {
+                dateCriterion.active = true;
                 break;
             }
-            case SortCriterion.Rating: {
-                const innerElement = ratingCriterionElement.querySelector('.sort__button');
-                if (innerElement) innerElement.classList.add(SortView.ACTIVE_CRITERION_CLASSNAME);
+            case SortCriterionType.Rating: {
+                ratingCriterion.active = true;
                 break;
             }
         }
 
-        element.appendChild(defaultCriterionElement);
-        element.appendChild(dateCriterionElement);
-        element.appendChild(ratingCriterionElement);
-    }
-
-    private getCriterionElement(criterion: SortCriterion) {
-        const element = document.createElement('li');
-        const innerElement = document.createElement('a');
-        innerElement.href = '#';
-        innerElement.classList.add('sort__button');
-        innerElement.textContent = criterion;
-        element.appendChild(innerElement);
-        return element;
+        element.appendChild(defaultCriterion.getElement());
+        element.appendChild(dateCriterion.getElement());
+        element.appendChild(ratingCriterion.getElement());
     }
 }
