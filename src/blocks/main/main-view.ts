@@ -1,28 +1,16 @@
 import AbstractView from '../../types/abstract-view';
-import FilmsView from '../films/films-view';
-import SortView from '../sort/sort-view';
-import FilmsSection from '../../types/films-sections/films-section';
-import SortCriterionType from '../../types/sort-criterion-type';
+import NavigationItem from '../../types/navigation-items/navigation-item';
+import UserData from '../../types/user-data';
 
-//  TODO: The first prototype version. It will be updated
-export default class MainView extends AbstractView {
-    constructor(filmsSection: FilmsSection, selectedSortCriterion: SortCriterionType) {
+export default abstract class MainView extends AbstractView {
+    constructor(selectedNavigationItem: NavigationItem, userData: UserData) {
         super();
-        this.filmsSection = filmsSection;
-        this.selectedSortCriterion = selectedSortCriterion;
+        this.selectedNavigationItem = selectedNavigationItem;
+        this.userData = userData;
     }
 
-    filmsSection: FilmsSection;
-    selectedSortCriterion: SortCriterionType;
+    selectedNavigationItem: NavigationItem;
+    userData: UserData;
     template: string =
         `<main class="main"></main>`;
-
-    getElement(): Element {
-        const element = this.getTemplate();
-        const sortView = new SortView(this.selectedSortCriterion);
-        const filmsView = new FilmsView(this.filmsSection);
-        element.appendChild(sortView.getElement());
-        element.appendChild(filmsView.getElement());
-        return element;
-    }
 }
