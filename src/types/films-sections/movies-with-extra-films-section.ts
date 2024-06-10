@@ -8,7 +8,10 @@ import FilmsSection from './films-section';
 export default class MoviesWithExtraFilmsSection extends FilmsSection {
     constructor(films: Movie[]) {
         super(films);
+        this.isEmpty = films === null || films.length === 0;
     }
+
+    isEmpty: boolean;
 
     renderFilmsListsToElement(element: Element): void {
         const topRatedFilms = this.getTopRatedFilms(this.films);

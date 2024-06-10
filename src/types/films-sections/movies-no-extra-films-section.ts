@@ -6,7 +6,10 @@ import FilmsSection from './films-section';
 export default class MoviesNoExtraFilmsSection extends FilmsSection {
     constructor(films: Movie[]) {
         super(films);
+        this.isEmpty = films === null || films.length === 0;
     }
+
+    isEmpty: boolean;
 
     renderFilmsListsToElement(element: Element): void {
         const filmsList = new AllMoviesFilmsList(this.films);

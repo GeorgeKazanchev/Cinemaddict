@@ -8,6 +8,8 @@ export default class EmptyFilmsSection extends FilmsSection {
         super(films);
     }
 
+    isEmpty: boolean = true;
+
     renderFilmsListsToElement(element: Element): void {
         const filmsList = new EmptyFilmsList(this.films);
         const filmsListView = new FilmsListView(filmsList);

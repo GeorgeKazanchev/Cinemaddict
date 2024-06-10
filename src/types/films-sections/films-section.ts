@@ -6,6 +6,7 @@ export default abstract class FilmsSection {
     }
 
     films: Movie[] | null;
+    abstract isEmpty: boolean;
 
     abstract renderFilmsListsToElement(element: Element): void;
 }
