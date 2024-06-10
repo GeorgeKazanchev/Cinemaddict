@@ -8,7 +8,7 @@ export default class EmptyFilmsList extends FilmsList {
 
     title: string = 'There are no movies in our database';
     isExtra: boolean = false;
-    isEmpty: boolean = false;
+    isEmpty: boolean = true;
 
     hideTitleIfNeeded(_titleElement: Element): void { }
 }
