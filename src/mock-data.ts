@@ -11,6 +11,8 @@ const userData: UserData = new UserData(
     25,
     35,
     20,
+    9350,
+    'Horror',
     './img/bitmap@2x.png'
 );
 
