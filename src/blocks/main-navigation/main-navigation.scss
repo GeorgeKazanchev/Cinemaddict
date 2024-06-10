@@ -22,6 +22,11 @@
         margin-right: 130px;
     }
 
+    &:hover {
+        color: $text-color-active;
+        opacity: 0.8;
+    }
+
     &--active {
         color: $text-color-active;
     }
@@ -39,6 +44,11 @@
     margin-left: auto;
     padding: $vertical-gap 0;
     color: $text-color;
+
+    &:hover {
+        color: $text-color-active;
+        opacity: 0.8;
+    }
 
     &--active {
         color: $text-color-active;

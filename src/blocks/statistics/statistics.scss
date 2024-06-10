@@ -45,7 +45,8 @@
 }
 
 .statistic__filters-input {
-    &:checked {
+    &:checked,
+    &:active {
         &+.statistic__filters-label {
             position: relative;
             color: $text-color-active;
