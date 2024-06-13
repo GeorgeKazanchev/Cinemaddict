@@ -1,8 +1,8 @@
-import AbstractView from '../../types/abstract-view';
+import AbstractView from '../../ts/abstract-view';
 import FilmCardView from '../film-card/film-card-view';
-import FilmsList from '../../types/films-lists/films-list';
-import AllMoviesFilmsList from '../../types/films-lists/all-movies-films-list';
-import Movie from '../../types/movie';
+import FilmsList from '../../ts/types/films-lists/films-list';
+import AllMoviesFilmsList from '../../ts/types/films-lists/all-movies-films-list';
+import Movie from '../../ts/types/movie';
 
 export default class FilmsListView extends AbstractView {
     constructor(filmsList: FilmsList) {

@@ -1,9 +1,9 @@
 import HeaderView from './blocks/header/header-view';
 import FooterView from './blocks/footer/footer-view';
 import MainFilmsView from './blocks/main/main-films-view';
-import SortCriterionType from './types/sort-criterion-type';
-import MoviesWithExtraFilmsSection from './types/films-sections/movies-with-extra-films-section';
-import AllMoviesNavigationItem from './types/navigation-items/all-movies-navigation-item';
+import SortCriterionType from './ts/types/sort-criterion-type';
+import MoviesWithExtraFilmsSection from './ts/types/films-sections/movies-with-extra-films-section';
+import AllMoviesNavigationItem from './ts/types/navigation-items/all-movies-navigation-item';
 import { userData, films } from './mock-data';
 
 const isAuthorized = true;

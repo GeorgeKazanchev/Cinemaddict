@@ -1,4 +1,4 @@
-import FilmsListView from '../../blocks/films-list/films-list-view';
+import FilmsListView from '../../../blocks/films-list/films-list-view';
 import LoadingFilmsList from '../films-lists/loading-films-list';
 import Movie from '../movie';
 import FilmsSection from './films-section';

@@ -1,6 +1,6 @@
-import AbstractView from '../../types/abstract-view';
-import NavigationItem from '../../types/navigation-items/navigation-item';
-import UserData from '../../types/user-data';
+import AbstractView from '../../ts/abstract-view';
+import NavigationItem from '../../ts/types/navigation-items/navigation-item';
+import UserData from '../../ts/types/user-data';
 
 export default abstract class MainView extends AbstractView {
     constructor(selectedNavigationItem: NavigationItem, userData: UserData) {

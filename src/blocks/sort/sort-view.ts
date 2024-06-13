@@ -1,8 +1,8 @@
-import AbstractView from '../../types/abstract-view';
-import SortCriterionType from '../../types/sort-criterion-type';
-import DefaultSortCriterion from '../../types/sort-criterions/default-sort-criterion';
-import DateSortCriterion from '../../types/sort-criterions/date-sort-criterion';
-import RatingSortCriterion from '../../types/sort-criterions/rating-sort-criterion';
+import AbstractView from '../../ts/abstract-view';
+import SortCriterionType from '../../ts/types/sort-criterion-type';
+import DefaultSortCriterion from '../../ts/types/sort-criterions/default-sort-criterion';
+import DateSortCriterion from '../../ts/types/sort-criterions/date-sort-criterion';
+import RatingSortCriterion from '../../ts/types/sort-criterions/rating-sort-criterion';
 
 export default class SortView extends AbstractView {
     constructor(selectedSortCriterion: SortCriterionType) {

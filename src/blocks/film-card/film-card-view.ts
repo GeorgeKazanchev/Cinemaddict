@@ -1,5 +1,5 @@
-import AbstractView from '../../types/abstract-view';
-import Movie from '../../types/movie';
+import AbstractView from '../../ts/abstract-view';
+import Movie from '../../ts/types/movie';
 
 export default class FilmCardView extends AbstractView {
     constructor(movie: Movie) {

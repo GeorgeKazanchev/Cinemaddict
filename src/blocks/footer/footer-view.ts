@@ -1,4 +1,4 @@
-import AbstractView from '../../types/abstract-view';
+import AbstractView from '../../ts/abstract-view';
 
 export default class FooterView extends AbstractView {
     constructor(filmsCount: number) {

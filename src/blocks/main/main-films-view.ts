@@ -2,10 +2,10 @@ import MainView from './main-view';
 import SortView from '../sort/sort-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import FilmsView from '../films/films-view';
-import NavigationItem from '../../types/navigation-items/navigation-item';
-import UserData from '../../types/user-data';
-import FilmsSection from '../../types/films-sections/films-section';
-import SortCriterionType from '../../types/sort-criterion-type';
+import NavigationItem from '../../ts/types/navigation-items/navigation-item';
+import UserData from '../../ts/types/user-data';
+import FilmsSection from '../../ts/types/films-sections/films-section';
+import SortCriterionType from '../../ts/types/sort-criterion-type';
 
 export default class MainFilmsView extends MainView {
     constructor(selectedNavigationItem: NavigationItem, userData: UserData, filmsSection: FilmsSection,

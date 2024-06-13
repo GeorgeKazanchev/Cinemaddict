@@ -1,6 +1,6 @@
-import AbstractView from '../../types/abstract-view';
+import AbstractView from '../../ts/abstract-view';
 import FilmDetailsCommentView from './__comment/film-details__comment-view';
-import Movie from '../../types/movie';
+import Movie from '../../ts/types/movie';
 
 export default class FilmDetailsView extends AbstractView {
     constructor(film: Movie) {

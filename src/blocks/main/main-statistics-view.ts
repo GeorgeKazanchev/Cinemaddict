@@ -1,8 +1,8 @@
 import MainView from './main-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import StatisticsView from '../statistics/statistics-view';
-import NavigationItem from '../../types/navigation-items/navigation-item';
-import UserData from '../../types/user-data';
+import NavigationItem from '../../ts/types/navigation-items/navigation-item';
+import UserData from '../../ts/types/user-data';
 
 export default class MainStatisticsView extends MainView {
     constructor(selectedNavigationItem: NavigationItem, userData: UserData) {

@@ -1,5 +1,5 @@
-import AbstractView from '../../types/abstract-view';
-import FilmsSection from '../../types/films-sections/films-section';
+import AbstractView from '../../ts/abstract-view';
+import FilmsSection from '../../ts/types/films-sections/films-section';
 
 export default class FilmsView extends AbstractView {
     constructor(filmsSection: FilmsSection) {

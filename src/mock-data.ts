@@ -1,10 +1,10 @@
-import FilmInfo from './types/film-info';
-import Movie from './types/movie';
-import ReleaseInfo from './types/release-info';
-import UserData from './types/user-data';
-import UserDetails from './types/user-details';
-import Comment from './types/comment';
-import Emotion from './types/emotion';
+import FilmInfo from './ts/types/film-info';
+import Movie from './ts/types/movie';
+import ReleaseInfo from './ts/types/release-info';
+import UserData from './ts/types/user-data';
+import UserDetails from './ts/types/user-details';
+import Comment from './ts/types/comment';
+import Emotion from './ts/types/emotion';
 
 const userData: UserData = new UserData(
     'Frank Sinatra',

@@ -1,6 +1,6 @@
-import AbstractView from '../../types/abstract-view';
-import UserData from '../../types/user-data';
+import AbstractView from '../../ts/abstract-view';
 import ProfileView from '../profile/profile-view';
+import UserData from '../../ts/types/user-data';
 
 export default class HeaderView extends AbstractView {
     constructor(isAuthorized: boolean, userData: UserData | null) {

@@ -1,4 +1,4 @@
-import FilmsListView from '../../blocks/films-list/films-list-view';
+import FilmsListView from '../../../blocks/films-list/films-list-view';
 import AllMoviesFilmsList from '../films-lists/all-movies-films-list';
 import MostCommentedFilmsList from '../films-lists/most-commented-films-list';
 import TopRatedFilmsList from '../films-lists/top-rated-films-list';
