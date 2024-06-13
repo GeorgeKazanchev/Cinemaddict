@@ -5,8 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build:dev": "webpack --env mode=development",
-    "build:prod": "webpack --env mode=production",
+    "build:dev": "gulp build && webpack --env mode=development",
+    "build:prod": "gulp build && webpack --env mode=production",
     "start": "webpack serve --env port=3000",
     "gulp": "gulp build",
     "eslint": "eslint",
