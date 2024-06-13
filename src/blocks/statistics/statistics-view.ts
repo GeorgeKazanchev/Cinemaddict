@@ -55,7 +55,7 @@ export default class StatisticsView extends AbstractView {
             </div>
         </section>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setUserInfo(element);
         this.setStatisticsItems(element);

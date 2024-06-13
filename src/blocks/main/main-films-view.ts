@@ -2,40 +2,31 @@ import MainView from './main-view';
 import SortView from '../sort/sort-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import FilmsView from '../films/films-view';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
-import UserData from '../../ts/types/user-data';
-import FilmsSection from '../../ts/types/films-sections/films-section';
-import SortCriterionType from '../../ts/types/sort-criterion-type';
+import Model from '../../ts/models/model';
 
 export default class MainFilmsView extends MainView {
-    constructor(selectedNavigationItem: NavigationItem, userData: UserData, filmsSection: FilmsSection,
-        selectedSortCriterion: SortCriterionType) {
-        super(selectedNavigationItem, userData);
-        this.filmsSection = filmsSection;
-        this.selectedSortCriterion = selectedSortCriterion;
+    constructor(model: Model) {
+        super(model);
     }
 
-    filmsSection: FilmsSection;
-    selectedSortCriterion: SortCriterionType;
-
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
 
-        const mainNavigationView = new MainNavigationView(this.selectedNavigationItem, this.userData);
-        element.appendChild(mainNavigationView.getElement());
+        const mainNavigationView = new MainNavigationView(this.model.selectedNavigationItem, this.model.userData);
+        element.appendChild(mainNavigationView.element);
 
         const needToRenderSortPanel = this.checkNeedToRenderSortPanel();
         if (needToRenderSortPanel) {
-            const sortView = new SortView(this.selectedSortCriterion);
-            element.appendChild(sortView.getElement());
+            const sortView = new SortView(this.model.selectedSortCriterion);
+            element.appendChild(sortView.element);
         }
 
-        const filmsSectionView = new FilmsView(this.filmsSection);
-        element.appendChild(filmsSectionView.getElement());
+        const filmsSectionView = new FilmsView(this.model.filmsSection);
+        element.appendChild(filmsSectionView.element);
         return element;
     }
 
     private checkNeedToRenderSortPanel(): boolean {
-        return !this.filmsSection.isEmpty;
+        return !this.model.filmsSection.isEmpty;
     }
 }

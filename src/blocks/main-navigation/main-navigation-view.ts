@@ -30,7 +30,7 @@ export default class MainNavigationView extends AbstractView {
             <a href="#stats" class="main-navigation__additional">Stats</a>
         </nav>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setItemsFilmsCount(element);
         this.setActiveItem(element);

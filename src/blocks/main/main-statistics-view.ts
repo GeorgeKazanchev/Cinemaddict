@@ -1,22 +1,21 @@
 import MainView from './main-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import StatisticsView from '../statistics/statistics-view';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
-import UserData from '../../ts/types/user-data';
+import Model from '../../ts/models/model';
 
 export default class MainStatisticsView extends MainView {
-    constructor(selectedNavigationItem: NavigationItem, userData: UserData) {
-        super(selectedNavigationItem, userData);
+    constructor(model: Model) {
+        super(model);
     }
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
 
-        const mainNavigationView = new MainNavigationView(this.selectedNavigationItem, this.userData);
-        element.appendChild(mainNavigationView.getElement());
+        const mainNavigationView = new MainNavigationView(this.model.selectedNavigationItem, this.model.userData);
+        element.appendChild(mainNavigationView.element);
 
-        const statisticsView = new StatisticsView(this.userData);
-        element.appendChild(statisticsView.getElement());
+        const statisticsView = new StatisticsView(this.model.userData);
+        element.appendChild(statisticsView.element);
         return element;
     }
 }

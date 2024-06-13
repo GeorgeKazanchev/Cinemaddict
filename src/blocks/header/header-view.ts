@@ -1,26 +1,24 @@
 import AbstractView from '../../ts/abstract-view';
 import ProfileView from '../profile/profile-view';
-import UserData from '../../ts/types/user-data';
+import Model from '../../ts/models/model';
 
 export default class HeaderView extends AbstractView {
-    constructor(isAuthorized: boolean, userData: UserData | null) {
+    constructor(model: Model) {
         super();
-        this.isAuthorized = isAuthorized;
-        this.userData = userData;
+        this.model = model;
     }
 
-    isAuthorized: boolean;
-    userData: UserData | null;
+    model: Model;
     template: string =
         `<header class="header">
             <h1 class="header__logo logo">Cinemaddict</h1>
         </header>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
-        if (this.isAuthorized && this.userData !== null) {  //  TODO: Make it simpler
-            const profileView = new ProfileView(this.userData);
-            const profileElement = profileView.getElement();
+        if (this.model.isAuthorized && this.model.userData !== null) {  //  TODO: Make it simpler
+            const profileView = new ProfileView(this.model.userData);
+            const profileElement = profileView.element;
             profileElement.classList.add('header__profile');
             element.appendChild(profileElement);
         }

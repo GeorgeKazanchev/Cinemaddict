@@ -113,7 +113,7 @@ export default class FilmDetailsView extends AbstractView {
             </form>
         </section>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setFilmInfo(element);
         this.setControls(element);
@@ -167,8 +167,7 @@ export default class FilmDetailsView extends AbstractView {
         if (commentsListElement) {
             this.film.comments.forEach((comment) => {
                 const commentView = new FilmDetailsCommentView(comment);
-                const commentElement = commentView.getElement();
-                commentsListElement.appendChild(commentElement);
+                commentsListElement.appendChild(commentView.element);
             });
         }
     }

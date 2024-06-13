@@ -20,7 +20,7 @@ export default class FilmsListView extends AbstractView {
         return this.filmsList.films;
     }
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setModifier(element);
         this.setTitle(element);
@@ -47,7 +47,7 @@ export default class FilmsListView extends AbstractView {
 
             this.films?.forEach((film) => {
                 const filmCardView = new FilmCardView(film);
-                container.appendChild(filmCardView.getElement());
+                container.appendChild(filmCardView.element);
             });
 
             element.appendChild(container);

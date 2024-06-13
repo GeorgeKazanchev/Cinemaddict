@@ -25,9 +25,9 @@ export default class MoviesWithExtraFilmsSection extends FilmsSection {
         const topRatedFilmsListView = new FilmsListView(topRatedFilmsList);
         const mostCommentedFilmsListView = new FilmsListView(mostCommentedFilmsList);
 
-        element.appendChild(allMoviesListView.getElement());
-        element.appendChild(topRatedFilmsListView.getElement());
-        element.appendChild(mostCommentedFilmsListView.getElement());
+        element.appendChild(allMoviesListView.element);
+        element.appendChild(topRatedFilmsListView.element);
+        element.appendChild(mostCommentedFilmsListView.element);
     }
 
     private getTopRatedFilms(films: Movie[] | null): Movie[] {   //  TODO: The method is not completed yet

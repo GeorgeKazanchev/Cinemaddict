@@ -32,7 +32,7 @@ export default class FilmCardView extends AbstractView {
             </div>
         </article>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
 
         this.setTitle(element);

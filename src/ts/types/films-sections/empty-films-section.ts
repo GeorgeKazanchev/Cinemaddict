@@ -13,6 +13,6 @@ export default class EmptyFilmsSection extends FilmsSection {
     renderFilmsListsToElement(element: Element): void {
         const filmsList = new EmptyFilmsList(this.films);
         const filmsListView = new FilmsListView(filmsList);
-        element.appendChild(filmsListView.getElement());
+        element.appendChild(filmsListView.element);
     }
 }

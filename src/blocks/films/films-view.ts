@@ -11,7 +11,7 @@ export default class FilmsView extends AbstractView {
     template: string =
         `<section class="films"></section>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setFilmsLists(element);
         return element;

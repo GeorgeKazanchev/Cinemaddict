@@ -1,16 +1,17 @@
 import AbstractView from '../../ts/abstract-view';
+import Model from '../../ts/models/model';
 
 export default class FooterView extends AbstractView {
-    constructor(filmsCount: number) {
-        if (filmsCount < 0) {
+    constructor(model: Model) {
+        if (model.filmsCount < 0) {
             throw new RangeError('Number of the films can not be negative.');
         }
 
         super();
-        this.filmsCount = filmsCount;
+        this.model = model;
     }
 
-    filmsCount: number;
+    model: Model;
     template: string =
         `<footer class="footer">
             <section class="footer__logo logo logo--smaller">Cinemaddict</section>
@@ -19,7 +20,7 @@ export default class FooterView extends AbstractView {
             </section>
         </footer>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setFilmsStatistics(element);
         return element;
@@ -30,9 +31,9 @@ export default class FooterView extends AbstractView {
         if (statisticsElement) {
             const filmsCountElement = statisticsElement.querySelector('p');
             if (filmsCountElement) {
-                filmsCountElement.textContent = this.filmsCount === 1
-                    ? `${this.filmsCount} movie inside`
-                    : `${this.filmsCount} movies inside`;
+                filmsCountElement.textContent = this.model.filmsCount === 1
+                    ? `${this.model.filmsCount} movie inside`
+                    : `${this.model.filmsCount} movies inside`;
             }
         }
     }

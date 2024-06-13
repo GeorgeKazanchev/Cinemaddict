@@ -14,7 +14,7 @@ export default class SortView extends AbstractView {
     template: string =
         `<ul class="sort"></ul>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.renderCriterionsToElement(element);
         return element;

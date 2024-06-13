@@ -13,7 +13,7 @@ export default class ProfileView extends AbstractView {
             <img class="profile__avatar" src="" alt="Avatar" width="35" height="35">
         </section>`;
 
-    getElement(): Element {
+    createElement(): Element {
         const element = this.getTemplate();
         this.setRating(element);
         this.setAvatar(element);

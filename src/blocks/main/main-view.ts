@@ -1,16 +1,13 @@
 import AbstractView from '../../ts/abstract-view';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
-import UserData from '../../ts/types/user-data';
+import Model from '../../ts/models/model';
 
 export default abstract class MainView extends AbstractView {
-    constructor(selectedNavigationItem: NavigationItem, userData: UserData) {
+    constructor(model: Model) {
         super();
-        this.selectedNavigationItem = selectedNavigationItem;
-        this.userData = userData;
+        this.model = model;
     }
 
-    selectedNavigationItem: NavigationItem;
-    userData: UserData;
+    model: Model;
     template: string =
         `<main class="main"></main>`;
 }
