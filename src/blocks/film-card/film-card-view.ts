@@ -2,9 +2,9 @@ import AbstractView from '../../ts/abstract-view';
 import Movie from '../../ts/types/movie';
 
 export default class FilmCardView extends AbstractView {
-    constructor(movie: Movie) {
+    constructor(film: Movie) {
         super();
-        this.film = movie;
+        this.film = film;
     }
 
     static get MIN_RATING(): number { return 0.0; };

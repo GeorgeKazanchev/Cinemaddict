@@ -5,6 +5,6 @@ export default class StatsNavigationItem extends NavigationItem {
         super();
     }
 
-    itemSelector: string = 'main-navigation__additional';
+    itemSelector: string = '.main-navigation__additional';
     activeItemClassname: string = 'main-navigation__additional--active';
 }

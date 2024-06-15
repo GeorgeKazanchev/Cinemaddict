@@ -5,6 +5,6 @@ export default class FavoritesNavigationItem extends NavigationItem {
         super();
     }
 
-    itemSelector: string = 'main-navigation__item--favorites';
+    itemSelector: string = '.main-navigation__item--favorites';
     activeItemClassname: string = 'main-navigation__item--active';
 }
