@@ -32,24 +32,43 @@ export default class MainNavigationView extends AbstractView {
 
     createElement(): Element {
         const element = this.getTemplate();
-        this.setItemsFilmsCount(element);
-        this.setActiveItem(element);
+        this.setWatchlistTab(element);
+        this.setHistoryTab(element);
+        this.setFavoritesTab(element);
+        this.selectActiveTab(element);
         return element;
     }
 
-    private setItemsFilmsCount(element: Element): void {
-        const watchlistItem = element.querySelector('.main-navigation__item--watchlist');
-        const historyItem = element.querySelector('.main-navigation__item--history');
-        const favoritesItem = element.querySelector('.main-navigation__item--favorites');
+    updateWatchlistTab(): void {
+        this.setWatchlistTab(this.element);
+    }
 
-        if (watchlistItem) {
-            this.setFilmsCount(watchlistItem, this.userData.filmsInWatchlist);
+    updateHistoryTab(): void {
+        this.setHistoryTab(this.element);
+    }
+
+    updateFavoritesTab(): void {
+        this.setFavoritesTab(this.element);
+    }
+
+    private setWatchlistTab(element: Element): void {
+        const watchlistTab = element.querySelector('.main-navigation__item--watchlist');
+        if (watchlistTab) {
+            this.setFilmsCount(watchlistTab, this.userData.filmsInWatchlist);
         }
-        if (historyItem) {
-            this.setFilmsCount(historyItem, this.userData.filmsWatched);
+    }
+
+    private setHistoryTab(element: Element): void {
+        const historyTab = element.querySelector('.main-navigation__item--history');
+        if (historyTab) {
+            this.setFilmsCount(historyTab, this.userData.filmsWatched);
         }
-        if (favoritesItem) {
-            this.setFilmsCount(favoritesItem, this.userData.favoriteFilms);
+    }
+
+    private setFavoritesTab(element: Element): void {
+        const favoritesTab = element.querySelector('.main-navigation__item--favorites');
+        if (favoritesTab) {
+            this.setFilmsCount(favoritesTab, this.userData.favoriteFilms);
         }
     }
 
@@ -60,7 +79,7 @@ export default class MainNavigationView extends AbstractView {
         }
     }
 
-    private setActiveItem(element: Element): void {
+    private selectActiveTab(element: Element): void {
         this.selectedItem.setActiveItem(element);
     }
 }

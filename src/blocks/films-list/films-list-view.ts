@@ -8,9 +8,15 @@ export default class FilmsListView extends AbstractView {
     constructor(filmsList: FilmsList) {
         super();
         this.filmsList = filmsList;
+
+        this.filmCardViews = [];
+        filmsList.films?.forEach((film) => {
+            this.filmCardViews.push(new FilmCardView(film));
+        });
     }
 
     filmsList: FilmsList;
+    filmCardViews: FilmCardView[];
     template: string =
         `<section class="films-list">
             <h2 class="films-list__title"></h2>
@@ -45,8 +51,7 @@ export default class FilmsListView extends AbstractView {
             const container = document.createElement('div');
             container.classList.add('films-list__container');
 
-            this.films?.forEach((film) => {
-                const filmCardView = new FilmCardView(film);
+            this.filmCardViews.forEach((filmCardView) => {
                 container.appendChild(filmCardView.element);
             });
 

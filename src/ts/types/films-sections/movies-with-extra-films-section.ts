@@ -13,7 +13,7 @@ export default class MoviesWithExtraFilmsSection extends FilmsSection {
 
     isEmpty: boolean;
 
-    renderFilmsListsToElement(element: Element): void {
+    getFilmsListViews(): FilmsListView[] {
         const topRatedFilms = this.getTopRatedFilms(this.films);
         const mostCommentedFilms = this.getMostCommentedFilms(this.films);
 
@@ -21,13 +21,11 @@ export default class MoviesWithExtraFilmsSection extends FilmsSection {
         const topRatedFilmsList = new TopRatedFilmsList(topRatedFilms);
         const mostCommentedFilmsList = new MostCommentedFilmsList(mostCommentedFilms);
 
-        const allMoviesListView = new FilmsListView(allMoviesList);
-        const topRatedFilmsListView = new FilmsListView(topRatedFilmsList);
-        const mostCommentedFilmsListView = new FilmsListView(mostCommentedFilmsList);
-
-        element.appendChild(allMoviesListView.element);
-        element.appendChild(topRatedFilmsListView.element);
-        element.appendChild(mostCommentedFilmsListView.element);
+        return [
+            new FilmsListView(allMoviesList),
+            new FilmsListView(topRatedFilmsList),
+            new FilmsListView(mostCommentedFilmsList)
+        ];
     }
 
     private getTopRatedFilms(films: Movie[] | null): Movie[] {   //  TODO: The method is not completed yet

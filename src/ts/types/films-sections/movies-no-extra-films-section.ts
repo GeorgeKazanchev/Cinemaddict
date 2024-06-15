@@ -11,9 +11,8 @@ export default class MoviesNoExtraFilmsSection extends FilmsSection {
 
     isEmpty: boolean;
 
-    renderFilmsListsToElement(element: Element): void {
+    getFilmsListViews(): FilmsListView[] {
         const filmsList = new AllMoviesFilmsList(this.films);
-        const filmsListView = new FilmsListView(filmsList);
-        element.appendChild(filmsListView.element);
+        return [new FilmsListView(filmsList)];
     }
 }

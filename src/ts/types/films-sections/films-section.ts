@@ -1,3 +1,4 @@
+import FilmsListView from '../../../blocks/films-list/films-list-view';
 import Movie from '../movie';
 
 export default abstract class FilmsSection {
@@ -8,5 +9,11 @@ export default abstract class FilmsSection {
     films: Movie[] | null;
     abstract isEmpty: boolean;
 
-    abstract renderFilmsListsToElement(element: Element): void;
+    abstract getFilmsListViews(): FilmsListView[];
+
+    renderFilmsListsToElement(filmsListViews: FilmsListView[], element: Element): void {
+        filmsListViews.forEach((filmsListView) => {
+            element.appendChild(filmsListView.element);
+        });
+    }
 }
