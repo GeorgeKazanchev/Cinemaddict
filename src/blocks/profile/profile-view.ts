@@ -20,6 +20,15 @@ export default class ProfileView extends AbstractView {
         return element;
     }
 
+    updateRating(): void {
+        const ratingElement = this.element.querySelector('.profile__rating');
+        if (ratingElement) {
+            ratingElement.textContent = this.userData.rank;
+        } else {
+            this.setRating(this.element);
+        }
+    }
+
     private setRating(element: Element): void {
         if (this.userData.filmsWatched > 0) {
             const ratingElement = document.createElement('p');
