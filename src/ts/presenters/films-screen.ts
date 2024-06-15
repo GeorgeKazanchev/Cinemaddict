@@ -39,32 +39,38 @@ export default class FilmsScreen {
     }
 
     private setFilmCardButtonsHandlers(): void {
-        const filmCardViews = this.mainView.filmsView?.filmsListViews[0].filmCardViews;
-        filmCardViews?.forEach((filmCardView) => {
-            this.setMarkFilmWatchedButtonHandler(filmCardView);
-            this.setAddFilmToWatchlistButtonHandler(filmCardView);
-            this.setAddFilmToFavoritesButtonHandler(filmCardView);
+        const filmsListViews = this.mainView.filmsView?.filmsListViews;
+        filmsListViews.forEach((filmsListView) => {
+            const filmCardViews = filmsListView.filmCardViews;
+            filmCardViews?.forEach((filmCardView) => {
+                this.setMarkFilmWatchedButtonHandler(filmCardView);
+                this.setAddFilmToWatchlistButtonHandler(filmCardView);
+                this.setAddFilmToFavoritesButtonHandler(filmCardView);
+            });
         });
     }
 
     private setFilmCardPopupOpenHandlers(): void {
-        const filmCardViews = this.mainView.filmsView?.filmsListViews[0].filmCardViews;
-        filmCardViews?.forEach((filmCardView) => {
-            const poster = filmCardView.element.querySelector('.film-card__poster');
-            const title = filmCardView.element.querySelector('.film-card__title');
-            const comments = filmCardView.element.querySelector('.film-card__comments');
+        const filmsListViews = this.mainView.filmsView?.filmsListViews;
+        filmsListViews.forEach((filmsListView) => {
+            const filmCardViews = filmsListView.filmCardViews;
+            filmCardViews?.forEach((filmCardView) => {
+                const poster = filmCardView.element.querySelector('.film-card__poster');
+                const title = filmCardView.element.querySelector('.film-card__title');
+                const comments = filmCardView.element.querySelector('.film-card__comments');
 
-            if (poster) {
-                this.setFilmPopupOpenHandler(poster, filmCardView.film);
-            }
+                if (poster) {
+                    this.setFilmPopupOpenHandler(poster, filmCardView.film);
+                }
 
-            if (title) {
-                this.setFilmPopupOpenHandler(title, filmCardView.film);
-            }
+                if (title) {
+                    this.setFilmPopupOpenHandler(title, filmCardView.film);
+                }
 
-            if (comments) {
-                this.setFilmPopupOpenHandler(comments, filmCardView.film);
-            }
+                if (comments) {
+                    this.setFilmPopupOpenHandler(comments, filmCardView.film);
+                }
+            });
         });
     }
 
