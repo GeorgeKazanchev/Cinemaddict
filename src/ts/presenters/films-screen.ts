@@ -4,7 +4,9 @@ import HeaderView from '../../blocks/header/header-view';
 import MainFilmsView from '../../blocks/main/main-films-view';
 import FilmCardView from '../../blocks/film-card/film-card-view';
 import FooterView from '../../blocks/footer/footer-view';
+import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import FilmsSection from '../types/films-sections/films-section';
+import Movie from '../types/movie';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -15,6 +17,7 @@ export default class FilmsScreen {
         this.footerView = new FooterView(this.model.filmsCount);
 
         this.setFilmCardButtonsHandlers();
+        this.setFilmCardPopupOpenHandlers();
     }
 
     private model: Model;
@@ -41,6 +44,27 @@ export default class FilmsScreen {
             this.setMarkFilmWatchedButtonHandler(filmCardView);
             this.setAddFilmToWatchlistButtonHandler(filmCardView);
             this.setAddFilmToFavoritesButtonHandler(filmCardView);
+        });
+    }
+
+    private setFilmCardPopupOpenHandlers(): void {
+        const filmCardViews = this.mainView.filmsView?.filmsListViews[0].filmCardViews;
+        filmCardViews?.forEach((filmCardView) => {
+            const poster = filmCardView.element.querySelector('.film-card__poster');
+            const title = filmCardView.element.querySelector('.film-card__title');
+            const comments = filmCardView.element.querySelector('.film-card__comments');
+
+            if (poster) {
+                this.setFilmPopupOpenHandler(poster, filmCardView.film);
+            }
+
+            if (title) {
+                this.setFilmPopupOpenHandler(title, filmCardView.film);
+            }
+
+            if (comments) {
+                this.setFilmPopupOpenHandler(comments, filmCardView.film);
+            }
         });
     }
 
@@ -96,6 +120,20 @@ export default class FilmsScreen {
             }
 
             this.mainView.mainNavigationView.updateFavoritesTab();
+        });
+    }
+
+    private setFilmPopupOpenHandler(element: Element, film: Movie): void {
+        element.addEventListener('click', () => {
+            const popupView = new FilmDetailsView(film);
+            const popupElement = popupView.element;
+
+            const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
+            popupCloseButton?.addEventListener('click', () => {
+                popupElement.remove();
+            });
+
+            this.footerView.element.insertAdjacentElement('afterend', popupElement);
         });
     }
 }
