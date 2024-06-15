@@ -12,7 +12,7 @@ export default class Model {
     private data: ModelData;
 
     public get filmsSection(): FilmsSection {
-        return Object.freeze(this.data.filmsSection);
+        return this.data.filmsSection;
     }
 
     public get filmsCount(): number {
@@ -20,7 +20,7 @@ export default class Model {
     }
 
     public get userData(): UserData {
-        return Object.freeze(this.data.userData);
+        return this.data.userData;
     }
 
     public get isAuthorized(): boolean {
@@ -39,23 +39,29 @@ export default class Model {
         ++this.data.userData.filmsWatched;
     }
 
-    public decrementFilmsWatched(): void {
-        --this.data.userData.filmsWatched;
-    }
-
     public incrementFilmsInWatchlist(): void {
         ++this.data.userData.filmsInWatchlist;
-    }
-
-    public decrementFilmsInWatchlist(): void {
-        --this.data.userData.filmsInWatchlist;
     }
 
     public incrementFavoriteFilms(): void {
         ++this.data.userData.favoriteFilms;
     }
 
+    public decrementFilmsWatched(): void {
+        if (this.data.userData.filmsWatched > 0) {
+            --this.data.userData.filmsWatched;
+        }
+    }
+
+    public decrementFilmsInWatchlist(): void {
+        if (this.data.userData.filmsInWatchlist > 0) {
+            --this.data.userData.filmsInWatchlist;
+        }
+    }
+
     public decrementFavoriteFilms(): void {
-        --this.data.userData.favoriteFilms;
+        if (this.data.userData.favoriteFilms > 0) {
+            --this.data.userData.favoriteFilms;
+        }
     }
 }
