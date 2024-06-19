@@ -20,6 +20,12 @@ export default class SortView extends AbstractView {
         return element;
     }
 
+    updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+        this.selectedSortCriterion = sortCriterion;
+        this.uncheckAllCriterions(this.element);
+        this.checkSelectedCriterion(this.element);
+    }
+
     private renderCriterionsToElement(element: Element) {
         const defaultCriterion = new DefaultSortCriterion();
         const dateCriterion = new DateSortCriterion();
@@ -47,5 +53,37 @@ export default class SortView extends AbstractView {
         element.appendChild(defaultCriterion.getElement());
         element.appendChild(dateCriterion.getElement());
         element.appendChild(ratingCriterion.getElement());
+    }
+
+    private checkSelectedCriterion(element: Element): void {
+        const criterionSelector = this.getCriterionSelector(this.selectedSortCriterion);
+        const selectedCriterion = element.querySelector(criterionSelector);
+        if (selectedCriterion) {
+            selectedCriterion.classList.add('sort__button--active');
+        }
+    }
+
+    private uncheckAllCriterions(element: Element): void {
+        const sortCriterions = element.querySelectorAll('.sort__button');
+        sortCriterions.forEach((criterion) => {
+            criterion.classList.remove('sort__button--active');
+        })
+    }
+
+    private getCriterionSelector(sortCriterion: SortCriterionType): string {
+        switch (sortCriterion) {
+            case SortCriterionType.Default: {
+                return '.sort__button--default';
+            }
+            case SortCriterionType.Date: {
+                return '.sort__button--date';
+            }
+            case SortCriterionType.Rating: {
+                return '.sort__button--rating';
+            }
+            default: {
+                throw new RangeError('Unsupported sort criterion type.');
+            }
+        }
     }
 }

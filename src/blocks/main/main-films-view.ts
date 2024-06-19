@@ -45,6 +45,10 @@ export default class MainFilmsView extends MainView {
         this.mainNavigationView.updateSelectedFiltrationCriterion(filtrationCriterion);
     }
 
+    updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+        this.sortView?.updateSelectedSortCriterion(sortCriterion);
+    }
+
     updateFilmsSection(filmsSection: FilmsSection): void {
         this.filmsView.updateFilmsSection(filmsSection);
     }

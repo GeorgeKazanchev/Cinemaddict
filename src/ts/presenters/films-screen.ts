@@ -19,6 +19,7 @@ export default class FilmsScreen {
         this.footerView = new FooterView(this.model.filmsCount);
 
         this.setFiltrationCriterionsClickHandlers();
+        this.setSortCriterionsClickHandlers();
         this.setFilmCardButtonsHandlers();
         this.setFilmCardPopupOpenHandlers();
     }
@@ -54,10 +55,34 @@ export default class FilmsScreen {
         });
     }
 
+    private setSortCriterionsClickHandlers(): void {
+        const sortButtons = this.mainView.element.querySelectorAll('.sort__button');
+        sortButtons.forEach((button) => {
+            button.addEventListener('click', (evt: Event) => {
+                const element = evt.target;
+                if (element instanceof Element) {
+                    const sortCriterion = this.getSortCriterionByElement(element);
+                    this.sortFilms(sortCriterion);
+                }
+            });
+        });
+    }
+
     private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
         this.model.selectedFiltrationCriterion = filtrationCriterion;
+        this.model.selectedSortCriterion = SortCriterionType.Default;
         this.model.updateShownFilms();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
+        this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
+        this.mainView.updateFilmsSection(this.model.filmsSection);
+        this.setFilmCardButtonsHandlers();
+        this.setFilmCardPopupOpenHandlers();
+    }
+
+    private sortFilms(sortCriterion: SortCriterionType): void {
+        this.model.selectedSortCriterion = sortCriterion;
+        this.model.updateShownFilms();
+        this.mainView.updateSelectedSortCriterion(sortCriterion);
         this.mainView.updateFilmsSection(this.model.filmsSection);
         this.setFilmCardButtonsHandlers();
         this.setFilmCardPopupOpenHandlers();
@@ -179,6 +204,18 @@ export default class FilmsScreen {
             return FiltrationCriterionType.Favorites;
         } else {
             throw new RangeError('Unsupported filtration criterion type.');
+        }
+    }
+
+    private getSortCriterionByElement(element: Element): SortCriterionType {
+        if (element.textContent === SortCriterionType.Default) {
+            return SortCriterionType.Default;
+        } else if (element.textContent === SortCriterionType.Date) {
+            return SortCriterionType.Date;
+        } else if (element.textContent === SortCriterionType.Rating) {
+            return SortCriterionType.Rating;
+        } else {
+            throw new RangeError('Unsupported sort criterion type.');
         }
     }
 }

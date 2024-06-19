@@ -45,6 +45,24 @@ export default class Model {
         }
     }
 
+    public get sortedFilms(): Movie[] {
+        switch (this.selectedSortCriterion) {
+            case SortCriterionType.Default: {
+                return this.filteredFilms;
+            }
+            case SortCriterionType.Date: {
+                return [...this.filteredFilms].sort((a, b) => {
+                    return new Date(b.filmInfo.release.date).getTime() > new Date(a.filmInfo.release.date).getTime() ? 1 : -1;
+                });
+            }
+            case SortCriterionType.Rating: {
+                return [...this.filteredFilms].sort((a, b) => {
+                    return b.filmInfo.totalRating - a.filmInfo.totalRating;
+                });
+            }
+        }
+    }
+
     public get filmsSection(): FilmsSection {
         return this.data.filmsSection;
     }
@@ -81,6 +99,10 @@ export default class Model {
         return this.data.selectedSortCriterion;
     }
 
+    public set selectedSortCriterion(sortCriterion: SortCriterionType) {
+        this.data.selectedSortCriterion = sortCriterion;
+    }
+
     public incrementFilmsWatched(): void {
         ++this.data.userData.filmsWatched;
     }
@@ -112,6 +134,6 @@ export default class Model {
     }
 
     public updateShownFilms(): void {
-        this.shownFilms = this.filteredFilms;
+        this.shownFilms = this.sortedFilms;
     }
 }
