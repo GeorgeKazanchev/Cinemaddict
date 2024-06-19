@@ -10,6 +10,6 @@ const filmsSection = new MoviesWithExtraFilmsSection(films);
 const selectedFiltrationCriterion = FiltrationCriterionType.AllMovies;
 const selectedSortCriterion = SortCriterionType.Default;
 
-const data = new ModelData(filmsSection, userData, isAuthorized, selectedNavigationItem, selectedSortCriterion);
+const data = new ModelData(films, filmsSection, userData, isAuthorized, selectedFiltrationCriterion, selectedSortCriterion);
 const filmsScreen = new FilmsScreen(data);
 filmsScreen.render();
