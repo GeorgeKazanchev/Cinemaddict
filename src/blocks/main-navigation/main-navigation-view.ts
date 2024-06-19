@@ -1,15 +1,15 @@
 import AbstractView from '../../ts/abstract-view';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
+import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
 import UserData from '../../ts/types/user-data';
 
 export default class MainNavigationView extends AbstractView {
-    constructor(selectedItem: NavigationItem, userData: UserData) {
+    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData) {
         super();
-        this.selectedItem = selectedItem;
+        this.selectedFiltrationCriterion = selectedFiltrationCriterion;
         this.userData = userData;
     }
 
-    selectedItem: NavigationItem;
+    selectedFiltrationCriterion: FiltrationCriterionType;
     userData: UserData;
     template: string =
         `<nav class="main-navigation">
@@ -32,41 +32,47 @@ export default class MainNavigationView extends AbstractView {
 
     createElement(): Element {
         const element = this.getTemplate();
-        this.setWatchlistTab(element);
-        this.setHistoryTab(element);
-        this.setFavoritesTab(element);
-        this.selectActiveTab(element);
+        this.setWatchlist(element);
+        this.setHistory(element);
+        this.setFavorites(element);
+        this.checkSelectedCriterion(element);
         return element;
     }
 
-    updateWatchlistTab(): void {
-        this.setWatchlistTab(this.element);
+    updateWatchlist(): void {
+        this.setWatchlist(this.element);
     }
 
-    updateHistoryTab(): void {
-        this.setHistoryTab(this.element);
+    updateHistory(): void {
+        this.setHistory(this.element);
     }
 
-    updateFavoritesTab(): void {
-        this.setFavoritesTab(this.element);
+    updateFavorites(): void {
+        this.setFavorites(this.element);
     }
 
-    private setWatchlistTab(element: Element): void {
-        const watchlistTab = element.querySelector('.main-navigation__item--watchlist');
+    updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
+        this.selectedFiltrationCriterion = filtrationCriterion;
+        this.uncheckAllCriterions(this.element);
+        this.checkSelectedCriterion(this.element);
+    }
+
+    private setWatchlist(element: Element): void {
+        const watchlistTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.Watchlist));
         if (watchlistTab) {
             this.setFilmsCount(watchlistTab, this.userData.filmsInWatchlist);
         }
     }
 
-    private setHistoryTab(element: Element): void {
-        const historyTab = element.querySelector('.main-navigation__item--history');
+    private setHistory(element: Element): void {
+        const historyTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.History));
         if (historyTab) {
             this.setFilmsCount(historyTab, this.userData.filmsWatched);
         }
     }
 
-    private setFavoritesTab(element: Element): void {
-        const favoritesTab = element.querySelector('.main-navigation__item--favorites');
+    private setFavorites(element: Element): void {
+        const favoritesTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.Favorites));
         if (favoritesTab) {
             this.setFilmsCount(favoritesTab, this.userData.favoriteFilms);
         }
@@ -79,7 +85,38 @@ export default class MainNavigationView extends AbstractView {
         }
     }
 
-    private selectActiveTab(element: Element): void {
-        this.selectedItem.setActiveItem(element);
+    private checkSelectedCriterion(element: Element): void {
+        const criterionSelector = this.getCriterionSelector(this.selectedFiltrationCriterion);
+        const selectedCriterion = element.querySelector(criterionSelector);
+        if (selectedCriterion) {
+            selectedCriterion.classList.add('main-navigation__item--active');
+        }
+    }
+
+    private uncheckAllCriterions(element: Element): void {
+        const filtrationCriterions = element.querySelectorAll('.main-navigation__item');
+        filtrationCriterions.forEach((criterion) => {
+            criterion.classList.remove('main-navigation__item--active');
+        });
+    }
+
+    private getCriterionSelector(filtrationCriterion: FiltrationCriterionType): string {
+        switch (filtrationCriterion) {
+            case FiltrationCriterionType.AllMovies: {
+                return '.main-navigation__item--all';
+            }
+            case FiltrationCriterionType.Watchlist: {
+                return '.main-navigation__item--watchlist';
+            }
+            case FiltrationCriterionType.History: {
+                return '.main-navigation__item--history';
+            }
+            case FiltrationCriterionType.Favorites: {
+                return '.main-navigation__item--favorites';
+            }
+            default: {
+                throw new RangeError('Unsupported filtration criterion type.');
+            }
+        }
     }
 }

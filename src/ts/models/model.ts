@@ -1,7 +1,8 @@
 import ModelData from '../models-data/model-data';
 import FilmsSection from '../types/films-sections/films-section';
-import NavigationItem from '../types/navigation-items/navigation-item';
+import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
+import FiltrationCriterionType from '../types/filtration-criterion-type';
 import UserData from '../types/user-data';
 
 export default class Model {
@@ -27,8 +28,12 @@ export default class Model {
         return this.data.isAuthorized;
     }
 
-    public get selectedNavigationItem(): NavigationItem {
-        return this.data.selectedNavigationItem;
+    public get selectedFiltrationCriterion(): FiltrationCriterionType {
+        return this.data.selectedFiltrationCriterion;
+    }
+
+    public set selectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType) {
+        this.data.selectedFiltrationCriterion = filtrationCriterion;
     }
 
     public get selectedSortCriterion(): SortCriterionType {

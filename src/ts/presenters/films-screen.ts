@@ -7,12 +7,14 @@ import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import FilmsSection from '../types/films-sections/films-section';
 import Movie from '../types/movie';
+import SortCriterionType from '../types/sort-criterion-type';
+import FiltrationCriterionType from '../types/filtration-criterion-type';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
-        this.mainView = new MainFilmsView(this.model.selectedNavigationItem, this.model.userData,
+        this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
             this.model.filmsSection, this.model.selectedSortCriterion);
         this.footerView = new FooterView(this.model.filmsCount);
 
@@ -89,7 +91,7 @@ export default class FilmsScreen {
             }
 
             this.headerView.updateUserRating();
-            this.mainView.mainNavigationView.updateHistoryTab();
+            this.mainView.mainNavigationView.updateHistory();
         });
     }
 
@@ -107,7 +109,7 @@ export default class FilmsScreen {
                 this.model.decrementFilmsInWatchlist();
             }
 
-            this.mainView.mainNavigationView.updateWatchlistTab();
+            this.mainView.mainNavigationView.updateWatchlist();
         });
     }
 
@@ -125,7 +127,7 @@ export default class FilmsScreen {
                 this.model.decrementFavoriteFilms();
             }
 
-            this.mainView.mainNavigationView.updateFavoritesTab();
+            this.mainView.mainNavigationView.updateFavorites();
         });
     }
 

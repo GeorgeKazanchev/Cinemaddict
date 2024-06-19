@@ -1,15 +1,15 @@
 import AbstractView from '../../ts/abstract-view';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
+import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
 import UserData from '../../ts/types/user-data';
 
 export default abstract class MainView extends AbstractView {
-    constructor(selectedNavigationItem: NavigationItem, userData: UserData) {
+    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData) {
         super();
-        this.selectedNavigationItem = selectedNavigationItem;
+        this.selectedFiltrationCriterion = selectedFiltrationCriterion;
         this.userData = userData;
     }
 
-    selectedNavigationItem: NavigationItem;
+    selectedFiltrationCriterion: FiltrationCriterionType;
     userData: UserData;
     template: string =
         `<main class="main"></main>`;

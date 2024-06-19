@@ -3,19 +3,20 @@ import SortView from '../sort/sort-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
-import NavigationItem from '../../ts/types/navigation-items/navigation-item';
 import UserData from '../../ts/types/user-data';
 import SortCriterionType from '../../ts/types/sort-criterion-type';
+import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
 
 export default class MainFilmsView extends MainView {
-    constructor(selectedNavigationItem: NavigationItem, userData: UserData, filmsSection: FilmsSection,
+    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, filmsSection: FilmsSection,
         selectedSortCriterion: SortCriterionType) {
-        super(selectedNavigationItem, userData);
+
+        super(selectedFiltrationCriterion, userData);
 
         this.filmsSection = filmsSection;
         this.selectedSortCriterion = selectedSortCriterion;
 
-        this.mainNavigationView = new MainNavigationView(this.selectedNavigationItem, this.userData);
+        this.mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
         this.filmsView = new FilmsView(this.filmsSection);
         this.sortView = null;
     }
