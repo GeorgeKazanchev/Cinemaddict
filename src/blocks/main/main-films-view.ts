@@ -41,6 +41,14 @@ export default class MainFilmsView extends MainView {
         return element;
     }
 
+    updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
+        this.mainNavigationView.updateSelectedFiltrationCriterion(filtrationCriterion);
+    }
+
+    updateFilmsSection(filmsSection: FilmsSection): void {
+        this.filmsView.updateFilmsSection(filmsSection);
+    }
+
     private checkNeedToRenderSortPanel(): boolean {
         return !this.filmsSection.isEmpty;
     }

@@ -19,4 +19,11 @@ export default class FilmsView extends AbstractView {
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, element);
         return element;
     }
+
+    updateFilmsSection(filmsSection: FilmsSection): void {
+        this.filmsSection = filmsSection;
+        this.filmsListViews = filmsSection.getFilmsListViews();
+        this.element.innerHTML = '';
+        this.filmsSection.renderFilmsListsToElement(this.filmsListViews, this.element);
+    }
 }

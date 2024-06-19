@@ -18,6 +18,7 @@ export default class FilmsScreen {
             this.model.filmsSection, this.model.selectedSortCriterion);
         this.footerView = new FooterView(this.model.filmsCount);
 
+        this.setFiltrationCriterionsClickHandlers();
         this.setFilmCardButtonsHandlers();
         this.setFilmCardPopupOpenHandlers();
     }
@@ -38,6 +39,28 @@ export default class FilmsScreen {
             this.headerView.element.insertAdjacentElement('afterend', this.mainView.element);
             this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
         }
+    }
+
+    private setFiltrationCriterionsClickHandlers(): void {
+        const filtrationButtons = this.mainView.element.querySelectorAll('.main-navigation__item');
+        filtrationButtons.forEach((button) => {
+            button.addEventListener('click', (evt: Event) => {
+                const element = evt.target;
+                if (element instanceof Element) {
+                    const filtrationCriterion = this.getFiltrationCriterionByElement(element);
+                    this.filterFilms(filtrationCriterion);
+                }
+            });
+        });
+    }
+
+    private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
+        this.model.selectedFiltrationCriterion = filtrationCriterion;
+        this.model.updateShownFilms();
+        this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
+        this.mainView.updateFilmsSection(this.model.filmsSection);
+        this.setFilmCardButtonsHandlers();
+        this.setFilmCardPopupOpenHandlers();
     }
 
     private setFilmCardButtonsHandlers(): void {
@@ -143,5 +166,19 @@ export default class FilmsScreen {
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
         });
+    }
+
+    private getFiltrationCriterionByElement(element: Element): FiltrationCriterionType {
+        if (element.classList.contains('main-navigation__item--all')) {
+            return FiltrationCriterionType.AllMovies;
+        } else if (element.classList.contains('main-navigation__item--watchlist')) {
+            return FiltrationCriterionType.Watchlist;
+        } else if (element.classList.contains('main-navigation__item--history')) {
+            return FiltrationCriterionType.History;
+        } else if (element.classList.contains('main-navigation__item--favorites')) {
+            return FiltrationCriterionType.Favorites;
+        } else {
+            throw new RangeError('Unsupported filtration criterion type.');
+        }
     }
 }

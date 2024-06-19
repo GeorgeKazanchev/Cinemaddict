@@ -12,8 +12,49 @@ export default class Model {
 
     private data: ModelData;
 
+    public get allFilms(): Movie[] {
+        return this.data.films ?? [];
+    }
+
+    public get filmsInWatchlist(): Movie[] {
+        return this.data.films?.filter((film) => film.userDetails.watchlist) ?? [];
+    }
+
+    public get watchedFilms(): Movie[] {
+        return this.data.films?.filter((film) => film.userDetails.alreadyWatched) ?? [];
+    }
+
+    public get favoriteFilms(): Movie[] {
+        return this.data.films?.filter((film) => film.userDetails.favorite) ?? [];
+    }
+
+    public get filteredFilms(): Movie[] {
+        switch (this.selectedFiltrationCriterion) {
+            case FiltrationCriterionType.AllMovies: {
+                return this.allFilms;
+            }
+            case FiltrationCriterionType.Watchlist: {
+                return this.filmsInWatchlist;
+            }
+            case FiltrationCriterionType.History: {
+                return this.watchedFilms;
+            }
+            case FiltrationCriterionType.Favorites: {
+                return this.favoriteFilms;
+            }
+        }
+    }
+
     public get filmsSection(): FilmsSection {
         return this.data.filmsSection;
+    }
+
+    public get shownFilms(): Movie[] {
+        return this.data.filmsSection.films ?? [];
+    }
+
+    public set shownFilms(films: Movie[]) {
+        this.data.filmsSection.films = films;
     }
 
     public get filmsCount(): number {
@@ -68,5 +109,9 @@ export default class Model {
         if (this.data.userData.favoriteFilms > 0) {
             --this.data.userData.favoriteFilms;
         }
+    }
+
+    public updateShownFilms(): void {
+        this.shownFilms = this.filteredFilms;
     }
 }
