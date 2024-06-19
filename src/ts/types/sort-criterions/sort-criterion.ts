@@ -3,6 +3,7 @@ export default abstract class SortCriterion {
 
     element: Element | null = null;
     abstract name: string;
+    abstract modifier: string;
 
     set active(isActive: boolean) {
         if (this.element) {
@@ -23,6 +24,7 @@ export default abstract class SortCriterion {
         const innerElement = document.createElement('a');
         innerElement.href = '#';
         innerElement.classList.add('sort__button');
+        innerElement.classList.add(this.modifier);
         innerElement.textContent = this.name;
 
         this.element = element;

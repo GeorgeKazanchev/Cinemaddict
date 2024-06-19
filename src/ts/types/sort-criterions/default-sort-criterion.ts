@@ -1,3 +1,4 @@
+import SortCriterionType from "../sort-criterion-type";
 import SortCriterion from "./sort-criterion";
 
 export default class DefaultSortCriterion extends SortCriterion {
@@ -5,5 +6,6 @@ export default class DefaultSortCriterion extends SortCriterion {
         super();
     }
 
-    name: string = 'Sort by default';
+    name: string = SortCriterionType.Default;
+    modifier: string = `sort__button--default`;
 }
