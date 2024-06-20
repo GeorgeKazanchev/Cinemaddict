@@ -1,5 +1,7 @@
 import AbstractView from '../../../ts/abstract-view';
 import Comment from '../../../ts/types/comment';
+import Emotion from '../../../ts/types/emotion';
+import EmotionImage from '../../../ts/types/emotion-image';
 
 export default class FilmDetailsCommentView extends AbstractView {
     constructor(comment: Comment) {
@@ -32,7 +34,11 @@ export default class FilmDetailsCommentView extends AbstractView {
     }
 
     private setCommentEmoji(element: Element): void {
-        //  TODO: Need to implement
+        const imageElement = element.querySelector('.film-details__comment-emoji > img');
+        if (imageElement && imageElement instanceof HTMLImageElement) {
+            imageElement.src = this.getEmotionImageSrc(this.comment.emotion);
+            imageElement.alt = this.comment.emotion;
+        }
     }
 
     private setCommentText(element: Element): void {
@@ -69,6 +75,23 @@ export default class FilmDetailsCommentView extends AbstractView {
             const minutes = date.getMinutes().toString().padStart(2, '0');
 
             dateElement.textContent = `${year}/${month}/${day} ${hours}:${minutes}`;
+        }
+    }
+
+    private getEmotionImageSrc(emotion: Emotion): EmotionImage {
+        switch (emotion) {
+            case Emotion.Smile: {
+                return EmotionImage.Smile;
+            }
+            case Emotion.Sleeping: {
+                return EmotionImage.Sleeping;
+            }
+            case Emotion.Puke: {
+                return EmotionImage.Puke;
+            }
+            case Emotion.Angry: {
+                return EmotionImage.Angry;
+            }
         }
     }
 }
