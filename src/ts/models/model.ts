@@ -3,6 +3,7 @@ import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
 import UserData from '../types/user-data';
+import { FILMS_CHUNK_SIZE } from '../../settings';
 
 export default class Model {
     constructor(data: ModelData) {
@@ -63,7 +64,7 @@ export default class Model {
     }
 
     public get shownFilms(): Movie[] {
-        return this.sortedFilms;
+        return this.sortedFilms.slice(0, this.data.shownFilmsCount);
     }
 
     public get filmsCount(): number {
@@ -92,6 +93,11 @@ export default class Model {
 
     public set selectedSortCriterion(sortCriterion: SortCriterionType) {
         this.data.selectedSortCriterion = sortCriterion;
+    }
+
+    public increaseShowFilms(): void {
+        const filmsLeft = this.allFilms.length - this.shownFilms.length;
+        this.data.shownFilmsCount += Math.min(FILMS_CHUNK_SIZE, filmsLeft);
     }
 
     public incrementFilmsWatched(): void {
