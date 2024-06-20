@@ -3,17 +3,19 @@ import SortView from '../sort/sort-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
+import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
 import UserData from '../../ts/types/user-data';
 import SortCriterionType from '../../ts/types/sort-criterion-type';
 import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
+import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {
-    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, filmsSection: FilmsSection,
+    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, films: Movie[] | null,
         selectedSortCriterion: SortCriterionType) {
 
         super(selectedFiltrationCriterion, userData);
 
-        this.filmsSection = filmsSection;
+        this.filmsSection = new FilledFilmsSection(films);
         this.selectedSortCriterion = selectedSortCriterion;
 
         this.mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
@@ -49,8 +51,8 @@ export default class MainFilmsView extends MainView {
         this.sortView?.updateSelectedSortCriterion(sortCriterion);
     }
 
-    updateFilmsSection(filmsSection: FilmsSection): void {
-        this.filmsView.updateFilmsSection(filmsSection);
+    updateFilmsSection(films: Movie[] | null): void {
+        this.filmsView.updateFilmsSection(films);
     }
 
     private checkNeedToRenderSortPanel(): boolean {

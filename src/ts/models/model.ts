@@ -1,5 +1,4 @@
 import ModelData from '../models-data/model-data';
-import FilmsSection from '../types/films-sections/films-section';
 import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
@@ -63,20 +62,12 @@ export default class Model {
         }
     }
 
-    public get filmsSection(): FilmsSection {
-        return this.data.filmsSection;
-    }
-
     public get shownFilms(): Movie[] {
-        return this.data.filmsSection.films ?? [];
-    }
-
-    public set shownFilms(films: Movie[]) {
-        this.data.filmsSection.films = films;
+        return this.sortedFilms;
     }
 
     public get filmsCount(): number {
-        return this.data.filmsSection.films?.length ?? 0;
+        return this.allFilms.length;
     }
 
     public get userData(): UserData {
@@ -131,9 +122,5 @@ export default class Model {
         if (this.data.userData.favoriteFilms > 0) {
             --this.data.userData.favoriteFilms;
         }
-    }
-
-    public updateShownFilms(): void {
-        this.shownFilms = this.sortedFilms;
     }
 }

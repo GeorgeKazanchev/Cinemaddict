@@ -6,7 +6,7 @@ import Movie from '../movie';
 import FilmsSection from './films-section';
 
 export default class FilledFilmsSection extends FilmsSection {
-    constructor(films: Movie[]) {
+    constructor(films: Movie[] | null) {
         super(films);
         this.isEmpty = films === null || films.length === 0;
     }

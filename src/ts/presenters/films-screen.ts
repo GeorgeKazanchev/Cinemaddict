@@ -5,7 +5,6 @@ import MainFilmsView from '../../blocks/main/main-films-view';
 import FilmCardView from '../../blocks/film-card/film-card-view';
 import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
-import FilmsSection from '../types/films-sections/films-section';
 import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
@@ -15,7 +14,7 @@ export default class FilmsScreen {
         this.model = new Model(data);
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
-            this.model.filmsSection, this.model.selectedSortCriterion);
+            this.model.shownFilms, this.model.selectedSortCriterion);
         this.footerView = new FooterView(this.model.filmsCount);
 
         this.setFiltrationCriterionsClickHandlers();
@@ -29,10 +28,6 @@ export default class FilmsScreen {
     private mainView: MainFilmsView;
     private footerView: FooterView;
     private isRendered: boolean = false;
-
-    public get filmsSection(): FilmsSection {
-        return this.model.filmsSection;
-    }
 
     public render(): void {
         if (!this.isRendered) {
@@ -71,19 +66,17 @@ export default class FilmsScreen {
     private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
         this.model.selectedFiltrationCriterion = filtrationCriterion;
         this.model.selectedSortCriterion = SortCriterionType.Default;
-        this.model.updateShownFilms();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
-        this.mainView.updateFilmsSection(this.model.filmsSection);
+        this.mainView.updateFilmsSection(this.model.shownFilms);
         this.setFilmCardButtonsHandlers();
         this.setFilmCardPopupOpenHandlers();
     }
 
     private sortFilms(sortCriterion: SortCriterionType): void {
         this.model.selectedSortCriterion = sortCriterion;
-        this.model.updateShownFilms();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
-        this.mainView.updateFilmsSection(this.model.filmsSection);
+        this.mainView.updateFilmsSection(this.model.shownFilms);
         this.setFilmCardButtonsHandlers();
         this.setFilmCardPopupOpenHandlers();
     }
