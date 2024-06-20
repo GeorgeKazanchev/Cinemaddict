@@ -5,7 +5,7 @@ import TopRatedFilmsList from '../films-lists/top-rated-films-list';
 import Movie from '../movie';
 import FilmsSection from './films-section';
 
-export default class MoviesWithExtraFilmsSection extends FilmsSection {
+export default class FilledFilmsSection extends FilmsSection {
     constructor(films: Movie[]) {
         super(films);
         this.isEmpty = films === null || films.length === 0;
