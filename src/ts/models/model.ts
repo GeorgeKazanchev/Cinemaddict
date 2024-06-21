@@ -67,6 +67,10 @@ export default class Model {
         return this.sortedFilms.slice(0, this.data.shownFilmsCount);
     }
 
+    public get allFilmsShown(): boolean {
+        return this.shownFilms.length === this.sortedFilms.length;
+    }
+
     public get filmsCount(): number {
         return this.allFilms.length;
     }

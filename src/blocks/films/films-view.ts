@@ -22,8 +22,8 @@ export default class FilmsView extends AbstractView {
         return element;
     }
 
-    updateFilmsSection(films: Movie[] | null): void {
-        this.filmsSection = new FilledFilmsSection(films);
+    updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
+        this.filmsSection = new FilledFilmsSection(films, allFilmsShown);
         this.filmsListViews = this.filmsSection.getFilmsListViews();
         this.element.innerHTML = '';
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, this.element);

@@ -11,11 +11,11 @@ import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {
     constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, films: Movie[] | null,
-        selectedSortCriterion: SortCriterionType) {
+        selectedSortCriterion: SortCriterionType, allFilmsShown: boolean) {
 
         super(selectedFiltrationCriterion, userData);
 
-        this.filmsSection = new FilledFilmsSection(films);
+        this.filmsSection = new FilledFilmsSection(films, allFilmsShown);
         this.selectedSortCriterion = selectedSortCriterion;
 
         this.mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
@@ -51,8 +51,8 @@ export default class MainFilmsView extends MainView {
         this.sortView?.updateSelectedSortCriterion(sortCriterion);
     }
 
-    updateFilmsSection(films: Movie[] | null): void {
-        this.filmsView.updateFilmsSection(films);
+    updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
+        this.filmsView.updateFilmsSection(films, allFilmsShown);
     }
 
     updateAllMoviesFilmsList(shownFilms: Movie[]): void {
@@ -67,6 +67,11 @@ export default class MainFilmsView extends MainView {
                 filmsListContainer.append(filmCardView.element);
             })
         }
+    }
+
+    hideShowMoreButton(): void {
+        const showMoreButton = this.element.querySelector('.films-list__show-more');
+        showMoreButton?.remove();
     }
 
     private checkNeedToRenderSortPanel(): boolean {

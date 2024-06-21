@@ -6,18 +6,20 @@ import Movie from '../movie';
 import FilmsSection from './films-section';
 
 export default class FilledFilmsSection extends FilmsSection {
-    constructor(films: Movie[] | null) {
+    constructor(films: Movie[] | null, allFilmsShown: boolean) {
         super(films);
         this.isEmpty = films === null || films.length === 0;
+        this.allFilmsShown = allFilmsShown;
     }
 
     isEmpty: boolean;
+    allFilmsShown: boolean;
 
     getFilmsListViews(): FilmsListView[] {
         const topRatedFilms = this.getTopRatedFilms(this.films);
         const mostCommentedFilms = this.getMostCommentedFilms(this.films);
 
-        const allMoviesList = new AllMoviesFilmsList(this.films);
+        const allMoviesList = new AllMoviesFilmsList(this.films, this.allFilmsShown);
         const topRatedFilmsList = new TopRatedFilmsList(topRatedFilms);
         const mostCommentedFilmsList = new MostCommentedFilmsList(mostCommentedFilms);
 

@@ -68,7 +68,7 @@ export default class FilmsListView extends AbstractView {
     }
 
     private setShowMoreButton(element: Element): void {
-        const needToRender = this.checkShouldFilmsRendered() && this.filmsList instanceof AllMoviesFilmsList;
+        const needToRender = this.checkShouldShowMoreButtonRendered();
         if (needToRender) {
             const button = document.createElement('button');
             button.classList.add('films-list__show-more');
@@ -79,5 +79,14 @@ export default class FilmsListView extends AbstractView {
 
     private checkShouldFilmsRendered(): boolean {
         return !this.filmsList.isEmpty;
+    }
+
+    private checkShouldShowMoreButtonRendered(): boolean {
+        if (this.filmsList instanceof AllMoviesFilmsList
+            && !this.filmsList.allFilmsShown) {
+
+            return true;
+        }
+        return false;
     }
 }

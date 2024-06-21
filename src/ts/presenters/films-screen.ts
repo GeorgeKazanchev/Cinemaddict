@@ -14,7 +14,7 @@ export default class FilmsScreen {
         this.model = new Model(data);
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
-            this.model.shownFilms, this.model.selectedSortCriterion);
+            this.model.shownFilms, this.model.selectedSortCriterion, this.model.allFilmsShown);
         this.footerView = new FooterView(this.model.filmsCount);
 
         this.setFiltrationButtonsClickHandlers();
@@ -74,7 +74,7 @@ export default class FilmsScreen {
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
-        this.mainView.updateFilmsSection(this.model.shownFilms);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.allFilmsShown);
         this.setFilmsHandlers();
     }
 
@@ -82,7 +82,7 @@ export default class FilmsScreen {
         this.model.selectedSortCriterion = sortCriterion;
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
-        this.mainView.updateFilmsSection(this.model.shownFilms);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.allFilmsShown);
         this.setFilmsHandlers();
     }
 
@@ -201,6 +201,10 @@ export default class FilmsScreen {
             this.model.increaseShownFilmsCount();
             this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
             this.setFilmCardsClickHandlers();
+
+            if (this.model.allFilmsShown) {
+                this.mainView.hideShowMoreButton();
+            }
         });
     }
 
