@@ -3,6 +3,7 @@ import SortView from '../sort/sort-view';
 import MainNavigationView from '../main-navigation/main-navigation-view';
 import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
+import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
 import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
 import UserData from '../../ts/types/user-data';
 import SortCriterionType from '../../ts/types/sort-criterion-type';
@@ -15,7 +16,7 @@ export default class MainFilmsView extends MainView {
 
         super(selectedFiltrationCriterion, userData);
 
-        this.filmsSection = new FilledFilmsSection(films, allFilmsShown);
+        this.filmsSection = this.getFilmsSection(films, allFilmsShown);
         this.selectedSortCriterion = selectedSortCriterion;
 
         this.mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
@@ -72,6 +73,14 @@ export default class MainFilmsView extends MainView {
     hideShowMoreButton(): void {
         const showMoreButton = this.element.querySelector('.films-list__show-more');
         showMoreButton?.remove();
+    }
+
+    private getFilmsSection(films: Movie[] | null, allFilmsShown: boolean): FilmsSection {
+        if (films && films.length > 0) {
+            return new FilledFilmsSection(films, allFilmsShown);
+        } else {
+            return new EmptyFilmsSection();
+        }
     }
 
     private checkNeedToRenderSortPanel(): boolean {
