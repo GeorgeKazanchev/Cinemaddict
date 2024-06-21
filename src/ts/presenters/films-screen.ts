@@ -17,10 +17,9 @@ export default class FilmsScreen {
             this.model.shownFilms, this.model.selectedSortCriterion);
         this.footerView = new FooterView(this.model.filmsCount);
 
-        this.setFiltrationCriterionsClickHandlers();
-        this.setSortCriterionsClickHandlers();
-        this.setFilmCardButtonsHandlers();
-        this.setFilmCardPopupOpenHandlers();
+        this.setFiltrationButtonsClickHandlers();
+        this.setSortButtonsClickHandlers();
+        this.setFilmsHandlers();
     }
 
     private model: Model;
@@ -37,30 +36,36 @@ export default class FilmsScreen {
         }
     }
 
-    private setFiltrationCriterionsClickHandlers(): void {
+    private setFiltrationButtonsClickHandlers(): void {
         const filtrationButtons = this.mainView.element.querySelectorAll('.main-navigation__item');
         filtrationButtons.forEach((button) => {
-            button.addEventListener('click', (evt: Event) => {
-                const element = evt.target;
-                if (element instanceof Element) {
-                    const filtrationCriterion = this.getFiltrationCriterionByElement(element);
-                    this.filterFilms(filtrationCriterion);
-                }
-            });
+            button.addEventListener('click', (evt: Event) => this.filtrationButtonClickHandler(evt));
         });
     }
 
-    private setSortCriterionsClickHandlers(): void {
+    private setSortButtonsClickHandlers(): void {
         const sortButtons = this.mainView.element.querySelectorAll('.sort__button');
         sortButtons.forEach((button) => {
-            button.addEventListener('click', (evt: Event) => {
-                const element = evt.target;
-                if (element instanceof Element) {
-                    const sortCriterion = this.getSortCriterionByElement(element);
-                    this.sortFilms(sortCriterion);
-                }
-            });
+            button.addEventListener('click', (evt: Event) => this.sortButtonClickHandler(evt));
         });
+    }
+
+    private filtrationButtonClickHandler(evt: Event): void {
+        evt.preventDefault();
+        const button = evt.target;
+        if (button instanceof Element) {
+            const filtrationCriterion = this.getFiltrationCriterionByElement(button);
+            this.filterFilms(filtrationCriterion);
+        }
+    }
+
+    private sortButtonClickHandler(evt: Event): void {
+        evt.preventDefault();
+        const button = evt.target;
+        if (button instanceof Element) {
+            const sortCriterion = this.getSortCriterionByElement(button);
+            this.sortFilms(sortCriterion);
+        }
     }
 
     private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
@@ -69,55 +74,34 @@ export default class FilmsScreen {
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
         this.mainView.updateFilmsSection(this.model.shownFilms);
-        this.setFilmCardButtonsHandlers();
-        this.setFilmCardPopupOpenHandlers();
+        this.setFilmsHandlers();
     }
 
     private sortFilms(sortCriterion: SortCriterionType): void {
         this.model.selectedSortCriterion = sortCriterion;
         this.mainView.updateSelectedSortCriterion(sortCriterion);
         this.mainView.updateFilmsSection(this.model.shownFilms);
-        this.setFilmCardButtonsHandlers();
-        this.setFilmCardPopupOpenHandlers();
+        this.setFilmsHandlers();
     }
 
-    private setFilmCardButtonsHandlers(): void {
-        const filmsListViews = this.mainView.filmsView?.filmsListViews;
+    private setFilmsHandlers(): void {
+        this.setFilmCardsClickHandlers();
+    }
+
+    private setFilmCardsClickHandlers(): void {
+        const filmsListViews = this.mainView.filmsView.filmsListViews;
         filmsListViews.forEach((filmsListView) => {
             const filmCardViews = filmsListView.filmCardViews;
-            filmCardViews?.forEach((filmCardView) => {
-                this.setMarkFilmWatchedButtonHandler(filmCardView);
-                this.setAddFilmToWatchlistButtonHandler(filmCardView);
-                this.setAddFilmToFavoritesButtonHandler(filmCardView);
+            filmCardViews.forEach((filmCardView) => {
+                this.setMarkWatchedButtonClickHandler(filmCardView);
+                this.setAddToWatchlistButtonClickHandler(filmCardView);
+                this.setAddToFavoritesButtonClickHandler(filmCardView);
+                this.setPopupOpenClickHandlers(filmCardView);
             });
         });
     }
 
-    private setFilmCardPopupOpenHandlers(): void {
-        const filmsListViews = this.mainView.filmsView?.filmsListViews;
-        filmsListViews.forEach((filmsListView) => {
-            const filmCardViews = filmsListView.filmCardViews;
-            filmCardViews?.forEach((filmCardView) => {
-                const poster = filmCardView.element.querySelector('.film-card__poster');
-                const title = filmCardView.element.querySelector('.film-card__title');
-                const comments = filmCardView.element.querySelector('.film-card__comments');
-
-                if (poster) {
-                    this.setFilmPopupOpenHandler(poster, filmCardView.film);
-                }
-
-                if (title) {
-                    this.setFilmPopupOpenHandler(title, filmCardView.film);
-                }
-
-                if (comments) {
-                    this.setFilmPopupOpenHandler(comments, filmCardView.film);
-                }
-            });
-        });
-    }
-
-    private setMarkFilmWatchedButtonHandler(filmCardView: FilmCardView): void {
+    private setMarkWatchedButtonClickHandler(filmCardView: FilmCardView): void {
         const button = filmCardView.element.querySelector('.film-card__controls-item--mark-as-watched');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
@@ -136,7 +120,7 @@ export default class FilmsScreen {
         });
     }
 
-    private setAddFilmToWatchlistButtonHandler(filmCardView: FilmCardView): void {
+    private setAddToWatchlistButtonClickHandler(filmCardView: FilmCardView): void {
         const button = filmCardView.element.querySelector('.film-card__controls-item--add-to-watchlist');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
@@ -154,7 +138,7 @@ export default class FilmsScreen {
         });
     }
 
-    private setAddFilmToFavoritesButtonHandler(filmCardView: FilmCardView): void {
+    private setAddToFavoritesButtonClickHandler(filmCardView: FilmCardView): void {
         const button = filmCardView.element.querySelector('.film-card__controls-item--favorite');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
@@ -172,13 +156,34 @@ export default class FilmsScreen {
         });
     }
 
-    private setFilmPopupOpenHandler(element: Element, film: Movie): void {
-        element.addEventListener('click', () => {
+    private setPopupOpenClickHandlers(filmCardView: FilmCardView): void {
+        const poster = filmCardView.element.querySelector('.film-card__poster');
+        const title = filmCardView.element.querySelector('.film-card__title');
+        const comments = filmCardView.element.querySelector('.film-card__comments');
+
+        if (poster) {
+            this.setPopupOpenClickHandler(poster, filmCardView.film);
+        }
+
+        if (title) {
+            this.setPopupOpenClickHandler(title, filmCardView.film);
+        }
+
+        if (comments) {
+            this.setPopupOpenClickHandler(comments, filmCardView.film);
+        }
+    }
+
+    private setPopupOpenClickHandler(element: Element, film: Movie): void {
+        element.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+
             const popupView = new FilmDetailsView(film);
             const popupElement = popupView.element;
 
             const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
-            popupCloseButton?.addEventListener('click', () => {
+            popupCloseButton?.addEventListener('click', (evt: Event) => {
+                evt.preventDefault();
                 popupElement.remove();
             });
 
