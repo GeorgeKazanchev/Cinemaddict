@@ -1,9 +1,8 @@
-import Movie from '../movie';
 import FilmsList from './films-list';
 
 export default class EmptyFilmsList extends FilmsList {
-    constructor(films: Movie[] | null) {
-        super(films);
+    constructor() {
+        super(null);
     }
 
     title: string = 'There are no movies in our database';

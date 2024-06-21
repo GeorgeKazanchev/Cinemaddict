@@ -1,9 +1,8 @@
-import Movie from '../movie';
 import FilmsList from './films-list';
 
 export default class LoadingFilmsList extends FilmsList {
-    constructor(films: Movie[] | null) {
-        super(films);
+    constructor() {
+        super(null);
     }
 
     title: string = 'Loading...';
