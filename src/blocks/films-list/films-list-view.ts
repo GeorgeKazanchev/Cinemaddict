@@ -8,11 +8,7 @@ export default class FilmsListView extends AbstractView {
     constructor(filmsList: FilmsList) {
         super();
         this.filmsList = filmsList;
-
-        this.filmCardViews = [];
-        filmsList.films?.forEach((film) => {
-            this.filmCardViews.push(new FilmCardView(film));
-        });
+        this.filmCardViews = this.getFilmCardViews();
     }
 
     filmsList: FilmsList;
@@ -33,6 +29,18 @@ export default class FilmsListView extends AbstractView {
         this.setFilmsListContainer(element);
         this.setShowMoreButton(element);
         return element;
+    }
+
+    setFilmCardViews(): void {
+        this.filmCardViews = this.getFilmCardViews();
+    }
+
+    getFilmCardViews(): FilmCardView[] {
+        const filmCardViews: FilmCardView[] = [];
+        this.filmsList.films?.forEach((film) => {
+            filmCardViews.push(new FilmCardView(film));
+        });
+        return filmCardViews;
     }
 
     private setModifier(element: Element): void {

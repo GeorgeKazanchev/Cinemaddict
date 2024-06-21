@@ -71,6 +71,7 @@ export default class FilmsScreen {
     private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
         this.model.selectedFiltrationCriterion = filtrationCriterion;
         this.model.selectedSortCriterion = SortCriterionType.Default;
+        this.model.resetShownFilmsCount();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
         this.mainView.updateFilmsSection(this.model.shownFilms);
@@ -79,6 +80,7 @@ export default class FilmsScreen {
 
     private sortFilms(sortCriterion: SortCriterionType): void {
         this.model.selectedSortCriterion = sortCriterion;
+        this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
         this.mainView.updateFilmsSection(this.model.shownFilms);
         this.setFilmsHandlers();
@@ -86,6 +88,7 @@ export default class FilmsScreen {
 
     private setFilmsHandlers(): void {
         this.setFilmCardsClickHandlers();
+        this.setShowMoreButtonClickHandler();
     }
 
     private setFilmCardsClickHandlers(): void {
@@ -188,6 +191,16 @@ export default class FilmsScreen {
             });
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
+        });
+    }
+
+    private setShowMoreButtonClickHandler(): void {
+        const showMoreButton = this.mainView.element.querySelector('.films-list__show-more');
+        showMoreButton?.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+            this.model.increaseShownFilmsCount();
+            this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
+            this.setFilmCardsClickHandlers();
         });
     }
 

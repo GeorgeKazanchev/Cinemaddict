@@ -95,9 +95,13 @@ export default class Model {
         this.data.selectedSortCriterion = sortCriterion;
     }
 
-    public increaseShowFilms(): void {
+    public increaseShownFilmsCount(): void {
         const filmsLeft = this.allFilms.length - this.shownFilms.length;
         this.data.shownFilmsCount += Math.min(FILMS_CHUNK_SIZE, filmsLeft);
+    }
+
+    public resetShownFilmsCount(): void {
+        this.data.shownFilmsCount = FILMS_CHUNK_SIZE;
     }
 
     public incrementFilmsWatched(): void {

@@ -55,6 +55,20 @@ export default class MainFilmsView extends MainView {
         this.filmsView.updateFilmsSection(films);
     }
 
+    updateAllMoviesFilmsList(shownFilms: Movie[]): void {
+        const filmsListView = this.filmsView.filmsListViews[0];     //  TODO: Don't use index here
+        filmsListView.filmsList.films = shownFilms;
+        filmsListView.setFilmCardViews();
+
+        const filmsListContainer = filmsListView.element.querySelector('.films-list__container');
+        if (filmsListContainer) {
+            filmsListContainer.innerHTML = '';
+            filmsListView.filmCardViews.forEach((filmCardView) => {
+                filmsListContainer.append(filmCardView.element);
+            })
+        }
+    }
+
     private checkNeedToRenderSortPanel(): boolean {
         return !this.filmsSection.isEmpty;
     }
