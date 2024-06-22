@@ -1,6 +1,6 @@
 import MainView from './main-view';
 import SortView from '../sort/sort-view';
-import MainNavigationView from '../main-navigation/main-navigation-view';
+import MainNavigationFilmsView from '../main-navigation/main-navigation-films-view';
 import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
 import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
@@ -14,19 +14,21 @@ export default class MainFilmsView extends MainView {
     constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, films: Movie[] | null,
         selectedSortCriterion: SortCriterionType, allFilmsShown: boolean) {
 
-        super(selectedFiltrationCriterion, userData);
+        super(userData);
 
         this.filmsSection = this.getFilmsSection(films, allFilmsShown);
+        this.selectedFiltrationCriterion = selectedFiltrationCriterion;
         this.selectedSortCriterion = selectedSortCriterion;
 
-        this.mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
+        this.mainNavigationView = new MainNavigationFilmsView(this.selectedFiltrationCriterion, this.userData);
         this.filmsView = new FilmsView(this.filmsSection);
         this.sortView = null;
     }
 
     filmsSection: FilmsSection;
+    selectedFiltrationCriterion: FiltrationCriterionType;
     selectedSortCriterion: SortCriterionType;
-    mainNavigationView: MainNavigationView;
+    mainNavigationView: MainNavigationFilmsView;
     filmsView: FilmsView;
     sortView: SortView | null;
 
