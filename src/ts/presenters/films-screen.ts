@@ -8,6 +8,7 @@ import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
+import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -54,7 +55,7 @@ export default class FilmsScreen {
         evt.preventDefault();
         const button = evt.target;
         if (button instanceof Element) {
-            const filtrationCriterion = this.getFiltrationCriterionByElement(button);
+            const filtrationCriterion = getFiltrationCriterionByElement(button);
             this.filterFilms(filtrationCriterion);
         }
     }
@@ -63,7 +64,7 @@ export default class FilmsScreen {
         evt.preventDefault();
         const button = evt.target;
         if (button instanceof Element) {
-            const sortCriterion = this.getSortCriterionByElement(button);
+            const sortCriterion = getSortCriterionByElement(button);
             this.sortFilms(sortCriterion);
         }
     }
@@ -206,31 +207,5 @@ export default class FilmsScreen {
                 this.mainView.hideShowMoreButton();
             }
         });
-    }
-
-    private getFiltrationCriterionByElement(element: Element): FiltrationCriterionType {
-        if (element.classList.contains('main-navigation__item--all')) {
-            return FiltrationCriterionType.AllMovies;
-        } else if (element.classList.contains('main-navigation__item--watchlist')) {
-            return FiltrationCriterionType.Watchlist;
-        } else if (element.classList.contains('main-navigation__item--history')) {
-            return FiltrationCriterionType.History;
-        } else if (element.classList.contains('main-navigation__item--favorites')) {
-            return FiltrationCriterionType.Favorites;
-        } else {
-            throw new RangeError('Unsupported filtration criterion type.');
-        }
-    }
-
-    private getSortCriterionByElement(element: Element): SortCriterionType {
-        if (element.textContent === SortCriterionType.Default) {
-            return SortCriterionType.Default;
-        } else if (element.textContent === SortCriterionType.Date) {
-            return SortCriterionType.Date;
-        } else if (element.textContent === SortCriterionType.Rating) {
-            return SortCriterionType.Rating;
-        } else {
-            throw new RangeError('Unsupported sort criterion type.');
-        }
     }
 }
