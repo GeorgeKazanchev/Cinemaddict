@@ -12,6 +12,10 @@ export default class Model {
 
     private data: ModelData;
 
+    public get modelData(): ModelData {
+        return this.data;
+    }
+
     public get allFilms(): Movie[] {
         return this.data.films ?? [];
     }

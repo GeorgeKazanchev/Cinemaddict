@@ -1,18 +1,17 @@
 import MainView from './main-view';
-import MainNavigationView from '../main-navigation/main-navigation-view';
+import MainNavigationStatsView from '../main-navigation/main-navigation-stats-view';
 import StatisticsView from '../statistics/statistics-view';
 import UserData from '../../ts/types/user-data';
-import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
 
 export default class MainStatisticsView extends MainView {
-    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData) {
-        super(selectedFiltrationCriterion, userData);
+    constructor(userData: UserData) {
+        super(userData);
     }
 
     createElement(): Element {
         const element = this.getTemplate();
 
-        const mainNavigationView = new MainNavigationView(this.selectedFiltrationCriterion, this.userData);
+        const mainNavigationView = new MainNavigationStatsView(this.userData);
         element.appendChild(mainNavigationView.element);
 
         const statisticsView = new StatisticsView(this.userData);

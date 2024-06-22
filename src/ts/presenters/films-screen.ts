@@ -8,16 +8,20 @@ import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
+import StatisticsScreen from './statistics-screen';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
+        this.model.resetShownFilmsCount();
+
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
             this.model.shownFilms, this.model.selectedSortCriterion, this.model.allFilmsShown);
         this.footerView = new FooterView(this.model.filmsCount);
 
+        this.setStatsButtonClickHandler();
         this.setFiltrationButtonsClickHandlers();
         this.setSortButtonsClickHandlers();
         this.setFilmsHandlers();
@@ -37,6 +41,11 @@ export default class FilmsScreen {
         }
     }
 
+    private setStatsButtonClickHandler(): void {
+        const statsButton = this.mainView.element.querySelector('.main-navigation__additional');
+        statsButton?.addEventListener('click', (evt: Event) => this.statsButtonClickHandler(evt));
+    }
+
     private setFiltrationButtonsClickHandlers(): void {
         const filtrationButtons = this.mainView.element.querySelectorAll('.main-navigation__item');
         filtrationButtons.forEach((button) => {
@@ -49,6 +58,13 @@ export default class FilmsScreen {
         sortButtons.forEach((button) => {
             button.addEventListener('click', (evt: Event) => this.sortButtonClickHandler(evt));
         });
+    }
+
+    private statsButtonClickHandler(evt: Event): void {
+        evt.preventDefault();
+        const statisticsScreen = new StatisticsScreen(this.model.modelData);
+        document.body.innerHTML = '';
+        statisticsScreen.render();
     }
 
     private filtrationButtonClickHandler(evt: Event): void {
