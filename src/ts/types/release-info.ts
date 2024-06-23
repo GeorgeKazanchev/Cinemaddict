@@ -1,9 +1,9 @@
 export default class ReleaseInfo {
-    constructor(date: string, releaseCountry: string) {
+    constructor(date: Date, releaseCountry: string) {
         this.date = date;
         this.releaseCountry = releaseCountry;
     }
 
-    date: string;
+    date: Date;
     releaseCountry: string;
 }

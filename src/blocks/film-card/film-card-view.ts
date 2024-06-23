@@ -127,7 +127,7 @@ export default class FilmCardView extends AbstractView {
 
     private getYear(): string {
         const date = this.film.filmInfo.release.date;
-        return date.split('-')[0];
+        return date.getFullYear().toFixed(0);
     }
 
     private getDuration(): string {

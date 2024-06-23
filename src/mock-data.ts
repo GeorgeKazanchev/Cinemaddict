@@ -67,7 +67,7 @@ const films: Movie[] = [
                 'Drama'
             ],
             new ReleaseInfo(
-                '1955-12-15T00:00:00.000Z',
+                new Date('1955-12-15T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -75,7 +75,7 @@ const films: Movie[] = [
             true,
             false,
             true,
-            '2019-07-03'
+            new Date('2019-07-03')
         )
     ),
 
@@ -104,7 +104,7 @@ const films: Movie[] = [
                 'Mystery'
             ],
             new ReleaseInfo(
-                '1945-03-30T00:00:00.000Z',
+                new Date('1945-03-30T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -156,7 +156,7 @@ const films: Movie[] = [
                 'Comedy'
             ],
             new ReleaseInfo(
-                '1939-02-10T00:00:00.000Z',
+                new Date('1939-02-10T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -164,7 +164,7 @@ const films: Movie[] = [
             true,
             false,
             true,
-            '2021-03-01'
+            new Date('2021-03-01')
         )
     ),
 
@@ -194,7 +194,7 @@ const films: Movie[] = [
                 'Cartoon'
             ],
             new ReleaseInfo(
-                '1936-11-27T00:00:00.000Z',
+                new Date('1936-11-27T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -202,7 +202,7 @@ const films: Movie[] = [
             true,
             false,
             true,
-            '2020-01-01'
+            new Date('2020-01-01')
         )
     ),
 
@@ -231,7 +231,7 @@ const films: Movie[] = [
                 'Western'
             ],
             new ReleaseInfo(
-                '1933-12-15T00:00:00.000Z',
+                new Date('1933-12-15T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -279,7 +279,7 @@ const films: Movie[] = [
                 'Comedy'
             ],
             new ReleaseInfo(
-                '1964-11-14T00:00:00.000Z',
+                new Date('1964-11-14T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -315,7 +315,7 @@ const films: Movie[] = [
                 'Musical'
             ],
             new ReleaseInfo(
-                '1929-08-16T00:00:00.000Z',
+                new Date('1929-08-16T00:00:00.000Z'),
                 'United States'
             )
         ),
@@ -369,7 +369,7 @@ const films: Movie[] = [
                 'Romance'
             ],
             new ReleaseInfo(
-                '1942-11-26T00:00:00.000Z',
+                new Date('1942-11-26T00:00:00.000Z'),
                 'United States'
             )
         ),

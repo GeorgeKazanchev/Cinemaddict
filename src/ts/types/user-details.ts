@@ -1,5 +1,5 @@
 export default class UserDetails {
-    constructor(favorite: boolean, watchlist: boolean, alreadyWatched: boolean, watchingDate: string | null) {
+    constructor(favorite: boolean, watchlist: boolean, alreadyWatched: boolean, watchingDate: Date | null) {
         this.favorite = favorite;
         this.watchlist = watchlist;
         this.alreadyWatched = alreadyWatched;
@@ -9,5 +9,5 @@ export default class UserDetails {
     favorite: boolean;
     watchlist: boolean;
     alreadyWatched: boolean;
-    watchingDate: string | null;
+    watchingDate: Date | null;
 }
