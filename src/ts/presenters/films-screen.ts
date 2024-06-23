@@ -19,7 +19,7 @@ export default class FilmsScreen {
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
             this.model.shownFilms, this.model.selectedSortCriterion, this.model.allFilmsShown);
-        this.footerView = new FooterView(this.model.filmsCount);
+        this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.setStatsButtonClickHandler();
         this.setFiltrationButtonsClickHandlers();

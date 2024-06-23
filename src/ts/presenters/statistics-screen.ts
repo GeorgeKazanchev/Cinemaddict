@@ -12,7 +12,7 @@ export default class StatisticsScreen {
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainStatisticsView(this.model.userData);
-        this.footerView = new FooterView(this.model.filmsCount);
+        this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.setNavigationTabsClickHandlers();
     }

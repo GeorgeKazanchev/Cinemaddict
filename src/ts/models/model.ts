@@ -75,7 +75,7 @@ export default class Model {
         return this.shownFilms.length === this.sortedFilms.length;
     }
 
-    public get filmsCount(): number {
+    public get allFilmsCount(): number {
         return this.allFilms.length;
     }
 
@@ -140,5 +140,50 @@ export default class Model {
         if (this.data.userData.favoriteFilms > 0) {
             --this.data.userData.favoriteFilms;
         }
+    }
+
+    public getWatchedFilmsSince(date: Date): Movie[] {
+        return this.watchedFilms.filter((film) => {
+            if (film.userDetails.watchingDate) {
+                return film.userDetails.watchingDate >= date;
+            }
+        })
+    }
+
+    public getFilmsCount(films: Movie[]): number {
+        return films.length;
+    }
+
+    public getTotalDuration(films: Movie[]): number {
+        let totalDuration = 0;
+        films.forEach((film) => {
+            totalDuration += film.filmInfo.runtime;
+        });
+        return totalDuration;
+    }
+
+    public getFavoriteGenres(films: Movie[]): string[] {
+        let favoriteGenres = [];
+        const genresCountMap = this.getGenresCountMap(films);
+
+        const largestFilmsOfGenre = Math.max(...genresCountMap.values());
+        for (let [key, value] of genresCountMap.entries()) {
+            if (value === largestFilmsOfGenre) {
+                favoriteGenres.push(key);
+            }
+        }
+
+        return favoriteGenres;
+    }
+
+    public getGenresCountMap(films: Movie[]): Map<string, number> {
+        const genresCountMap = new Map<string, number>();
+        films.forEach((film) => {
+            film.filmInfo.genre.forEach((genre) => {
+                const prevFilmsCount = genresCountMap.get(genre) ?? 0;
+                genresCountMap.set(genre, prevFilmsCount + 1);
+            });
+        });
+        return genresCountMap;
     }
 }
