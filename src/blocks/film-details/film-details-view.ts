@@ -273,7 +273,11 @@ export default class FilmDetailsView extends AbstractView {
         if (releaseDateElement) {
             const releaseDateContentElement = releaseDateElement.querySelector('.film-details__cell');
             if (releaseDateContentElement) {
-                //  TODO: Add release date in the correct format
+                const releaseDate = this.film.filmInfo.release.date;
+                const day = releaseDate.getDate().toString().padStart(2, '0');
+                const monthName = releaseDate.toLocaleDateString('default', { month: 'long' });
+                const year = releaseDate.getFullYear();
+                releaseDateContentElement.textContent = `${day} ${monthName} ${year}`;
             }
         }
     }
