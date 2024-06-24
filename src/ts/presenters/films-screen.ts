@@ -14,6 +14,7 @@ import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../u
 export default class FilmsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
+        this.model.updateUserData();
         this.model.resetShownFilmsCount();
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);

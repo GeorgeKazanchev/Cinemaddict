@@ -9,6 +9,7 @@ import { getFiltrationCriterionByElement, getMinDate } from '../utils';
 export default class StatisticsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
+        this.model.updateUserData();
         this.model.updateStatisticsData(getMinDate());
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
