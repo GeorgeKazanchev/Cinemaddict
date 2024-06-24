@@ -46,7 +46,7 @@ export default abstract class MainNavigationView extends AbstractView {
     protected setHistory(element: Element): void {
         const historyTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.History));
         if (historyTab) {
-            this.setFilmsCount(historyTab, this.userData.filmsWatched);
+            this.setFilmsCount(historyTab, this.userData.allFilmsWatched);
         }
     }
 

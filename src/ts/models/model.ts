@@ -113,7 +113,7 @@ export default class Model {
     }
 
     public incrementFilmsWatched(): void {
-        ++this.data.userData.filmsWatched;
+        ++this.data.userData.allFilmsWatched;
     }
 
     public incrementFilmsInWatchlist(): void {
@@ -125,8 +125,8 @@ export default class Model {
     }
 
     public decrementFilmsWatched(): void {
-        if (this.data.userData.filmsWatched > 0) {
-            --this.data.userData.filmsWatched;
+        if (this.data.userData.allFilmsWatched > 0) {
+            --this.data.userData.allFilmsWatched;
         }
     }
 
@@ -148,10 +148,6 @@ export default class Model {
                 return film.userDetails.watchingDate >= date;
             }
         })
-    }
-
-    public getFilmsCount(films: Movie[]): number {
-        return films.length;
     }
 
     public getTotalDuration(films: Movie[]): number {
@@ -185,5 +181,18 @@ export default class Model {
             });
         });
         return genresCountMap;
+    }
+
+    public updateStatisticsData(startDate: Date): void {
+        const filteredWatchedFilms = this.getWatchedFilmsSince(startDate);
+        this.data.userData.filteredFilmsWatched = filteredWatchedFilms.length;
+        this.data.userData.totalDuration = this.getTotalDuration(filteredWatchedFilms);
+        this.data.userData.topGenres = this.getFavoriteGenres(filteredWatchedFilms);
+    }
+
+    public updateUserData(): void {
+        this.data.userData.allFilmsWatched = this.watchedFilms.length;
+        this.data.userData.filmsInWatchlist = this.filmsInWatchlist.length;
+        this.data.userData.favoriteFilms = this.favoriteFilms.length;
     }
 }

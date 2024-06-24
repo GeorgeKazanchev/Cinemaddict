@@ -62,6 +62,31 @@ export default class StatisticsView extends AbstractView {
         return element;
     }
 
+    updateWatchedFilms(): void {
+        const watchedFilmsElement = this.element.querySelector('.statistic__text-item--films-watched');
+        if (watchedFilmsElement) {
+            const textElement = watchedFilmsElement.querySelector('.statistic__item-text');
+            if (textElement) {
+                textElement.innerHTML = '';
+                this.setWatchedFilms(this.element);
+            }
+        }
+    }
+
+    updateTotalDuration(): void {
+        const totalDurationElement = this.element.querySelector('.statistic__text-item--total-duration');
+        if (totalDurationElement) {
+            const textElement = totalDurationElement.querySelector('.statistic__item-text');
+            if (textElement) {
+                this.setTotalDuration(this.element);
+            }
+        }
+    }
+
+    updateFavoriteGenres(): void {
+        this.setTopGenres(this.element);
+    }
+
     private setUserInfo(element: Element): void {
         this.setAvatar(element);
         this.setRankLabel(element);
@@ -70,7 +95,7 @@ export default class StatisticsView extends AbstractView {
     private setStatisticsItems(element: Element): void {
         this.setWatchedFilms(element);
         this.setTotalDuration(element);
-        this.setTopGenre(element);
+        this.setTopGenres(element);
     }
 
     private setAvatar(element: Element): void {
@@ -93,11 +118,11 @@ export default class StatisticsView extends AbstractView {
             const textElement = watchedFilmsElement.querySelector('.statistic__item-text');
             if (textElement) {
                 const descriptionElement = this.createDescriptionElement();
-                descriptionElement.textContent = this.userData.filmsWatched === 1
+                descriptionElement.textContent = this.userData.filteredFilmsWatched === 1
                     ? ' movie'
                     : ' movies';
 
-                textElement.textContent = this.userData.filmsWatched.toFixed(0);
+                textElement.textContent = this.userData.filteredFilmsWatched.toFixed(0);
                 textElement.appendChild(descriptionElement);
             }
         }
@@ -137,12 +162,12 @@ export default class StatisticsView extends AbstractView {
         }
     }
 
-    private setTopGenre(element: Element): void {
+    private setTopGenres(element: Element): void {
         const topGenreElement = element.querySelector('.statistic__text-item--top-genre');
         if (topGenreElement) {
             const textElement = topGenreElement.querySelector('.statistic__item-text');
             if (textElement) {
-                textElement.textContent = this.userData.topGenre;
+                textElement.textContent = this.userData.topGenres.join(', ');
             }
         }
     }

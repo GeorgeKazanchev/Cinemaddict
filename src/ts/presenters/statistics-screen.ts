@@ -4,17 +4,19 @@ import MainStatisticsView from '../../blocks/main/main-statistics-view';
 import ModelData from '../models-data/model-data';
 import Model from '../models/model';
 import FilmsScreen from './films-screen';
-import { getFiltrationCriterionByElement } from '../utils';
+import { getFiltrationCriterionByElement, getMinDate } from '../utils';
 
 export default class StatisticsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
+        this.model.updateStatisticsData(getMinDate());
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainStatisticsView(this.model.userData);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.setNavigationTabsClickHandlers();
+        this.setStatisticsFiltersChangeHandlers();
     }
 
     private model: Model;
@@ -38,6 +40,13 @@ export default class StatisticsScreen {
         });
     }
 
+    private setStatisticsFiltersChangeHandlers(): void {
+        const filters = this.mainView.element.querySelectorAll('.statistic__filters-input');
+        filters.forEach((filter) => {
+            filter.addEventListener('change', (evt: Event) => this.statisticsFilterChangeHandler(evt));
+        });
+    }
+
     private navigationTabClickHandler(evt: Event): void {
         evt.preventDefault();
         const tab = evt.target;
@@ -49,5 +58,48 @@ export default class StatisticsScreen {
             document.body.innerHTML = '';
             filmsScreen.render();
         }
+    }
+
+    private statisticsFilterChangeHandler(evt: Event): void {
+        evt.preventDefault();
+        const filter = evt.target;
+        if (filter instanceof HTMLInputElement) {
+            const startDate = this.getStartDateByFilterValue(filter.value);
+            console.log(startDate);
+            this.model.updateStatisticsData(startDate);
+            this.mainView.updateStatisticsData(this.model.userData);
+        }
+    }
+
+    private getStartDateByFilterValue(value: string): Date {
+        let startDate = new Date();
+
+        switch (value) {
+            case 'all-time': {
+                startDate = getMinDate();
+                break;
+            }
+            case 'year': {
+                startDate.setFullYear(startDate.getFullYear() - 1);
+                break;
+            }
+            case 'month': {
+                startDate.setMonth(startDate.getMonth() - 1);
+                break;
+            }
+            case 'week': {
+                startDate.setDate(startDate.getDate() - 7);
+                break;
+            }
+            case 'today': {
+                startDate.setDate(startDate.getDate() - 1);
+                break;
+            }
+            default: {
+                throw new RangeError('Input value is not supported.');
+            }
+        }
+
+        return startDate;
     }
 }

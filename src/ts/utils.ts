@@ -1,6 +1,10 @@
 import FiltrationCriterionType from './types/filtration-criterion-type';
 import SortCriterionType from './types/sort-criterion-type';
 
+export function getMinDate(): Date {
+    return new Date(-8640000000000000);
+}
+
 export function getFiltrationCriterionByElement(element: Element): FiltrationCriterionType {
     if (element.classList.contains('main-navigation__item--all')) {
         return FiltrationCriterionType.AllMovies;

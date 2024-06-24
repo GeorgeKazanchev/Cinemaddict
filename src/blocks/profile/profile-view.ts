@@ -30,7 +30,7 @@ export default class ProfileView extends AbstractView {
     }
 
     private setRating(element: Element): void {
-        if (this.userData.filmsWatched > 0) {
+        if (this.userData.allFilmsWatched > 0) {
             const ratingElement = document.createElement('p');
             ratingElement.classList.add('profile__rating');
             ratingElement.textContent = this.userData.rank;
