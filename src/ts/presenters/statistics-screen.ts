@@ -4,6 +4,7 @@ import MainStatisticsView from '../../blocks/main/main-statistics-view';
 import ModelData from '../models-data/model-data';
 import Model from '../models/model';
 import FilmsScreen from './films-screen';
+import SortCriterionType from '../types/sort-criterion-type';
 import { getFiltrationCriterionByElement, getMinDate } from '../utils';
 
 export default class StatisticsScreen {
@@ -54,6 +55,7 @@ export default class StatisticsScreen {
         if (tab instanceof Element) {
             const filtrationCriterion = getFiltrationCriterionByElement(tab);
             this.model.selectedFiltrationCriterion = filtrationCriterion;
+            this.model.selectedSortCriterion = SortCriterionType.Default;
 
             const filmsScreen = new FilmsScreen(this.model.modelData);
             document.body.innerHTML = '';
