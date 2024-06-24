@@ -12,7 +12,7 @@ const userData: UserData = new UserData(
     35,
     20,
     9350,
-    'Horror',
+    ['Horror'],
     './img/bitmap@2x.png'
 );
 
@@ -75,7 +75,7 @@ const films: Movie[] = [
             true,
             false,
             true,
-            new Date('2019-07-03')
+            new Date('2023-07-03')
         )
     ),
 
@@ -164,7 +164,7 @@ const films: Movie[] = [
             true,
             false,
             true,
-            new Date('2021-03-01')
+            new Date('2024-05-25')
         )
     ),
 
