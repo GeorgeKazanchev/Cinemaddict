@@ -126,19 +126,7 @@ export default class FilmsScreen {
         const button = filmCardView.element.querySelector('.film-card__controls-item--mark-as-watched');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
-
-            const userDetails = filmCardView.film.userDetails;
-            userDetails.alreadyWatched = !userDetails.alreadyWatched;
-
-            if (userDetails.alreadyWatched) {
-                this.model.incrementFilmsWatched();
-            } else {
-                this.model.decrementFilmsWatched();
-                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.History);
-            }
-
-            this.headerView.updateUserRating();
-            this.mainView.mainNavigationView.updateHistory();
+            this.updateWatchedFilms(filmCardView);
         });
     }
 
@@ -146,18 +134,7 @@ export default class FilmsScreen {
         const button = filmCardView.element.querySelector('.film-card__controls-item--add-to-watchlist');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
-
-            const userDetails = filmCardView.film.userDetails;
-            userDetails.watchlist = !userDetails.watchlist;
-
-            if (userDetails.watchlist) {
-                this.model.incrementFilmsInWatchlist();
-            } else {
-                this.model.decrementFilmsInWatchlist();
-                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Watchlist);
-            }
-
-            this.mainView.mainNavigationView.updateWatchlist();
+            this.updateFilmsInWatchlist(filmCardView);
         });
     }
 
@@ -165,19 +142,51 @@ export default class FilmsScreen {
         const button = filmCardView.element.querySelector('.film-card__controls-item--favorite');
         button?.addEventListener('click', () => {
             button.classList.toggle('film-card__controls-item--active');
-
-            const userDetails = filmCardView.film.userDetails;
-            userDetails.favorite = !userDetails.favorite;
-
-            if (userDetails.favorite) {
-                this.model.incrementFavoriteFilms();
-            } else {
-                this.model.decrementFavoriteFilms();
-                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Favorites);
-            }
-
-            this.mainView.mainNavigationView.updateFavorites();
+            this.updateFavoriteFilms(filmCardView);
         });
+    }
+
+    private updateWatchedFilms(filmCardView: FilmCardView): void {
+        const userDetails = filmCardView.film.userDetails;
+        userDetails.alreadyWatched = !userDetails.alreadyWatched;
+
+        if (userDetails.alreadyWatched) {
+            this.model.incrementFilmsWatched();
+        } else {
+            this.model.decrementFilmsWatched();
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.History);
+        }
+
+        this.headerView.updateUserRating();
+        this.mainView.mainNavigationView.updateHistory();
+    }
+
+    private updateFilmsInWatchlist(filmCardView: FilmCardView): void {
+        const userDetails = filmCardView.film.userDetails;
+        userDetails.watchlist = !userDetails.watchlist;
+
+        if (userDetails.watchlist) {
+            this.model.incrementFilmsInWatchlist();
+        } else {
+            this.model.decrementFilmsInWatchlist();
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Watchlist);
+        }
+
+        this.mainView.mainNavigationView.updateWatchlist();
+    }
+
+    private updateFavoriteFilms(filmCardView: FilmCardView): void {
+        const userDetails = filmCardView.film.userDetails;
+        userDetails.favorite = !userDetails.favorite;
+
+        if (userDetails.favorite) {
+            this.model.incrementFavoriteFilms();
+        } else {
+            this.model.decrementFavoriteFilms();
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Favorites);
+        }
+
+        this.mainView.mainNavigationView.updateFavorites();
     }
 
     private removeFilmCardIfNeeded(filmCardElement: Element, filtrationCriterion: FiltrationCriterionType): void {
