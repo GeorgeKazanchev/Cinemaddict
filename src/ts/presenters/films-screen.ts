@@ -134,6 +134,7 @@ export default class FilmsScreen {
                 this.model.incrementFilmsWatched();
             } else {
                 this.model.decrementFilmsWatched();
+                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.History);
             }
 
             this.headerView.updateUserRating();
@@ -153,6 +154,7 @@ export default class FilmsScreen {
                 this.model.incrementFilmsInWatchlist();
             } else {
                 this.model.decrementFilmsInWatchlist();
+                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Watchlist);
             }
 
             this.mainView.mainNavigationView.updateWatchlist();
@@ -171,10 +173,17 @@ export default class FilmsScreen {
                 this.model.incrementFavoriteFilms();
             } else {
                 this.model.decrementFavoriteFilms();
+                this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Favorites);
             }
 
             this.mainView.mainNavigationView.updateFavorites();
         });
+    }
+
+    private removeFilmCardIfNeeded(filmCardElement: Element, filtrationCriterion: FiltrationCriterionType): void {
+        if (this.model.selectedFiltrationCriterion === filtrationCriterion) {
+            filmCardElement.remove();
+        }
     }
 
     private setPopupOpenClickHandlers(filmCardView: FilmCardView): void {
