@@ -7,7 +7,7 @@ import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
-import StatisticsScreen from './statistics-screen';
+import Application from '../application';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
 
 const NEW_COMMENT_EMOJI_SIZE = 55;
@@ -33,14 +33,12 @@ export default class FilmsScreen {
     private headerView: HeaderView;
     private mainView: MainFilmsView;
     private footerView: FooterView;
-    private isRendered: boolean = false;
 
     public render(): void {
-        if (!this.isRendered) {
-            document.body.insertAdjacentElement('afterbegin', this.headerView.element);
-            this.headerView.element.insertAdjacentElement('afterend', this.mainView.element);
-            this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
-        }
+        document.body.innerHTML = '';
+        document.body.insertAdjacentElement('afterbegin', this.headerView.element);
+        this.headerView.element.insertAdjacentElement('afterend', this.mainView.element);
+        this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
     }
 
     private setStatsButtonClickHandler(): void {
@@ -64,9 +62,7 @@ export default class FilmsScreen {
 
     private statsButtonClickHandler(evt: Event): void {
         evt.preventDefault();
-        const statisticsScreen = new StatisticsScreen(this.model.modelData);
-        document.body.innerHTML = '';
-        statisticsScreen.render();
+        Application.showStatistics(this.model.modelData);
     }
 
     private filtrationButtonClickHandler(evt: Event): void {

@@ -3,7 +3,7 @@ import HeaderView from '../../blocks/header/header-view';
 import MainStatisticsView from '../../blocks/main/main-statistics-view';
 import ModelData from '../models-data/model-data';
 import Model from '../models/model';
-import FilmsScreen from './films-screen';
+import Application from '../application';
 import SortCriterionType from '../types/sort-criterion-type';
 import { getFiltrationCriterionByElement, getMinDate } from '../utils';
 
@@ -25,14 +25,12 @@ export default class StatisticsScreen {
     private headerView: HeaderView;
     private mainView: MainStatisticsView;
     private footerView: FooterView;
-    private isRendered: boolean = false;
 
     public render(): void {
-        if (!this.isRendered) {
-            document.body.insertAdjacentElement('afterbegin', this.headerView.element);
-            this.headerView.element.insertAdjacentElement('afterend', this.mainView.element);
-            this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
-        }
+        document.body.innerHTML = '';
+        document.body.insertAdjacentElement('afterbegin', this.headerView.element);
+        this.headerView.element.insertAdjacentElement('afterend', this.mainView.element);
+        this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
     }
 
     private setNavigationTabsClickHandlers(): void {
@@ -56,10 +54,7 @@ export default class StatisticsScreen {
             const filtrationCriterion = getFiltrationCriterionByElement(tab);
             this.model.selectedFiltrationCriterion = filtrationCriterion;
             this.model.selectedSortCriterion = SortCriterionType.Default;
-
-            const filmsScreen = new FilmsScreen(this.model.modelData);
-            document.body.innerHTML = '';
-            filmsScreen.render();
+            Application.showFilmsScreen(this.model.modelData);
         }
     }
 
