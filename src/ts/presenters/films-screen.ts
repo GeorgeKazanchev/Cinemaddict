@@ -216,6 +216,7 @@ export default class FilmsScreen {
     private setPopupOpenClickHandler(element: Element, filmCardView: FilmCardView): void {
         element.addEventListener('click', (evt: Event) => {
             evt.preventDefault();
+            this.closePopupIfOpened();
 
             const popupView = new FilmDetailsView(filmCardView.film);
             const popupElement = popupView.element;
@@ -233,6 +234,11 @@ export default class FilmsScreen {
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
         });
+    }
+
+    private closePopupIfOpened(): void {
+        const openedPopupElement = document.querySelector('.film-details');
+        openedPopupElement?.remove();
     }
 
     private setPopupMarkWatchedButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
