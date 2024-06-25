@@ -224,6 +224,12 @@ export default class FilmsScreen {
             this.setPopupAddToWatchlistButtonClickHandler(popupElement, filmCardView);
             this.setPopupAddToFavoritesButtonClickHandler(popupElement, filmCardView);
             this.setPopupCloseButtonClickHandler(popupElement);
+            this.setPopupCloseKeyDownHandler(popupElement);
+
+            const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
+            if (popupCloseButton instanceof HTMLElement) {      //  It doesn't work without setTimeout()
+                setTimeout(() => popupCloseButton.focus(), 1);
+            }
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
         });
@@ -256,6 +262,14 @@ export default class FilmsScreen {
             evt.preventDefault();
             popupElement.remove();
         });
+    }
+
+    private setPopupCloseKeyDownHandler(popupElement: Element): void {
+        popupElement.addEventListener('keydown', ((evt: KeyboardEvent) => {
+            if (evt.key === 'Escape') {
+                popupElement.remove();
+            }
+        }) as EventListener);
     }
 
     private setShowMoreButtonClickHandler(): void {
