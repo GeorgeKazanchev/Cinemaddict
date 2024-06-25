@@ -148,8 +148,10 @@ export default class FilmsScreen {
         userDetails.alreadyWatched = !userDetails.alreadyWatched;
 
         if (userDetails.alreadyWatched) {
+            userDetails.watchingDate = new Date();
             this.model.incrementFilmsWatched();
         } else {
+            userDetails.watchingDate = null;
             this.model.decrementFilmsWatched();
             this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.History);
         }
