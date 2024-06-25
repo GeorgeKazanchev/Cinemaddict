@@ -5,11 +5,12 @@ import MainFilmsView from '../../blocks/main/main-films-view';
 import FilmCardView from '../../blocks/film-card/film-card-view';
 import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
-import Movie from '../types/movie';
 import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
 import StatisticsScreen from './statistics-screen';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
+
+const NEW_COMMENT_EMOJI_SIZE = 55;
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -226,6 +227,7 @@ export default class FilmsScreen {
             this.setPopupAddToFavoritesButtonClickHandler(popupElement, filmCardView);
             this.setPopupCloseButtonClickHandler(popupElement);
             this.setPopupCloseKeyDownHandler(popupElement);
+            this.setPopupEmojiItemsChangeHandlers(popupElement);
 
             const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
             if (popupCloseButton instanceof HTMLElement) {      //  It doesn't work without setTimeout()
@@ -276,6 +278,33 @@ export default class FilmsScreen {
                 popupElement.remove();
             }
         }) as EventListener);
+    }
+
+    private setPopupEmojiItemsChangeHandlers(popupElement: Element): void {
+        const emojiItems = popupElement.querySelectorAll('.film-details__emoji-item');
+        emojiItems.forEach((emojiItem) => {
+            emojiItem.addEventListener('change', (evt: Event) => {
+                if (evt.target instanceof HTMLInputElement) {
+                    const emojiItemId = evt.target.id;
+                    const emojiImage = popupElement.querySelector(`[for="${emojiItemId}"] > img`);
+
+                    if (emojiImage && emojiImage instanceof HTMLImageElement) {
+                        const newCommentEmoji = popupElement.querySelector('.film-details__add-emoji-label');
+                        if (newCommentEmoji) {
+                            newCommentEmoji.innerHTML = '';
+
+                            const newEmojiImage = document.createElement('img');
+                            newEmojiImage.width = NEW_COMMENT_EMOJI_SIZE;
+                            newEmojiImage.height = NEW_COMMENT_EMOJI_SIZE;
+                            newEmojiImage.src = emojiImage.src;
+                            newEmojiImage.alt = emojiItemId;
+
+                            newCommentEmoji.appendChild(newEmojiImage);
+                        }
+                    }
+                }
+            });
+        });
     }
 
     private setShowMoreButtonClickHandler(): void {
