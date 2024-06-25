@@ -201,32 +201,60 @@ export default class FilmsScreen {
         const comments = filmCardView.element.querySelector('.film-card__comments');
 
         if (poster) {
-            this.setPopupOpenClickHandler(poster, filmCardView.film);
+            this.setPopupOpenClickHandler(poster, filmCardView);
         }
 
         if (title) {
-            this.setPopupOpenClickHandler(title, filmCardView.film);
+            this.setPopupOpenClickHandler(title, filmCardView);
         }
 
         if (comments) {
-            this.setPopupOpenClickHandler(comments, filmCardView.film);
+            this.setPopupOpenClickHandler(comments, filmCardView);
         }
     }
 
-    private setPopupOpenClickHandler(element: Element, film: Movie): void {
+    private setPopupOpenClickHandler(element: Element, filmCardView: FilmCardView): void {
         element.addEventListener('click', (evt: Event) => {
             evt.preventDefault();
 
-            const popupView = new FilmDetailsView(film);
+            const popupView = new FilmDetailsView(filmCardView.film);
             const popupElement = popupView.element;
 
-            const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
-            popupCloseButton?.addEventListener('click', (evt: Event) => {
-                evt.preventDefault();
-                popupElement.remove();
-            });
+            this.setPopupMarkWatchedButtonClickHandler(popupElement, filmCardView);
+            this.setPopupAddToWatchlistButtonClickHandler(popupElement, filmCardView);
+            this.setPopupAddToFavoritesButtonClickHandler(popupElement, filmCardView);
+            this.setPopupCloseButtonClickHandler(popupElement);
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
+        });
+    }
+
+    private setPopupMarkWatchedButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
+        const button = popupElement.querySelector('.film-details__control-label--watched');
+        button?.addEventListener('click', () => {
+            this.updateWatchedFilms(filmCardView);
+        });
+    }
+
+    private setPopupAddToWatchlistButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
+        const button = popupElement.querySelector('.film-details__control-label--watchlist');
+        button?.addEventListener('click', () => {
+            this.updateFilmsInWatchlist(filmCardView);
+        });
+    }
+
+    private setPopupAddToFavoritesButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
+        const button = popupElement.querySelector('.film-details__control-label--favorite');
+        button?.addEventListener('click', () => {
+            this.updateFavoriteFilms(filmCardView);
+        })
+    }
+
+    private setPopupCloseButtonClickHandler(popupElement: Element): void {
+        const button = popupElement.querySelector('.film-details__close-btn');
+        button?.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+            popupElement.remove();
         });
     }
 
