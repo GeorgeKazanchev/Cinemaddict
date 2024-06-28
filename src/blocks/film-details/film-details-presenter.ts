@@ -26,6 +26,17 @@ export default class FilmDetailsPresenter {
     private updateFilmsInWatchlist: () => void;
     private updateFavoriteFilms: () => void;
 
+    public render(): void {
+        this.closePopupIfOpened();
+        const footerElement = document.querySelector('.footer');
+        footerElement?.insertAdjacentElement('afterend', this.view.element);
+    }
+
+    private closePopupIfOpened(): void {
+        const openedPopupElement = document.querySelector('.film-details');
+        openedPopupElement?.remove();
+    }
+
     private setButtonsClickHandlers(): void {
         this.setMarkWatchedButtonClickHandler();
         this.setAddToWatchlistButtonClickHandler();

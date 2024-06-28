@@ -28,4 +28,23 @@ export default class FilmsView extends AbstractView {
         this.element.innerHTML = '';
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, this.element);
     }
+
+    updateAllMoviesFilmsList(shownFilms: Movie[]): void {
+        const filmsListView = this.filmsListViews[0];     //  TODO: Don't use index here
+        filmsListView.filmsList.films = shownFilms;
+        filmsListView.setFilmCardViews();
+
+        const filmsListContainer = filmsListView.element.querySelector('.films-list__container');
+        if (filmsListContainer) {
+            filmsListContainer.innerHTML = '';
+            filmsListView.filmCardViews.forEach((filmCardView) => {
+                filmsListContainer.append(filmCardView.element);
+            })
+        }
+    }
+
+    hideShowMoreButton(): void {
+        const showMoreButton = this.element.querySelector('.films-list__show-more');
+        showMoreButton?.remove();
+    }
 }

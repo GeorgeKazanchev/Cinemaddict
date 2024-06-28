@@ -20,6 +20,7 @@ export default class FilmCardPresenter {
         this.updateFavoritesTab = updateFavoritesTab;
 
         this.setButtonsClickHandlers();
+        this.setPopupOpenClickHandlers();
     }
 
     private model: Model;
@@ -109,5 +110,30 @@ export default class FilmCardPresenter {
         if (this.model.selectedFiltrationCriterion === filtrationCriterion) {
             this.view.element.remove();
         }
+    }
+
+    private setPopupOpenClickHandlers(): void {
+        const poster = this.view.element.querySelector('.film-card__poster');
+        const title = this.view.element.querySelector('.film-card__title');
+        const comment = this.view.element.querySelector('.film-card__comments');
+
+        if (poster) {
+            this.setPopupOpenClickHandler(poster);
+        }
+
+        if (title) {
+            this.setPopupOpenClickHandler(title);
+        }
+
+        if (comment) {
+            this.setPopupOpenClickHandler(comment);
+        }
+    }
+
+    private setPopupOpenClickHandler(element: Element): void {
+        element.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+            this.popupPresenter.render();
+        });
     }
 }
