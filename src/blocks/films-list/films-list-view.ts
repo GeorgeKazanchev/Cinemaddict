@@ -36,11 +36,7 @@ export default class FilmsListView extends AbstractView {
     }
 
     getFilmCardViews(): FilmCardView[] {
-        const filmCardViews: FilmCardView[] = [];
-        this.filmsList.films?.forEach((film) => {
-            filmCardViews.push(new FilmCardView(film));
-        });
-        return filmCardViews;
+        return this.filmsList.films?.map((film) => new FilmCardView(film)) ?? [];
     }
 
     private setModifier(element: Element): void {

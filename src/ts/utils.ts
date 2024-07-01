@@ -1,4 +1,8 @@
+import EmptyFilmsSection from './types/films-sections/empty-films-section';
+import FilledFilmsSection from './types/films-sections/filled-films-section';
+import FilmsSection from './types/films-sections/films-section';
 import FiltrationCriterionType from './types/filtration-criterion-type';
+import Movie from './types/movie';
 import SortCriterionType from './types/sort-criterion-type';
 
 export function getMinDate(): Date {
@@ -28,5 +32,13 @@ export function getSortCriterionByElement(element: Element): SortCriterionType {
         return SortCriterionType.Rating;
     } else {
         throw new RangeError('Unsupported sort criterion type.');
+    }
+}
+
+export function getFilmsSection(films: Movie[] | null, allFilmsShown: boolean): FilmsSection {
+    if (films && films.length > 0) {
+        return new FilledFilmsSection(films, allFilmsShown);
+    } else {
+        return new EmptyFilmsSection();
     }
 }

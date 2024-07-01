@@ -1,24 +1,31 @@
 import Model from '../../ts/models/model';
 import SortView from './sort-view';
 import SortCriterionType from '../../ts/types/sort-criterion-type';
-import Movie from '../../ts/types/movie';
 import { getSortCriterionByElement } from '../../ts/utils';
 
 export default class SortPresenter {
     constructor(model: Model, selectedSortCriterion: SortCriterionType,
-        updateFilmsSection: (shownFilms: Movie[], allFilmsShown: boolean) => void) {
+        sortFilms: (sortCriterion: SortCriterionType) => void) {
 
         this.model = model;
         this.view = new SortView(selectedSortCriterion);
 
-        this.updateFilmsSection = updateFilmsSection;
+        this.sortFilms = sortFilms;
 
         this.setSortButtonsClickHandlers();
     }
 
     private model: Model;
     private view: SortView;
-    private updateFilmsSection: (shownFilms: Movie[], allFilmsShown: boolean) => void;
+    private sortFilms: (sortCriterion: SortCriterionType) => void;
+
+    public render(element: Element): void {
+        element.appendChild(this.view.element);
+    }
+
+    public updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+        this.view.updateSelectedSortCriterion(sortCriterion);
+    }
 
     private setSortButtonsClickHandlers(): void {
         const sortButtons = this.view.element.querySelectorAll('.sort__button');
@@ -34,12 +41,5 @@ export default class SortPresenter {
             const sortCriterion = getSortCriterionByElement(button);
             this.sortFilms(sortCriterion);
         }
-    }
-
-    private sortFilms(sortCriterion: SortCriterionType): void {
-        this.model.selectedSortCriterion = sortCriterion;
-        this.model.resetShownFilmsCount();
-        this.view.updateSelectedSortCriterion(sortCriterion);
-        this.updateFilmsSection(this.model.shownFilms, this.model.allFilmsShown);
     }
 }

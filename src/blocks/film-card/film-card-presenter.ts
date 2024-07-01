@@ -31,6 +31,10 @@ export default class FilmCardPresenter {
     private updateWatchlistTab: () => void;
     private updateFavoritesTab: () => void;
 
+    public getFilmCardElement(): Element {
+        return Object.freeze(this.view.element);
+    }
+
     private setButtonsClickHandlers(): void {
         this.setMarkWatchedButtonClickHandler();
         this.setAddToWatchlistButtonClickHandler();
