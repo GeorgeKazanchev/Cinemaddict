@@ -309,6 +309,7 @@ export default class FilmsScreen {
         const formElement = popupElement.querySelector('.film-details__inner');
         if (formElement instanceof HTMLFormElement) {
             this.setCommentInputKeyUpHandler(formElement);
+            this.setCommentFormSubmitHandler(formElement);
         }
     }
 
@@ -317,9 +318,19 @@ export default class FilmsScreen {
         commentInputElement?.addEventListener('keyup', ((evt: KeyboardEvent) => {
             if (evt.key === 'Enter' && evt.ctrlKey) {
                 evt.preventDefault();
-                formElement.submit();
+                formElement.requestSubmit();
             }
         }) as EventListener);
+    }
+
+    private setCommentFormSubmitHandler(formElement: HTMLFormElement): void {
+        formElement.addEventListener('submit', (evt: Event) => {
+            evt.preventDefault();
+            const commentInputElement = formElement.querySelector('.film-details__new-comment textarea');
+            if (commentInputElement instanceof HTMLTextAreaElement) {
+                commentInputElement.value = '';
+            }
+        });
     }
 
     private setShowMoreButtonClickHandler(): void {
