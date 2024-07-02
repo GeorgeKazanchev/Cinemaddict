@@ -2,6 +2,7 @@ import AbstractView from '../../ts/abstract-view';
 import FilmsListView from '../films-list/films-list-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
 import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
+import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
 import Movie from '../../ts/types/movie';
 
 export default class FilmsView extends AbstractView {
@@ -23,7 +24,9 @@ export default class FilmsView extends AbstractView {
     }
 
     updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
-        this.filmsSection = new FilledFilmsSection(films, allFilmsShown);
+        this.filmsSection = films && films.length > 0
+            ? new FilledFilmsSection(films, allFilmsShown)
+            : new EmptyFilmsSection();
         this.filmsListViews = this.filmsSection.getFilmsListViews();
         this.element.innerHTML = '';
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, this.element);
