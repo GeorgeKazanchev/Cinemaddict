@@ -12,7 +12,7 @@ export default class FilmsScreen {
 
         this.headerPresenter = new HeaderPresenter(model, model.isAuthorized, model.userData);
         this.mainPresenter = new MainFilmsPresenter(model, model.selectedFiltrationCriterion, model.userData,
-            model.shownFilms, model.selectedSortCriterion, model.allFilmsShown, this.updateUserRating);
+            model.shownFilms, model.selectedSortCriterion, model.allFilmsShown, this.updateUserRating.bind(this));
         this.footerPresenter = new FooterPresenter(model, model.allFilmsCount);
     }
 

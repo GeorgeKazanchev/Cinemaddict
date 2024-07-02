@@ -11,36 +11,68 @@ export default class FilmsListPresenter {
 
         this.model = model;
         this.view = new FilmsListView(filmsList);
-        this.filmCardPresenters = filmsList.films?.map((film) =>
-            new FilmCardPresenter(model, film,
-                updateUserRating, updateHistoryTab,
-                updateWatchlistTab, updateFavoritesTab))
-            ?? [];
+        this.filmCardPresenters = this.getFilmCardPresentersBy(filmsList.films,
+            updateUserRating, updateHistoryTab, updateWatchlistTab, updateFavoritesTab);
+
+        this.updateUserRating = updateUserRating;
+        this.updateHistoryTab = updateHistoryTab;
+        this.updateWatchlistTab = updateWatchlistTab;
+        this.updateFavoritesTab = updateFavoritesTab;
+
+        this.setShowMoreButtonClickHandler();
     }
 
     private model: Model;
     private view: FilmsListView;
     private filmCardPresenters: FilmCardPresenter[];
+    private updateUserRating: () => void;
+    private updateHistoryTab: () => void;
+    private updateWatchlistTab: () => void;
+    private updateFavoritesTab: () => void;
 
     public render(element: Element): void {
-
+        this.renderFilmCards();
         element.appendChild(this.view.element);
     }
 
     public updateFilmsList(films: Movie[]): void {
         this.view.filmsList.films = films;
-        this.view.setFilmCardViews();
+        this.filmCardPresenters = this.getFilmCardPresentersBy(films,
+            this.updateUserRating, this.updateHistoryTab, this.updateWatchlistTab, this.updateFavoritesTab);
         this.renderFilmCards();
+    }
+
+    private getFilmCardPresentersBy(films: Movie[] | null,
+        updateUserRating: () => void, updateHistoryTab: () => void,
+        updateWatchlistTab: () => void, updateFavoritesTab: () => void): FilmCardPresenter[] {
+
+        return films?.map((film) =>
+            new FilmCardPresenter(this.model, film,
+                updateUserRating, updateHistoryTab,
+                updateWatchlistTab, updateFavoritesTab))
+            ?? [];
     }
 
     private renderFilmCards(): void {
         const filmsListContainer = this.view.element.querySelector('.films-list__container');
         if (filmsListContainer) {
             filmsListContainer.innerHTML = '';
-            const filmCardsElements = this.filmCardPresenters.map((presenter) => presenter.getFilmCardElement());
-            filmCardsElements.forEach((filmCardElement) => {
-                this.view.element.appendChild(filmCardElement);
+            this.filmCardPresenters.forEach((presenter) => {
+                presenter.render(filmsListContainer);
             });
         }
+    }
+
+    private setShowMoreButtonClickHandler(): void {
+        const showMoreButton = this.view.element.querySelector('.films-list__show-more');
+        showMoreButton?.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+            this.model.increaseShownFilmsCount();
+            this.updateFilmsList(this.model.shownFilms);
+
+            if (this.model.allFilmsShown) {
+                this.view.hideShowMoreButton();
+            }
+        });
     }
 }

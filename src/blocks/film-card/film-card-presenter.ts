@@ -31,8 +31,8 @@ export default class FilmCardPresenter {
     private updateWatchlistTab: () => void;
     private updateFavoritesTab: () => void;
 
-    public getFilmCardElement(): Element {
-        return Object.freeze(this.view.element);
+    public render(element: Element): void {
+        element.appendChild(this.view.element);
     }
 
     private setButtonsClickHandlers(): void {

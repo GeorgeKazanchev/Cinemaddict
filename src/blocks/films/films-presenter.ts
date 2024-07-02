@@ -16,8 +16,6 @@ export default class FilmsPresenter {
             new FilmsListPresenter(model, filmsList,
                 updateUserRating, updateHistoryTab,
                 updateWatchlistTab, updateFavoritesTab));
-
-        this.setShowMoreButtonClickHandler();
     }
 
     private model: Model;
@@ -35,30 +33,19 @@ export default class FilmsPresenter {
 
     public updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
         this.view.filmsSection = new FilledFilmsSection(films, allFilmsShown);
-        this.renderFilmsLists();
-    }
-
-    private setShowMoreButtonClickHandler(): void {
-        const showMoreButton = this.view.element.querySelector('.films-list__show-more');
-        showMoreButton?.addEventListener('click', (evt: Event) => {
-            evt.preventDefault();
-            this.model.increaseShownFilmsCount();
-            this.updateAllMoviesFilmsList(this.model.shownFilms);
-
-            if (this.model.allFilmsShown) {
-                this.view.hideShowMoreButton();
-            }
-        });
-    }
-
-    private updateAllMoviesFilmsList(shownFilms: Movie[]): void {
-        const filmsListPresenter = this.filmsListPresenters[0];     //  TODO: Don't use index here
-        filmsListPresenter.updateFilmsList(shownFilms);
+        this.updateFilmsLists(films);
     }
 
     private renderFilmsLists(): void {
         this.view.element.innerHTML = '';
         this.filmsListPresenters.forEach((presenter) => {
+            presenter.render(this.view.element);
+        });
+    }
+
+    private updateFilmsLists(films: Movie[] | null): void {
+        this.filmsListPresenters.forEach((presenter) => {
+            presenter.updateFilmsList(films ?? []);
             presenter.render(this.view.element);
         });
     }

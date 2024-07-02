@@ -15,9 +15,4 @@ export default class FilmsView extends AbstractView {
         const element = this.getTemplate();
         return element;
     }
-
-    hideShowMoreButton(): void {
-        const showMoreButton = this.element.querySelector('.films-list__show-more');
-        showMoreButton?.remove();
-    }
 }

@@ -19,11 +19,11 @@ export default class MainFilmsPresenter {
         this.model = model;
         this.view = new MainFilmsView(selectedFiltrationCriterion, userData, filmsSection, selectedSortCriterion);
 
-        this.filmsPresenter = new FilmsPresenter(model, filmsSection,
-            updateUserRating, this.updateHistoryTab, this.updateWatchlistTab, this.updateFavoritesTab);
+        this.filmsPresenter = new FilmsPresenter(model, filmsSection, updateUserRating, this.updateHistoryTab.bind(this),
+            this.updateWatchlistTab.bind(this), this.updateFavoritesTab.bind(this));
         this.mainNavigationPresenter = new MainNavigationFilmsPresenter(model, selectedFiltrationCriterion,
-            userData, this.filterFilms);
-        this.sortPresenter = new SortPresenter(model, selectedSortCriterion, this.sortFilms);
+            userData, this.filterFilms.bind(this));
+        this.sortPresenter = new SortPresenter(model, selectedSortCriterion, this.sortFilms.bind(this));
     }
 
     private model: Model;
@@ -31,10 +31,6 @@ export default class MainFilmsPresenter {
     private filmsPresenter: FilmsPresenter;
     private mainNavigationPresenter: MainNavigationFilmsPresenter;
     private sortPresenter: SortPresenter;
-
-    public get element(): Element {
-        return Object.freeze(this.view.element);
-    }
 
     public render(element: Element): void {
         this.mainNavigationPresenter.render(this.view.element);

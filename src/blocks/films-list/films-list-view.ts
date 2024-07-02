@@ -39,6 +39,11 @@ export default class FilmsListView extends AbstractView {
         return this.filmsList.films?.map((film) => new FilmCardView(film)) ?? [];
     }
 
+    hideShowMoreButton(): void {
+        const showMoreButton = this.element.querySelector('.films-list__show-more');
+        showMoreButton?.remove();
+    }
+
     private setModifier(element: Element): void {
         if (this.filmsList.isExtra) {
             element.classList.add('films-list--extra');
