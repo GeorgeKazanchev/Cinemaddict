@@ -9,8 +9,7 @@ import SortCriterionType from '../types/sort-criterion-type';
 import FiltrationCriterionType from '../types/filtration-criterion-type';
 import Application from '../application';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
-
-const NEW_COMMENT_EMOJI_SIZE = 55;
+import { NEW_COMMENT_EMOJI_SIZE } from '../../settings';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
