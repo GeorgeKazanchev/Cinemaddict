@@ -20,7 +20,7 @@ export default class StatisticsScreen {
 
         this.setNavigationTabsClickHandlers();
         this.setStatisticsFiltersChangeHandlers();
-        this.renderCanvas();
+        this.renderCanvas(getMinDate());
     }
 
     private model: Model;
@@ -67,22 +67,24 @@ export default class StatisticsScreen {
             const startDate = this.getStartDateByFilterValue(filter.value);
             this.model.updateStatisticsData(startDate);
             this.mainView.updateStatisticsData(this.model.userData);
+            this.renderCanvas(startDate);
         }
     }
 
-    private renderCanvas(): void {
+    private renderCanvas(startDate: Date): void {
         const statisticsCanvas = this.mainView.element.querySelector('.statistic__chart');
         if (statisticsCanvas instanceof HTMLCanvasElement) {
             const context = statisticsCanvas.getContext('2d');
             if (context) {
-                const genresDataArray = this.getShownGenresData();
+                const genresDataArray = this.getShownGenresData(startDate);
+                context.clearRect(0, 0, statisticsCanvas.width, statisticsCanvas.height);
                 this.renderGenresColumns(context, genresDataArray, statisticsCanvas.width, statisticsCanvas.height);
             }
         }
     }
 
-    private getShownGenresData(): [string, number][] {
-        const genresDataMap = this.model.getGenresDataMap(this.model.watchedFilms);
+    private getShownGenresData(startDate: Date): [string, number][] {
+        const genresDataMap = this.model.getGenresDataMap(this.model.getWatchedFilmsSince(startDate));
         const genresDataArray = Array.from(genresDataMap);
         genresDataArray.sort((a, b) => b[1] - a[1]);
         return genresDataArray.slice(0, STATS_SHOWN_GENRES_COUNT);
@@ -90,6 +92,10 @@ export default class StatisticsScreen {
 
     private renderGenresColumns(context: CanvasRenderingContext2D, genresDataArray: [string, number][],
         canvasWidth: number, canvasHeight: number): void {
+
+        if (genresDataArray.length === 0) {     //  If the array is empty we don't render any columns
+            return;
+        }
 
         const columnWidth = 50;
         const columnGap = 2 * columnWidth;
