@@ -326,9 +326,22 @@ export default class FilmsScreen {
     private setCommentFormSubmitHandler(formElement: HTMLFormElement): void {
         formElement.addEventListener('submit', (evt: Event) => {
             evt.preventDefault();
+
             const commentInputElement = formElement.querySelector('.film-details__new-comment textarea');
             if (commentInputElement instanceof HTMLTextAreaElement) {
                 commentInputElement.value = '';
+            }
+
+            const emojiElements = formElement.querySelectorAll('.film-details__emoji-item');
+            emojiElements.forEach((element) => {
+                if (element instanceof HTMLInputElement) {
+                    element.checked = false;
+                }
+            });
+
+            const newCommentEmojiElement = formElement.querySelector('.film-details__add-emoji-label');
+            if (newCommentEmojiElement) {
+                newCommentEmojiElement.innerHTML = '';
             }
         });
     }
