@@ -160,10 +160,10 @@ export default class Model {
 
     public getFavoriteGenres(films: Movie[]): string[] {
         let favoriteGenres = [];
-        const genresCountMap = this.getGenresCountMap(films);
+        const genresDataMap = this.getGenresDataMap(films);
 
-        const largestFilmsOfGenre = Math.max(...genresCountMap.values());
-        for (let [key, value] of genresCountMap.entries()) {
+        const largestFilmsOfGenre = Math.max(...genresDataMap.values());
+        for (let [key, value] of genresDataMap.entries()) {
             if (value === largestFilmsOfGenre) {
                 favoriteGenres.push(key);
             }
@@ -172,15 +172,15 @@ export default class Model {
         return favoriteGenres;
     }
 
-    public getGenresCountMap(films: Movie[]): Map<string, number> {
-        const genresCountMap = new Map<string, number>();
+    public getGenresDataMap(films: Movie[]): Map<string, number> {
+        const genresDataMap = new Map<string, number>();
         films.forEach((film) => {
             film.filmInfo.genre.forEach((genre) => {
-                const prevFilmsCount = genresCountMap.get(genre) ?? 0;
-                genresCountMap.set(genre, prevFilmsCount + 1);
+                const prevFilmsCount = genresDataMap.get(genre) ?? 0;
+                genresDataMap.set(genre, prevFilmsCount + 1);
             });
         });
-        return genresCountMap;
+        return genresDataMap;
     }
 
     public updateStatisticsData(startDate: Date): void {

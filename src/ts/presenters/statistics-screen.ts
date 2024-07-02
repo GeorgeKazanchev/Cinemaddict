@@ -6,6 +6,7 @@ import Model from '../models/model';
 import Application from '../application';
 import SortCriterionType from '../types/sort-criterion-type';
 import { getFiltrationCriterionByElement, getMinDate } from '../utils';
+import { STATS_SHOWN_GENRES_COUNT } from '../../settings';
 
 export default class StatisticsScreen {
     constructor(data: ModelData) {
@@ -19,6 +20,7 @@ export default class StatisticsScreen {
 
         this.setNavigationTabsClickHandlers();
         this.setStatisticsFiltersChangeHandlers();
+        this.renderCanvas();
     }
 
     private model: Model;
@@ -63,9 +65,51 @@ export default class StatisticsScreen {
         const filter = evt.target;
         if (filter instanceof HTMLInputElement) {
             const startDate = this.getStartDateByFilterValue(filter.value);
-            console.log(startDate);
             this.model.updateStatisticsData(startDate);
             this.mainView.updateStatisticsData(this.model.userData);
+        }
+    }
+
+    private renderCanvas(): void {
+        const statisticsCanvas = this.mainView.element.querySelector('.statistic__chart');
+        if (statisticsCanvas instanceof HTMLCanvasElement) {
+            const context = statisticsCanvas.getContext('2d');
+            if (context) {
+                const genresDataArray = this.getShownGenresData();
+                this.renderGenresColumns(context, genresDataArray, statisticsCanvas.width, statisticsCanvas.height);
+            }
+        }
+    }
+
+    private getShownGenresData(): [string, number][] {
+        const genresDataMap = this.model.getGenresDataMap(this.model.watchedFilms);
+        const genresDataArray = Array.from(genresDataMap);
+        genresDataArray.sort((a, b) => b[1] - a[1]);
+        return genresDataArray.slice(0, STATS_SHOWN_GENRES_COUNT);
+    }
+
+    private renderGenresColumns(context: CanvasRenderingContext2D, genresDataArray: [string, number][],
+        canvasWidth: number, canvasHeight: number): void {
+
+        const columnWidth = 50;
+        const columnGap = 2 * columnWidth;
+        const largestColumnHeight = 0.7 * canvasHeight;
+        const columnsCount = genresDataArray.length;
+
+        const x0 = (canvasWidth - columnsCount * columnWidth - (columnsCount - 1) * columnGap) / 2;
+        const y0 = 50;
+
+        const topGenreFilmsCount = genresDataArray[0][1];
+
+        for (let i = 0; i < genresDataArray.length; ++i) {
+            const filmsCount = genresDataArray[i][1];
+            const columnHeight = largestColumnHeight * filmsCount / topGenreFilmsCount;
+
+            const x = x0 + i * (columnWidth + columnGap);
+            const y = canvasHeight - y0 - columnHeight;
+
+            context.fillStyle = 'orange';
+            context.fillRect(x, y, columnWidth, columnHeight);
         }
     }
 
