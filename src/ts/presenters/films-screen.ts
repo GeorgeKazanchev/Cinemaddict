@@ -66,7 +66,7 @@ export default class FilmsScreen {
 
     private filtrationButtonClickHandler(evt: Event): void {
         evt.preventDefault();
-        const button = evt.target;
+        const button = evt.currentTarget;
         if (button instanceof Element) {
             const filtrationCriterion = getFiltrationCriterionByElement(button);
             this.filterFilms(filtrationCriterion);
