@@ -225,6 +225,7 @@ export default class FilmsScreen {
             this.setPopupCloseButtonClickHandler(popupElement);
             this.setPopupCloseKeyDownHandler(popupElement);
             this.setPopupEmojiItemsChangeHandlers(popupElement);
+            this.setCommentFormHandlers(popupElement);
 
             const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
             if (popupCloseButton instanceof HTMLElement) {      //  It doesn't work without setTimeout()
@@ -302,6 +303,23 @@ export default class FilmsScreen {
                 }
             });
         });
+    }
+
+    private setCommentFormHandlers(popupElement: Element): void {
+        const formElement = popupElement.querySelector('.film-details__inner');
+        if (formElement instanceof HTMLFormElement) {
+            this.setCommentInputKeyUpHandler(formElement);
+        }
+    }
+
+    private setCommentInputKeyUpHandler(formElement: HTMLFormElement): void {
+        const commentInputElement = formElement.querySelector('.film-details__new-comment textarea');
+        commentInputElement?.addEventListener('keyup', ((evt: KeyboardEvent) => {
+            if (evt.key === 'Enter' && evt.ctrlKey) {
+                evt.preventDefault();
+                formElement.submit();
+            }
+        }) as EventListener);
     }
 
     private setShowMoreButtonClickHandler(): void {
