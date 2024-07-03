@@ -6,7 +6,7 @@ export default class MainNavigationStatsView extends MainNavigationView {
         super(userData);
     }
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = super.createElement();
         this.checkStatsTabSelected(element);
         return element;

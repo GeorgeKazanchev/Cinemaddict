@@ -10,27 +10,27 @@ export default class MainNavigationFilmsView extends MainNavigationView {
 
     selectedFiltrationCriterion: FiltrationCriterionType;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = super.createElement();
         this.checkSelectedCriterion(element);
         return element;
     }
 
-    updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
+    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
         this.selectedFiltrationCriterion = filtrationCriterion;
         this.uncheckAllCriterions(this.element);
         this.checkSelectedCriterion(this.element);
     }
 
-    updateWatchlist(): void {
+    public updateWatchlist(): void {
         super.setWatchlist(this.element);
     }
 
-    updateHistory(): void {
+    public updateHistory(): void {
         super.setHistory(this.element);
     }
 
-    updateFavorites(): void {
+    public updateFavorites(): void {
         super.setFavorites(this.element);
     }
 

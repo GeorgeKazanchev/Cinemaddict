@@ -18,11 +18,11 @@ export default class FilmsListView extends AbstractView {
             <h2 class="films-list__title"></h2>
         </section>`;
 
-    get films(): Movie[] | null {
+    public get films(): Movie[] | null {
         return this.filmsList.films;
     }
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setModifier(element);
         this.setTitle(element);
@@ -31,11 +31,11 @@ export default class FilmsListView extends AbstractView {
         return element;
     }
 
-    setFilmCardViews(): void {
+    public setFilmCardViews(): void {
         this.filmCardViews = this.getFilmCardViews();
     }
 
-    getFilmCardViews(): FilmCardView[] {
+    public getFilmCardViews(): FilmCardView[] {
         return this.filmsList.films?.map((film) => new FilmCardView(film)) ?? [];
     }
 

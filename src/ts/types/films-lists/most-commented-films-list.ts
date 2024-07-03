@@ -11,5 +11,5 @@ export default class MostCommentedFilmsList extends FilmsList {
     isExtra: boolean = true;
     isEmpty: boolean;
 
-    hideTitleIfNeeded(_titleElement: Element): void { }
+    public hideTitleIfNeeded(_titleElement: Element): void { }
 }

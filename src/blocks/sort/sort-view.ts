@@ -14,13 +14,13 @@ export default class SortView extends AbstractView {
     template: string =
         `<ul class="sort"></ul>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.renderCriterionsToElement(element);
         return element;
     }
 
-    updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+    public updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
         this.selectedSortCriterion = sortCriterion;
         this.uncheckAllCriterions(this.element);
         this.checkSelectedCriterion(this.element);

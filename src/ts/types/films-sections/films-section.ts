@@ -9,9 +9,9 @@ export default abstract class FilmsSection {
     films: Movie[] | null;
     abstract isEmpty: boolean;
 
-    abstract getFilmsListViews(): FilmsListView[];
+    public abstract getFilmsListViews(): FilmsListView[];
 
-    renderFilmsListsToElement(filmsListViews: FilmsListView[], element: Element): void {
+    public renderFilmsListsToElement(filmsListViews: FilmsListView[], element: Element): void {
         filmsListViews.forEach((filmsListView) => {
             element.appendChild(filmsListView.element);
         });

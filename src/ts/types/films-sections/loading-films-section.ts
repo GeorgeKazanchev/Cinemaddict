@@ -9,7 +9,7 @@ export default class LoadingFilmsSection extends FilmsSection {
 
     isEmpty: boolean = true;
 
-    getFilmsListViews(): FilmsListView[] {
+    public getFilmsListViews(): FilmsListView[] {
         const filmsList = new LoadingFilmsList();
         return [new FilmsListView(filmsList)];
     }

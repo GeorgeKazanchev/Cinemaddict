@@ -13,7 +13,7 @@ export default class AllMoviesFilmsList extends FilmsList {
     isEmpty: boolean;
     allFilmsShown: boolean;
 
-    hideTitleIfNeeded(titleElement: Element): void {
+    public hideTitleIfNeeded(titleElement: Element): void {
         titleElement.classList.add('visually-hidden');
     }
 }

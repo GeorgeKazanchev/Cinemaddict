@@ -18,7 +18,7 @@ export default class HeaderView extends AbstractView {
             <h1 class="header__logo logo">Cinemaddict</h1>
         </header>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         if (this.isAuthorized && this.userData !== null) {
             const profileElement = this.profileView.element;
@@ -28,7 +28,7 @@ export default class HeaderView extends AbstractView {
         return element;
     }
 
-    updateUserRating(): void {
+    public updateUserRating(): void {
         this.profileView.updateRating();
     }
 }

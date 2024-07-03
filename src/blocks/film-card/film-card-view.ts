@@ -1,16 +1,16 @@
 import AbstractView from '../../ts/abstract-view';
 import Movie from '../../ts/types/movie';
 
+const MIN_RATING: number = 0.0;
+const MAX_RATING: number = 10.0;
+const MAX_DESCRIPTION_LENGTH: number = 140;
+const ELLIPSIS_CODE: number = 8230;
+
 export default class FilmCardView extends AbstractView {
     constructor(film: Movie) {
         super();
         this.film = film;
     }
-
-    static get MIN_RATING(): number { return 0.0; };
-    static get MAX_RATING(): number { return 10.0; };
-    static get MAX_DESCRIPTION_LENGTH(): number { return 140; };
-    static get ELLIPSIS_CODE(): number { return 8230; };
 
     film: Movie;
     template: string =
@@ -32,7 +32,7 @@ export default class FilmCardView extends AbstractView {
             </div>
         </article>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
 
         this.setTitle(element);
@@ -119,7 +119,7 @@ export default class FilmCardView extends AbstractView {
 
     private getRating(): string {
         const totalRating = this.film.filmInfo.totalRating;
-        if (totalRating < FilmCardView.MIN_RATING || totalRating > FilmCardView.MAX_RATING) {
+        if (totalRating < MIN_RATING || totalRating > MAX_RATING) {
             throw new RangeError('Film\'s rating is not in the correct range.');
         }
         return totalRating.toFixed(1);
@@ -158,9 +158,9 @@ export default class FilmCardView extends AbstractView {
         const description = this.film.filmInfo.description;
 
         let resultDescription = '';
-        if (description.length > FilmCardView.MAX_DESCRIPTION_LENGTH) {
-            resultDescription += description.slice(0, FilmCardView.MAX_DESCRIPTION_LENGTH - 1);
-            resultDescription += String.fromCharCode(FilmCardView.ELLIPSIS_CODE);
+        if (description.length > MAX_DESCRIPTION_LENGTH) {
+            resultDescription += description.slice(0, MAX_DESCRIPTION_LENGTH - 1);
+            resultDescription += String.fromCharCode(ELLIPSIS_CODE);
         } else {
             resultDescription += description;
         }

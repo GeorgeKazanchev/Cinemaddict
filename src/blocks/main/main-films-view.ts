@@ -32,7 +32,7 @@ export default class MainFilmsView extends MainView {
     filmsView: FilmsView;
     sortView: SortView | null;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         element.appendChild(this.mainNavigationView.element);
 
@@ -46,19 +46,19 @@ export default class MainFilmsView extends MainView {
         return element;
     }
 
-    updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
+    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
         this.mainNavigationView.updateSelectedFiltrationCriterion(filtrationCriterion);
     }
 
-    updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+    public updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
         this.sortView?.updateSelectedSortCriterion(sortCriterion);
     }
 
-    updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
+    public updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
         this.filmsView.updateFilmsSection(films, allFilmsShown);
     }
 
-    updateAllMoviesFilmsList(shownFilms: Movie[]): void {
+    public updateAllMoviesFilmsList(shownFilms: Movie[]): void {
         const filmsListView = this.filmsView.filmsListViews[0];     //  TODO: Don't use index here
         filmsListView.filmsList.films = shownFilms;
         filmsListView.setFilmCardViews();
@@ -72,7 +72,7 @@ export default class MainFilmsView extends MainView {
         }
     }
 
-    hideShowMoreButton(): void {
+    public hideShowMoreButton(): void {
         const showMoreButton = this.element.querySelector('.films-list__show-more');
         showMoreButton?.remove();
     }

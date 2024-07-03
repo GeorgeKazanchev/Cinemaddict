@@ -10,9 +10,9 @@ export default abstract class FilmsList {
     abstract isExtra: boolean;
     abstract isEmpty: boolean;
 
-    abstract hideTitleIfNeeded(titleElement: Element): void;
+    public abstract hideTitleIfNeeded(titleElement: Element): void;
 
-    setTitle(element: Element): void {
+    public setTitle(element: Element): void {
         const titleElement = element.querySelector('.films-list__title');
         if (titleElement) {
             this.hideTitleIfNeeded(titleElement);

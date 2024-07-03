@@ -15,7 +15,7 @@ export default class FilledFilmsSection extends FilmsSection {
     isEmpty: boolean;
     allFilmsShown: boolean;
 
-    getFilmsListViews(): FilmsListView[] {
+    public getFilmsListViews(): FilmsListView[] {
         const topRatedFilms = this.getTopRatedFilms(this.films);
         const mostCommentedFilms = this.getMostCommentedFilms(this.films);
 

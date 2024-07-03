@@ -14,14 +14,14 @@ export default class MainStatisticsView extends MainView {
     mainNavigationView: MainNavigationStatsView;
     statisticsView: StatisticsView;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         element.appendChild(this.mainNavigationView.element);
         element.appendChild(this.statisticsView.element);
         return element;
     }
 
-    updateStatisticsData(userData: UserData): void {
+    public updateStatisticsData(userData: UserData): void {
         this.statisticsView.userData = userData;
         this.statisticsView.updateWatchedFilms();
         this.statisticsView.updateTotalDuration();

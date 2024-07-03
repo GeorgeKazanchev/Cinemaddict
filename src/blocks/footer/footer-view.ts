@@ -15,7 +15,7 @@ export default class FooterView extends AbstractView {
             </section>
         </footer>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setFilmsStatistics(element);
         return element;

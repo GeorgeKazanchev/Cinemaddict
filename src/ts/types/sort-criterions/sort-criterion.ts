@@ -5,7 +5,7 @@ export default abstract class SortCriterion {
     abstract name: string;
     abstract modifier: string;
 
-    set active(isActive: boolean) {
+    public set active(isActive: boolean) {
         if (this.element) {
             const sortButton = this.element.querySelector('.sort__button');
             if (sortButton) {
@@ -18,7 +18,7 @@ export default abstract class SortCriterion {
         }
     }
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = document.createElement('li');
 
         const innerElement = document.createElement('a');
@@ -32,7 +32,7 @@ export default abstract class SortCriterion {
         return element;
     }
 
-    getElement(): Element {
+    public getElement(): Element {
         if (this.element) {
             return this.element;
         } else {

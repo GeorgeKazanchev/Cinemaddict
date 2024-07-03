@@ -9,5 +9,5 @@ export default class LoadingFilmsList extends FilmsList {
     isExtra: boolean = false;
     isEmpty: boolean = true;
 
-    hideTitleIfNeeded(_titleElement: Element): void { }
+    public hideTitleIfNeeded(_titleElement: Element): void { }
 }

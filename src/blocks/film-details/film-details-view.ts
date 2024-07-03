@@ -113,7 +113,7 @@ export default class FilmDetailsView extends AbstractView {
             </form>
         </section>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setFilmInfo(element);
         this.setControls(element);

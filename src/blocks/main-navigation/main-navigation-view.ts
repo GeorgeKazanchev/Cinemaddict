@@ -28,7 +28,7 @@ export default abstract class MainNavigationView extends AbstractView {
             <a href="#stats" class="main-navigation__additional">Stats</a>
         </nav>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setWatchlist(element);
         this.setHistory(element);

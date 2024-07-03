@@ -15,11 +15,11 @@ export default abstract class AbstractView {
 
     public abstract createElement(): Element;
 
-    getMarkup(): string {
+    public getMarkup(): string {
         return this.element.outerHTML;
     }
 
-    getTemplate(): Element {
+    public getTemplate(): Element {
         const templateContainer = document.createElement('div');
         templateContainer.insertAdjacentHTML('afterbegin', this.template);
 

@@ -17,13 +17,13 @@ export default class FilmsView extends AbstractView {
     template: string =
         `<section class="films"></section>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, element);
         return element;
     }
 
-    updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
+    public updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
         this.filmsSection = films && films.length > 0
             ? new FilledFilmsSection(films, allFilmsShown)
             : new EmptyFilmsSection();

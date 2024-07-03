@@ -13,14 +13,14 @@ export default class ProfileView extends AbstractView {
             <img class="profile__avatar" src="" alt="Avatar" width="35" height="35">
         </section>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setRating(element);
         this.setAvatar(element);
         return element;
     }
 
-    updateRating(): void {
+    public updateRating(): void {
         const ratingElement = this.element.querySelector('.profile__rating');
         if (ratingElement) {
             ratingElement.textContent = this.userData.rank;

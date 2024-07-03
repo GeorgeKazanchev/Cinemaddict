@@ -25,7 +25,7 @@ export default class FilmDetailsCommentView extends AbstractView {
             </div>
         </li>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setCommentEmoji(element);
         this.setCommentText(element);

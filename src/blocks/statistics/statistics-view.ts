@@ -55,14 +55,14 @@ export default class StatisticsView extends AbstractView {
             </div>
         </section>`;
 
-    createElement(): Element {
+    public createElement(): Element {
         const element = this.getTemplate();
         this.setUserInfo(element);
         this.setStatisticsItems(element);
         return element;
     }
 
-    updateWatchedFilms(): void {
+    public updateWatchedFilms(): void {
         const watchedFilmsElement = this.element.querySelector('.statistic__text-item--films-watched');
         if (watchedFilmsElement) {
             const textElement = watchedFilmsElement.querySelector('.statistic__item-text');
@@ -73,7 +73,7 @@ export default class StatisticsView extends AbstractView {
         }
     }
 
-    updateTotalDuration(): void {
+    public updateTotalDuration(): void {
         const totalDurationElement = this.element.querySelector('.statistic__text-item--total-duration');
         if (totalDurationElement) {
             const textElement = totalDurationElement.querySelector('.statistic__item-text');
@@ -83,7 +83,7 @@ export default class StatisticsView extends AbstractView {
         }
     }
 
-    updateFavoriteGenres(): void {
+    public updateFavoriteGenres(): void {
         this.setTopGenres(this.element);
     }
 
