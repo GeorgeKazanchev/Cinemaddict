@@ -8,15 +8,16 @@ export default class ProfileView extends AbstractView {
     }
 
     userData: UserData;
-    template: string =
-        `<section class="profile">
-            <img class="profile__avatar" src="" alt="Avatar" width="35" height="35">
-        </section>`;
+
+    public get template(): string {
+        return `<section class="profile">
+                    <img class="profile__avatar" src="${this.userData.avatar}" alt="Avatar" width="35" height="35">
+                </section>`;
+    }
 
     public createElement(): Element {
         const element = this.getTemplate();
         this.setRating(element);
-        this.setAvatar(element);
         return element;
     }
 
@@ -35,13 +36,6 @@ export default class ProfileView extends AbstractView {
             ratingElement.classList.add('profile__rating');
             ratingElement.textContent = this.userData.rank;
             element.insertAdjacentElement('afterbegin', ratingElement);
-        }
-    }
-
-    private setAvatar(element: Element): void {
-        const avatarElement = element.querySelector('.profile__avatar');
-        if (avatarElement && avatarElement instanceof HTMLImageElement) {
-            avatarElement.src = this.userData.avatar;
         }
     }
 }

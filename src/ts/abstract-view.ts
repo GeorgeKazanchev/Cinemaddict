@@ -4,7 +4,8 @@ export default abstract class AbstractView {
     }
 
     private _element: Element | null;
-    public abstract template: string;
+
+    public abstract get template(): string;
 
     public get element(): Element {
         if (!this._element) {
