@@ -1,7 +1,14 @@
 .footer {
     display: flex;
     align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: inherit;
+    max-width: inherit;
     height: 100px;
+    padding-left: inherit;
+    padding-right: inherit;
+    box-sizing: border-box;
     background: url('./../img/background-footer.png') no-repeat 50% -20px;
 }
 
