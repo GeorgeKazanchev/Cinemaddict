@@ -51,7 +51,7 @@ export default class StatisticsScreen {
 
     private navigationTabClickHandler(evt: Event): void {
         evt.preventDefault();
-        const tab = evt.target;
+        const tab = evt.currentTarget;
         if (tab instanceof Element) {
             const filtrationCriterion = getFiltrationCriterionByElement(tab);
             this.model.selectedFiltrationCriterion = filtrationCriterion;
