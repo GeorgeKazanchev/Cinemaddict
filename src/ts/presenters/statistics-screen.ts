@@ -103,20 +103,52 @@ export default class StatisticsScreen {
         const columnsCount = genresDataArray.length;
 
         const x0 = (canvasWidth - columnsCount * columnWidth - (columnsCount - 1) * columnGap) / 2;
-        const y0 = 50;
+        const y0 = 60;  //  Bottom margin of the columns
 
         const topGenreFilmsCount = genresDataArray[0][1];
 
         for (let i = 0; i < genresDataArray.length; ++i) {
+            const genre = genresDataArray[i][0];
             const filmsCount = genresDataArray[i][1];
             const columnHeight = largestColumnHeight * filmsCount / topGenreFilmsCount;
 
             const x = x0 + i * (columnWidth + columnGap);
             const y = canvasHeight - y0 - columnHeight;
+            const genreY = y + columnHeight + 30;
+            const filmsCountY = y + columnHeight + 60;
 
-            context.fillStyle = 'orange';
-            context.fillRect(x, y, columnWidth, columnHeight);
+            this.renderColumn(context, x, y, columnWidth, columnHeight);
+            this.renderGenreName(context, genre, x + columnWidth / 2, genreY);
+            this.renderFilmsCount(context, filmsCount, x + columnWidth / 2, filmsCountY);
         }
+    }
+
+    private renderColumn(context: CanvasRenderingContext2D, x: number, y: number,
+        width: number, height: number): void {
+
+        const gradient = context.createLinearGradient(x, y, x, y + height);
+        gradient.addColorStop(0, '#e49a27');
+        gradient.addColorStop(1, '#ffe800');
+        context.fillStyle = gradient;
+        context.fillRect(x, y, width, height);
+    }
+
+    private renderGenreName(context: CanvasRenderingContext2D, genre: string,
+        x: number, y: number): void {
+
+        context.fillStyle = '#ffffff';
+        context.font = '24px "Open Sans", "Arial", sans-serif';
+        context.textAlign = 'center';
+        context.fillText(genre, x, y);
+    }
+
+    private renderFilmsCount(context: CanvasRenderingContext2D, filmsCount: number,
+        x: number, y: number): void {
+
+        context.fillStyle = '#ffe800';
+        context.font = 'bold 24px "Open Sans", "Arial", sans-serif';
+        context.textAlign = 'center';
+        context.fillText(filmsCount.toFixed(0), x, y);
     }
 
     private getStartDateByFilterValue(value: string): Date {
