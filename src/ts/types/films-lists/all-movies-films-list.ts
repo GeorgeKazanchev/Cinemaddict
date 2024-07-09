@@ -11,9 +11,6 @@ export default class AllMoviesFilmsList extends FilmsList {
     title: string = 'All movies. Upcoming';
     isExtra: boolean = false;
     isEmpty: boolean;
+    isTitleHidden: boolean = true;
     allFilmsShown: boolean;
-
-    public hideTitleIfNeeded(titleElement: Element): void {
-        titleElement.classList.add('visually-hidden');
-    }
 }

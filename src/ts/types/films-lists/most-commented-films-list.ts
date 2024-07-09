@@ -10,6 +10,5 @@ export default class MostCommentedFilmsList extends FilmsList {
     title: string = 'Most commented';
     isExtra: boolean = true;
     isEmpty: boolean;
-
-    public hideTitleIfNeeded(_titleElement: Element): void { }
+    isTitleHidden: boolean = false;
 }

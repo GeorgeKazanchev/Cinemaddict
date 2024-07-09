@@ -10,6 +10,5 @@ export default class TopRatedFilmsList extends FilmsList {
     title: string = 'Top rated';
     isExtra: boolean = true;
     isEmpty: boolean;
-
-    public hideTitleIfNeeded(_titleElement: Element): void { }
+    isTitleHidden: boolean = false;
 }

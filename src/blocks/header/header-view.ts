@@ -13,22 +13,29 @@ export default class HeaderView extends AbstractView {
     isAuthorized: boolean;
     userData: UserData;
     profileView: ProfileView;
-    template: string =
-        `<header class="header">
-            <h1 class="header__logo logo">Cinemaddict</h1>
-        </header>`;
+
+    public get template(): string {
+        return `<header class="header">
+                    <h1 class="header__logo logo">Cinemaddict</h1>
+                    ${this.getProfileMarkup()}
+                </header>`;
+    }
 
     public createElement(): Element {
-        const element = this.getTemplate();
-        if (this.isAuthorized && this.userData !== null) {
-            const profileElement = this.profileView.element;
-            profileElement.classList.add('header__profile');
-            element.appendChild(profileElement);
-        }
-        return element;
+        return this.getTemplate();
     }
 
     public updateUserRating(): void {
         this.profileView.updateRating();
+    }
+
+    private getProfileMarkup(): string {
+        if (this.isAuthorized && this.userData !== null) {
+            const profileElement = this.profileView.element;
+            profileElement.classList.add('header__profile');
+            return profileElement.outerHTML;
+        } else {
+            return '';
+        }
     }
 }

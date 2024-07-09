@@ -8,6 +8,5 @@ export default class LoadingFilmsList extends FilmsList {
     title: string = 'Loading...';
     isExtra: boolean = false;
     isEmpty: boolean = true;
-
-    public hideTitleIfNeeded(_titleElement: Element): void { }
+    isTitleHidden: boolean = false;
 }

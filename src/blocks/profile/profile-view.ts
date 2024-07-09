@@ -11,14 +11,13 @@ export default class ProfileView extends AbstractView {
 
     public get template(): string {
         return `<section class="profile">
+                    ${this.getRatingMarkup()}
                     <img class="profile__avatar" src="${this.userData.avatar}" alt="Avatar" width="35" height="35">
                 </section>`;
     }
 
     public createElement(): Element {
-        const element = this.getTemplate();
-        this.setRating(element);
-        return element;
+        return this.getTemplate();
     }
 
     public updateRating(): void {
@@ -26,16 +25,13 @@ export default class ProfileView extends AbstractView {
         if (ratingElement) {
             ratingElement.textContent = this.userData.rank;
         } else {
-            this.setRating(this.element);
+            this.element.insertAdjacentHTML('afterbegin', this.getRatingMarkup());
         }
     }
 
-    private setRating(element: Element): void {
-        if (this.userData.allFilmsWatched > 0) {
-            const ratingElement = document.createElement('p');
-            ratingElement.classList.add('profile__rating');
-            ratingElement.textContent = this.userData.rank;
-            element.insertAdjacentElement('afterbegin', ratingElement);
-        }
+    private getRatingMarkup(): string {
+        return this.userData.allFilmsWatched > 0
+            ? `<p class="profile__rating">${this.userData.rank}</p>`
+            : ``;
     }
 }

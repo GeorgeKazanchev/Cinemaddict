@@ -13,10 +13,14 @@ export default class FilmsListView extends AbstractView {
 
     filmsList: FilmsList;
     filmCardViews: FilmCardView[];
-    template: string =
-        `<section class="films-list">
-            <h2 class="films-list__title"></h2>
-        </section>`;
+
+    public get template(): string {
+        return `<section class="films-list">
+                    <h2 class="films-list__title${this.filmsList.isTitleHidden ? ' visually-hidden' : ''}">
+                        ${this.filmsList.title}
+                    </h2>
+                </section>`;
+    }
 
     public get films(): Movie[] | null {
         return this.filmsList.films;
@@ -25,7 +29,6 @@ export default class FilmsListView extends AbstractView {
     public createElement(): Element {
         const element = this.getTemplate();
         this.setModifier(element);
-        this.setTitle(element);
         this.setFilmsListContainer(element);
         this.setShowMoreButton(element);
         return element;
@@ -43,10 +46,6 @@ export default class FilmsListView extends AbstractView {
         if (this.filmsList.isExtra) {
             element.classList.add('films-list--extra');
         }
-    }
-
-    private setTitle(element: Element): void {
-        this.filmsList.setTitle(element);
     }
 
     private setFilmsListContainer(element: Element): void {

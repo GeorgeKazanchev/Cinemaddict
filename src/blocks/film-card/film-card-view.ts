@@ -77,12 +77,12 @@ export default class FilmCardView extends AbstractView {
         return duration;
     }
 
-    private getGenre() {
+    private getGenre(): string {
         const genres = this.film.filmInfo.genre;
         return genres.join(', ');
     }
 
-    private getDescription() {
+    private getDescription(): string {
         const description = this.film.filmInfo.description;
 
         let resultDescription = '';
@@ -96,7 +96,7 @@ export default class FilmCardView extends AbstractView {
         return resultDescription;
     }
 
-    private getCommentsCount() {
+    private getCommentsCount(): string {
         const commentsCount = this.film.comments.length;
         return commentsCount === 1 ? `${commentsCount} comment` : `${commentsCount} comments`;
     }
