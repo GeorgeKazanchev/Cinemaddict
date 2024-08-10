@@ -6,10 +6,10 @@
     },
     "compilerOptions": {
         "outDir": "./src/main.js",
-        "module": "ES6",
-        "target": "ES6",
+        "module": "ESNext",
+        "target": "ESNext",
         "noImplicitAny": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "Bundler",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "allowJs": true,

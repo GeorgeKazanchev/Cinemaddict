@@ -46,6 +46,9 @@ export default class Model {
             case FiltrationCriterionType.Favorites: {
                 return this.favoriteFilms;
             }
+            default: {
+                throw new Error('Given filtration criterion is not supported.');
+            }
         }
     }
 
@@ -63,6 +66,9 @@ export default class Model {
                 return [...this.filteredFilms].sort((a, b) => {
                     return b.filmInfo.totalRating - a.filmInfo.totalRating;
                 });
+            }
+            default: {
+                throw new Error('Given sort criterion is not supported.');
             }
         }
     }
@@ -159,11 +165,11 @@ export default class Model {
     }
 
     public getFavoriteGenres(films: Movie[]): string[] {
-        let favoriteGenres = [];
+        const favoriteGenres = [];
         const genresDataMap = this.getGenresDataMap(films);
 
         const largestFilmsOfGenre = Math.max(...genresDataMap.values());
-        for (let [key, value] of genresDataMap.entries()) {
+        for (const [key, value] of genresDataMap.entries()) {
             if (value === largestFilmsOfGenre) {
                 favoriteGenres.push(key);
             }
