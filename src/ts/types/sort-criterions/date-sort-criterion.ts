@@ -1,4 +1,4 @@
-import SortCriterionType from '../sort-criterion-type';
+import SortType from '../sort-type';
 import SortCriterion from './sort-criterion';
 
 export default class DateSortCriterion extends SortCriterion {
@@ -6,6 +6,6 @@ export default class DateSortCriterion extends SortCriterion {
         super();
     }
 
-    name: string = SortCriterionType.Date;
+    name: string = SortType.Date;
     modifier: string = `sort__button--date`;
 }

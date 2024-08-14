@@ -1,5 +1,5 @@
 import AbstractView from '../../ts/abstract-view';
-import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
+import FiltrationType from '../../ts/types/filtration-type';
 import UserData from '../../ts/types/user-data';
 
 export default abstract class MainNavigationView extends AbstractView {
@@ -37,38 +37,38 @@ export default abstract class MainNavigationView extends AbstractView {
     }
 
     protected setWatchlist(element: Element): void {
-        const watchlistTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.Watchlist));
+        const watchlistTab = element.querySelector(this.getCriterionSelector(FiltrationType.Watchlist));
         if (watchlistTab) {
             this.setFilmsCount(watchlistTab, this.userData.filmsInWatchlist);
         }
     }
 
     protected setHistory(element: Element): void {
-        const historyTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.History));
+        const historyTab = element.querySelector(this.getCriterionSelector(FiltrationType.History));
         if (historyTab) {
             this.setFilmsCount(historyTab, this.userData.allFilmsWatched);
         }
     }
 
     protected setFavorites(element: Element): void {
-        const favoritesTab = element.querySelector(this.getCriterionSelector(FiltrationCriterionType.Favorites));
+        const favoritesTab = element.querySelector(this.getCriterionSelector(FiltrationType.Favorites));
         if (favoritesTab) {
             this.setFilmsCount(favoritesTab, this.userData.favoriteFilms);
         }
     }
 
-    protected getCriterionSelector(filtrationCriterion: FiltrationCriterionType): string {
+    protected getCriterionSelector(filtrationCriterion: FiltrationType): string {
         switch (filtrationCriterion) {
-            case FiltrationCriterionType.AllMovies: {
+            case FiltrationType.AllMovies: {
                 return '.main-navigation__item--all';
             }
-            case FiltrationCriterionType.Watchlist: {
+            case FiltrationType.Watchlist: {
                 return '.main-navigation__item--watchlist';
             }
-            case FiltrationCriterionType.History: {
+            case FiltrationType.History: {
                 return '.main-navigation__item--history';
             }
-            case FiltrationCriterionType.Favorites: {
+            case FiltrationType.Favorites: {
                 return '.main-navigation__item--favorites';
             }
             default: {

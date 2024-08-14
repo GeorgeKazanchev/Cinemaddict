@@ -6,8 +6,8 @@ import FilmsSection from '../../ts/types/films-sections/films-section';
 import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
 import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
 import UserData from '../../ts/types/user-data';
-import SortCriterionType from '../../ts/types/sort-criterion-type';
-import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
+import SortType from '../../ts/types/sort-type';
+import FiltrationType from '../../ts/types/filtration-type';
 import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {

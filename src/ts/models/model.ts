@@ -1,7 +1,7 @@
 import ModelData from '../models-data/model-data';
 import Movie from '../types/movie';
-import SortCriterionType from '../types/sort-criterion-type';
-import FiltrationCriterionType from '../types/filtration-criterion-type';
+import SortType from '../types/sort-type';
+import FiltrationType from '../types/filtration-type';
 import UserData from '../types/user-data';
 import { FILMS_CHUNK_SIZE } from '../../settings';
 
@@ -33,17 +33,17 @@ export default class Model {
     }
 
     public get filteredFilms(): Movie[] {
-        switch (this.selectedFiltrationCriterion) {
-            case FiltrationCriterionType.AllMovies: {
+        switch (this.filtrationSelected) {
+            case FiltrationType.AllMovies: {
                 return this.allFilms;
             }
-            case FiltrationCriterionType.Watchlist: {
+            case FiltrationType.Watchlist: {
                 return this.filmsInWatchlist;
             }
-            case FiltrationCriterionType.History: {
+            case FiltrationType.History: {
                 return this.watchedFilms;
             }
-            case FiltrationCriterionType.Favorites: {
+            case FiltrationType.Favorites: {
                 return this.favoriteFilms;
             }
             default: {
@@ -53,16 +53,16 @@ export default class Model {
     }
 
     public get sortedFilms(): Movie[] {
-        switch (this.selectedSortCriterion) {
-            case SortCriterionType.Default: {
+        switch (this.sortSelected) {
+            case SortType.Default: {
                 return this.filteredFilms;
             }
-            case SortCriterionType.Date: {
+            case SortType.Date: {
                 return [...this.filteredFilms].sort((a, b) => {
                     return new Date(b.filmInfo.release.date).getTime() > new Date(a.filmInfo.release.date).getTime() ? 1 : -1;
                 });
             }
-            case SortCriterionType.Rating: {
+            case SortType.Rating: {
                 return [...this.filteredFilms].sort((a, b) => {
                     return b.filmInfo.totalRating - a.filmInfo.totalRating;
                 });
@@ -77,7 +77,7 @@ export default class Model {
         return this.sortedFilms.slice(0, this.data.shownFilmsCount);
     }
 
-    public get allFilmsShown(): boolean {
+    public get areAllFilmsShown(): boolean {
         return this.shownFilms.length === this.sortedFilms.length;
     }
 
@@ -93,20 +93,20 @@ export default class Model {
         return this.data.isAuthorized;
     }
 
-    public get selectedFiltrationCriterion(): FiltrationCriterionType {
-        return this.data.selectedFiltrationCriterion;
+    public get filtrationSelected(): FiltrationType {
+        return this.data.filtrationSelected;
     }
 
-    public set selectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType) {
-        this.data.selectedFiltrationCriterion = filtrationCriterion;
+    public set filtrationSelected(filtrationType: FiltrationType) {
+        this.data.filtrationSelected = filtrationType;
     }
 
-    public get selectedSortCriterion(): SortCriterionType {
-        return this.data.selectedSortCriterion;
+    public get sortSelected(): SortType {
+        return this.data.sortSelected;
     }
 
-    public set selectedSortCriterion(sortCriterion: SortCriterionType) {
-        this.data.selectedSortCriterion = sortCriterion;
+    public set sortSelected(sortType: SortType) {
+        this.data.sortSelected = sortType;
     }
 
     public increaseShownFilmsCount(): void {

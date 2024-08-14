@@ -4,7 +4,7 @@ import MainStatisticsView from '../../blocks/main/main-statistics-view';
 import ModelData from '../models-data/model-data';
 import Model from '../models/model';
 import Application from '../application';
-import SortCriterionType from '../types/sort-criterion-type';
+import SortType from '../types/sort-type';
 import { getFiltrationCriterionByElement, getMinDate } from '../utils';
 import { STATS_SHOWN_GENRES_COUNT } from '../../settings';
 
@@ -54,8 +54,8 @@ export default class StatisticsScreen {
         const tab = evt.currentTarget;
         if (tab instanceof Element) {
             const filtrationCriterion = getFiltrationCriterionByElement(tab);
-            this.model.selectedFiltrationCriterion = filtrationCriterion;
-            this.model.selectedSortCriterion = SortCriterionType.Default;
+            this.model.filtrationSelected = filtrationCriterion;
+            this.model.sortSelected = SortType.Default;
             Application.showFilmsScreen(this.model.modelData);
         }
     }

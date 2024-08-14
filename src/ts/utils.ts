@@ -1,31 +1,31 @@
-import FiltrationCriterionType from './types/filtration-criterion-type';
-import SortCriterionType from './types/sort-criterion-type';
+import FiltrationType from './types/filtration-type';
+import SortType from './types/sort-type';
 
 export function getMinDate(): Date {
     return new Date(-8640000000000000);
 }
 
-export function getFiltrationCriterionByElement(element: Element): FiltrationCriterionType {
+export function getFiltrationCriterionByElement(element: Element): FiltrationType {
     if (element.classList.contains('main-navigation__item--all')) {
-        return FiltrationCriterionType.AllMovies;
+        return FiltrationType.AllMovies;
     } else if (element.classList.contains('main-navigation__item--watchlist')) {
-        return FiltrationCriterionType.Watchlist;
+        return FiltrationType.Watchlist;
     } else if (element.classList.contains('main-navigation__item--history')) {
-        return FiltrationCriterionType.History;
+        return FiltrationType.History;
     } else if (element.classList.contains('main-navigation__item--favorites')) {
-        return FiltrationCriterionType.Favorites;
+        return FiltrationType.Favorites;
     } else {
         throw new RangeError('Unsupported filtration criterion type.');
     }
 }
 
-export function getSortCriterionByElement(element: Element): SortCriterionType {
-    if (element.textContent === SortCriterionType.Default) {
-        return SortCriterionType.Default;
-    } else if (element.textContent === SortCriterionType.Date) {
-        return SortCriterionType.Date;
-    } else if (element.textContent === SortCriterionType.Rating) {
-        return SortCriterionType.Rating;
+export function getSortCriterionByElement(element: Element): SortType {
+    if (element.textContent === SortType.Default) {
+        return SortType.Default;
+    } else if (element.textContent === SortType.Date) {
+        return SortType.Date;
+    } else if (element.textContent === SortType.Rating) {
+        return SortType.Rating;
     } else {
         throw new RangeError('Unsupported sort criterion type.');
     }

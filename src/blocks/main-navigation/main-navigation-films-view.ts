@@ -1,14 +1,14 @@
 import MainNavigationView from './main-navigation-view';
-import FiltrationCriterionType from '../../ts/types/filtration-criterion-type';
+import FiltrationType from '../../ts/types/filtration-type';
 import UserData from '../../ts/types/user-data';
 
 export default class MainNavigationFilmsView extends MainNavigationView {
-    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData) {
+    constructor(filtrationSelected: FiltrationType, userData: UserData) {
         super(userData);
-        this.selectedFiltrationCriterion = selectedFiltrationCriterion;
+        this.filtrationSelected = filtrationSelected;
     }
 
-    selectedFiltrationCriterion: FiltrationCriterionType;
+    filtrationSelected: FiltrationType;
 
     public createElement(): Element {
         const element = super.createElement();
@@ -16,8 +16,8 @@ export default class MainNavigationFilmsView extends MainNavigationView {
         return element;
     }
 
-    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
-        this.selectedFiltrationCriterion = filtrationCriterion;
+    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationType): void {
+        this.filtrationSelected = filtrationCriterion;
         this.uncheckAllCriterions(this.element);
         this.checkSelectedCriterion(this.element);
     }
@@ -35,7 +35,7 @@ export default class MainNavigationFilmsView extends MainNavigationView {
     }
 
     private checkSelectedCriterion(element: Element): void {
-        const criterionSelector = this.getCriterionSelector(this.selectedFiltrationCriterion);
+        const criterionSelector = this.getCriterionSelector(this.filtrationSelected);
         const selectedCriterion = element.querySelector(criterionSelector);
         selectedCriterion?.classList.add('main-navigation__item--active');
     }

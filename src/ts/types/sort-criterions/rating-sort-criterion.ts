@@ -1,4 +1,4 @@
-import SortCriterionType from '../sort-criterion-type';
+import SortType from '../sort-type';
 import SortCriterion from './sort-criterion';
 
 export default class RatingSortCriterion extends SortCriterion {
@@ -6,6 +6,6 @@ export default class RatingSortCriterion extends SortCriterion {
         super();
     }
 
-    name: string = SortCriterionType.Rating;
+    name: string = SortType.Rating;
     modifier: string = `sort__button--rating`;
 }

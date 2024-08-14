@@ -1,16 +1,16 @@
 import AbstractView from '../../ts/abstract-view';
-import SortCriterionType from '../../ts/types/sort-criterion-type';
+import SortType from '../../ts/types/sort-type';
 import DefaultSortCriterion from '../../ts/types/sort-criterions/default-sort-criterion';
 import DateSortCriterion from '../../ts/types/sort-criterions/date-sort-criterion';
 import RatingSortCriterion from '../../ts/types/sort-criterions/rating-sort-criterion';
 
 export default class SortView extends AbstractView {
-    constructor(selectedSortCriterion: SortCriterionType) {
+    constructor(sortSelected: SortType) {
         super();
-        this.selectedSortCriterion = selectedSortCriterion;
+        this.sortSelected = sortSelected;
     }
 
-    selectedSortCriterion: SortCriterionType;
+    sortSelected: SortType;
     template: string =
         `<ul class="sort"></ul>`;
 
@@ -20,8 +20,8 @@ export default class SortView extends AbstractView {
         return element;
     }
 
-    public updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
-        this.selectedSortCriterion = sortCriterion;
+    public updateSelectedSortCriterion(sortCriterion: SortType): void {
+        this.sortSelected = sortCriterion;
         this.uncheckAllCriterions(this.element);
         this.checkSelectedCriterion(this.element);
     }
@@ -35,16 +35,16 @@ export default class SortView extends AbstractView {
         dateCriterion.createElement();
         ratingCriterion.createElement();
 
-        switch (this.selectedSortCriterion) {
-            case SortCriterionType.Default: {
+        switch (this.sortSelected) {
+            case SortType.Default: {
                 defaultCriterion.active = true;
                 break;
             }
-            case SortCriterionType.Date: {
+            case SortType.Date: {
                 dateCriterion.active = true;
                 break;
             }
-            case SortCriterionType.Rating: {
+            case SortType.Rating: {
                 ratingCriterion.active = true;
                 break;
             }
@@ -56,7 +56,7 @@ export default class SortView extends AbstractView {
     }
 
     private checkSelectedCriterion(element: Element): void {
-        const criterionSelector = this.getCriterionSelector(this.selectedSortCriterion);
+        const criterionSelector = this.getCriterionSelector(this.sortSelected);
         const selectedCriterion = element.querySelector(criterionSelector);
         if (selectedCriterion) {
             selectedCriterion.classList.add('sort__button--active');
@@ -70,15 +70,15 @@ export default class SortView extends AbstractView {
         })
     }
 
-    private getCriterionSelector(sortCriterion: SortCriterionType): string {
+    private getCriterionSelector(sortCriterion: SortType): string {
         switch (sortCriterion) {
-            case SortCriterionType.Default: {
+            case SortType.Default: {
                 return '.sort__button--default';
             }
-            case SortCriterionType.Date: {
+            case SortType.Date: {
                 return '.sort__button--date';
             }
-            case SortCriterionType.Rating: {
+            case SortType.Rating: {
                 return '.sort__button--rating';
             }
             default: {

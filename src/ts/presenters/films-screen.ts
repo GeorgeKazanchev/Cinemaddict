@@ -5,8 +5,8 @@ import MainFilmsView from '../../blocks/main/main-films-view';
 import FilmCardView from '../../blocks/film-card/film-card-view';
 import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
-import SortCriterionType from '../types/sort-criterion-type';
-import FiltrationCriterionType from '../types/filtration-criterion-type';
+import SortType from '../types/sort-type';
+import FiltrationType from '../types/filtration-type';
 import Application from '../application';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
 import { NEW_COMMENT_EMOJI_SIZE } from '../../settings';
@@ -18,8 +18,8 @@ export default class FilmsScreen {
         this.model.resetShownFilmsCount();
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
-        this.mainView = new MainFilmsView(this.model.selectedFiltrationCriterion, this.model.userData,
-            this.model.shownFilms, this.model.selectedSortCriterion, this.model.allFilmsShown);
+        this.mainView = new MainFilmsView(this.model.filtrationSelected, this.model.userData,
+            this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.setStatsButtonClickHandler();
@@ -82,21 +82,21 @@ export default class FilmsScreen {
         }
     }
 
-    private filterFilms(filtrationCriterion: FiltrationCriterionType): void {
-        this.model.selectedFiltrationCriterion = filtrationCriterion;
-        this.model.selectedSortCriterion = SortCriterionType.Default;
+    private filterFilms(filtrationCriterion: FiltrationType): void {
+        this.model.filtrationSelected = filtrationCriterion;
+        this.model.sortSelected = SortType.Default;
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
-        this.mainView.updateSelectedSortCriterion(SortCriterionType.Default);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.allFilmsShown);
+        this.mainView.updateSelectedSortCriterion(SortType.Default);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown);
         this.setFilmsHandlers();
     }
 
-    private sortFilms(sortCriterion: SortCriterionType): void {
-        this.model.selectedSortCriterion = sortCriterion;
+    private sortFilms(sortCriterion: SortType): void {
+        this.model.sortSelected = sortCriterion;
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.allFilmsShown);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown);
         this.setFilmsHandlers();
     }
 
@@ -152,7 +152,7 @@ export default class FilmsScreen {
         } else {
             userDetails.watchingDate = null;
             this.model.decrementFilmsWatched();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.History);
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.History);
         }
 
         this.headerView.updateUserRating();
@@ -167,7 +167,7 @@ export default class FilmsScreen {
             this.model.incrementFilmsInWatchlist();
         } else {
             this.model.decrementFilmsInWatchlist();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Watchlist);
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.Watchlist);
         }
 
         this.mainView.mainNavigationView.updateWatchlist();
@@ -181,14 +181,14 @@ export default class FilmsScreen {
             this.model.incrementFavoriteFilms();
         } else {
             this.model.decrementFavoriteFilms();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationCriterionType.Favorites);
+            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.Favorites);
         }
 
         this.mainView.mainNavigationView.updateFavorites();
     }
 
-    private removeFilmCardIfNeeded(filmCardElement: Element, filtrationCriterion: FiltrationCriterionType): void {
-        if (this.model.selectedFiltrationCriterion === filtrationCriterion) {
+    private removeFilmCardIfNeeded(filmCardElement: Element, filtrationCriterion: FiltrationType): void {
+        if (this.model.filtrationSelected === filtrationCriterion) {
             filmCardElement.remove();
         }
     }
@@ -354,7 +354,7 @@ export default class FilmsScreen {
             this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
             this.setFilmCardsClickHandlers();
 
-            if (this.model.allFilmsShown) {
+            if (this.model.areAllFilmsShown) {
                 this.mainView.hideShowMoreButton();
             }
         });
