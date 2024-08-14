@@ -4,6 +4,7 @@ import MainNavigationFilmsView from '../main-navigation/main-navigation-films-vi
 import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
 import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
+import LoadingFilmsSection from '../../ts/types/films-sections/loading-films-section';
 import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
 import UserData from '../../ts/types/user-data';
 import SortType from '../../ts/types/sort-type';
@@ -11,23 +12,23 @@ import FiltrationType from '../../ts/types/filtration-type';
 import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {
-    constructor(selectedFiltrationCriterion: FiltrationCriterionType, userData: UserData, films: Movie[] | null,
-        selectedSortCriterion: SortCriterionType, allFilmsShown: boolean) {
+    constructor(filtrationSelected: FiltrationType, userData: UserData, films: Movie[] | null,
+        sortSelected: SortType, areAllFilmsShown: boolean) {
 
         super(userData);
 
-        this.filmsSection = this.getFilmsSection(films, allFilmsShown);
-        this.selectedFiltrationCriterion = selectedFiltrationCriterion;
-        this.selectedSortCriterion = selectedSortCriterion;
+        this.filmsSection = this.getFilmsSection(films, areAllFilmsShown);
+        this.filtrationSelected = filtrationSelected;
+        this.sortSelected = sortSelected;
 
-        this.mainNavigationView = new MainNavigationFilmsView(this.selectedFiltrationCriterion, this.userData);
+        this.mainNavigationView = new MainNavigationFilmsView(this.filtrationSelected, this.userData);
         this.filmsView = new FilmsView(this.filmsSection);
         this.sortView = null;
     }
 
     filmsSection: FilmsSection;
-    selectedFiltrationCriterion: FiltrationCriterionType;
-    selectedSortCriterion: SortCriterionType;
+    filtrationSelected: FiltrationType;
+    sortSelected: SortType;
     mainNavigationView: MainNavigationFilmsView;
     filmsView: FilmsView;
     sortView: SortView | null;
@@ -38,7 +39,7 @@ export default class MainFilmsView extends MainView {
 
         const needToRenderSortPanel = this.checkNeedToRenderSortPanel();
         if (needToRenderSortPanel) {
-            this.sortView = new SortView(this.selectedSortCriterion);
+            this.sortView = new SortView(this.sortSelected);
             element.appendChild(this.sortView.element);
         }
 
@@ -46,16 +47,17 @@ export default class MainFilmsView extends MainView {
         return element;
     }
 
-    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationCriterionType): void {
+    public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationType): void {
         this.mainNavigationView.updateSelectedFiltrationCriterion(filtrationCriterion);
     }
 
-    public updateSelectedSortCriterion(sortCriterion: SortCriterionType): void {
+    public updateSelectedSortCriterion(sortCriterion: SortType): void {
         this.sortView?.updateSelectedSortCriterion(sortCriterion);
     }
 
-    public updateFilmsSection(films: Movie[] | null, allFilmsShown: boolean): void {
-        this.filmsView.updateFilmsSection(films, allFilmsShown);
+    public updateFilmsSection(films: Movie[] | null, areAllFilmsShown: boolean, areFilmsLoaded: boolean): void {
+        const filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded);
+        this.filmsView.updateFilmsSection(filmsSection);
     }
 
     public updateAllMoviesFilmsList(shownFilms: Movie[]): void {
@@ -77,11 +79,17 @@ export default class MainFilmsView extends MainView {
         showMoreButton?.remove();
     }
 
-    private getFilmsSection(films: Movie[] | null, allFilmsShown: boolean): FilmsSection {
-        if (films && films.length > 0) {
-            return new FilledFilmsSection(films, allFilmsShown);
+    private getFilmsSection(films: Movie[] | null = null, allFilmsShown: boolean = false,
+        areFilmsLoaded: boolean = false
+    ): FilmsSection {
+        if (areFilmsLoaded) {
+            if (films && films.length > 0) {
+                return new FilledFilmsSection(films, allFilmsShown);
+            } else {
+                return new EmptyFilmsSection();
+            }
         } else {
-            return new EmptyFilmsSection();
+            return new LoadingFilmsSection();
         }
     }
 

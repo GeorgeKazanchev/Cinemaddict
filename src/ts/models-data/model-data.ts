@@ -2,17 +2,17 @@ import FiltrationType from '../types/filtration-type';
 import SortType from '../types/sort-type';
 import UserData from '../types/user-data';
 import Movie from '../types/movie';
+import { FILMS_CHUNK_SIZE } from '../../settings';
 
 export default class ModelData {
-    constructor(films: Movie[] | null, shownFilmsCount: number, userData: UserData, isAuthorized: boolean,
-        filtrationSelected: FiltrationType, sortSelected: SortType) {
-
-        this.films = films;
-        this.shownFilmsCount = shownFilmsCount;
+    constructor(userData: UserData) {
+        this.films = null;
+        this.shownFilmsCount = FILMS_CHUNK_SIZE;
         this.userData = userData;
-        this.isAuthorized = isAuthorized;
-        this.filtrationSelected = filtrationSelected;
-        this.sortSelected = sortSelected;
+        this.isAuthorized = true;
+        this.filtrationSelected = FiltrationType.AllMovies;
+        this.sortSelected = SortType.Default;
+        this.areFilmsLoaded = false;
     }
 
     public films: Movie[] | null;
@@ -21,4 +21,5 @@ export default class ModelData {
     public isAuthorized: boolean;
     public filtrationSelected: FiltrationType;
     public sortSelected: SortType;
+    public areFilmsLoaded: boolean;
 }

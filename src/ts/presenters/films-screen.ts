@@ -88,7 +88,7 @@ export default class FilmsScreen {
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortType.Default);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
         this.setFilmsHandlers();
     }
 
@@ -96,7 +96,7 @@ export default class FilmsScreen {
         this.model.sortSelected = sortCriterion;
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
         this.setFilmsHandlers();
     }
 

@@ -109,6 +109,10 @@ export default class Model {
         this.data.sortSelected = sortType;
     }
 
+    public get areFilmsLoaded(): boolean {
+        return this.data.areFilmsLoaded;
+    }
+
     public increaseShownFilmsCount(): void {
         const filmsLeft = this.allFilms.length - this.shownFilms.length;
         this.data.shownFilmsCount += Math.min(FILMS_CHUNK_SIZE, filmsLeft);
