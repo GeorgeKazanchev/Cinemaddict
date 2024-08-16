@@ -21,6 +21,14 @@ export default class FooterView extends AbstractView {
         return this.getTemplate();
     }
 
+    public updateTotalFilmsCount(totalFilmsCount: number): void {
+        const filmsCountElement = this.element.querySelector('.footer__statistics > p');
+        if (filmsCountElement instanceof Element) {
+            this.filmsCount = totalFilmsCount;
+            filmsCountElement.textContent = this.getFilmsStatistics();
+        }
+    }
+
     private getFilmsStatistics(): string {
         return this.filmsCount === 1
             ? `${this.filmsCount} movie inside`

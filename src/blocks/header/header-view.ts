@@ -17,25 +17,24 @@ export default class HeaderView extends AbstractView {
     public get template(): string {
         return `<header class="header">
                     <h1 class="header__logo logo">Cinemaddict</h1>
-                    ${this.getProfileMarkup()}
                 </header>`;
     }
 
     public createElement(): Element {
-        return this.getTemplate();
+        const element = this.getTemplate();
+        if (this.isAuthorized && this.userData !== null) {
+            element.appendChild(this.getProfileElement());
+        }
+        return element;
     }
 
     public updateUserRating(): void {
         this.profileView.updateRating();
     }
 
-    private getProfileMarkup(): string {
-        if (this.isAuthorized && this.userData !== null) {
-            const profileElement = this.profileView.element;
-            profileElement.classList.add('header__profile');
-            return profileElement.outerHTML;
-        } else {
-            return '';
-        }
+    private getProfileElement(): Element {
+        const profileElement = this.profileView.element;
+        profileElement.classList.add('header__profile');
+        return profileElement;
     }
 }
