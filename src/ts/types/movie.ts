@@ -1,9 +1,8 @@
-import Comment from './comment';
 import FilmInfo from './film-info';
 import UserDetails from './user-details';
 
 export default class Movie {
-    constructor(id: string, comments: Comment[], filmInfo: FilmInfo, userDetails: UserDetails) {
+    constructor(id: string, comments: string[], filmInfo: FilmInfo, userDetails: UserDetails) {
         this.id = id;
         this.comments = comments;
         this.filmInfo = filmInfo;
@@ -11,7 +10,7 @@ export default class Movie {
     }
 
     id: string;
-    comments: Comment[];
+    comments: string[];
     filmInfo: FilmInfo;
     userDetails: UserDetails;
 }

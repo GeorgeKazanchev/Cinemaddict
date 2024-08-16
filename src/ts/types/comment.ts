@@ -1,7 +1,7 @@
 import Emotion from './emotion';
 
 export default class Comment {
-    constructor(id: string, author: string, comment: string, date: string, emotion: Emotion) {
+    constructor(id: string, author: string, comment: string, date: Date, emotion: Emotion) {
         this.id = id;
         this.author = author;
         this.comment = comment;
@@ -12,6 +12,6 @@ export default class Comment {
     id: string;
     author: string;
     comment: string;
-    date: string;
+    date: Date;
     emotion: Emotion;
 }

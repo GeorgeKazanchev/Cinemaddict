@@ -1,6 +1,7 @@
 import AbstractView from '../../ts/abstract-view';
 import FilmDetailsCommentView from './__comment/film-details__comment-view';
 import Movie from '../../ts/types/movie';
+import Comment from '../../ts/types/comment';
 
 export default class FilmDetailsView extends AbstractView {
     constructor(film: Movie) {
@@ -86,7 +87,6 @@ export default class FilmDetailsView extends AbstractView {
                                     Comments <span class="film-details__comments-count">${this.film.comments.length.toFixed(0)}</span>
                                 </h3>
                                 <ul class="film-details__comments-list">
-                                    ${this.getCommentsMarkup()}
                                 </ul>
                                 <div class="film-details__new-comment">
                                     <div class="film-details__add-emoji-label"></div>
@@ -125,6 +125,14 @@ export default class FilmDetailsView extends AbstractView {
         return this.getTemplate();
     }
 
+    public updateComments(comments: Comment[]): void {
+        const commentsList = this.element.querySelector('.film-details__comments-list');
+        const commentElements = this.getCommentElements(comments);
+        commentElements.forEach((comment) => {
+            commentsList?.appendChild(comment);
+        });
+    }
+
     private getRuntime(): string {
         const MINUTES_IN_HOUR = 60;
         const runtimeInMinutes = this.film.filmInfo.runtime;
@@ -155,10 +163,7 @@ export default class FilmDetailsView extends AbstractView {
             `<span class="film-details__genre">${genre}</span>`).join('').toString();
     }
 
-    private getCommentsMarkup(): string {
-        return this.film.comments.map((comment) => {
-            const commentView = new FilmDetailsCommentView(comment);
-            return commentView.getMarkup();
-        }).join('').toString();
+    private getCommentElements(comments: Comment[]): Element[] {
+        return comments.map((comment) => new FilmDetailsCommentView(comment).element);
     }
 }
