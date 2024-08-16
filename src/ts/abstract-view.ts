@@ -10,6 +10,7 @@ export default abstract class AbstractView {
     public get element(): Element {
         if (!this._element) {
             this._element = this.createElement();
+            this.bind();
         }
         return this._element;
     }
@@ -32,4 +33,6 @@ export default abstract class AbstractView {
             throw new Error('Failed to create template!');
         }
     }
+
+    public bind(): void { }
 }

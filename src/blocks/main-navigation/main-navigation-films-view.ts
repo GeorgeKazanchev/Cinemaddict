@@ -16,6 +16,19 @@ export default class MainNavigationFilmsView extends MainNavigationView {
         return element;
     }
 
+    public bind(): void {
+        const filtrationButtons = this.element.querySelectorAll('.main-navigation__item');
+        filtrationButtons.forEach((button) => {
+            button.addEventListener('click', (evt: Event) => this.buttonClickHandler(evt));
+        });
+
+        const statsButton = this.element.querySelector('.main-navigation__additional');
+        statsButton?.addEventListener('click', (evt: Event) => this.statsButtonClickHandler(evt));
+    }
+
+    public buttonClickHandler(_: Event): void { }
+    public statsButtonClickHandler(_: Event): void { }
+
     public updateSelectedFiltrationCriterion(filtrationCriterion: FiltrationType): void {
         this.filtrationSelected = filtrationCriterion;
         this.uncheckAllCriterions(this.element);
