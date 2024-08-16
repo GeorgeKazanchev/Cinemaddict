@@ -14,11 +14,42 @@ export default class SortView extends AbstractView {
     template: string =
         `<ul class="sort"></ul>`;
 
+    public get isVisible(): boolean {
+        return this.element.isConnected;
+    }
+
+    public set isVisible(needToMakeVisible: boolean) {
+        if (!needToMakeVisible) {
+            this.element.remove();
+            return;
+        }
+
+        if (this.element.isConnected) {
+            return;
+        }
+
+        const mainNavElement = document.querySelector('.main-navigation');
+        if (mainNavElement) {
+            mainNavElement.insertAdjacentElement('afterend', this.element);
+        } else {
+            throw new Error('Sort panel can not be added to the page.');
+        }
+    }
+
     public createElement(): Element {
         const element = this.getTemplate();
         this.renderCriterionsToElement(element);
         return element;
     }
+
+    public bind(): void {
+        const sortButtons = this.element.querySelectorAll('.sort__button');
+        sortButtons.forEach((button) => {
+            button.addEventListener('click', (evt: Event) => this.buttonClickHandler(evt));
+        });
+    }
+
+    public buttonClickHandler(_: Event) { }
 
     public updateSelectedSortCriterion(sortCriterion: SortType): void {
         this.sortSelected = sortCriterion;

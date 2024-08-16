@@ -13,17 +13,17 @@ import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {
     constructor(filtrationSelected: FiltrationType, userData: UserData, films: Movie[] | null,
-        sortSelected: SortType, areAllFilmsShown: boolean) {
+        sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean) {
 
         super(userData);
 
-        this.filmsSection = this.getFilmsSection(films, areAllFilmsShown);
+        this.filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded);
         this.filtrationSelected = filtrationSelected;
         this.sortSelected = sortSelected;
 
         this.mainNavigationView = new MainNavigationFilmsView(this.filtrationSelected, this.userData);
         this.filmsView = new FilmsView(this.filmsSection);
-        this.sortView = null;
+        this.sortView = new SortView(sortSelected);
     }
 
     filmsSection: FilmsSection;
@@ -31,19 +31,16 @@ export default class MainFilmsView extends MainView {
     sortSelected: SortType;
     mainNavigationView: MainNavigationFilmsView;
     filmsView: FilmsView;
-    sortView: SortView | null;
+    sortView: SortView;
 
     public createElement(): Element {
         const element = this.getTemplate();
         element.appendChild(this.mainNavigationView.element);
-
-        const needToRenderSortPanel = this.checkNeedToRenderSortPanel();
-        if (needToRenderSortPanel) {
-            this.sortView = new SortView(this.sortSelected);
-            element.appendChild(this.sortView.element);
-        }
-
+        element.appendChild(this.sortView.element);
         element.appendChild(this.filmsView.element);
+        if (!this.needToRenderSortPanel()) {
+            this.sortView.isVisible = false;
+        }
         return element;
     }
 
@@ -57,6 +54,7 @@ export default class MainFilmsView extends MainView {
 
     public updateFilmsSection(films: Movie[] | null, areAllFilmsShown: boolean, areFilmsLoaded: boolean): void {
         const filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded);
+        this.filmsSection = filmsSection;
         this.filmsView.updateFilmsSection(filmsSection);
     }
 
@@ -79,6 +77,11 @@ export default class MainFilmsView extends MainView {
         showMoreButton?.remove();
     }
 
+    public updateSortPanelVisibility(isVisible?: boolean): void {
+        const needToMakeVisible = isVisible ?? this.needToRenderSortPanel();
+        this.sortView.isVisible = needToMakeVisible;
+    }
+
     private getFilmsSection(films: Movie[] | null = null, allFilmsShown: boolean = false,
         areFilmsLoaded: boolean = false
     ): FilmsSection {
@@ -93,7 +96,10 @@ export default class MainFilmsView extends MainView {
         }
     }
 
-    private checkNeedToRenderSortPanel(): boolean {
-        return !this.filmsSection.isEmpty;
+    private needToRenderSortPanel(): boolean {
+        return (
+            !(this.filmsSection instanceof EmptyFilmsSection)
+            && !(this.filmsSection instanceof LoadingFilmsSection)
+        );
     }
 }
