@@ -1,3 +1,5 @@
+import Emotion from './emotion';
+
 export type ReleaseInfoDto = {
     'release_country': string,
     'date': Date
@@ -30,4 +32,18 @@ export type MovieDto = {
     'comments': string[],
     'film_info': FilmInfoDto,
     'user_details': UserDetailsDto
+};
+
+export type CommentDto = {
+    'id': string,
+    'author': string,
+    'comment': string,
+    'date': Date,
+    'emotion': Emotion
+};
+
+export type LocalCommentDto = {
+    'comment': string,
+    'date': Date,
+    'emotion': Emotion
 };
