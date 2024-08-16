@@ -1,28 +1,17 @@
 export default class UserData {
-    constructor(username: string, allFilmsWatched: number, filmsInWatchlist: number, favoriteFilms: number,
-        totalDuration: number, topGenres: string[], avatar: string) {
-        if (allFilmsWatched < 0 || filmsInWatchlist < 0 || favoriteFilms < 0) {
-            throw new RangeError('Number of films can not be negative.');
-        }
-
+    constructor(username: string, avatar: string) {
         this.username = username;
-        this.allFilmsWatched = allFilmsWatched;
-        this.filmsInWatchlist = filmsInWatchlist;
-        this.favoriteFilms = favoriteFilms;
-        this.filteredFilmsWatched = allFilmsWatched;
-        this.totalDuration = totalDuration;
-        this.topGenres = topGenres;
         this.avatar = avatar;
+        this.allFilmsWatched = 0;
+        this.filmsInWatchlist = 0;
+        this.favoriteFilms = 0;
     }
 
-    username: string;
-    allFilmsWatched: number;
-    filmsInWatchlist: number;
-    favoriteFilms: number;
-    filteredFilmsWatched: number;
-    totalDuration: number;
-    topGenres: string[];
-    avatar: string;
+    public username: string;
+    public avatar: string;
+    public allFilmsWatched: number;
+    public filmsInWatchlist: number;
+    public favoriteFilms: number;
 
     get rank(): string {
         if (this.allFilmsWatched === 0) {

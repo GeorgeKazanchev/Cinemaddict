@@ -4,6 +4,7 @@ import SortType from '../types/sort-type';
 import FiltrationType from '../types/filtration-type';
 import UserData from '../types/user-data';
 import { FILMS_CHUNK_SIZE } from '../../settings';
+import { StatisticsData } from '../types/statistics-data';
 
 export default class Model {
     constructor(data: ModelData) {
@@ -161,11 +162,9 @@ export default class Model {
     }
 
     public getTotalDuration(films: Movie[]): number {
-        let totalDuration = 0;
-        films.forEach((film) => {
-            totalDuration += film.filmInfo.runtime;
-        });
-        return totalDuration;
+        return films.reduce(
+            (totalDuration: number, film: Movie) => totalDuration += film.filmInfo.runtime, 0
+        );
     }
 
     public getFavoriteGenres(films: Movie[]): string[] {
@@ -193,11 +192,18 @@ export default class Model {
         return genresDataMap;
     }
 
-    public updateStatisticsData(startDate: Date): void {
-        const filteredWatchedFilms = this.getWatchedFilmsSince(startDate);
-        this.data.userData.filteredFilmsWatched = filteredWatchedFilms.length;
-        this.data.userData.totalDuration = this.getTotalDuration(filteredWatchedFilms);
-        this.data.userData.topGenres = this.getFavoriteGenres(filteredWatchedFilms);
+    public getStatisticsData(startDate: Date): StatisticsData {
+        const watchedFilms = this.getWatchedFilmsSince(startDate);
+
+        const watchedFilmsCount = watchedFilms.length;
+        const totalDuration = this.getTotalDuration(watchedFilms);
+        const favoriteGenres = this.getFavoriteGenres(watchedFilms);
+
+        return {
+            watchedFilmsCount,
+            totalDuration,
+            favoriteGenres
+        };
     }
 
     public updateUserData(): void {

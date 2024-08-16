@@ -1,13 +1,16 @@
 import AbstractView from '../../ts/abstract-view';
 import UserData from '../../ts/types/user-data';
+import { StatisticsData } from '../../ts/types/statistics-data';
 
 export default class StatisticsView extends AbstractView {
-    constructor(userData: UserData) {
+    constructor(userData: UserData, statisticsData: StatisticsData) {
         super();
         this.userData = userData;
+        this.statisticsData = statisticsData;
     }
 
     userData: UserData;
+    statisticsData: StatisticsData;
     template: string =
         `<section class="statistic">
             <p class="statistic__rank">
@@ -118,11 +121,11 @@ export default class StatisticsView extends AbstractView {
             const textElement = watchedFilmsElement.querySelector('.statistic__item-text');
             if (textElement) {
                 const descriptionElement = this.createDescriptionElement();
-                descriptionElement.textContent = this.userData.filteredFilmsWatched === 1
+                descriptionElement.textContent = this.statisticsData.watchedFilmsCount === 1
                     ? ' movie'
                     : ' movies';
 
-                textElement.textContent = this.userData.filteredFilmsWatched.toFixed(0);
+                textElement.textContent = this.statisticsData.watchedFilmsCount.toFixed(0);
                 textElement.appendChild(descriptionElement);
             }
         }
@@ -133,7 +136,7 @@ export default class StatisticsView extends AbstractView {
         if (totalDurationElement) {
             const textElement = totalDurationElement.querySelector('.statistic__item-text');
             if (textElement) {
-                const durationInMinutes = this.userData.totalDuration;
+                const durationInMinutes = this.statisticsData.totalDuration;
                 const MINUTES_IN_HOUR = 60;
 
                 if (durationInMinutes === 0) {
@@ -167,7 +170,7 @@ export default class StatisticsView extends AbstractView {
         if (topGenreElement) {
             const textElement = topGenreElement.querySelector('.statistic__item-text');
             if (textElement) {
-                textElement.textContent = this.userData.topGenres.join(', ');
+                textElement.textContent = this.statisticsData.favoriteGenres.join(', ');
             }
         }
     }

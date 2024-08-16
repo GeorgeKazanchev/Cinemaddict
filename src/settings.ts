@@ -6,10 +6,5 @@ export const STATS_SHOWN_GENRES_COUNT: number = 4;
 
 export const userData: UserData = new UserData(
     'Frank Sinatra',
-    25,
-    35,
-    20,
-    9350,
-    ['Horror'],
     './img/bitmap@2x.png'
 );

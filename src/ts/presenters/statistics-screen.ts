@@ -11,11 +11,10 @@ import { STATS_SHOWN_GENRES_COUNT } from '../../settings';
 export default class StatisticsScreen {
     constructor(data: ModelData) {
         this.model = new Model(data);
-        this.model.updateUserData();
-        this.model.updateStatisticsData(getMinDate());
+        const statisticsData = this.model.getStatisticsData(getMinDate());
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
-        this.mainView = new MainStatisticsView(this.model.userData);
+        this.mainView = new MainStatisticsView(this.model.userData, statisticsData);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.setNavigationTabsClickHandlers();
@@ -65,8 +64,8 @@ export default class StatisticsScreen {
         const filter = evt.target;
         if (filter instanceof HTMLInputElement) {
             const startDate = this.getStartDateByFilterValue(filter.value);
-            this.model.updateStatisticsData(startDate);
-            this.mainView.updateStatisticsData(this.model.userData);
+            const statisticsData = this.model.getStatisticsData(startDate);
+            this.mainView.updateStatisticsData(this.model.userData, statisticsData);
             this.renderCanvas(startDate);
         }
     }

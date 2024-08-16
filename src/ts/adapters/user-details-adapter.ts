@@ -7,7 +7,7 @@ export default class UserDetailsAdapter {
             userDetailsDto['favorite'],
             userDetailsDto['watchlist'],
             userDetailsDto['already_watched'],
-            userDetailsDto['watching_date']
+            userDetailsDto['watching_date'] !== null ? new Date(userDetailsDto['watching_date']) : null
         );
     }
 }
