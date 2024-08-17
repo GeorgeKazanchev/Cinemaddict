@@ -10,7 +10,7 @@ import FiltrationType from '../types/filtration-type';
 import Movie from '../types/movie';
 import Comment from '../types/comment';
 import Application from '../application';
-import HttpClient from '../http-interaction/http-client';
+import HttpClient from '../http-api/http-client';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
 import { AUTHORIZATION_STRING, NEW_COMMENT_EMOJI_SIZE, SERVER_ORIGIN } from '../../settings';
 
