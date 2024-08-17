@@ -5,6 +5,16 @@ export function getMinDate(): Date {
     return new Date(-8640000000000000);
 }
 
+export function getRandomString(length: number): string {
+    const CHARACTERS = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ123456789';
+    let str = '';
+    for (let i = 0; i < length; ++i) {
+        const index = Math.floor(Math.random() * CHARACTERS.length);
+        str += CHARACTERS.substring(index, index + 1);
+    }
+    return str;
+}
+
 export function getFiltrationCriterionByElement(element: Element): FiltrationType {
     if (element.classList.contains('main-navigation__item--all')) {
         return FiltrationType.AllMovies;

@@ -12,7 +12,7 @@ import Comment from '../types/comment';
 import Application from '../application';
 import HttpClient from '../http-api/http-client';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
-import { AUTHORIZATION_STRING, NEW_COMMENT_EMOJI_SIZE, SERVER_ORIGIN } from '../../settings';
+import { NEW_COMMENT_EMOJI_SIZE, SERVER_ORIGIN } from '../../settings';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -31,7 +31,7 @@ export default class FilmsScreen {
         this.mainView.mainNavigationView.statsButtonClickHandler = this.statsButtonClickHandler.bind(this);
         this.setFilmsHandlers();
 
-        this.httpClient = new HttpClient(SERVER_ORIGIN, AUTHORIZATION_STRING);
+        this.httpClient = new HttpClient(SERVER_ORIGIN, Application.authorizationString);
 
         if (!this.model.areFilmsLoaded) {
             this.loadFilms();
