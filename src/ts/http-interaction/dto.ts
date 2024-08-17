@@ -47,3 +47,8 @@ export type LocalCommentDto = {
     'date': Date,
     'emotion': Emotion
 };
+
+export type CommentCreationResponseDto = {
+    'movie': MovieDto,
+    'comments': CommentDto[]
+};

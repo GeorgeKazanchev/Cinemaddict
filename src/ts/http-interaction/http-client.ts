@@ -1,12 +1,13 @@
 import Movie from '../types/movie';
 import Comment from '../types/comment';
 import LocalComment from '../types/local-comment';
+import CommentCreationResponse from '../types/comment-creation-response';
 import MovieAdapter from './adapters/movie-adapter';
 import CommentAdapter from './adapters/comment-adapter';
+import CommentCreationResponseAdapter from './adapters/comment-creation-response-adapter';
 import ResponseError from './errors/response-error';
 import { CommentDto, MovieDto } from './dto';
 import { RequestMethod, ResponseSuccessStatus, ResponseErrorStatus, ErrorMessage } from './constants';
-import { ResponseCreateComment } from '../types/response-create-comment';
 
 export default class HttpClient {
     constructor(serverOrigin: string, authorizationString: string) {
@@ -45,12 +46,27 @@ export default class HttpClient {
         return comments;
     }
 
-    public async createComment(filmId: number, comment: LocalComment): Promise<ResponseCreateComment> {
-        throw new Error('Not Implemented');
+    public async createComment(filmId: number, comment: LocalComment): Promise<CommentCreationResponse> {
+        const body = JSON.stringify(CommentAdapter.toDto(comment));
+        const response = await window.fetch(
+            `${this.serverOrigin}/comments/${filmId}`,
+            this.getFetchInit(RequestMethod.POST, body)
+        );
+
+        this.checkStatus(response);
+        const responseData = await response.json();
+        const commentCreationResponse = CommentCreationResponseAdapter.fromDto(responseData);
+        return commentCreationResponse;
     }
 
     public async deleteComment(commentId: number): Promise<null> {
-        throw new Error('Not Implemented');
+        await window.fetch(
+            `${this.serverOrigin}/comments/${commentId}`,
+            this.getFetchInit(RequestMethod.DELETE)
+        );
+
+        this.checkStatus;
+        return null;
     }
 
     private getFetchInit(method: RequestMethod, body: string | null = null): RequestInit {
