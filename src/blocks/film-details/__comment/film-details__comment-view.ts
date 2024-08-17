@@ -45,7 +45,7 @@ export default class FilmDetailsCommentView extends AbstractView {
     }
 
     private getEmotionImageSrc(emotion: Emotion): EmotionImage {
-        switch (emotion) {
+        switch (emotion.toLowerCase()) {
             case Emotion.Smile: {
                 return EmotionImage.Smile;
             }
@@ -57,6 +57,9 @@ export default class FilmDetailsCommentView extends AbstractView {
             }
             case Emotion.Angry: {
                 return EmotionImage.Angry;
+            }
+            default: {
+                throw new Error('Unsupported emotion type.');
             }
         }
     }
