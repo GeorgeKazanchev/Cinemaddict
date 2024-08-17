@@ -11,23 +11,21 @@ import { ResponseCreateComment } from '../types/response-create-comment';
 export default class HttpClient {
     constructor(serverOrigin: string, authorizationString: string) {
         this.serverOrigin = serverOrigin;
-        this.requestHeaders = new Headers();
-        this.requestHeaders.set('Authorization', `Basic ${authorizationString}`);
+        this.authorizationString = authorizationString;
     }
 
     private serverOrigin: string;
-    private requestHeaders: Headers;
+    private authorizationString: string;
 
     public async readMovies(): Promise<Movie[]> {
-        const response = await window.fetch(`${this.serverOrigin}/movies`, {
-            method: RequestMethod.GET,
-            mode: 'cors',
-            headers: this.requestHeaders
-        });
+        const response = await window.fetch(
+            `${this.serverOrigin}/movies`,
+            this.getFetchInit(RequestMethod.GET)
+        );
 
         this.checkStatus(response);
-        const data = await response.json();
-        const films = (data as MovieDto[]).map((film) => MovieAdapter.fromDto(film));
+        const responseData = await response.json();
+        const films = (responseData as MovieDto[]).map((film) => MovieAdapter.fromDto(film));
         return films;
     }
 
@@ -36,11 +34,10 @@ export default class HttpClient {
     }
 
     public async readComments(filmId: number): Promise<Comment[]> {
-        const response = await window.fetch(`${this.serverOrigin}/comments/${filmId}`, {
-            method: RequestMethod.GET,
-            mode: 'cors',
-            headers: this.requestHeaders
-        });
+        const response = await window.fetch(
+            `${this.serverOrigin}/comments/${filmId}`,
+            this.getFetchInit(RequestMethod.GET)
+        );
 
         this.checkStatus(response);
         const responseData = await response.json();
@@ -54,6 +51,24 @@ export default class HttpClient {
 
     public async deleteComment(commentId: number): Promise<null> {
         throw new Error('Not Implemented');
+    }
+
+    private getFetchInit(method: RequestMethod, body: string | null = null): RequestInit {
+        return {
+            method: method,
+            mode: 'cors',
+            headers: this.getRequestHeaders(method),
+            body: body
+        };
+    }
+
+    private getRequestHeaders(method: RequestMethod): Headers {
+        const headers = new Headers();
+        headers.set('Authorization', `Basic ${this.authorizationString}`);
+        if (method === RequestMethod.POST) {
+            headers.set('Content-Type', 'application/json');
+        }
+        return headers;
     }
 
     private checkStatus(response: Response): void {
