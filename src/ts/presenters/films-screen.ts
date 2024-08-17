@@ -7,9 +7,12 @@ import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import SortType from '../types/sort-type';
 import FiltrationType from '../types/filtration-type';
+import Movie from '../types/movie';
+import Comment from '../types/comment';
 import Application from '../application';
+import HttpClient from '../http-interaction/http-client';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
-import { NEW_COMMENT_EMOJI_SIZE } from '../../settings';
+import { AUTHORIZATION_STRING, NEW_COMMENT_EMOJI_SIZE, SERVER_ORIGIN } from '../../settings';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -19,19 +22,26 @@ export default class FilmsScreen {
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.filtrationSelected, this.model.userData,
-            this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown);
+            this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
-        this.setStatsButtonClickHandler();
-        this.setFiltrationButtonsClickHandlers();
-        this.setSortButtonsClickHandlers();
+        this.mainView.sortView.buttonClickHandler = this.sortButtonClickHandler.bind(this);
+        this.mainView.mainNavigationView.buttonClickHandler = this.filtrationButtonClickHandler.bind(this);
+        this.mainView.mainNavigationView.statsButtonClickHandler = this.statsButtonClickHandler.bind(this);
         this.setFilmsHandlers();
+
+        this.httpClient = new HttpClient(SERVER_ORIGIN, AUTHORIZATION_STRING);
+
+        if (!this.model.areFilmsLoaded) {
+            this.loadFilms();
+        }
     }
 
     private model: Model;
     private headerView: HeaderView;
     private mainView: MainFilmsView;
     private footerView: FooterView;
+    private httpClient: HttpClient;
 
     public render(): void {
         document.body.innerHTML = '';
@@ -40,23 +50,39 @@ export default class FilmsScreen {
         this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
     }
 
-    private setStatsButtonClickHandler(): void {
-        const statsButton = this.mainView.element.querySelector('.main-navigation__additional');
-        statsButton?.addEventListener('click', (evt: Event) => this.statsButtonClickHandler(evt));
+    private async loadFilms(): Promise<void> {
+        try {
+            const films = await this.httpClient.readMovies();
+            this.handleFilmsLoadingSuccess(films);
+        } catch (err: unknown) {
+            //  TODO: Add an error handling
+        }
     }
 
-    private setFiltrationButtonsClickHandlers(): void {
-        const filtrationButtons = this.mainView.element.querySelectorAll('.main-navigation__item');
-        filtrationButtons.forEach((button) => {
-            button.addEventListener('click', (evt: Event) => this.filtrationButtonClickHandler(evt));
-        });
+    private async loadComments(filmDetailsView: FilmDetailsView): Promise<void> {
+        try {
+            const comments = await this.httpClient.readComments(Number(filmDetailsView.film.id));
+            this.handleCommentsLoadingSuccess(comments, filmDetailsView);
+        } catch (err: unknown) {
+            //  TODO: Add an error handling
+        }
     }
 
-    private setSortButtonsClickHandlers(): void {
-        const sortButtons = this.mainView.element.querySelectorAll('.sort__button');
-        sortButtons.forEach((button) => {
-            button.addEventListener('click', (evt: Event) => this.sortButtonClickHandler(evt));
-        });
+    private handleFilmsLoadingSuccess(films: Movie[]): void {
+        this.model.films = films;
+        this.model.updateUserData();
+        this.mainView.mainNavigationView.updateWatchlist();
+        this.mainView.mainNavigationView.updateHistory();
+        this.mainView.mainNavigationView.updateFavorites();
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
+        this.mainView.updateSortPanelVisibility();
+        this.headerView.updateUserRating();
+        this.footerView.updateTotalFilmsCount(this.model.allFilmsCount);
+        this.setFilmsHandlers();
+    }
+
+    private handleCommentsLoadingSuccess(comments: Comment[], filmDetailsView: FilmDetailsView): void {
+        filmDetailsView.updateComments(comments);
     }
 
     private statsButtonClickHandler(evt: Event): void {
@@ -233,6 +259,7 @@ export default class FilmsScreen {
             }
 
             this.footerView.element.insertAdjacentElement('afterend', popupElement);
+            this.loadComments(popupView);
         });
     }
 

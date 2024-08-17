@@ -1,6 +1,6 @@
-import Comment from '../types/comment';
-import LocalComment from '../types/local-comment';
-import { CommentDto, LocalCommentDto } from '../types/dto';
+import Comment from '../../types/comment';
+import LocalComment from '../../types/local-comment';
+import { CommentDto, LocalCommentDto } from '../dto';
 
 export default class CommentAdapter {
     public static fromDto(commentDto: CommentDto): Comment {

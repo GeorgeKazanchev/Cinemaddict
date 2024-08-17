@@ -1,5 +1,5 @@
-import ReleaseInfo from '../types/release-info';
-import { ReleaseInfoDto } from '../types/dto';
+import ReleaseInfo from '../../types/release-info';
+import { ReleaseInfoDto } from '../dto';
 
 export default class ReleaseInfoAdapter {
     public static fromDto(releaseInfoDto: ReleaseInfoDto): ReleaseInfo {

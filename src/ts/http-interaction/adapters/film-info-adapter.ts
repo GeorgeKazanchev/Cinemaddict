@@ -1,6 +1,6 @@
 import ReleaseInfoAdapter from './release-info-adapter';
-import FilmInfo from '../types/film-info';
-import { FilmInfoDto } from '../types/dto';
+import FilmInfo from '../../types/film-info';
+import { FilmInfoDto } from '../dto';
 
 export default class FilmInfoAdapter {
     public static fromDto(filmInfoDto: FilmInfoDto): FilmInfo {

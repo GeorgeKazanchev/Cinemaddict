@@ -21,6 +21,11 @@ export default class Model {
         return this.data.films ?? [];
     }
 
+    public set films(films: Movie[] | null) {
+        this.data.films = films;
+        this.data.areFilmsLoaded = true;
+    }
+
     public get filmsInWatchlist(): Movie[] {
         return this.data.films?.filter((film) => film.userDetails.watchlist) ?? [];
     }

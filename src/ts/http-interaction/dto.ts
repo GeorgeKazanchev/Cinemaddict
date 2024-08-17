@@ -1,4 +1,4 @@
-import Emotion from './emotion';
+import Emotion from '../types/emotion';
 
 export type ReleaseInfoDto = {
     'release_country': string,

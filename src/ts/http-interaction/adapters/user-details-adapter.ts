@@ -1,5 +1,5 @@
-import UserDetails from '../types/user-details';
-import { UserDetailsDto } from '../types/dto';
+import UserDetails from '../../types/user-details';
+import { UserDetailsDto } from '../dto';
 
 export default class UserDetailsAdapter {
     public static fromDto(userDetailsDto: UserDetailsDto): UserDetails {
