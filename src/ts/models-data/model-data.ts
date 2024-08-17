@@ -13,6 +13,7 @@ export default class ModelData {
         this.filtrationSelected = FiltrationType.AllMovies;
         this.sortSelected = SortType.Default;
         this.areFilmsLoaded = false;
+        this.isLoadingFailed = false;
     }
 
     public films: Movie[] | null;
@@ -22,4 +23,5 @@ export default class ModelData {
     public filtrationSelected: FiltrationType;
     public sortSelected: SortType;
     public areFilmsLoaded: boolean;
+    public isLoadingFailed: boolean;
 }

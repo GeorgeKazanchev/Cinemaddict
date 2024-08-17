@@ -5,6 +5,7 @@ import FilmsView from '../films/films-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
 import EmptyFilmsSection from '../../ts/types/films-sections/empty-films-section';
 import LoadingFilmsSection from '../../ts/types/films-sections/loading-films-section';
+import ErrorFilmsSection from '../../ts/types/films-sections/error-films-section';
 import FilledFilmsSection from '../../ts/types/films-sections/filled-films-section';
 import UserData from '../../ts/types/user-data';
 import SortType from '../../ts/types/sort-type';
@@ -13,11 +14,11 @@ import Movie from '../../ts/types/movie';
 
 export default class MainFilmsView extends MainView {
     constructor(filtrationSelected: FiltrationType, userData: UserData, films: Movie[] | null,
-        sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean) {
+        sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean, isLoadingFailed: boolean) {
 
         super(userData);
 
-        this.filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded);
+        this.filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded, isLoadingFailed);
         this.filtrationSelected = filtrationSelected;
         this.sortSelected = sortSelected;
 
@@ -52,8 +53,10 @@ export default class MainFilmsView extends MainView {
         this.sortView?.updateSelectedSortCriterion(sortCriterion);
     }
 
-    public updateFilmsSection(films: Movie[] | null, areAllFilmsShown: boolean, areFilmsLoaded: boolean): void {
-        const filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded);
+    public updateFilmsSection(films: Movie[] | null, areAllFilmsShown: boolean, areFilmsLoaded: boolean,
+        isLoadingFailed: boolean
+    ): void {
+        const filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded, isLoadingFailed);
         this.filmsSection = filmsSection;
         this.filmsView.updateFilmsSection(filmsSection);
     }
@@ -83,7 +86,7 @@ export default class MainFilmsView extends MainView {
     }
 
     private getFilmsSection(films: Movie[] | null = null, allFilmsShown: boolean = false,
-        areFilmsLoaded: boolean = false
+        areFilmsLoaded: boolean = false, isLoadingFailed: boolean = false
     ): FilmsSection {
         if (areFilmsLoaded) {
             if (films && films.length > 0) {
@@ -92,7 +95,11 @@ export default class MainFilmsView extends MainView {
                 return new EmptyFilmsSection();
             }
         } else {
-            return new LoadingFilmsSection();
+            if (isLoadingFailed) {
+                return new ErrorFilmsSection();
+            } else {
+                return new LoadingFilmsSection();
+            }
         }
     }
 

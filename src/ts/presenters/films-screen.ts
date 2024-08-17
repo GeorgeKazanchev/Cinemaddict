@@ -22,7 +22,8 @@ export default class FilmsScreen {
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.filtrationSelected, this.model.userData,
-            this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
+            this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown,
+            this.model.areFilmsLoaded, this.model.isLoadingFailed);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.mainView.sortView.buttonClickHandler = this.sortButtonClickHandler.bind(this);
@@ -55,7 +56,7 @@ export default class FilmsScreen {
             const films = await this.httpClient.readMovies();
             this.handleFilmsLoadingSuccess(films);
         } catch (err: unknown) {
-            //  TODO: Add an error handling
+            this.handleFilmsLoadingError();
         }
     }
 
@@ -74,11 +75,18 @@ export default class FilmsScreen {
         this.mainView.mainNavigationView.updateWatchlist();
         this.mainView.mainNavigationView.updateHistory();
         this.mainView.mainNavigationView.updateFavorites();
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
+            this.model.areFilmsLoaded, this.model.isLoadingFailed);
         this.mainView.updateSortPanelVisibility();
         this.headerView.updateUserRating();
         this.footerView.updateTotalFilmsCount(this.model.allFilmsCount);
         this.setFilmsHandlers();
+    }
+
+    private handleFilmsLoadingError(): void {
+        this.model.isLoadingFailed = true;
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
+            this.model.areFilmsLoaded, this.model.isLoadingFailed);
     }
 
     private handleCommentsLoadingSuccess(comments: Comment[], filmDetailsView: FilmDetailsView): void {
@@ -114,7 +122,8 @@ export default class FilmsScreen {
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortType.Default);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
+            this.model.areFilmsLoaded, this.model.isLoadingFailed);
         this.setFilmsHandlers();
     }
 
@@ -122,7 +131,8 @@ export default class FilmsScreen {
         this.model.sortSelected = sortCriterion;
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
-        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown, this.model.areFilmsLoaded);
+        this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
+            this.model.areFilmsLoaded, this.model.isLoadingFailed);
         this.setFilmsHandlers();
     }
 

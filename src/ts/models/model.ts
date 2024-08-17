@@ -119,6 +119,14 @@ export default class Model {
         return this.data.areFilmsLoaded;
     }
 
+    public get isLoadingFailed(): boolean {
+        return this.data.isLoadingFailed;
+    }
+
+    public set isLoadingFailed(isFailed: boolean) {
+        this.data.isLoadingFailed = isFailed;
+    }
+
     public increaseShownFilmsCount(): void {
         const filmsLeft = this.allFilms.length - this.shownFilms.length;
         this.data.shownFilmsCount += Math.min(FILMS_CHUNK_SIZE, filmsLeft);
