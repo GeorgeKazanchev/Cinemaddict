@@ -31,7 +31,16 @@ export default class HttpClient {
     }
 
     public async updateMovie(film: Movie): Promise<Movie> {
-        throw new Error('Not Implemented');
+        const body = JSON.stringify(MovieAdapter.toDto(film));
+        const response = await window.fetch(
+            `${this.serverOrigin}/movies/${film.id}`,
+            this.getFetchInit(RequestMethod.PUT, body)
+        );
+
+        this.checkStatus(response);
+        const responseData = await response.json();
+        const updatedFilm = MovieAdapter.fromDto(responseData);
+        return updatedFilm;
     }
 
     public async readComments(filmId: number): Promise<Comment[]> {
@@ -60,12 +69,12 @@ export default class HttpClient {
     }
 
     public async deleteComment(commentId: number): Promise<null> {
-        await window.fetch(
+        const response = await window.fetch(
             `${this.serverOrigin}/comments/${commentId}`,
             this.getFetchInit(RequestMethod.DELETE)
         );
 
-        this.checkStatus;
+        this.checkStatus(response);
         return null;
     }
 
@@ -81,7 +90,7 @@ export default class HttpClient {
     private getRequestHeaders(method: RequestMethod): Headers {
         const headers = new Headers();
         headers.set('Authorization', `Basic ${this.authorizationString}`);
-        if (method === RequestMethod.POST) {
+        if (method === RequestMethod.POST || method === RequestMethod.PUT) {
             headers.set('Content-Type', 'application/json');
         }
         return headers;

@@ -12,4 +12,13 @@ export default class MovieAdapter {
             UserDetailsAdapter.fromDto(movieDto['user_details'])
         );
     }
+
+    public static toDto(film: Movie): MovieDto {
+        return {
+            'id': film.id,
+            'comments': film.comments,
+            'film_info': FilmInfoAdapter.toDto(film.filmInfo),
+            'user_details': UserDetailsAdapter.toDto(film.userDetails)
+        };
+    }
 }

@@ -8,4 +8,11 @@ export default class ReleaseInfoAdapter {
             releaseInfoDto['release_country']
         );
     }
+
+    public static toDto(releaseInfo: ReleaseInfo): ReleaseInfoDto {
+        return {
+            'date': releaseInfo.date,
+            'release_country': releaseInfo.releaseCountry
+        };
+    }
 }

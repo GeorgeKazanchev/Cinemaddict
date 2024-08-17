@@ -10,4 +10,13 @@ export default class UserDetailsAdapter {
             userDetailsDto['watching_date'] !== null ? new Date(userDetailsDto['watching_date']) : null
         );
     }
+
+    public static toDto(userDetails: UserDetails): UserDetailsDto {
+        return {
+            'favorite': userDetails.favorite,
+            'watchlist': userDetails.watchlist,
+            'already_watched': userDetails.alreadyWatched,
+            'watching_date': userDetails.watchingDate
+        };
+    }
 }
