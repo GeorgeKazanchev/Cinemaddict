@@ -3,16 +3,19 @@ import FilmCardView from '../film-card/film-card-view';
 import FilmsList from '../../ts/types/films-lists/films-list';
 import AllMoviesFilmsList from '../../ts/types/films-lists/all-movies-films-list';
 import Movie from '../../ts/types/movie';
+import { FilmCardHandlers } from '../../ts/types/film-card-handlers';
 
 export default class FilmsListView extends AbstractView {
-    constructor(filmsList: FilmsList) {
+    constructor(filmsList: FilmsList, filmCardHandlers: FilmCardHandlers) {
         super();
         this.filmsList = filmsList;
+        this.handlers = filmCardHandlers;
         this.filmCardViews = this.getFilmCardViews();
     }
 
     filmsList: FilmsList;
     filmCardViews: FilmCardView[];
+    handlers: FilmCardHandlers;
 
     public get template(): string {
         return `<section class="films-list">
@@ -39,7 +42,14 @@ export default class FilmsListView extends AbstractView {
     }
 
     public getFilmCardViews(): FilmCardView[] {
-        return this.filmsList.films?.map((film) => new FilmCardView(film)) ?? [];
+        const filmCardViews = this.filmsList.films?.map((film) => new FilmCardView(film)) ?? [];
+        filmCardViews.forEach((view) => {
+            view.markWatchedButtonClickHandler = this.handlers.markWatchedButtonClickHandler;
+            view.watchlistButtonClickHandler = this.handlers.watchlistButtonClickHandler;
+            view.favoritesButtonClickHandler = this.handlers.favoritesButtonClickHandler;
+            view.popupOpenClickHandler = this.handlers.popupOpenClickHandler;
+        });
+        return filmCardViews;
     }
 
     private setModifier(element: Element): void {

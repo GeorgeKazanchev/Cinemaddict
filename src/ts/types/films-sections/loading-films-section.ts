@@ -1,6 +1,7 @@
 import FilmsListView from '../../../blocks/films-list/films-list-view';
 import LoadingFilmsList from '../films-lists/loading-films-list';
 import FilmsSection from './films-section';
+import { FilmCardHandlers } from '../film-card-handlers';
 
 export default class LoadingFilmsSection extends FilmsSection {
     constructor() {
@@ -9,8 +10,10 @@ export default class LoadingFilmsSection extends FilmsSection {
 
     isEmpty: boolean = true;
 
-    public getFilmsListViews(): FilmsListView[] {
+    public getFilmsListViews(filmCardHandlers: FilmCardHandlers): FilmsListView[] {
         const filmsList = new LoadingFilmsList();
-        return [new FilmsListView(filmsList)];
+        return [
+            new FilmsListView(filmsList, filmCardHandlers)
+        ];
     }
 }

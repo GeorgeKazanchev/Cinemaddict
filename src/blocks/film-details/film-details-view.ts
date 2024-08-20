@@ -2,6 +2,7 @@ import AbstractView from '../../ts/abstract-view';
 import FilmDetailsCommentView from './__comment/film-details__comment-view';
 import Movie from '../../ts/types/movie';
 import Comment from '../../ts/types/comment';
+import { NEW_COMMENT_EMOJI_SIZE } from '../../settings';
 
 export default class FilmDetailsView extends AbstractView {
     constructor(film: Movie) {
@@ -12,7 +13,7 @@ export default class FilmDetailsView extends AbstractView {
     film: Movie;
 
     public get template(): string {
-        return `<section class="film-details">
+        return `<section class="film-details" data-film-id="${this.film.id}">
                     <form class="film-details__inner" action="" method="get">
                         <div class="film-details__top-container">
                             <div class="film-details__close">
@@ -125,12 +126,156 @@ export default class FilmDetailsView extends AbstractView {
         return this.getTemplate();
     }
 
+    public bind(): void {
+        this.bindControlButtonsHandlers();
+        this.bindPopupCloseHandlers();
+        this.bindEmojiChangeHandlers();
+        this.bindCommentFormSubmitKeyUpHandler();
+    }
+
+    public markWatchedButtonClickHandler(_: Event): void { }
+    public watchlistButtonClickHandler(_: Event): void { }
+    public favoritesButtonClickHandler(_: Event): void { }
+
     public updateComments(comments: Comment[]): void {
         const commentsList = this.element.querySelector('.film-details__comments-list');
         const commentElements = this.getCommentElements(comments);
         commentElements.forEach((comment) => {
             commentsList?.appendChild(comment);
         });
+    }
+
+    public getCommentFormElement(): HTMLFormElement {
+        const formElement = this.element.querySelector('.film-details__inner');
+        if (!(formElement instanceof HTMLFormElement)) {
+            throw new Error('Comment form is not found.');
+        }
+        return formElement;
+    }
+
+    public getCommentText(): string {
+        const commentInputElement = this.getCommentInputElement();
+        return commentInputElement.value;
+    }
+
+    public getSelectedEmojiElement(): HTMLInputElement {
+        const emojiElements = this.element.querySelectorAll('.film-details__emoji-item');
+        const selectedEmojiElement = [...emojiElements].find((element) =>
+            element instanceof HTMLInputElement && element.checked
+        );
+
+        if (!(selectedEmojiElement instanceof HTMLInputElement)) {
+            throw new Error('Selected emoji element is not found.');
+        }
+
+        return selectedEmojiElement;
+    }
+
+    public resetCommentForm(): void {
+        const commentInputElement = this.getCommentInputElement();
+        const newCommentEmojiElement = this.getNewCommentEmojiElement();
+
+        commentInputElement.value = '';
+        newCommentEmojiElement.innerHTML = '';
+
+        this.uncheckAllEmojiElements();
+    }
+
+    private getCommentInputElement(): HTMLTextAreaElement {
+        const commentInputElement = this.element.querySelector('.film-details__new-comment textarea');
+        if (!(commentInputElement instanceof HTMLTextAreaElement)) {
+            throw new Error('Comment\'s text is not found.');
+        }
+        return commentInputElement;
+    }
+
+    private getNewCommentEmojiElement(): Element {
+        const newCommentEmojiElement = this.element.querySelector('.film-details__add-emoji-label');
+        if (!(newCommentEmojiElement)) {
+            throw new Error('Comment\'s emotion is not found.');
+        }
+        return newCommentEmojiElement;
+    }
+
+    private uncheckAllEmojiElements(): void {
+        const emojiElements = this.element.querySelectorAll('.film-details__emoji-item');
+        emojiElements.forEach((element) => {
+            if (element instanceof HTMLInputElement) {
+                element.checked = false;
+            }
+        });
+    }
+
+    private bindControlButtonsHandlers(): void {
+        const markWatchedButton = this.element.querySelector('.film-details__control-input--watched');
+        const watchlistButton = this.element.querySelector('.film-details__control-input--watchlist');
+        const favoritesButton = this.element.querySelector('.film-details__control-input--favorite');
+
+        markWatchedButton?.addEventListener('click', (evt: Event) => this.markWatchedButtonClickHandler(evt));
+        watchlistButton?.addEventListener('click', (evt: Event) => this.watchlistButtonClickHandler(evt));
+        favoritesButton?.addEventListener('click', (evt: Event) => this.favoritesButtonClickHandler(evt));
+    }
+
+    private bindPopupCloseHandlers(): void {
+        const closeButton = this.element.querySelector('.film-details__close-btn');
+        if (closeButton instanceof HTMLElement) {
+            closeButton.addEventListener('click', (evt: Event) => {
+                evt.preventDefault();
+                this.element.remove();
+            });
+            setTimeout(() => closeButton.focus(), 0);
+        }
+
+        this.element.addEventListener('keydown', ((evt: KeyboardEvent) => {
+            if (evt.key === 'Escape') {
+                this.element.remove();
+            }
+        }) as EventListener);
+    }
+
+    private bindEmojiChangeHandlers(): void {
+        const emojiElements = this.element.querySelectorAll('.film-details__emoji-item');
+        emojiElements.forEach((element) => {
+            element.addEventListener('change', (evt: Event) => this.emojiChangeHandler(evt));
+        });
+    }
+
+    private emojiChangeHandler(evt: Event): void {
+        if (evt.target instanceof HTMLInputElement) {
+            const emojiItemId = evt.target.id;
+            const emojiImage = this.element.querySelector(`[for="${emojiItemId}"] > img`);
+
+            if (emojiImage && emojiImage instanceof HTMLImageElement) {
+                const newCommentEmoji = this.element.querySelector('.film-details__add-emoji-label');
+                if (newCommentEmoji) {
+                    newCommentEmoji.innerHTML = '';
+
+                    const newEmojiImage = document.createElement('img');
+                    newEmojiImage.width = NEW_COMMENT_EMOJI_SIZE;
+                    newEmojiImage.height = NEW_COMMENT_EMOJI_SIZE;
+                    newEmojiImage.src = emojiImage.src;
+                    newEmojiImage.alt = emojiItemId;
+
+                    newCommentEmoji.appendChild(newEmojiImage);
+                }
+            }
+        }
+    }
+
+    private bindCommentFormSubmitKeyUpHandler(): void {     //  TODO: Change the function name
+        const commentFormElement = this.element.querySelector('.film-details__inner');
+        const commentInputElement = this.element.querySelector('.film-details__new-comment textarea');
+
+        if (!(commentFormElement instanceof HTMLFormElement)) {
+            throw new Error('');        //  TODO: Add error's message
+        }
+
+        commentInputElement?.addEventListener('keyup', ((evt: KeyboardEvent) => {
+            if (evt.key === 'Enter' && evt.ctrlKey) {
+                evt.preventDefault();
+                commentFormElement.requestSubmit();
+            }
+        }) as EventListener);
     }
 
     private getRuntime(): string {

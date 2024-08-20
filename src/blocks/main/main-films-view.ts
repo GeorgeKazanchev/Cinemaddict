@@ -11,11 +11,13 @@ import UserData from '../../ts/types/user-data';
 import SortType from '../../ts/types/sort-type';
 import FiltrationType from '../../ts/types/filtration-type';
 import Movie from '../../ts/types/movie';
+import { FilmCardHandlers } from '../../ts/types/film-card-handlers';
 
 export default class MainFilmsView extends MainView {
     constructor(filtrationSelected: FiltrationType, userData: UserData, films: Movie[] | null,
-        sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean, isLoadingFailed: boolean) {
-
+        sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean, isLoadingFailed: boolean,
+        filmCardHandlers: FilmCardHandlers
+    ) {
         super(userData);
 
         this.filmsSection = this.getFilmsSection(films, areAllFilmsShown, areFilmsLoaded, isLoadingFailed);
@@ -23,7 +25,7 @@ export default class MainFilmsView extends MainView {
         this.sortSelected = sortSelected;
 
         this.mainNavigationView = new MainNavigationFilmsView(this.filtrationSelected, this.userData);
-        this.filmsView = new FilmsView(this.filmsSection);
+        this.filmsView = new FilmsView(this.filmsSection, filmCardHandlers);
         this.sortView = new SortView(sortSelected);
     }
 
@@ -83,6 +85,21 @@ export default class MainFilmsView extends MainView {
     public updateSortPanelVisibility(isVisible?: boolean): void {
         const needToMakeVisible = isVisible ?? this.needToRenderSortPanel();
         this.sortView.isVisible = needToMakeVisible;
+    }
+
+    public toggleMarkWatchedButtonState(filmId: string): void {
+        const buttons = this.element.querySelectorAll(`.film-card[data-film-id="${filmId}"] .film-card__controls-item--mark-as-watched`);
+        buttons.forEach((button) => button.classList.toggle('film-card__controls-item--active'));
+    }
+
+    public toggleWatchlistButtonState(filmId: string): void {
+        const buttons = this.element.querySelectorAll(`.film-card[data-film-id="${filmId}"] .film-card__controls-item--add-to-watchlist`);
+        buttons.forEach((button) => button.classList.toggle('film-card__controls-item--active'));
+    }
+
+    public toggleFavoritesButtonState(filmId: string): void {
+        const buttons = this.element.querySelectorAll(`.film-card[data-film-id="${filmId}"] .film-card__controls-item--favorite`);
+        buttons.forEach((button) => button.classList.toggle('film-card__controls-item--active'));
     }
 
     private getFilmsSection(films: Movie[] | null = null, allFilmsShown: boolean = false,

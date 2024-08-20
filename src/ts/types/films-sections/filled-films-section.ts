@@ -4,6 +4,7 @@ import MostCommentedFilmsList from '../films-lists/most-commented-films-list';
 import TopRatedFilmsList from '../films-lists/top-rated-films-list';
 import Movie from '../movie';
 import FilmsSection from './films-section';
+import { FilmCardHandlers } from '../film-card-handlers';
 
 export default class FilledFilmsSection extends FilmsSection {
     constructor(films: Movie[] | null, allFilmsShown: boolean) {
@@ -15,7 +16,7 @@ export default class FilledFilmsSection extends FilmsSection {
     isEmpty: boolean;
     allFilmsShown: boolean;
 
-    public getFilmsListViews(): FilmsListView[] {
+    public getFilmsListViews(filmCardHandlers: FilmCardHandlers): FilmsListView[] {
         const topRatedFilms = this.getTopRatedFilms(this.films);
         const mostCommentedFilms = this.getMostCommentedFilms(this.films);
 
@@ -24,9 +25,9 @@ export default class FilledFilmsSection extends FilmsSection {
         const mostCommentedFilmsList = new MostCommentedFilmsList(mostCommentedFilms);
 
         return [
-            new FilmsListView(allMoviesList),
-            new FilmsListView(topRatedFilmsList),
-            new FilmsListView(mostCommentedFilmsList)
+            new FilmsListView(allMoviesList, filmCardHandlers),
+            new FilmsListView(topRatedFilmsList, filmCardHandlers),
+            new FilmsListView(mostCommentedFilmsList, filmCardHandlers)
         ];
     }
 

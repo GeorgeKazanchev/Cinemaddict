@@ -2,17 +2,20 @@ import ModelData from '../models-data/model-data';
 import Model from '../models/model';
 import HeaderView from '../../blocks/header/header-view';
 import MainFilmsView from '../../blocks/main/main-films-view';
-import FilmCardView from '../../blocks/film-card/film-card-view';
 import FooterView from '../../blocks/footer/footer-view';
 import FilmDetailsView from '../../blocks/film-details/film-details-view';
 import SortType from '../types/sort-type';
 import FiltrationType from '../types/filtration-type';
 import Movie from '../types/movie';
 import Comment from '../types/comment';
+import LocalComment from '../types/local-comment';
+import Emotion from '../types/emotion';
+import UserDetails from '../types/user-details';
 import Application from '../application';
 import HttpClient from '../http-api/http-client';
+import he from 'he';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
-import { NEW_COMMENT_EMOJI_SIZE, SERVER_ORIGIN } from '../../settings';
+import { SERVER_ORIGIN } from '../../settings';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -20,16 +23,23 @@ export default class FilmsScreen {
         this.model.updateUserData();
         this.model.resetShownFilmsCount();
 
+        const filmCardHandlers = {
+            markWatchedButtonClickHandler: this.markWatchedButtonClickHandler.bind(this),
+            watchlistButtonClickHandler: this.watchlistButtonClickHandler.bind(this),
+            favoritesButtonClickHandler: this.favoritesButtonClickHandler.bind(this),
+            popupOpenClickHandler: this.popupOpenClickHandler.bind(this)
+        };
+
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
         this.mainView = new MainFilmsView(this.model.filtrationSelected, this.model.userData,
             this.model.shownFilms, this.model.sortSelected, this.model.areAllFilmsShown,
-            this.model.areFilmsLoaded, this.model.isLoadingFailed);
+            this.model.areFilmsLoaded, this.model.isLoadingFailed, filmCardHandlers
+        );
         this.footerView = new FooterView(this.model.allFilmsCount);
 
         this.mainView.sortView.buttonClickHandler = this.sortButtonClickHandler.bind(this);
         this.mainView.mainNavigationView.buttonClickHandler = this.filtrationButtonClickHandler.bind(this);
         this.mainView.mainNavigationView.statsButtonClickHandler = this.statsButtonClickHandler.bind(this);
-        this.setFilmsHandlers();
 
         this.httpClient = new HttpClient(SERVER_ORIGIN, Application.authorizationString);
 
@@ -65,6 +75,7 @@ export default class FilmsScreen {
             const comments = await this.httpClient.readComments(Number(filmDetailsView.film.id));
             this.handleCommentsLoadingSuccess(comments, filmDetailsView);
         } catch (err: unknown) {
+            this.handleCommentsLoadingError();
             //  TODO: Add an error handling
         }
     }
@@ -76,11 +87,11 @@ export default class FilmsScreen {
         this.mainView.mainNavigationView.updateHistory();
         this.mainView.mainNavigationView.updateFavorites();
         this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
-            this.model.areFilmsLoaded, this.model.isLoadingFailed);
+            this.model.areFilmsLoaded, this.model.isLoadingFailed
+        );
         this.mainView.updateSortPanelVisibility();
         this.headerView.updateUserRating();
         this.footerView.updateTotalFilmsCount(this.model.allFilmsCount);
-        this.setFilmsHandlers();
     }
 
     private handleFilmsLoadingError(): void {
@@ -91,6 +102,10 @@ export default class FilmsScreen {
 
     private handleCommentsLoadingSuccess(comments: Comment[], filmDetailsView: FilmDetailsView): void {
         filmDetailsView.updateComments(comments);
+    }
+
+    private handleCommentsLoadingError(): void {
+
     }
 
     private statsButtonClickHandler(evt: Event): void {
@@ -123,8 +138,8 @@ export default class FilmsScreen {
         this.mainView.updateSelectedFiltrationCriterion(filtrationCriterion);
         this.mainView.updateSelectedSortCriterion(SortType.Default);
         this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
-            this.model.areFilmsLoaded, this.model.isLoadingFailed);
-        this.setFilmsHandlers();
+            this.model.areFilmsLoaded, this.model.isLoadingFailed
+        );
     }
 
     private sortFilms(sortCriterion: SortType): void {
@@ -132,54 +147,60 @@ export default class FilmsScreen {
         this.model.resetShownFilmsCount();
         this.mainView.updateSelectedSortCriterion(sortCriterion);
         this.mainView.updateFilmsSection(this.model.shownFilms, this.model.areAllFilmsShown,
-            this.model.areFilmsLoaded, this.model.isLoadingFailed);
-        this.setFilmsHandlers();
+            this.model.areFilmsLoaded, this.model.isLoadingFailed
+        );
     }
 
-    private setFilmsHandlers(): void {
-        this.setFilmCardsClickHandlers();
-        this.setShowMoreButtonClickHandler();
+    private markWatchedButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmCard(evt.target);
+            this.updateWatchedFilms(filmId);
+            this.mainView.toggleMarkWatchedButtonState(filmId);
+        }
     }
 
-    private setFilmCardsClickHandlers(): void {
-        const filmsListViews = this.mainView.filmsView.filmsListViews;
-        filmsListViews.forEach((filmsListView) => {
-            const filmCardViews = filmsListView.filmCardViews;
-            filmCardViews.forEach((filmCardView) => {
-                this.setMarkWatchedButtonClickHandler(filmCardView);
-                this.setAddToWatchlistButtonClickHandler(filmCardView);
-                this.setAddToFavoritesButtonClickHandler(filmCardView);
-                this.setPopupOpenClickHandlers(filmCardView);
-            });
-        });
+    private watchlistButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmCard(evt.target);
+            this.updateFilmsInWatchlist(filmId);
+            this.mainView.toggleWatchlistButtonState(filmId);
+        }
     }
 
-    private setMarkWatchedButtonClickHandler(filmCardView: FilmCardView): void {
-        const button = filmCardView.element.querySelector('.film-card__controls-item--mark-as-watched');
-        button?.addEventListener('click', () => {
-            button.classList.toggle('film-card__controls-item--active');
-            this.updateWatchedFilms(filmCardView);
-        });
+    private favoritesButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmCard(evt.target);
+            this.updateFavoriteFilms(filmId);
+            this.mainView.toggleFavoritesButtonState(filmId);
+        }
     }
 
-    private setAddToWatchlistButtonClickHandler(filmCardView: FilmCardView): void {
-        const button = filmCardView.element.querySelector('.film-card__controls-item--add-to-watchlist');
-        button?.addEventListener('click', () => {
-            button.classList.toggle('film-card__controls-item--active');
-            this.updateFilmsInWatchlist(filmCardView);
-        });
+    private popupMarkWatchedButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmDetails(evt.target);
+            this.updateWatchedFilms(filmId);
+            this.mainView.toggleMarkWatchedButtonState(filmId);
+        }
     }
 
-    private setAddToFavoritesButtonClickHandler(filmCardView: FilmCardView): void {
-        const button = filmCardView.element.querySelector('.film-card__controls-item--favorite');
-        button?.addEventListener('click', () => {
-            button.classList.toggle('film-card__controls-item--active');
-            this.updateFavoriteFilms(filmCardView);
-        });
+    private popupWatchlistButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmDetails(evt.target);
+            this.updateFilmsInWatchlist(filmId);
+            this.mainView.toggleWatchlistButtonState(filmId);
+        }
     }
 
-    private updateWatchedFilms(filmCardView: FilmCardView): void {
-        const userDetails = filmCardView.film.userDetails;
+    private popupFavoritesButtonClickHandler(evt: Event): void {
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmDetails(evt.target);
+            this.updateFavoriteFilms(filmId);
+            this.mainView.toggleFavoritesButtonState(filmId);
+        }
+    }
+
+    private updateWatchedFilms(filmId: string): void {
+        const userDetails = this.getUserDetails(filmId);
         userDetails.alreadyWatched = !userDetails.alreadyWatched;
 
         if (userDetails.alreadyWatched) {
@@ -188,89 +209,81 @@ export default class FilmsScreen {
         } else {
             userDetails.watchingDate = null;
             this.model.decrementFilmsWatched();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.History);
+            this.removeFilmCardIfNeeded(filmId, FiltrationType.History);
         }
 
         this.headerView.updateUserRating();
         this.mainView.mainNavigationView.updateHistory();
     }
 
-    private updateFilmsInWatchlist(filmCardView: FilmCardView): void {
-        const userDetails = filmCardView.film.userDetails;
+    private updateFilmsInWatchlist(filmId: string): void {
+        const userDetails = this.getUserDetails(filmId);
         userDetails.watchlist = !userDetails.watchlist;
 
         if (userDetails.watchlist) {
             this.model.incrementFilmsInWatchlist();
         } else {
             this.model.decrementFilmsInWatchlist();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.Watchlist);
+            this.removeFilmCardIfNeeded(filmId, FiltrationType.Watchlist);
         }
 
         this.mainView.mainNavigationView.updateWatchlist();
     }
 
-    private updateFavoriteFilms(filmCardView: FilmCardView): void {
-        const userDetails = filmCardView.film.userDetails;
+    private updateFavoriteFilms(filmId: string): void {
+        const userDetails = this.getUserDetails(filmId);
         userDetails.favorite = !userDetails.favorite;
 
         if (userDetails.favorite) {
             this.model.incrementFavoriteFilms();
         } else {
             this.model.decrementFavoriteFilms();
-            this.removeFilmCardIfNeeded(filmCardView.element, FiltrationType.Favorites);
+            this.removeFilmCardIfNeeded(filmId, FiltrationType.Favorites);
         }
 
         this.mainView.mainNavigationView.updateFavorites();
     }
 
-    private removeFilmCardIfNeeded(filmCardElement: Element, filtrationCriterion: FiltrationType): void {
-        if (this.model.filtrationSelected === filtrationCriterion) {
+    private getUserDetails(filmId: string): UserDetails {
+        const film = this.getFilmById(filmId);
+        return film.userDetails;
+    }
+
+    private getFilmById(filmId: string): Movie {
+        const film = this.model.allFilms.find((film) => film.id === filmId);
+        if (film) {
+            return film;
+        } else {
+            throw new Error('Given film is not found.');
+        }
+    }
+
+    private removeFilmCardIfNeeded(filmId: string, filtrationCriterion: FiltrationType): void {
+        const filmCardElement = document.querySelector(`.film-card[data-film-id="${filmId}"]`);
+        if (filmCardElement && this.model.filtrationSelected === filtrationCriterion) {
             filmCardElement.remove();
         }
     }
 
-    private setPopupOpenClickHandlers(filmCardView: FilmCardView): void {
-        const poster = filmCardView.element.querySelector('.film-card__poster');
-        const title = filmCardView.element.querySelector('.film-card__title');
-        const comments = filmCardView.element.querySelector('.film-card__comments');
+    private popupOpenClickHandler(evt: Event): void {
+        evt.preventDefault();
+        this.closePopupIfOpened();
 
-        if (poster) {
-            this.setPopupOpenClickHandler(poster, filmCardView);
-        }
+        if (evt.target instanceof Element) {
+            const filmId = this.getFilmIdViaFilmCard(evt.target);
+            const film = this.getFilmById(filmId);
+            const popupView = new FilmDetailsView(film);
 
-        if (title) {
-            this.setPopupOpenClickHandler(title, filmCardView);
-        }
+            popupView.markWatchedButtonClickHandler = this.popupMarkWatchedButtonClickHandler.bind(this);
+            popupView.watchlistButtonClickHandler = this.popupWatchlistButtonClickHandler.bind(this);
+            popupView.favoritesButtonClickHandler = this.popupFavoritesButtonClickHandler.bind(this);
 
-        if (comments) {
-            this.setPopupOpenClickHandler(comments, filmCardView);
-        }
-    }
+            const commentFormElement = popupView.getCommentFormElement();
+            this.setCommentFormSubmitHandler(commentFormElement, popupView);
 
-    private setPopupOpenClickHandler(element: Element, filmCardView: FilmCardView): void {
-        element.addEventListener('click', (evt: Event) => {
-            evt.preventDefault();
-            this.closePopupIfOpened();
-
-            const popupView = new FilmDetailsView(filmCardView.film);
-            const popupElement = popupView.element;
-
-            this.setPopupMarkWatchedButtonClickHandler(popupElement, filmCardView);
-            this.setPopupAddToWatchlistButtonClickHandler(popupElement, filmCardView);
-            this.setPopupAddToFavoritesButtonClickHandler(popupElement, filmCardView);
-            this.setPopupCloseButtonClickHandler(popupElement);
-            this.setPopupCloseKeyDownHandler(popupElement);
-            this.setPopupEmojiItemsChangeHandlers(popupElement);
-            this.setCommentFormHandlers(popupElement);
-
-            const popupCloseButton = popupElement.querySelector('.film-details__close-btn');
-            if (popupCloseButton instanceof HTMLElement) {      //  It doesn't work without setTimeout()
-                setTimeout(() => popupCloseButton.focus(), 1);
-            }
-
-            this.footerView.element.insertAdjacentElement('afterend', popupElement);
+            this.footerView.element.insertAdjacentElement('afterend', popupView.element);
             this.loadComments(popupView);
-        });
+        }
     }
 
     private closePopupIfOpened(): void {
@@ -278,109 +291,29 @@ export default class FilmsScreen {
         openedPopupElement?.remove();
     }
 
-    private setPopupMarkWatchedButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
-        const button = popupElement.querySelector('.film-details__control-label--watched');
-        button?.addEventListener('click', () => {
-            this.updateWatchedFilms(filmCardView);
-        });
-    }
-
-    private setPopupAddToWatchlistButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
-        const button = popupElement.querySelector('.film-details__control-label--watchlist');
-        button?.addEventListener('click', () => {
-            this.updateFilmsInWatchlist(filmCardView);
-        });
-    }
-
-    private setPopupAddToFavoritesButtonClickHandler(popupElement: Element, filmCardView: FilmCardView): void {
-        const button = popupElement.querySelector('.film-details__control-label--favorite');
-        button?.addEventListener('click', () => {
-            this.updateFavoriteFilms(filmCardView);
-        })
-    }
-
-    private setPopupCloseButtonClickHandler(popupElement: Element): void {
-        const button = popupElement.querySelector('.film-details__close-btn');
-        button?.addEventListener('click', (evt: Event) => {
-            evt.preventDefault();
-            popupElement.remove();
-        });
-    }
-
-    private setPopupCloseKeyDownHandler(popupElement: Element): void {
-        popupElement.addEventListener('keydown', ((evt: KeyboardEvent) => {
-            if (evt.key === 'Escape') {
-                popupElement.remove();
-            }
-        }) as EventListener);
-    }
-
-    private setPopupEmojiItemsChangeHandlers(popupElement: Element): void {
-        const emojiItems = popupElement.querySelectorAll('.film-details__emoji-item');
-        emojiItems.forEach((emojiItem) => {
-            emojiItem.addEventListener('change', (evt: Event) => {
-                if (evt.target instanceof HTMLInputElement) {
-                    const emojiItemId = evt.target.id;
-                    const emojiImage = popupElement.querySelector(`[for="${emojiItemId}"] > img`);
-
-                    if (emojiImage && emojiImage instanceof HTMLImageElement) {
-                        const newCommentEmoji = popupElement.querySelector('.film-details__add-emoji-label');
-                        if (newCommentEmoji) {
-                            newCommentEmoji.innerHTML = '';
-
-                            const newEmojiImage = document.createElement('img');
-                            newEmojiImage.width = NEW_COMMENT_EMOJI_SIZE;
-                            newEmojiImage.height = NEW_COMMENT_EMOJI_SIZE;
-                            newEmojiImage.src = emojiImage.src;
-                            newEmojiImage.alt = emojiItemId;
-
-                            newCommentEmoji.appendChild(newEmojiImage);
-                        }
-                    }
-                }
-            });
-        });
-    }
-
-    private setCommentFormHandlers(popupElement: Element): void {
-        const formElement = popupElement.querySelector('.film-details__inner');
-        if (formElement instanceof HTMLFormElement) {
-            this.setCommentInputKeyUpHandler(formElement);
-            this.setCommentFormSubmitHandler(formElement);
-        }
-    }
-
-    private setCommentInputKeyUpHandler(formElement: HTMLFormElement): void {
-        const commentInputElement = formElement.querySelector('.film-details__new-comment textarea');
-        commentInputElement?.addEventListener('keyup', ((evt: KeyboardEvent) => {
-            if (evt.key === 'Enter' && evt.ctrlKey) {
-                evt.preventDefault();
-                formElement.requestSubmit();
-            }
-        }) as EventListener);
-    }
-
-    private setCommentFormSubmitHandler(formElement: HTMLFormElement): void {
+    private setCommentFormSubmitHandler(formElement: HTMLFormElement, filmDetailsView: FilmDetailsView): void {
         formElement.addEventListener('submit', (evt: Event) => {
             evt.preventDefault();
 
-            const commentInputElement = formElement.querySelector('.film-details__new-comment textarea');
-            if (commentInputElement instanceof HTMLTextAreaElement) {
-                commentInputElement.value = '';
-            }
+            const commentText = he.encode(filmDetailsView.getCommentText());
+            const commentDate = new Date();
+            const commentEmotion = this.getEmotionByElement(filmDetailsView.getSelectedEmojiElement());
 
-            const emojiElements = formElement.querySelectorAll('.film-details__emoji-item');
-            emojiElements.forEach((element) => {
-                if (element instanceof HTMLInputElement) {
-                    element.checked = false;
-                }
-            });
+            const newComment = new LocalComment(
+                commentText,
+                commentDate,
+                commentEmotion
+            );
 
-            const newCommentEmojiElement = formElement.querySelector('.film-details__add-emoji-label');
-            if (newCommentEmojiElement) {
-                newCommentEmojiElement.innerHTML = '';
-            }
+            filmDetailsView.resetCommentForm();
         });
+    }
+
+    private getEmotionByElement(emojiElement: HTMLInputElement): Emotion {
+        const key: keyof typeof Emotion = Object.keys(Emotion)[
+            Object.values(Emotion).indexOf(emojiElement.value as unknown as Emotion)
+        ] as keyof typeof Emotion;
+        return Emotion[key];
     }
 
     private setShowMoreButtonClickHandler(): void {
@@ -389,11 +322,33 @@ export default class FilmsScreen {
             evt.preventDefault();
             this.model.increaseShownFilmsCount();
             this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
-            this.setFilmCardsClickHandlers();
+            // this.setFilmCardsClickHandlers();
 
             if (this.model.areAllFilmsShown) {
                 this.mainView.hideShowMoreButton();
             }
         });
+    }
+
+    private getFilmIdViaFilmCard(element: Element): string {
+        const filmCardElement = element.closest('.film-card');
+        return this.getFilmIdFromElement(filmCardElement);
+    }
+
+    private getFilmIdViaFilmDetails(element: Element): string {
+        const filmDetailsElement = element.closest('.film-details');
+        return this.getFilmIdFromElement(filmDetailsElement);
+    }
+
+    private getFilmIdFromElement(element: Element | null): string {
+        if (!(element instanceof HTMLElement)) {
+            throw new Error('Given element is not a film card.');
+        }
+
+        if (!element.dataset.filmId) {
+            throw new Error('Film card element does not contain a film id.');
+        }
+
+        return element.dataset.filmId;
     }
 }

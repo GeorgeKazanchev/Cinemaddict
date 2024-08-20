@@ -16,7 +16,7 @@ export default class FilmCardView extends AbstractView {
     film: Movie;
 
     public get template(): string {
-        return `<article class="film-card">
+        return `<article class="film-card" data-film-id="${this.film.id}">
                     <h3 class="film-card__title">${this.film.filmInfo.title}</h3>
                     <p class="film-card__rating">${this.getRating()}</p>
                     <p class="film-card__info">
@@ -43,6 +43,36 @@ export default class FilmCardView extends AbstractView {
 
     public createElement(): Element {
         return this.getTemplate();
+    }
+
+    public bind(): void {
+        this.bindControlButtonsHandlers();
+        this.bindPopupOpenHandlers();
+    }
+
+    public markWatchedButtonClickHandler(_: Event): void { }
+    public watchlistButtonClickHandler(_: Event): void { }
+    public favoritesButtonClickHandler(_: Event): void { }
+    public popupOpenClickHandler(_: Event): void { }
+
+    private bindControlButtonsHandlers(): void {
+        const markWatchedButton = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+        const watchlistButton = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
+        const favoritesButton = this.element.querySelector('.film-card__controls-item--favorite');
+
+        markWatchedButton?.addEventListener('click', (evt: Event) => this.markWatchedButtonClickHandler(evt));
+        watchlistButton?.addEventListener('click', (evt: Event) => this.watchlistButtonClickHandler(evt));
+        favoritesButton?.addEventListener('click', (evt: Event) => this.favoritesButtonClickHandler(evt));
+    }
+
+    private bindPopupOpenHandlers(): void {
+        const posterElement = this.element.querySelector('.film-card__poster');
+        const titleElement = this.element.querySelector('.film-card__title');
+        const commentsElement = this.element.querySelector('.film-card__comments');
+
+        posterElement?.addEventListener('click', (evt: Event) => this.popupOpenClickHandler(evt));
+        titleElement?.addEventListener('click', (evt: Event) => this.popupOpenClickHandler(evt));
+        commentsElement?.addEventListener('click', (evt: Event) => this.popupOpenClickHandler(evt));
     }
 
     private getRating(): string {
