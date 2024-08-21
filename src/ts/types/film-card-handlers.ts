@@ -4,5 +4,6 @@ export type FilmCardHandlers = {
     markWatchedButtonClickHandler: Handler,
     watchlistButtonClickHandler: Handler,
     favoritesButtonClickHandler: Handler,
-    popupOpenClickHandler: Handler
+    popupOpenClickHandler: Handler,
+    showMoreButtonClickHandler: Handler
 };

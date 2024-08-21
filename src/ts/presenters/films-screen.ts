@@ -27,7 +27,8 @@ export default class FilmsScreen {
             markWatchedButtonClickHandler: this.markWatchedButtonClickHandler.bind(this),
             watchlistButtonClickHandler: this.watchlistButtonClickHandler.bind(this),
             favoritesButtonClickHandler: this.favoritesButtonClickHandler.bind(this),
-            popupOpenClickHandler: this.popupOpenClickHandler.bind(this)
+            popupOpenClickHandler: this.popupOpenClickHandler.bind(this),
+            showMoreButtonClickHandler: this.showMoreButtonClickHandler.bind(this)
         };
 
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
@@ -316,18 +317,12 @@ export default class FilmsScreen {
         return Emotion[key];
     }
 
-    private setShowMoreButtonClickHandler(): void {
-        const showMoreButton = this.mainView.element.querySelector('.films-list__show-more');
-        showMoreButton?.addEventListener('click', (evt: Event) => {
-            evt.preventDefault();
-            this.model.increaseShownFilmsCount();
-            this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
-            // this.setFilmCardsClickHandlers();
-
-            if (this.model.areAllFilmsShown) {
-                this.mainView.hideShowMoreButton();
-            }
-        });
+    private showMoreButtonClickHandler(_: Event): void {
+        this.model.increaseShownFilmsCount();
+        this.mainView.updateAllMoviesFilmsList(this.model.shownFilms);
+        if (this.model.areAllFilmsShown) {
+            this.mainView.hideShowMoreButton();
+        }
     }
 
     private getFilmIdViaFilmCard(element: Element): string {

@@ -11,6 +11,7 @@ export default class FilmsListView extends AbstractView {
         this.filmsList = filmsList;
         this.handlers = filmCardHandlers;
         this.filmCardViews = this.getFilmCardViews();
+        this.showMoreButtonClickHandler = filmCardHandlers.showMoreButtonClickHandler;
     }
 
     filmsList: FilmsList;
@@ -36,6 +37,16 @@ export default class FilmsListView extends AbstractView {
         this.setShowMoreButton(element);
         return element;
     }
+
+    public bind(): void {
+        const showMoreButton = this.element.querySelector('.films-list__show-more');
+        showMoreButton?.addEventListener('click', (evt: Event) => {
+            evt.preventDefault();
+            this.showMoreButtonClickHandler(evt);
+        })
+    }
+
+    public showMoreButtonClickHandler(_: Event): void { }
 
     public setFilmCardViews(): void {
         this.filmCardViews = this.getFilmCardViews();
