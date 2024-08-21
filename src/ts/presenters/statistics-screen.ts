@@ -13,12 +13,15 @@ export default class StatisticsScreen {
         this.model = new Model(data);
         const statisticsData = this.model.getStatisticsData(getMinDate());
 
+        const statisticsHandlers = {
+            navigationTabClickHandler: this.navigationTabClickHandler.bind(this),
+            statisticsFilterChangeHandler: this.statisticsFilterChangeHandler.bind(this)
+        };
+
         this.headerView = new HeaderView(this.model.isAuthorized, this.model.userData);
-        this.mainView = new MainStatisticsView(this.model.userData, statisticsData);
+        this.mainView = new MainStatisticsView(this.model.userData, statisticsData, statisticsHandlers);
         this.footerView = new FooterView(this.model.allFilmsCount);
 
-        this.setNavigationTabsClickHandlers();
-        this.setStatisticsFiltersChangeHandlers();
         this.renderCanvas(getMinDate());
     }
 
@@ -34,22 +37,7 @@ export default class StatisticsScreen {
         this.mainView.element.insertAdjacentElement('afterend', this.footerView.element);
     }
 
-    private setNavigationTabsClickHandlers(): void {
-        const navigationTabs = this.mainView.element.querySelectorAll('.main-navigation__item');
-        navigationTabs.forEach((navigationTab) => {
-            navigationTab.addEventListener('click', (evt: Event) => this.navigationTabClickHandler(evt));
-        });
-    }
-
-    private setStatisticsFiltersChangeHandlers(): void {
-        const filters = this.mainView.element.querySelectorAll('.statistic__filters-input');
-        filters.forEach((filter) => {
-            filter.addEventListener('change', (evt: Event) => this.statisticsFilterChangeHandler(evt));
-        });
-    }
-
     private navigationTabClickHandler(evt: Event): void {
-        evt.preventDefault();
         const tab = evt.currentTarget;
         if (tab instanceof Element) {
             const filtrationCriterion = getFiltrationCriterionByElement(tab);
@@ -60,7 +48,6 @@ export default class StatisticsScreen {
     }
 
     private statisticsFilterChangeHandler(evt: Event): void {
-        evt.preventDefault();
         const filter = evt.target;
         if (filter instanceof HTMLInputElement) {
             const startDate = this.getStartDateByFilterValue(filter.value);

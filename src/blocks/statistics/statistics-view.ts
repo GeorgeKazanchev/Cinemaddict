@@ -65,6 +65,18 @@ export default class StatisticsView extends AbstractView {
         return element;
     }
 
+    public bind(): void {
+        const filterButtons = this.element.querySelectorAll('.statistic__filters-input');
+        filterButtons.forEach((button) => {
+            button.addEventListener('change', (evt: Event) => {
+                evt.preventDefault();
+                this.statisticsFilterChangeHandler(evt);
+            })
+        });
+    }
+
+    public statisticsFilterChangeHandler(_: Event): void { }
+
     public updateWatchedFilms(): void {
         const watchedFilmsElement = this.element.querySelector('.statistic__text-item--films-watched');
         if (watchedFilmsElement) {

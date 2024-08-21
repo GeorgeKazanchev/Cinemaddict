@@ -7,3 +7,8 @@ export type FilmCardsHandlers = {
     popupOpenClickHandler: Handler,
     showMoreButtonClickHandler: Handler
 };
+
+export type StatisticsHandlers = {
+    navigationTabClickHandler: Handler,
+    statisticsFilterChangeHandler: Handler
+};

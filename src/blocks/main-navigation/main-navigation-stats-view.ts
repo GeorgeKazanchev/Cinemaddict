@@ -12,6 +12,18 @@ export default class MainNavigationStatsView extends MainNavigationView {
         return element;
     }
 
+    public bind(): void {
+        const navigationTabs = this.element.querySelectorAll('.main-navigation__item');
+        navigationTabs.forEach((navigationTab) => {
+            navigationTab.addEventListener('click', (evt: Event) => {
+                evt.preventDefault();
+                this.navigationTabClickHandler(evt);
+            })
+        });
+    }
+
+    public navigationTabClickHandler(_: Event): void { }
+
     private checkStatsTabSelected(element: Element): void {
         const statsTab = element.querySelector('.main-navigation__additional');
         statsTab?.classList.add('main-navigation__additional--active');

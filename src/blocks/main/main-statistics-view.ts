@@ -3,13 +3,17 @@ import MainNavigationStatsView from '../main-navigation/main-navigation-stats-vi
 import StatisticsView from '../statistics/statistics-view';
 import UserData from '../../ts/types/user-data';
 import { StatisticsData } from '../../ts/types/statistics-data';
+import { StatisticsHandlers } from '../../ts/types/handlers';
 
 export default class MainStatisticsView extends MainView {
-    constructor(userData: UserData, statisticsData: StatisticsData) {
+    constructor(userData: UserData, statisticsData: StatisticsData, statisticsHandlers: StatisticsHandlers) {
         super(userData);
 
         this.mainNavigationView = new MainNavigationStatsView(this.userData);
         this.statisticsView = new StatisticsView(this.userData, statisticsData);
+
+        this.mainNavigationView.navigationTabClickHandler = statisticsHandlers.navigationTabClickHandler;
+        this.statisticsView.statisticsFilterChangeHandler = statisticsHandlers.statisticsFilterChangeHandler;
     }
 
     mainNavigationView: MainNavigationStatsView;
