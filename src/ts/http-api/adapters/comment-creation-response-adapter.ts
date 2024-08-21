@@ -4,9 +4,9 @@ import CommentAdapter from './comment-adapter';
 import { CommentCreationResponseDto } from '../dto';
 
 export default class CommentCreationResponseAdapter {
-    public static fromDto(createdComment: CommentCreationResponseDto): CommentCreationResponse {
-        const film = MovieAdapter.fromDto(createdComment['movie']);
-        const comments = createdComment['comments'].map((comment) => CommentAdapter.fromDto(comment));
+    public static fromDto(responseData: CommentCreationResponseDto): CommentCreationResponse {
+        const film = MovieAdapter.fromDto(responseData['movie']);
+        const comments = responseData['comments'].map((comment) => CommentAdapter.fromDto(comment));
 
         return new CommentCreationResponse(
             film,

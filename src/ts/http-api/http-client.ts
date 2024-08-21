@@ -2,6 +2,7 @@ import Movie from '../types/movie';
 import Comment from '../types/comment';
 import LocalComment from '../types/local-comment';
 import CommentCreationResponse from '../types/comment-creation-response';
+import MoviesSyncResponse from '../types/movies-sync-response';
 import MovieAdapter from './adapters/movie-adapter';
 import CommentAdapter from './adapters/comment-adapter';
 import CommentCreationResponseAdapter from './adapters/comment-creation-response-adapter';
@@ -41,6 +42,18 @@ export default class HttpClient {
         const responseData = await response.json();
         const updatedFilm = MovieAdapter.fromDto(responseData);
         return updatedFilm;
+    }
+
+    public async syncMovies(): Promise<Movie[]> {
+        const response = await window.fetch(
+            `${this.serverOrigin}/movies/sync`,
+            this.getFetchInit(RequestMethod.POST)
+        );
+
+        this.checkStatus(response);
+        const responseData = await response.json();
+        const films = (responseData as MoviesSyncResponse).updated;
+        return films;
     }
 
     public async readComments(filmId: number): Promise<Comment[]> {
