@@ -1,7 +1,7 @@
 import FilmsListView from '../../../blocks/films-list/films-list-view';
 import LoadingFilmsList from '../films-lists/loading-films-list';
 import FilmsSection from './films-section';
-import { FilmCardHandlers } from '../film-card-handlers';
+import { FilmCardsHandlers } from '../handlers';
 
 export default class LoadingFilmsSection extends FilmsSection {
     constructor() {
@@ -10,10 +10,10 @@ export default class LoadingFilmsSection extends FilmsSection {
 
     isEmpty: boolean = true;
 
-    public getFilmsListViews(filmCardHandlers: FilmCardHandlers): FilmsListView[] {
+    public getFilmsListViews(filmCardsHandlers: FilmCardsHandlers): FilmsListView[] {
         const filmsList = new LoadingFilmsList();
         return [
-            new FilmsListView(filmsList, filmCardHandlers)
+            new FilmsListView(filmsList, filmCardsHandlers)
         ];
     }
 }

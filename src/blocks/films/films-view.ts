@@ -1,19 +1,19 @@
 import AbstractView from '../../ts/abstract-view';
 import FilmsListView from '../films-list/films-list-view';
 import FilmsSection from '../../ts/types/films-sections/films-section';
-import { FilmCardHandlers } from '../../ts/types/film-card-handlers';
+import { FilmCardsHandlers } from '../../ts/types/handlers';
 
 export default class FilmsView extends AbstractView {
-    constructor(filmsSection: FilmsSection, filmCardHandlers: FilmCardHandlers) {
+    constructor(filmsSection: FilmsSection, filmCardsHandlers: FilmCardsHandlers) {
         super();
         this.filmsSection = filmsSection;
-        this.filmCardHandlers = filmCardHandlers;
-        this.filmsListViews = filmsSection.getFilmsListViews(filmCardHandlers);
+        this.filmCardsHandlers = filmCardsHandlers;
+        this.filmsListViews = filmsSection.getFilmsListViews(filmCardsHandlers);
     }
 
     filmsSection: FilmsSection;
     filmsListViews: FilmsListView[];
-    filmCardHandlers: FilmCardHandlers;
+    filmCardsHandlers: FilmCardsHandlers;
     template: string =
         `<section class="films"></section>`;
 
@@ -25,7 +25,7 @@ export default class FilmsView extends AbstractView {
 
     public updateFilmsSection(filmsSection: FilmsSection): void {
         this.filmsSection = filmsSection;
-        this.filmsListViews = this.filmsSection.getFilmsListViews(this.filmCardHandlers);
+        this.filmsListViews = this.filmsSection.getFilmsListViews(this.filmCardsHandlers);
         this.element.innerHTML = '';
         this.filmsSection.renderFilmsListsToElement(this.filmsListViews, this.element);
     }

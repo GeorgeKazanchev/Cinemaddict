@@ -3,20 +3,20 @@ import FilmCardView from '../film-card/film-card-view';
 import FilmsList from '../../ts/types/films-lists/films-list';
 import AllMoviesFilmsList from '../../ts/types/films-lists/all-movies-films-list';
 import Movie from '../../ts/types/movie';
-import { FilmCardHandlers } from '../../ts/types/film-card-handlers';
+import { FilmCardsHandlers } from '../../ts/types/handlers';
 
 export default class FilmsListView extends AbstractView {
-    constructor(filmsList: FilmsList, filmCardHandlers: FilmCardHandlers) {
+    constructor(filmsList: FilmsList, filmCardsHandlers: FilmCardsHandlers) {
         super();
         this.filmsList = filmsList;
-        this.handlers = filmCardHandlers;
+        this.handlers = filmCardsHandlers;
         this.filmCardViews = this.getFilmCardViews();
-        this.showMoreButtonClickHandler = filmCardHandlers.showMoreButtonClickHandler;
+        this.showMoreButtonClickHandler = filmCardsHandlers.showMoreButtonClickHandler;
     }
 
     filmsList: FilmsList;
     filmCardViews: FilmCardView[];
-    handlers: FilmCardHandlers;
+    handlers: FilmCardsHandlers;
 
     public get template(): string {
         return `<section class="films-list">

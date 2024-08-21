@@ -11,12 +11,12 @@ import UserData from '../../ts/types/user-data';
 import SortType from '../../ts/types/sort-type';
 import FiltrationType from '../../ts/types/filtration-type';
 import Movie from '../../ts/types/movie';
-import { FilmCardHandlers } from '../../ts/types/film-card-handlers';
+import { FilmCardsHandlers } from '../../ts/types/handlers';
 
 export default class MainFilmsView extends MainView {
     constructor(filtrationSelected: FiltrationType, userData: UserData, films: Movie[] | null,
         sortSelected: SortType, areAllFilmsShown: boolean, areFilmsLoaded: boolean, isLoadingFailed: boolean,
-        filmCardHandlers: FilmCardHandlers
+        filmCardsHandlers: FilmCardsHandlers
     ) {
         super(userData);
 
@@ -25,7 +25,7 @@ export default class MainFilmsView extends MainView {
         this.sortSelected = sortSelected;
 
         this.mainNavigationView = new MainNavigationFilmsView(this.filtrationSelected, this.userData);
-        this.filmsView = new FilmsView(this.filmsSection, filmCardHandlers);
+        this.filmsView = new FilmsView(this.filmsSection, filmCardsHandlers);
         this.sortView = new SortView(sortSelected);
     }
 

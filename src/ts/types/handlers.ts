@@ -1,6 +1,6 @@
 export type Handler = (evt: Event) => void;
 
-export type FilmCardHandlers = {
+export type FilmCardsHandlers = {
     markWatchedButtonClickHandler: Handler,
     watchlistButtonClickHandler: Handler,
     favoritesButtonClickHandler: Handler,
