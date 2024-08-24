@@ -3,6 +3,11 @@
 
 &nbsp;&laquo;Киноман&raquo; &dash; это сервис для всех любителей кино. &laquo;Киноман&raquo; позволит вам узнать как о горячих новинках кино, так и о признанной классике. Сервис даст вам возможность выбрать понравившийся фильм на вечер, сформировать список картин для просмотра, рассказать другим пользователям о своих любимых фильмах и многое другое.
 
+<section style="display: flex; flex-direction: row;" align="center">
+    <img width="45%" src="https://raw.githubusercontent.com/GeorgeKazanchev/Cinemaddict/main/markup/img/screenshot-films.png" alt="Скриншот экрана &laquo;Фильмы&raquo;">
+    <img width="45%" src="https://raw.githubusercontent.com/GeorgeKazanchev/Cinemaddict/main/markup/img/screenshot-statistics.png" alt="Скриншот экрана &laquo;Статистика&raquo;">
+</section>
+
 ## :movie_camera: О проекте
 Разработка проекта ведётся самостоятельно на основе материалов профессионального курса [&laquo;JavaScript. Архитектура клиентских приложений&raquo;](https://htmlacademy.ru/intensive/ecmascript) онлайн-школы HTML Academy и служит для закрепления знаний, полученных при изучении теории, а также для получения практических навыков проектирования фронтенд-приложений (ООП, паттерны проектирования, MV*-паттерны), работы с языком TypeScript, методологией БЭМ, препроцессорами CSS и другими инструментами современной фронтенд-разработки.
 
