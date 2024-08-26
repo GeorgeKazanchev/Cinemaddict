@@ -1,6 +1,8 @@
 import ModelData from './ts/models-data/model-data';
 import Application from './ts/application';
-import { userData } from './settings';
+import { IS_DEBUG, userData } from './settings';
+import { films as debugFilms } from './debug-data';
 
-const data = new ModelData(userData);
+const films = IS_DEBUG ? debugFilms : null;
+const data = new ModelData(userData, films);
 Application.showFilmsScreen(data);

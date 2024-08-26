@@ -5,8 +5,8 @@ import Movie from '../types/movie';
 import { FILMS_CHUNK_SIZE } from '../../settings';
 
 export default class ModelData {
-    constructor(userData: UserData) {
-        this.films = null;
+    constructor(userData: UserData, films: Movie[] | null = null) {
+        this.films = films;
         this.shownFilmsCount = FILMS_CHUNK_SIZE;
         this.userData = userData;
         this.isAuthorized = true;

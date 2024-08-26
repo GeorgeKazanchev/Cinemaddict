@@ -15,7 +15,8 @@ import Application from '../application';
 import HttpClient from '../http-api/http-client';
 import he from 'he';
 import { getFiltrationCriterionByElement, getSortCriterionByElement } from '../utils';
-import { SERVER_ORIGIN } from '../../settings';
+import { IS_DEBUG, SERVER_ORIGIN } from '../../settings';
+import { comments as debugComments } from '../../debug-data';
 
 export default class FilmsScreen {
     constructor(data: ModelData) {
@@ -45,7 +46,11 @@ export default class FilmsScreen {
         this.httpClient = new HttpClient(SERVER_ORIGIN, Application.authorizationString);
 
         if (!this.model.areFilmsLoaded) {
-            this.loadFilms();
+            if (!IS_DEBUG) {
+                this.loadFilms();
+            } else {
+                this.initializeDebugFilms();
+            }
         }
     }
 
@@ -79,6 +84,15 @@ export default class FilmsScreen {
             this.handleCommentsLoadingError();
             //  TODO: Add an error handling
         }
+    }
+
+    private async initializeDebugFilms(): Promise<void> {
+        this.handleFilmsLoadingSuccess(this.model.allFilms);
+    }
+
+    private async initializeDebugComments(commentsIds: string[], filmDetailsView: FilmDetailsView): Promise<void> {
+        const comments = debugComments.filter((comment) => commentsIds.includes(comment.id));
+        this.handleCommentsLoadingSuccess(comments, filmDetailsView);
     }
 
     private handleFilmsLoadingSuccess(films: Movie[]): void {
@@ -283,7 +297,12 @@ export default class FilmsScreen {
             this.setCommentFormSubmitHandler(commentFormElement, popupView);
 
             this.footerView.element.insertAdjacentElement('afterend', popupView.element);
-            this.loadComments(popupView);
+
+            if (!IS_DEBUG) {
+                this.loadComments(popupView);
+            } else {
+                this.initializeDebugComments(film.comments, popupView);
+            }
         }
     }
 
