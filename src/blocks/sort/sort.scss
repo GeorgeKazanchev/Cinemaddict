@@ -1,7 +1,16 @@
 .sort {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
     padding-left: 0;
     list-style: none;
+
+    @media (max-width: $mobile-width) {
+        flex-direction: column;
+        row-gap: 10px;
+        margin: 20px 0;
+        padding: 0 10%;
+    }
 }
 
 .sort__button {

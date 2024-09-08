@@ -3,6 +3,12 @@
     flex-shrink: 0;
     padding-bottom: 60px;
 
+    @media (max-width: $mobile-width) {
+        &:not(&--extra) {
+            border-bottom: solid 2px #31353f;
+        }
+    }
+
     .film-card {
         margin-top: 50px;
     }
@@ -13,6 +19,10 @@
         flex-shrink: 0;
         padding-bottom: 0;
         box-sizing: border-box;
+
+        @media (max-width: $mobile-width) {
+            padding-bottom: 60px;
+        }
 
         &:last-of-type {
             position: relative;
@@ -26,11 +36,19 @@
                 height: calc(100% - 20px * 2);
                 border-left: 1px solid $outline-color;
                 content: '';
+
+                @media (max-width: $mobile-width) {
+                    display: none;
+                }
             }
         }
 
         .films-list__container {
             padding: $vertical-gap 40px;
+
+            @media (max-width: $mobile-width) {
+                padding: 0;
+            }
         }
     }
 }
