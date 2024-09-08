@@ -1,14 +1,24 @@
 .profile {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+    @media (max-width: $mobile-width) {
+        color: $text-color-active;
+    }
 }
 
 .profile__rating {
     font-size: $font-size-bigger;
+
+    @media (max-width: $mobile-width) {
+        order: 1;
+        margin-left: 20px;
+    }
 }
 
 .profile__avatar {
     display: block;
     margin-left: 15px;
+
+    @media (max-width: $mobile-width) {
+        order: -1;
+        margin-left: 0;
+    }
 }

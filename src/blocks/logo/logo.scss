@@ -6,6 +6,10 @@
     letter-spacing: 4px;
     cursor: default;
 
+    @media (max-width: $mobile-width) {
+        text-align: left;
+    }
+
     &--smaller {
         font-size: $font-size;
         letter-spacing: normal;

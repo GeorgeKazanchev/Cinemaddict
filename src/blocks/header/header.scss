@@ -3,6 +3,11 @@
     align-items: center;
     padding-bottom: 80px;
     box-sizing: border-box;
+
+    @media (max-width: $mobile-width) {
+        display: block;
+        padding-bottom: 40px;
+    }
 }
 
 .header__logo {
@@ -10,4 +15,23 @@
     flex-grow: 0;
     flex-shrink: 0;
     margin-right: 68px;
+
+    @media (max-width: $mobile-width) {
+        width: 165px;
+        margin: 0;
+        margin-left: $mobile-margin-left;
+    }
+}
+
+.header__profile {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    @media (max-width: $mobile-width) {
+        width: 165px;
+        margin: 0;
+        margin-top: 40px;
+        margin-left: $mobile-margin-left;
+    }
 }

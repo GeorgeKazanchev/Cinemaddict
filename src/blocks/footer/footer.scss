@@ -1,8 +1,6 @@
 .footer {
     display: flex;
     align-items: center;
-    position: absolute;
-    bottom: 0;
     width: inherit;
     max-width: inherit;
     height: 100px;
@@ -10,8 +8,23 @@
     padding-right: inherit;
     box-sizing: border-box;
     background: url('./../img/background-footer.png') no-repeat 50% -20px;
+
+    @media (max-width: $mobile-width) {
+        display: block;
+    }
 }
 
 .footer__logo {
     margin-right: auto;
+
+    @media (max-width: $mobile-width) {
+        margin-left: $mobile-margin-left;
+    }
+}
+
+.footer__statistics {
+    @media (max-width: $mobile-width) {
+        margin-top: 30px;
+        margin-left: $mobile-margin-left;
+    }
 }
