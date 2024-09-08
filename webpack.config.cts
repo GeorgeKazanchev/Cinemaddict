@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
-import webpackDevServer from 'webpack-dev-server';
+import _ from 'webpack-dev-server';
 
 type Mode = 'production' | 'development';
 
@@ -10,7 +10,6 @@ interface EnvVariables {
 }
 
 export default (env: EnvVariables) => {
-
     const isDev = env.mode === 'development';
 
     const config: webpack.Configuration = {
