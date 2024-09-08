@@ -20,6 +20,10 @@
         padding-bottom: 0;
         box-sizing: border-box;
 
+        @media (max-width: $tablet-width) {
+            flex-basis: 100%;
+        }
+
         @media (max-width: $mobile-width) {
             padding-bottom: 60px;
         }
@@ -37,6 +41,10 @@
                 border-left: 1px solid $outline-color;
                 content: '';
 
+                @media (max-width: $tablet-width) {
+                    display: none;
+                }
+
                 @media (max-width: $mobile-width) {
                     display: none;
                 }
@@ -45,6 +53,10 @@
 
         .films-list__container {
             padding: $vertical-gap 40px;
+
+            @media (max-width: $tablet-width) {
+                padding: 0 40px;
+            }
 
             @media (max-width: $mobile-width) {
                 padding: 0;
@@ -58,6 +70,14 @@
     flex-wrap: wrap;
     align-items: baseline;
     padding-bottom: $vertical-gap;
+
+    @media (max-width: $desktop-min-width) {
+        justify-content: space-around;
+    }
+
+    @media (max-width: $tablet-width) {
+        justify-content: space-around;
+    }
 }
 
 .films-list__show-more {
