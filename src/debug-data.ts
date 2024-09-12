@@ -92,7 +92,7 @@ export const films: Movie[] = [
         new FilmInfo(
             'Made for Each Other',
             'Made for Each Other',
-            './img/debug-posters/made-for-each-other.png',
+            './img/debug-posters/made-for-each-other.jpg',
             'John Cromwell',
             'While on a business trip, an ambitious young lawyer meets and immediately falls in love with a stranger. They wed the following day, and tragedy soon strikes.',
             5.8,
@@ -128,7 +128,7 @@ export const films: Movie[] = [
         new FilmInfo(
             'Popeye the Sailor Meets Sindbad the Sailor',
             'Popeye the Sailor Meets Sindbad the Sailor',
-            './img/debug-posters/popeye-meets-sinbad.png',
+            './img/debug-posters/popeye-meets-sinbad.jpg',
             'Dave Fleischer',
             'The legendary sailors Popeye and Sindbad do battle to see which one is the greatest.',
             6.3,
