@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "lint": "eslint js/ --ext .ts,.js",
+    "lint": "eslint . --ext .ts,.js",
     "test": "npm run lint",
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",

@@ -13,7 +13,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   ignorePatterns: [
-    'build',
+    'public',
     'webpack.config.ts',
   ],
 };

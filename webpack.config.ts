@@ -11,11 +11,11 @@ export default (env: EnvVariables) => {
   const isProd = env.mode === 'production';
 
   const config: webpack.Configuration = {
-    mode: env.mode,
-    entry: './js/main.js',
+    mode: env.mode ?? 'development',
+    entry: './src/js/main.js',
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, './build'),
+      path: path.join(__dirname, './public'),
     },
     devtool: isProd ? false : 'source-map',
     devServer: {

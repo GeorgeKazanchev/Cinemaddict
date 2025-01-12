@@ -10,4 +10,4 @@ Thumbs.db
 # Файлы сборки, логов и прочее
 *.log*
 node_modules/
-build/
+public/bundle.js
