@@ -1,0 +1,49 @@
+{
+  "name": "cinemaddict",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "lint": "eslint js/ --ext .ts,.js",
+    "test": "npm run lint",
+    "build:dev": "webpack --env mode=development",
+    "build:prod": "webpack --env mode=production",
+    "start": "webpack serve --env port=8080"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "@types/webpack": "5.28.5",
+    "@types/webpack-dev-server": "4.7.2",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "autoprefixer": "10.4.20",
+    "css-loader": "7.1.2",
+    "eslint": "8.57.1",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript-base": "6.0.1",
+    "eslint-plugin-import": "2.31.0",
+    "postcss-loader": "8.1.1",
+    "sass": "1.83.1",
+    "sass-loader": "16.0.4",
+    "style-loader": "4.0.0",
+    "ts-loader": "9.5.2",
+    "ts-node": "10.9.2",
+    "typescript": "5.7.3",
+    "webpack": "5.97.1",
+    "webpack-cli": "6.0.1",
+    "webpack-dev-server": "5.2.0"
+  },
+  "author": "George Kazanchev",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgeKazanchev/Cinemaddict_New.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GeorgeKazanchev/Cinemaddict_New/issues"
+  },
+  "homepage": "https://github.com/GeorgeKazanchev/Cinemaddict_New#readme",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

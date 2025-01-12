@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "module": "ESNext",
+    "target": "ES2015",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
