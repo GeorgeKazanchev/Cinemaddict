@@ -16,4 +16,7 @@ module.exports = {
     'public',
     'webpack.config.ts',
   ],
+  rules: {
+    'import/no-cycle': ['off'],
+  },
 };

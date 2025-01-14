@@ -1104,26 +1104,3 @@ button {
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
-.arrows__wrap {
-  display: flex;
-  column-gap: 20px;
-  width: fit-content;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 50px;
-}
-
-.arrows__btn {
-  padding: 10px 20px;
-  font-weight: 700;
-  color: #ffea00a4;
-  background: none;
-  border: 2px solid #ffea00a4;
-  border-radius: 5px;
-}
-
-.arrows__btn:hover {
-  color: #000000;
-  background-color: #d3cb69c0;
-}
