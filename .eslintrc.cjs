@@ -18,6 +18,12 @@ module.exports = {
   ],
   rules: {
     'import/no-cycle': ['off'],
+    'no-plusplus': [
+      'error',
+      {
+        'allowForLoopAfterthoughts': true,
+      },
+    ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/quotes': [
       'error',
