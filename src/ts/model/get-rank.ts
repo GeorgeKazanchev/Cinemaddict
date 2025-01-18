@@ -1,0 +1,21 @@
+const getRank = (watchedFilmsCount: number): string => {
+  if (watchedFilmsCount < 0 || !Number.isInteger(watchedFilmsCount)) {
+    throw new RangeError(`Watched films count ${watchedFilmsCount} is not a positive integer number`);
+  }
+
+  if (watchedFilmsCount === 0) {
+    return '';
+  }
+
+  if (watchedFilmsCount >= 1 && watchedFilmsCount <= 10) {
+    return 'novice';
+  }
+
+  if (watchedFilmsCount >= 11 && watchedFilmsCount <= 20) {
+    return 'fan';
+  }
+
+  return 'movie buff';
+};
+
+export default getRank;

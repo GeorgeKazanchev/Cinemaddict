@@ -18,5 +18,13 @@ module.exports = {
   ],
   rules: {
     'import/no-cycle': ['off'],
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/quotes': [
+      'error',
+      'single',
+      {
+        'allowTemplateLiterals': true,
+      },
+    ],
   },
 };
