@@ -1,4 +1,42 @@
+import StatisticsPeriod from './enums/statistics-period';
+import getMinDate from './get-min-date';
 import type Film from './types/film';
+import type FilmsSummary from './types/films-summary';
+
+export const getFilmsSummary = (films: Film[]): FilmsSummary => {
+  const watchlistFilmsCount = films.filter(({ userDetails }) => userDetails.inWatchlist).length;
+  const watchedFilmsCount = films.filter(({ userDetails }) => userDetails.isWatched).length;
+  const favoriteFilmsCount = films.filter(({ userDetails }) => userDetails.isFavorite).length;
+
+  return {
+    watchlistFilmsCount,
+    watchedFilmsCount,
+    favoriteFilmsCount,
+  };
+};
+
+export const getStatisticsStartDate = (period: StatisticsPeriod): Date => {
+  const date = new Date();
+
+  switch (period) {
+    case StatisticsPeriod.AllTime:
+      return getMinDate();
+    case StatisticsPeriod.Today:
+      date.setDate(date.getDate() - 1);
+      return date;
+    case StatisticsPeriod.Week:
+      date.setDate(date.getDate() - 7);
+      return date;
+    case StatisticsPeriod.Month:
+      date.setMonth(date.getMonth() - 1);
+      return date;
+    case StatisticsPeriod.Year:
+      date.setFullYear(date.getFullYear() - 1);
+      return date;
+    default:
+      throw new RangeError(`Statistics period isn't supported`);
+  }
+};
 
 export const getWatchedFilmsSince = (startDate: Date, films: Film[]): Film[] => (
   films.filter(({ userDetails: { isWatched, watchingDate } }) => {
@@ -29,15 +67,7 @@ export const getFilmsCountByGenres = (films: Film[]): Map<string, number> => {
 };
 
 export const getFavoriteGenre = (films: Film[]): string => {
-  if (films.length === 0) {
-    throw new Error('It is not possible to obtain a favorite genre from an empty array');
-  }
-
   const genresToFilmsCount = getFilmsCountByGenres(films);
-
-  if (genresToFilmsCount.size === 0) {
-    throw new Error('There are no genres in the films');
-  }
 
   let favoriteGenre = '';
   let maxFilmsCount = 0;

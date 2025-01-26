@@ -1,76 +1,138 @@
-import filmsFilteredScreen from './films-filtered-screen';
-import filmsScreen from './films-screen';
-import { changeScreen, getElementFromTemplate, getTargetAsElement } from './util';
+import StatisticsPeriod from './model/enums/statistics-period';
+import getDurationComponents from './model/get-duration-components';
+import getRank from './model/get-rank';
+import {
+  getFavoriteGenre,
+  getFilmsSummary,
+  getStatisticsStartDate,
+  getTotalDuration,
+  getWatchedFilmsSince,
+} from './model/get-statistics';
+import getNavigationPanel from './navigation-panel';
+import { getElementFromTemplate } from './util';
+import type Film from './model/types/film';
 
-const template = `
-<nav class="main-navigation">
-  <div class="main-navigation__items">
-    <a href="#all" class="main-navigation__item main-navigation__item--all">All movies</a>
-    <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-    <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-    <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
-  </div>
-  <a href="#stats" class="main-navigation__additional main-navigation__additional--active">Stats</a>
-</nav>
+type Props = {
+  films: Film[];
+  period?: StatisticsPeriod;
+};
 
-<section class="statistic">
-  <p class="statistic__rank">
-    Your rank
-    <img class="statistic__img" src="img/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    <span class="statistic__rank-label">Sci-Fighter</span>
-  </p>
+const getStatisticsScreen = ({
+  films,
+  period = StatisticsPeriod.AllTime,
+}: Props): Element => {
+  const filmsSummary = getFilmsSummary(films);
 
-  <form action="https://echo.htmlacademy.ru/" method="get" class="statistic__filters">
-    <p class="statistic__filters-description">Show stats:</p>
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-all-time" value="all-time" checked>
-    <label for="statistic-all-time" class="statistic__filters-label">All time</label>
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-today" value="today">
-    <label for="statistic-today" class="statistic__filters-label">Today</label>
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-week" value="week">
-    <label for="statistic-week" class="statistic__filters-label">Week</label>
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-month" value="month">
-    <label for="statistic-month" class="statistic__filters-label">Month</label>
-    <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-year" value="year">
-    <label for="statistic-year" class="statistic__filters-label">Year</label>
-  </form>
+  const navigationPanel = getNavigationPanel({
+    filmsSummary,
+    isFilmsScreen: false,
+  }).outerHTML;
 
-  <ul class="statistic__text-list">
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">You watched</h4>
-      <p class="statistic__item-text">22 <span class="statistic__item-description">movies</span></p>
-    </li>
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">Total duration</h4>
-      <p class="statistic__item-text">130 <span class="statistic__item-description">h</span> 22 <span class="statistic__item-description">m</span></p>
-    </li>
-    <li class="statistic__text-item">
-      <h4 class="statistic__item-title">Top genre</h4>
-      <p class="statistic__item-text">Sci-Fi</p>
-    </li>
-  </ul>
+  const rank = `
+    <p class="statistic__rank">
+      Your rank
+      <img class="statistic__img" src="img/bitmap@2x.png" alt="Avatar" width="35" height="35">
+      <span class="statistic__rank-label">${getRank(filmsSummary.watchedFilmsCount)}</span>
+    </p>`;
 
-  <div class="statistic__chart-wrap">
-    <canvas class="statistic__chart" width="1000"></canvas>
-  </div>
-</section>`;
+  const filters = `
+    <form action="#" method="get" class="statistic__filters">
+      <p class="statistic__filters-description">Show stats:</p>
 
-const element = getElementFromTemplate(template);
+      <input
+        type="radio"
+        class="statistic__filters-input visually-hidden"
+        name="statistic-filter"
+        id="statistic-all-time"
+        value="all-time"
+        ${period === StatisticsPeriod.AllTime ? 'checked' : ''}
+      >
+      <label for="statistic-all-time" class="statistic__filters-label">All time</label>
 
-const allFilmsButtonElement = element.querySelector('.main-navigation__item--all');
-allFilmsButtonElement?.addEventListener('click', (evt: Event) => {
-  evt.preventDefault();
-  changeScreen(filmsScreen);
-});
+      <input
+        type="radio"
+        class="statistic__filters-input visually-hidden"
+        name="statistic-filter"
+        id="statistic-today"
+        value="today"
+        ${period === StatisticsPeriod.Today ? 'checked' : ''}
+      >
+      <label for="statistic-today" class="statistic__filters-label">Today</label>
 
-element.addEventListener('click', (evt: Event) => {
-  const target = getTargetAsElement(evt);
-  const filterButtonElement = target.closest('.main-navigation__item:not(.main-navigation__item--all)');
-  if (!filterButtonElement) {
-    return;
-  }
+      <input
+        type="radio"
+        class="statistic__filters-input visually-hidden"
+        name="statistic-filter"
+        id="statistic-week"
+        value="week"
+        ${period === StatisticsPeriod.Week ? 'checked' : ''}
+      >
+      <label for="statistic-week" class="statistic__filters-label">Week</label>
 
-  evt.preventDefault();
-  changeScreen(filmsFilteredScreen);
-});
+      <input
+        type="radio"
+        class="statistic__filters-input visually-hidden"
+        name="statistic-filter"
+        id="statistic-month"
+        value="month"
+        ${period === StatisticsPeriod.Month ? 'checked' : ''}
+      >
+      <label for="statistic-month" class="statistic__filters-label">Month</label>
 
-export default element;
+      <input
+        type="radio"
+        class="statistic__filters-input visually-hidden"
+        name="statistic-filter"
+        id="statistic-year"
+        value="year"
+        ${period === StatisticsPeriod.Year ? 'checked' : ''}
+      >
+      <label for="statistic-year" class="statistic__filters-label">Year</label>
+    </form>`;
+
+  const statisticsStartDate = getStatisticsStartDate(period);
+  const watchedFilmsInPeriod = getWatchedFilmsSince(statisticsStartDate, films);
+
+  const filmsCount = watchedFilmsInPeriod.length;
+  const totalDuration = getTotalDuration(watchedFilmsInPeriod);
+  const favoriteGenre = getFavoriteGenre(watchedFilmsInPeriod);
+  const { hours, minutes } = getDurationComponents(totalDuration);
+
+  const statistics = `
+    <ul class="statistic__text-list">
+      <li class="statistic__text-item">
+        <h4 class="statistic__item-title">You watched</h4>
+        <p class="statistic__item-text">${filmsCount}
+          <span class="statistic__item-description">${filmsCount === 1 ? 'movie' : 'movies'}</span>
+        </p>
+      </li>
+      <li class="statistic__text-item">
+        <h4 class="statistic__item-title">Total duration</h4>
+        <p class="statistic__item-text">
+          ${hours} <span class="statistic__item-description">h</span>
+          ${minutes} <span class="statistic__item-description">m</span>
+        </p>
+      </li>
+      <li class="statistic__text-item">
+        <h4 class="statistic__item-title">Top genre</h4>
+        <p class="statistic__item-text">${favoriteGenre}</p>
+      </li>
+    </ul>`;
+
+  const content = `
+    <div>
+      ${navigationPanel}
+      <section class="statistic">
+        ${rank}
+        ${filters}
+        ${statistics}
+        <div class="statistic__chart-wrap">
+          <canvas class="statistic__chart" width="1000"></canvas>
+        </div>
+      </section>
+    </div>`;
+
+  return getElementFromTemplate(content);
+};
+
+export default getStatisticsScreen;

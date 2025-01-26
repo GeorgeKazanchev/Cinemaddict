@@ -7,12 +7,12 @@ describe('Get rank function', () => {
   });
 
   it('should return some rank if films > 0', () => {
-    expect(getRank(1)).toEqual('novice');
-    expect(getRank(10)).toEqual('novice');
-    expect(getRank(11)).toEqual('fan');
-    expect(getRank(20)).toEqual('fan');
-    expect(getRank(21)).toEqual('movie buff');
-    expect(getRank(100)).toEqual('movie buff');
+    expect(getRank(1)).toEqual('Novice');
+    expect(getRank(10)).toEqual('Novice');
+    expect(getRank(11)).toEqual('Fan');
+    expect(getRank(20)).toEqual('Fan');
+    expect(getRank(21)).toEqual('Movie buff');
+    expect(getRank(100)).toEqual('Movie buff');
   });
 
   it('should throw an error if films count is negative', () => {

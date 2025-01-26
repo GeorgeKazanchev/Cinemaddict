@@ -8,14 +8,14 @@ const getRank = (watchedFilmsCount: number): string => {
   }
 
   if (watchedFilmsCount >= 1 && watchedFilmsCount <= 10) {
-    return 'novice';
+    return 'Novice';
   }
 
   if (watchedFilmsCount >= 11 && watchedFilmsCount <= 20) {
-    return 'fan';
+    return 'Fan';
   }
 
-  return 'movie buff';
+  return 'Movie buff';
 };
 
 export default getRank;

@@ -70,12 +70,12 @@ describe('Get films count by genres', () => {
 });
 
 describe('Get favorite genre', () => {
-  it('should throw an error if an empty array was passed', () => {
-    expect(() => getFavoriteGenre([])).toThrowError();
+  it('should return an empty string if an empty array was passed', () => {
+    expect(getFavoriteGenre([])).toBe('');
   });
 
-  it('should throw an error if there are no genres in the films', () => {
-    expect(() => getFavoriteGenre([emptyFilm])).toThrowError();
+  it('should return an empty string if there are no genres in the films', () => {
+    expect(getFavoriteGenre([emptyFilm])).toBe('');
   });
 
   it('should correctly return a genre if 1 film was passed', () => {

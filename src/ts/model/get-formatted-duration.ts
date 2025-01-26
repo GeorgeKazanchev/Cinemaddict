@@ -1,10 +1,7 @@
-const getFormattedDuration = (durationMinutes: number): string => {
-  if (durationMinutes < 0) {
-    throw new RangeError(`Duration = ${durationMinutes} minutes is not a positive`);
-  }
+import getDurationComponents from './get-duration-components';
 
-  const hours = Math.floor(durationMinutes / 60);
-  const minutes = Math.floor(durationMinutes - hours * 60);
+const getFormattedDuration = (durationMinutes: number): string => {
+  const { hours, minutes } = getDurationComponents(durationMinutes);
 
   let formattedDuration = '';
   if (hours >= 1) {

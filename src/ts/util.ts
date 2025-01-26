@@ -3,15 +3,30 @@ if (!mainElement) {
   throw new Error('The ".main" element is absent from the page');
 }
 
-export const changeScreen = (element: Element): void => {
+export const renderScreen = (element: Element): void => {
   mainElement.innerHTML = '';
   mainElement.append(element);
 };
 
-export const getElementFromTemplate = (template: string): HTMLElement => {
+export const renderHeader = (element: Element): void => {
+  document.querySelector('.header')?.remove();
+  mainElement.before(element);
+};
+
+export const renderFooter = (element: Element): void => {
+  document.querySelector('.footer')?.remove();
+  mainElement.after(element);
+};
+
+export const getElementFromTemplate = (template: string): Element => {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = template.trim();
-  return wrapper;
+
+  if (!wrapper.firstElementChild) {
+    throw new Error('Failed to create an element from the template');
+  }
+
+  return wrapper.firstElementChild;
 };
 
 export const getTargetAsElement = (evt: Event): Element => {
