@@ -10,6 +10,7 @@ import {
   getTotalDuration,
   getWatchedFilmsSince,
 } from './model/get-statistics';
+import renderStatisticsChart from './model/render-statistics-chart';
 import getNavigationPanel from './navigation-panel';
 import { getElementFromTemplate, getTargetAsElement, renderScreen } from './util';
 import type Film from './model/types/film';
@@ -128,6 +129,12 @@ const getStatisticsScreen = ({
       </li>
     </ul>`;
 
+  const chart = filmsCount > 0 ? (
+    `<div class="statistic__chart-wrap">
+      <canvas class="statistic__chart" width="1000"></canvas>
+    </div>`
+  ) : '';
+
   const content = `
     <div>
       ${navigationPanel}
@@ -135,13 +142,16 @@ const getStatisticsScreen = ({
         ${rank}
         ${filters}
         ${statistics}
-        <div class="statistic__chart-wrap">
-          <canvas class="statistic__chart" width="1000"></canvas>
-        </div>
+        ${chart}
       </section>
     </div>`;
 
   const element = getElementFromTemplate(content);
+  const canvasElement = element.querySelector('.statistic__chart');
+
+  if (canvasElement instanceof HTMLCanvasElement) {
+    renderStatisticsChart(watchedFilmsInPeriod, canvasElement);
+  }
 
   element.querySelector('.statistic__filters')?.addEventListener('change', (evt: Event) => {
     const target = getTargetAsElement(evt);

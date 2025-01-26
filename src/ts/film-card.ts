@@ -16,7 +16,7 @@ const getFilmCard = ({ film }: Props): Element => {
 
   const commentsCount = commentsIds.length;
 
-  const openPopup = () => {
+  const openPopup = (): void => {
     document.querySelector('.film-details')?.remove();
 
     const comments = mocksComments.filter((comment) => commentsIds.includes(comment.id));
