@@ -33,16 +33,21 @@ const getFilmsScreen = ({
   const shownFilms = sortFilms(filteredFilms, sortType);
   const filmCards = shownFilms.map((film) => getFilmCard({ film }).outerHTML).join('');
 
+  const areFilmsShown = shownFilms.length > 0;
+  const title = shownFilms.length > 0 ? 'All movies. Upcoming' : 'There are no movies in our database';
+
   const content = `
     <div>
       ${navigationPanel}
-      ${sortPanel}
+      ${areFilmsShown ? sortPanel : ''}
       <section class="films">
         <section class="films-list">
-          <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-          <div class="films-list__container">
-            ${filmCards}
-          </div>
+          <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
+          ${areFilmsShown ? (
+            `<div class="films-list__container">
+              ${filmCards}
+            </div>`
+          ) : ''}
           <button class="films-list__show-more">Show more</button>
         </section>
       </section>
