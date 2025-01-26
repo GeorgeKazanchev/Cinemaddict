@@ -6,6 +6,7 @@ import {
   getTotalDuration,
   getFilmsCountByGenres,
   getFavoriteGenre,
+  getFilmsSummary,
 } from '../../src/ts/model/get-statistics';
 
 import { getEmptyFilm, getTestFilms } from '../get-test-films';
@@ -81,5 +82,29 @@ describe('Get favorite genre', () => {
   it('should correctly return a genre if 1 film was passed', () => {
     const favoriteGenre = getFavoriteGenre([films[0]]);
     expect(films[0].info.genres.includes(favoriteGenre));
+  });
+});
+
+//  A "zero object" means an object all the fields of which are equal to 0
+describe('Get films summary function', () => {
+  it('should return a zero object if an empty array was passed', () => {
+    const filmsSummary = getFilmsSummary([]);
+    expect(filmsSummary.watchlistFilmsCount).toBe(0);
+    expect(filmsSummary.watchedFilmsCount).toBe(0);
+    expect(filmsSummary.favoriteFilmsCount).toBe(0);
+  });
+
+  it('should return a zero object for the "empty" film', () => {
+    const filmsSummary = getFilmsSummary([getEmptyFilm()]);
+    expect(filmsSummary.watchlistFilmsCount).toBe(0);
+    expect(filmsSummary.watchedFilmsCount).toBe(0);
+    expect(filmsSummary.favoriteFilmsCount).toBe(0);
+  });
+
+  it('should correctly return a non-zero object', () => {
+    const filmsSummary = getFilmsSummary(getTestFilms());
+    expect(filmsSummary.watchlistFilmsCount).toBe(1);
+    expect(filmsSummary.watchedFilmsCount).toBe(3);
+    expect(filmsSummary.favoriteFilmsCount).toBe(2);
   });
 });

@@ -4,7 +4,7 @@ import type Film from './types/film';
 const filterFilms = (films: Film[], filter: Filter): Film[] => {
   switch (filter) {
     case Filter.All:
-      return films;
+      return [...films];
     case Filter.Watchlist:
       return films.filter(({ userDetails }) => userDetails.inWatchlist);
     case Filter.Watched:
