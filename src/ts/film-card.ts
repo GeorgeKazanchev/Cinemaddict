@@ -1,3 +1,4 @@
+import mocksComments from './data/mock-comments';
 import getFormattedDuration from './model/get-formatted-duration';
 import getLimitedDescription from './model/get-limited-description';
 import getPopup from './popup';
@@ -11,13 +12,15 @@ type Props = {
 };
 
 const getFilmCard = ({ film }: Props): Element => {
-  const { info, userDetails } = film;
+  const { commentsIds, info, userDetails } = film;
 
-  const commentsCount = film.commentsIds.length;
+  const commentsCount = commentsIds.length;
 
   const openPopup = () => {
     document.querySelector('.film-details')?.remove();
-    const popupElement = getPopup({ film, comments: [] });
+
+    const comments = mocksComments.filter((comment) => commentsIds.includes(comment.id));
+    const popupElement = getPopup({ film, comments });
     document.body.append(popupElement);
 
     const popupCloseButtonElement = popupElement.querySelector('.film-details__close-btn');
