@@ -31,7 +31,7 @@ const getNavigationPanel = ({
   const content = `
     <nav class="main-navigation">
       <div class="main-navigation__items">
-        <a href="#all" class="main-navigation__item main-navigation__item--all ${isAllSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
+        <a href="#all" class="main-navigation__item ${isAllSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
           All movies
         </a>
         <a href="#watchlist" class="main-navigation__item ${isWatchlistSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
@@ -50,7 +50,9 @@ const getNavigationPanel = ({
       </a>
     </nav>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  return element;
 };
 
 export default getNavigationPanel;

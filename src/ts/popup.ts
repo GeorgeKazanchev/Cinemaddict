@@ -17,7 +17,7 @@ const getPopup = ({ film, comments }: Props): Element => {
     `<span class="film-details__genre">${genre}</span>`
   )).join('');
 
-  const commentCards = comments.map((comment) => getCommentCard({ comment }).outerHTML).join('');
+  const commentCards = comments.map((comment) => getCommentCard({ comment }));
 
   const infoWrapper = `
     <div class="film-details__info-wrap">
@@ -109,9 +109,7 @@ const getPopup = ({ film, comments }: Props): Element => {
         <span class="film-details__comments-count">${comments.length}</span>
       </h3>
 
-      <ul class="film-details__comments-list">
-        ${commentCards}
-      </ul>
+      <ul class="film-details__comments-list"></ul>
 
       <div class="film-details__new-comment">
         <div class="film-details__add-emoji-label"></div>
@@ -155,7 +153,31 @@ const getPopup = ({ film, comments }: Props): Element => {
       </form>
     </section>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+  const closeButtonElement = element.querySelector('.film-details__close-btn');
+
+  element.querySelector('.film-details__comments-list')?.append(...commentCards);
+
+  element.addEventListener('keydown', ((evt: KeyboardEvent) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      element.remove();
+    }
+  }) as EventListener);
+
+  closeButtonElement?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+    element.remove();
+  });
+
+  closeButtonElement?.addEventListener('keydown', ((evt: KeyboardEvent) => {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      element.remove();
+    }
+  }) as EventListener);
+
+  return element;
 };
 
 export default getPopup;

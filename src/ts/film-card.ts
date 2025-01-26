@@ -1,6 +1,7 @@
 import getFormattedDuration from './model/get-formatted-duration';
 import getLimitedDescription from './model/get-limited-description';
-import { getElementFromTemplate } from './util';
+import getPopup from './popup';
+import { getElementFromTemplate, getTargetAsElement } from './util';
 import type Film from './model/types/film';
 
 const BUTTON_ACTIVE_CLASSNAME = 'film-card__controls-item--active';
@@ -13,6 +14,17 @@ const getFilmCard = ({ film }: Props): Element => {
   const { info, userDetails } = film;
 
   const commentsCount = film.commentsIds.length;
+
+  const openPopup = () => {
+    document.querySelector('.film-details')?.remove();
+    const popupElement = getPopup({ film, comments: [] });
+    document.body.append(popupElement);
+
+    const popupCloseButtonElement = popupElement.querySelector('.film-details__close-btn');
+    if (popupCloseButtonElement instanceof HTMLElement) {
+      setTimeout(() => popupCloseButtonElement.focus(), 0);
+    }
+  };
 
   const content = `
     <article class="film-card">
@@ -51,7 +63,24 @@ const getFilmCard = ({ film }: Props): Element => {
       </div>
     </article>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  element.addEventListener('click', (evt: Event) => {
+    const target = getTargetAsElement(evt);
+
+    const titleElement = target.closest('.film-card__title');
+    const posterElement = target.closest('.film-card__poster');
+    const commentsElement = target.closest('.film-card__comments');
+
+    if (!titleElement && !posterElement && !commentsElement) {
+      return;
+    }
+
+    evt.preventDefault();
+    openPopup();
+  });
+
+  return element;
 };
 
 export default getFilmCard;

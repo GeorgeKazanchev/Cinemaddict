@@ -11,23 +11,25 @@ const getSortPanel = ({ sortType = SortType.Default }: Props): Element => {
   const content = `
     <ul class="sort">
       <li>
-        <a href="#" class="sort__button sort__button--default ${sortType === SortType.Default ? ACTIVE_CLASSNAME : ''}">
+        <a href="#default" class="sort__button ${sortType === SortType.Default ? ACTIVE_CLASSNAME : ''}">
           Sort by default
         </a>
       </li>
       <li>
-        <a href="#" class="sort__button ${sortType === SortType.Date ? ACTIVE_CLASSNAME : ''}">
+        <a href="#date" class="sort__button ${sortType === SortType.Date ? ACTIVE_CLASSNAME : ''}">
           Sort by date
         </a>
       </li>
       <li>
-        <a href="#" class="sort__button ${sortType === SortType.Rating ? ACTIVE_CLASSNAME : ''}">
+        <a href="#rating" class="sort__button ${sortType === SortType.Rating ? ACTIVE_CLASSNAME : ''}">
           Sort by rating
         </a>
       </li>
     </ul>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  return element;
 };
 
 export default getSortPanel;

@@ -24,7 +24,9 @@ const getHeader = ({ films }: Props): Element => {
       ${profile}
     </header>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  return element;
 };
 
 export default getHeader;

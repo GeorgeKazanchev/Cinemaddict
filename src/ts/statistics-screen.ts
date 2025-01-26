@@ -1,3 +1,5 @@
+import getFilmsScreen from './films-screen';
+import Filter from './model/enums/filter';
 import StatisticsPeriod from './model/enums/statistics-period';
 import getDurationComponents from './model/get-duration-components';
 import getRank from './model/get-rank';
@@ -9,8 +11,15 @@ import {
   getWatchedFilmsSince,
 } from './model/get-statistics';
 import getNavigationPanel from './navigation-panel';
-import { getElementFromTemplate } from './util';
+import { getElementFromTemplate, getTargetAsElement, renderScreen } from './util';
 import type Film from './model/types/film';
+
+const inputValueToStatsPeriod = new Map<string, StatisticsPeriod>();
+inputValueToStatsPeriod.set('all-time', StatisticsPeriod.AllTime);
+inputValueToStatsPeriod.set('today', StatisticsPeriod.Today);
+inputValueToStatsPeriod.set('week', StatisticsPeriod.Week);
+inputValueToStatsPeriod.set('month', StatisticsPeriod.Month);
+inputValueToStatsPeriod.set('year', StatisticsPeriod.Year);
 
 type Props = {
   films: Film[];
@@ -132,7 +141,50 @@ const getStatisticsScreen = ({
       </section>
     </div>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  element.querySelector('.statistic__filters')?.addEventListener('change', (evt: Event) => {
+    const target = getTargetAsElement(evt);
+    const inputElement = target.closest('.statistic__filters-input');
+    if (!inputElement || !(inputElement instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const selectedPeriod = inputValueToStatsPeriod.get(inputElement.value);
+    if (!selectedPeriod || selectedPeriod === period) {
+      return;
+    }
+
+    renderScreen(getStatisticsScreen({ films, period: selectedPeriod }));
+  });
+
+  //  Обработчики кликов по кнопкам перехода на экран "Фильмы"
+  element.querySelector('.main-navigation__item[href="#all"]')?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+    renderScreen(getFilmsScreen({ films }));
+  });
+
+  element.querySelector('.main-navigation__item[href="#watchlist"]')?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+    renderScreen(getFilmsScreen({ films, filter: Filter.Watchlist }));
+  });
+
+  element.querySelector('.main-navigation__item[href="#history"]')?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+    renderScreen(getFilmsScreen({ films, filter: Filter.Watched }));
+  });
+
+  element.querySelector('.main-navigation__item[href="#favorites"]')?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+    renderScreen(getFilmsScreen({ films, filter: Filter.Favorite }));
+  });
+
+  //  Отмена действия по умолчанию при клике по кнопке "Stats"
+  element.querySelector('.main-navigation__additional')?.addEventListener('click', (evt: Event) => {
+    evt.preventDefault();
+  });
+
+  return element;
 };
 
 export default getStatisticsScreen;

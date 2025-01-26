@@ -13,7 +13,9 @@ const getFooter = ({ totalFilmsCount }: Props): Element => {
       </section>
     </footer>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  return element;
 };
 
 export default getFooter;

@@ -29,7 +29,9 @@ const getCommentCard = ({ comment }: Props): Element => {
       </div>
     </li>`;
 
-  return getElementFromTemplate(content);
+  const element = getElementFromTemplate(content);
+
+  return element;
 };
 
 export default getCommentCard;
