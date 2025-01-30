@@ -1,0 +1,14 @@
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.profile__rating {
+  font-size: 20px;
+}
+
+.profile__avatar {
+  display: block;
+  margin-left: 15px;
+}

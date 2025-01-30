@@ -31,21 +31,21 @@ const getNavigationPanel = ({
   const content = `
     <nav class="main-navigation">
       <div class="main-navigation__items">
-        <a href="#all" class="main-navigation__item ${isAllSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
+        <a href="#all" class="link main-navigation__item ${isAllSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
           All movies
         </a>
-        <a href="#watchlist" class="main-navigation__item ${isWatchlistSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
+        <a href="#watchlist" class="link main-navigation__item ${isWatchlistSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
           Watchlist <span class="main-navigation__item-count">${watchlistFilmsCount}</span>
         </a>
-        <a href="#history" class="main-navigation__item ${isWatchedSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
+        <a href="#history" class="link main-navigation__item ${isWatchedSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
           History <span class="main-navigation__item-count">${watchedFilmsCount}</span>
         </a>
-        <a href="#favorites" class="main-navigation__item ${isFavoriteSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
+        <a href="#favorites" class="link main-navigation__item ${isFavoriteSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
           Favorites <span class="main-navigation__item-count">${favoriteFilmsCount}</span>
         </a>
       </div>
 
-      <a href="#stats" class="main-navigation__additional ${isStatsSelected ? STATS_ACTIVE_CLASSNAME : ''}">
+      <a href="#stats" class="link main-navigation__additional ${isStatsSelected ? STATS_ACTIVE_CLASSNAME : ''}">
         Stats
       </a>
     </nav>`;

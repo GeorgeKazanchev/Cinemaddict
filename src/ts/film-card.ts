@@ -40,7 +40,7 @@ const getFilmCard = ({ film }: Props): Element => {
       </p>
       <img src="${info.posterSrc}" alt="${info.title}" class="film-card__poster">
       <p class="film-card__description">${getLimitedDescription(info.description)}</p>
-      <a class="film-card__comments">${commentsCount} ${commentsCount === 1 ? 'comment' : 'comments'}</a>
+      <a class="link film-card__comments">${commentsCount} ${commentsCount === 1 ? 'comment' : 'comments'}</a>
       <div class="film-card__controls">
         <button
           class="film-card__controls-item button film-card__controls-item--add-to-watchlist

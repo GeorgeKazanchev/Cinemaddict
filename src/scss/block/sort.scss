@@ -1,0 +1,27 @@
+@import '/src/scss/variables.scss';
+
+.sort {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sort__button {
+  display: block;
+  margin-right: 32px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  text-decoration: none;
+  color: $text-color;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &--active {
+    color: $text-color-active;
+  }
+}

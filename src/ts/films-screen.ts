@@ -45,7 +45,7 @@ const getFilmsScreen = ({
         <section class="films-list">
           <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
           ${areFilmsShown ? '<div class="films-list__container"></div>' : ''}
-          <button class="films-list__show-more">Show more</button>
+          <button class="films-list__show-more button">Show more</button>
         </section>
       </section>
     </div>`;

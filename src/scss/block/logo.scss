@@ -1,0 +1,15 @@
+@import '/src/scss/variables.scss';
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: default;
+
+  &--smaller {
+    font-size: $font-size;
+    letter-spacing: normal;
+  }
+}

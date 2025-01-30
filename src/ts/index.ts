@@ -4,6 +4,8 @@ import getFooter from './footer';
 import getHeader from './header';
 import { renderFooter, renderHeader, renderScreen } from './util';
 
+import '../scss/style.scss';
+
 const { films } = initialState;
 
 renderHeader(getHeader({ films }));

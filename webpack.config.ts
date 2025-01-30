@@ -12,6 +12,22 @@ export default (env: EnvVariables) => {
   const isProd = env.mode === 'production';
 
   const buildLoaders = (): ModuleOptions['rules'] => {
+    const cssLoader = {
+      loader: 'css-loader',
+      options: {
+        url: false,
+      },
+    };
+
+    const stylesLoader = {
+      test: /\.s[ac]ss$/i,
+      use: [
+        !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
+        cssLoader,
+        'sass-loader',
+      ],
+    };
+
     const tsLoader = {
       test: /\.ts/,
       use: 'ts-loader',
@@ -19,6 +35,7 @@ export default (env: EnvVariables) => {
     };
 
     return [
+      stylesLoader,
       tsLoader,
     ];
   };
@@ -41,8 +58,8 @@ export default (env: EnvVariables) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'css/[name].css',
-        chunkFilename: 'css/[name].css',
+        filename: 'css/style.css',
+        chunkFilename: 'css/style.css',
       }),
     ],
     resolve: {
