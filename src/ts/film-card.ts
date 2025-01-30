@@ -1,6 +1,7 @@
 import mocksComments from './data/mock-comments';
 import getFormattedDuration from './model/get-formatted-duration';
 import getLimitedDescription from './model/get-limited-description';
+import getRatingClassname from './model/get-rating-classname';
 import getPopup from './popup';
 import { getElementFromTemplate, getTargetAsElement } from './util';
 import type Film from './model/types/film';
@@ -32,7 +33,7 @@ const getFilmCard = ({ film }: Props): Element => {
   const content = `
     <article class="film-card">
       <h3 class="film-card__title">${info.title}</h3>
-      <p class="film-card__rating">${info.rating.toFixed(1)}</p>
+      <p class="${getRatingClassname(info.rating, 'film-card__rating')}">${info.rating.toFixed(1)}</p>
       <p class="film-card__info">
         <span class="film-card__year">${info.release.date.getFullYear()}</span>
         <span class="film-card__duration">${getFormattedDuration(info.durationMinutes)}</span>

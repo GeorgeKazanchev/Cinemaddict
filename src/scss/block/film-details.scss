@@ -1,3 +1,5 @@
+@import '/src/scss/variables.scss';
+
 $container-width: 1070px;
 $font-size-regular: 21px;
 $dark-gray: #212126;
@@ -136,6 +138,14 @@ $contols-border-color: #31353f;
   font-size: 50px;
   font-weight: 700;
   color: #42cd51;
+
+  &--average {
+    color: $text-color-average;
+  }
+
+  &--poor {
+    color: $text-color-poor;
+  }
 }
 
 .film-details__user-rating {

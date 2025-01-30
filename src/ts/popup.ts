@@ -1,6 +1,7 @@
 import getCommentCard from './comment-card';
 import getFormattedDuration from './model/get-formatted-duration';
 import getFormattedReleaseDate from './model/get-formatted-release-date';
+import getRatingClassname from './model/get-rating-classname';
 import { getElementFromTemplate } from './util';
 import type Comment from './model/types/comment';
 import type Film from './model/types/film';
@@ -32,7 +33,7 @@ const getPopup = ({ film, comments }: Props): Element => {
             <p class="film-details__title-original">Original: ${info.alternativeTitle}</p>
           </div>
           <div class="film-details__rating">
-            <p class="film-details__total-rating">${info.rating.toFixed(1)}</p>
+            <p class="${getRatingClassname(info.rating, 'film-details__total-rating')}">${info.rating.toFixed(1)}</p>
           </div>
         </div>
         <table class="film-details__table">
