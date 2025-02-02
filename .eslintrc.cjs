@@ -17,6 +17,7 @@ module.exports = {
     'webpack.config.ts',
   ],
   rules: {
+    'class-methods-use-this': ['off'],
     'import/no-cycle': ['off'],
     'no-plusplus': [
       'error',
@@ -24,7 +25,10 @@ module.exports = {
         'allowForLoopAfterthoughts': true,
       },
     ],
+    'no-underscore-dangle': ['off'],
+    '@typescript-eslint/class-literal-property-style': ['error', 'getters'],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/lines-between-class-members': ['off'],
     '@typescript-eslint/quotes': [
       'error',
       'single',
