@@ -48,6 +48,7 @@ export default class FilmsScreen {
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._navigationPanelView.onStatisticsOpen = this._onStatisticsOpen.bind(this);
     this._sortPanelView.onSort = this._onSort.bind(this);
+    this._filmsView.onShowMore = this._onShowMore.bind(this);
     this._filmsView.onPopupOpen = this._onPopupOpen.bind(this);
     this._filmsView.onWatchlistChange = this._onWatchlistChange.bind(this);
     this._filmsView.onWatchedChange = this._onWatchedChange.bind(this);
@@ -103,6 +104,12 @@ export default class FilmsScreen {
       this._filmsView.updateFilms(this._getShownFilms());
       this._sortPanelView.updateActiveSortType(this._sortType);
     }
+  }
+
+  private _onShowMore(): void {
+    const filmsLeftCount = this._films.length - this._getShownFilms().length;
+    this._shownFilmsCount += Math.min(FILMS_PORTION_SIZE, filmsLeftCount);
+    this._filmsView.updateFilms(this._getShownFilms());
   }
 
   private _onPopupOpen(film: Film): void {

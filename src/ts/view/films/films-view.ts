@@ -42,6 +42,15 @@ export default class FilmsView extends AbstractView {
   }
 
   public bind(): void {
+    const showMoreElement = this.element.querySelector('.films-list__show-more');
+
+    const showMoreClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      this.onShowMore();
+    };
+
+    showMoreElement?.addEventListener('click', showMoreClickHandler);
+
     /* eslint-disable no-param-reassign */
     this._filmCardViews.forEach((view) => {
       view.onPopupOpen = this.onPopupOpen.bind(this);
@@ -53,6 +62,7 @@ export default class FilmsView extends AbstractView {
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
+  public onShowMore(): void { }
   public onPopupOpen(film: Film): void { }
   public onWatchlistChange(film: Film): void { }
   public onWatchedChange(film: Film): void { }
