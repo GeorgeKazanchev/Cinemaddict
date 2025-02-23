@@ -30,7 +30,7 @@ export default class FilmsScreen {
     this._films = films;
     this._filter = filter ?? Filter.All;
     this._sortType = sortType ?? SortType.Default;
-    this._shownFilmsCount = Math.min(FILMS_PORTION_SIZE, this._films.length);
+    this._shownFilmsCount = this._getInitShownFilmsCount();
     this._mainElement = mainElement;
     this._header = header;
 
@@ -88,6 +88,7 @@ export default class FilmsScreen {
     if (this._filter !== selectedFilter) {
       this._filter = selectedFilter;
       this._sortType = SortType.Default;
+      this._shownFilmsCount = this._getInitShownFilmsCount();
       this._filmsView.updateFilms(this._getShownFilms());
       this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
       this._navigationPanelView.updateActiveFilter(this._filter);
@@ -107,7 +108,9 @@ export default class FilmsScreen {
   private _onSort(selectedSortType: SortType): void {
     if (this._sortType !== selectedSortType) {
       this._sortType = selectedSortType;
+      this._shownFilmsCount = this._getInitShownFilmsCount();
       this._filmsView.updateFilms(this._getShownFilms());
+      this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
       this._sortPanelView.updateActiveSortType(this._sortType);
     }
   }
@@ -166,10 +169,17 @@ export default class FilmsScreen {
     }
   }
 
+  private _getFilteredFilms(): Film[] {
+    return filterFilms(this._films, this._filter);
+  }
+
   private _getShownFilms(): Film[] {
-    const filteredFilms = filterFilms(this._films, this._filter);
+    const filteredFilms = this._getFilteredFilms();
     const sortedFilms = sortFilms(filteredFilms, this._sortType);
-    const shownFilms = sortedFilms.slice(0, this._shownFilmsCount);
-    return shownFilms;
+    return sortedFilms.slice(0, this._shownFilmsCount);
+  }
+
+  private _getInitShownFilmsCount(): number {
+    return Math.min(FILMS_PORTION_SIZE, this._getFilteredFilms().length);
   }
 }
