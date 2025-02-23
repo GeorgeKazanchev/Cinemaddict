@@ -1,7 +1,4 @@
-import { getElementFromTemplate } from './util';
-import {
-  CloseButtonView, CommentsView, ControlsView, InfoView,
-} from './view/popup';
+import PopupView from './view/popup/popup-view';
 import type Comment from './model/types/comment';
 import type Film from './model/types/film';
 
@@ -10,46 +7,25 @@ type Props = {
   film: Film;
 };
 
-const getPopup = ({ film, comments }: Props): Element => {
-  const closeButtonView = new CloseButtonView();
-  const infoView = new InfoView({ filmInfo: film.info });
-  const controlsView = new ControlsView({ userDetails: film.userDetails });
-  const commentsView = new CommentsView({ comments });
+export default class Popup {
+  constructor({ comments, film }: Props) {
+    this._comments = comments;
+    this._film = film;
 
-  const template = `
-    <section class="film-details">
-      <form class="film-details__inner" action="#" method="get">
-        <div class="film-details__top-container"></div>
-        <div class="film-details__bottom-container"></div>
-      </form>
-    </section>`;
+    this._popupView = new PopupView({ comments: this._comments, film: this._film });
 
-  const element = getElementFromTemplate(template);
-
-  const topContainerElement = element.querySelector('.film-details__top-container');
-  if (topContainerElement) {
-    topContainerElement.append(closeButtonView.element);
-    topContainerElement.append(infoView.element);
-    topContainerElement.append(controlsView.element);
+    this._popupView.onClose = this._onClose.bind(this);
   }
 
-  const bottomContainerElement = element.querySelector('.film-details__bottom-container');
-  if (bottomContainerElement) {
-    bottomContainerElement.append(commentsView.element);
+  private _comments: Comment[];
+  private _film: Film;
+  private _popupView: PopupView;
+
+  public get element(): Element {
+    return this._popupView.element;
   }
 
-  closeButtonView.onClose = () => {
-    element.remove();
-  };
-
-  element.addEventListener('keydown', ((evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      element.remove();
-    }
-  }) as EventListener);
-
-  return element;
-};
-
-export default getPopup;
+  private _onClose(): void {
+    this.element.remove();
+  }
+}

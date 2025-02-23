@@ -4,9 +4,16 @@ type Props = {
   totalFilmsCount: number;
 };
 
-const getFooter = ({ totalFilmsCount }: Props): Element => {
-  const footerView = new FooterView({ totalFilmsCount });
-  return footerView.element;
-};
+export default class Footer {
+  constructor({ totalFilmsCount }: Props) {
+    this._totalFilmsCount = totalFilmsCount;
+    this._footerView = new FooterView({ totalFilmsCount: this._totalFilmsCount });
+  }
 
-export default getFooter;
+  private _totalFilmsCount: number;
+  private _footerView: FooterView;
+
+  public get element(): Element {
+    return this._footerView.element;
+  }
+}

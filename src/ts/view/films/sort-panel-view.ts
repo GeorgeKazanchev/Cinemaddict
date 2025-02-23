@@ -70,4 +70,21 @@ export default class SortPanelView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onSort(sortType: SortType): void { }
+
+  public updateActiveSortType(sortType: SortType): void {
+    this._sortType = sortType;
+
+    const activeSortTypeElement = this.element.querySelector(`.${ACTIVE_CLASSNAME}`);
+    if (activeSortTypeElement) {
+      activeSortTypeElement.classList.remove(ACTIVE_CLASSNAME);
+    }
+
+    const sortTypeHrefPair = [...hrefsToSortTypes].find(([, value]) => value === this._sortType);
+    if (!sortTypeHrefPair) {
+      throw new Error(`No href found matching sort type ${this._sortType}`);
+    }
+
+    const newActiveSortTypeElement = this.element.querySelector(`[href="${sortTypeHrefPair[0]}"]`);
+    newActiveSortTypeElement?.classList.add(ACTIVE_CLASSNAME);
+  }
 }

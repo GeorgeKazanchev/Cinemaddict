@@ -1,19 +1,15 @@
-const mainElement = document.querySelector('.main');
-if (!mainElement) {
-  throw new Error('The ".main" element is absent from the page');
-}
-
-export const renderScreen = (element: Element): void => {
-  mainElement.innerHTML = '';
-  mainElement.append(element);
+export const render = (element: Element, containerElement: Element): void => {
+  /* eslint-disable no-param-reassign */
+  containerElement.innerHTML = '';
+  containerElement.append(element);
 };
 
-export const renderHeader = (element: Element): void => {
+export const renderHeader = (element: Element, mainElement: Element): void => {
   document.querySelector('.header')?.remove();
   mainElement.before(element);
 };
 
-export const renderFooter = (element: Element): void => {
+export const renderFooter = (element: Element, mainElement: Element): void => {
   document.querySelector('.footer')?.remove();
   mainElement.after(element);
 };

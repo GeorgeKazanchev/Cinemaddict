@@ -18,7 +18,7 @@ export default class FilmsView extends AbstractView {
 
   public get template(): string {
     const areFilmsShown = this._films.length > 0;
-    const title = areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+    const title = this._getTitle(areFilmsShown);
 
     return `
       <section class="films">
@@ -32,15 +32,12 @@ export default class FilmsView extends AbstractView {
 
   public get element(): Element {
     const element = super.element;
-
     const filmsContainerElement = element.querySelector('.films-list__container');
-
     if (filmsContainerElement && filmsContainerElement.children.length === 0) {
       this._filmCardViews.forEach((view) => {
         filmsContainerElement.append(view.element);
       });
     }
-
     return element;
   }
 
@@ -53,4 +50,45 @@ export default class FilmsView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPopupOpen(film: Film): void { }
+
+  public updateFilms(films: Film[]): void {
+    this._films = films;
+    this._filmCardViews = films.map((film) => new FilmCardView({ film }));
+
+    const areFilmsShown = this._films.length > 0;
+    this._updateTitle(areFilmsShown);
+    this._updateFilmsContainer(areFilmsShown);
+    this.bind();
+  }
+
+  private _updateTitle(areFilmsShown: boolean): void {
+    const title = this._getTitle(areFilmsShown);
+    const titleElement = this.element.querySelector('.films-list__title');
+    if (titleElement) {
+      titleElement.className = `films-list__title ${areFilmsShown ? 'visually-hidden' : ''}`;
+      titleElement.textContent = title;
+    }
+  }
+
+  private _updateFilmsContainer(areFilmsShown: boolean): void {
+    let filmsContainerElement = this.element.querySelector('.films-list__container');
+
+    if (areFilmsShown) {
+      if (!filmsContainerElement) {
+        filmsContainerElement = document.createElement('div');
+        filmsContainerElement.classList.add('films-list__container');
+      }
+
+      filmsContainerElement.innerHTML = '';
+      this._filmCardViews.forEach((view) => {
+        filmsContainerElement!.append(view.element);
+      });
+    } else if (filmsContainerElement) {
+      filmsContainerElement.remove();
+    }
+  }
+
+  private _getTitle(areFilmsShown: boolean): string {
+    return areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+  }
 }

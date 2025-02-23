@@ -94,4 +94,8 @@ export default class FiltersView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPeriodChanged(period: StatisticsPeriod): void { }
+
+  public updateActivePeriod(period: StatisticsPeriod): void {
+    this._period = period;
+  }
 }

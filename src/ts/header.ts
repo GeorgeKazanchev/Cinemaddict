@@ -7,12 +7,20 @@ type Props = {
   films: Film[];
 };
 
-const getHeader = ({ films }: Props): Element => {
-  const filmsSummary = getFilmsSummary(films);
-  const rank = getRank(filmsSummary.watchedFilmsCount);
+export default class Header {
+  constructor({ films }: Props) {
+    this._films = films;
 
-  const headerView = new HeaderView({ rank });
-  return headerView.element;
-};
+    const filmsSummary = getFilmsSummary(this._films);
+    const rank = getRank(filmsSummary.watchedFilmsCount);
 
-export default getHeader;
+    this._headerView = new HeaderView({ rank });
+  }
+
+  private _films: Film[];
+  private _headerView: HeaderView;
+
+  public get element(): Element {
+    return this._headerView.element;
+  }
+}

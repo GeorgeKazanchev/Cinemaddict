@@ -1,13 +1,23 @@
 import initialState from './data/data';
-import getFilmsScreen from './films-screen';
-import getFooter from './footer';
-import getHeader from './header';
-import { renderFooter, renderHeader, renderScreen } from './util';
+import FilmsScreen from './films-screen';
+import Footer from './footer';
+import Header from './header';
+import { render, renderFooter, renderHeader } from './util';
 
 import '../scss/style.scss';
 
-const { films } = initialState;
+const state = initialState;
+const { films } = state;
 
-renderHeader(getHeader({ films }));
-renderFooter(getFooter({ totalFilmsCount: films.length }));
-renderScreen(getFilmsScreen({ ...initialState }));
+const mainElement = document.querySelector('.main');
+if (!mainElement) {
+  throw new Error('The ".main" element is absent from the page');
+}
+
+const filmsScreen = new FilmsScreen({ ...state, mainElement });
+const header = new Header({ films });
+const footer = new Footer({ totalFilmsCount: films.length });
+
+render(filmsScreen.element, mainElement);
+renderHeader(header.element, mainElement);
+renderFooter(footer.element, mainElement);

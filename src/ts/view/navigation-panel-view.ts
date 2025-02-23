@@ -103,4 +103,21 @@ export default class NavigationPanelView extends AbstractView {
   public onFiltration(filter: Filter): void { }
 
   public onStatisticsOpen(): void { }
+
+  public updateActiveFilter(filter: Filter): void {
+    this._filter = filter;
+
+    const activeFilterElement = this.element.querySelector(`.${FILTER_ACTIVE_CLASSNAME}`);
+    if (activeFilterElement) {
+      activeFilterElement.classList.remove(FILTER_ACTIVE_CLASSNAME);
+    }
+
+    const filterHrefPair = [...hrefsToFilters].find(([, value]) => value === this._filter);
+    if (!filterHrefPair) {
+      throw new Error(`No href found matching filter ${this._filter}`);
+    }
+
+    const newActiveFilterElement = this.element.querySelector(`[href="${filterHrefPair[0]}"]`);
+    newActiveFilterElement?.classList.add(FILTER_ACTIVE_CLASSNAME);
+  }
 }

@@ -23,13 +23,18 @@ export default class ChartView extends AbstractView {
 
   public get element(): Element {
     const element = super.element;
-
     const canvasElement = element.querySelector('.statistic__chart');
-
     if (canvasElement instanceof HTMLCanvasElement) {
       renderStatisticsChart(this._films, canvasElement);
     }
-
     return element;
+  }
+
+  public updateChart(films: Film[]): void {
+    this._films = films;
+    const canvasElement = this.element.querySelector('.statistic__chart');
+    if (canvasElement instanceof HTMLCanvasElement) {
+      renderStatisticsChart(this._films, canvasElement);
+    }
   }
 }
