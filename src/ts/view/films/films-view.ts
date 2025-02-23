@@ -2,19 +2,24 @@ import AbstractView from '../abstract-view';
 import FilmCardView from './film-card-view';
 import type Film from '../../model/types/film';
 
+const HIDDEN_CLASSNAME = 'hidden';
+
 type Props = {
+  areAllShown?: boolean;
   films: Film[];
 };
 
 export default class FilmsView extends AbstractView {
-  constructor({ films }: Props) {
+  constructor({ films, areAllShown }: Props) {
     super();
     this._films = films;
     this._filmCardViews = films.map((film) => new FilmCardView({ film }));
+    this._areAllShown = areAllShown ?? true;
   }
 
   private _films: Film[];
   private _filmCardViews: FilmCardView[];
+  private _areAllShown: boolean;
 
   public get template(): string {
     const areFilmsShown = this._films.length > 0;
@@ -25,7 +30,7 @@ export default class FilmsView extends AbstractView {
         <section class="films-list">
           <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
           ${areFilmsShown ? '<div class="films-list__container"></div>' : ''}
-          <button class="films-list__show-more button">Show more</button>
+          <button class="films-list__show-more button ${this._areAllShown ? HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>
       </section>`;
   }
@@ -77,6 +82,21 @@ export default class FilmsView extends AbstractView {
     this._updateTitle(areFilmsShown);
     this._updateFilmsContainer(areFilmsShown);
     this.bind();
+  }
+
+  public updateShowMoreButton(areAllShown: boolean): void {
+    this._areAllShown = areAllShown;
+
+    const showMoreElement = this.element.querySelector('.films-list__show-more');
+    if (!showMoreElement) {
+      throw new Error('The "Show more" button is not found');
+    }
+
+    if (areAllShown) {
+      showMoreElement.classList.add(HIDDEN_CLASSNAME);
+    } else {
+      showMoreElement.classList.remove(HIDDEN_CLASSNAME);
+    }
   }
 
   public deleteFilmCard(filmId: string): void {

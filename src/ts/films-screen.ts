@@ -37,7 +37,7 @@ export default class FilmsScreen {
     const filmsSummary = getFilmsSummary(this._films);
     const shownFilms = this._getShownFilms();
 
-    this._filmsView = new FilmsView({ films: shownFilms });
+    this._filmsView = new FilmsView({ films: shownFilms, areAllShown: this.areAllFilmsShown });
     this._sortPanelView = new SortPanelView({ sortType: this._sortType });
     this._navigationPanelView = new NavigationPanelView({
       filmsSummary,
@@ -79,11 +79,17 @@ export default class FilmsScreen {
     return this._element;
   }
 
+  public get areAllFilmsShown(): boolean {
+    const filteredFilms = filterFilms(this._films, this._filter);
+    return this._shownFilmsCount >= filteredFilms.length;
+  }
+
   private _onFiltration(selectedFilter: Filter): void {
     if (this._filter !== selectedFilter) {
       this._filter = selectedFilter;
       this._sortType = SortType.Default;
       this._filmsView.updateFilms(this._getShownFilms());
+      this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
       this._navigationPanelView.updateActiveFilter(this._filter);
       this._sortPanelView.updateActiveSortType(this._sortType);
     }
@@ -110,6 +116,7 @@ export default class FilmsScreen {
     const filmsLeftCount = this._films.length - this._getShownFilms().length;
     this._shownFilmsCount += Math.min(FILMS_PORTION_SIZE, filmsLeftCount);
     this._filmsView.updateFilms(this._getShownFilms());
+    this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
   }
 
   private _onPopupOpen(film: Film): void {
