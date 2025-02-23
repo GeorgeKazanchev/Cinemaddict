@@ -1,4 +1,5 @@
 import FilmsScreen from './films-screen';
+import Header from './header';
 import Filter from './model/enums/filter';
 import StatisticsPeriod from './model/enums/statistics-period';
 import getRank from './model/get-rank';
@@ -18,15 +19,19 @@ import type Film from './model/types/film';
 
 type Props = {
   films: Film[];
-  period?: StatisticsPeriod;
+  header: Header;
   mainElement: Element;
+  period?: StatisticsPeriod;
 };
 
 export default class StatisticsScreen {
-  constructor({ films, period, mainElement }: Props) {
+  constructor({
+    films, period, mainElement, header,
+  }: Props) {
     this._films = films;
     this._period = period ?? StatisticsPeriod.AllTime;
     this._mainElement = mainElement;
+    this._header = header;
 
     const filmsSummary = getFilmsSummary(this._films);
     const watchedFilmsInPeriod = this._getWatchedFilmsInPeriod();
@@ -56,6 +61,7 @@ export default class StatisticsScreen {
   private _chartView: ChartView;
   private _element: Element | null = null;
   private _mainElement: Element;
+  private _header: Header;
 
   public get element(): Element {
     if (this._element) {
@@ -85,6 +91,7 @@ export default class StatisticsScreen {
       films: this._films,
       filter: selectedFilter,
       mainElement: this._mainElement,
+      header: this._header,
     });
     render(filmsScreen.element, this._mainElement);
   }

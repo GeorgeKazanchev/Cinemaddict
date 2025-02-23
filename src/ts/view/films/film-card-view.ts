@@ -18,6 +18,10 @@ export default class FilmCardView extends AbstractView {
 
   private _film: Film;
 
+  public get filmId(): string {
+    return this._film.id;
+  }
+
   public get template(): string {
     const commentsCount = this._film.commentsIds.length;
     const { info, userDetails } = this._film;
@@ -65,16 +69,45 @@ export default class FilmCardView extends AbstractView {
     const posterElement = this.element.querySelector('.film-card__poster');
     const commentsElement = this.element.querySelector('.film-card__comments');
 
+    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
+    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+    const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
+
     const popupOpenHandler = (evt: Event) => {
       evt.preventDefault();
       this.onPopupOpen(this._film);
     };
 
+    const watchlistClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      watchlistButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+      this.onWatchlistChange(this._film);
+    };
+
+    const watchedClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      watchedButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+      this.onWatchedChange(this._film);
+    };
+
+    const favoriteClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+      this.onFavoriteChange(this._film);
+    };
+
     titleElement?.addEventListener('click', popupOpenHandler);
     posterElement?.addEventListener('click', popupOpenHandler);
     commentsElement?.addEventListener('click', popupOpenHandler);
+    watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
+    watchedButtonElement?.addEventListener('click', watchedClickHandler);
+    favoriteButtonElement?.addEventListener('click', favoriteClickHandler);
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPopupOpen(film: Film): void { }
+  public onWatchlistChange(film: Film): void { }
+  public onWatchedChange(film: Film): void { }
+  public onFavoriteChange(film: Film): void { }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 }

@@ -53,13 +53,13 @@ export default class NavigationPanelView extends AbstractView {
             All movies
           </a>
           <a href="#watchlist" class="link main-navigation__item ${isWatchlistSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
-            Watchlist <span class="main-navigation__item-count">${watchlistFilmsCount}</span>
+            Watchlist <span class="main-navigation__item-count">${watchlistFilmsCount.toFixed(0)}</span>
           </a>
           <a href="#history" class="link main-navigation__item ${isWatchedSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
-            History <span class="main-navigation__item-count">${watchedFilmsCount}</span>
+            History <span class="main-navigation__item-count">${watchedFilmsCount.toFixed(0)}</span>
           </a>
           <a href="#favorites" class="link main-navigation__item ${isFavoriteSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
-            Favorites <span class="main-navigation__item-count">${favoriteFilmsCount}</span>
+            Favorites <span class="main-navigation__item-count">${favoriteFilmsCount.toFixed(0)}</span>
           </a>
         </div>
 
@@ -119,5 +119,27 @@ export default class NavigationPanelView extends AbstractView {
 
     const newActiveFilterElement = this.element.querySelector(`[href="${filterHrefPair[0]}"]`);
     newActiveFilterElement?.classList.add(FILTER_ACTIVE_CLASSNAME);
+  }
+
+  public updateFilmsSummary(filmsSummary: FilmsSummary): void {
+    this._filmsSummary = filmsSummary;
+
+    const {
+      watchlistFilmsCount,
+      watchedFilmsCount,
+      favoriteFilmsCount,
+    } = this._filmsSummary;
+
+    const watchlistCountElement = this.element.querySelector('[href="#watchlist"] .main-navigation__item-count');
+    const watchedCountElement = this.element.querySelector('[href="#history"] .main-navigation__item-count');
+    const favoriteCountElement = this.element.querySelector('[href="#favorites"] .main-navigation__item-count');
+
+    if (!watchlistCountElement || !watchedCountElement || !favoriteCountElement) {
+      throw new Error('No films count label in the navigation panel found');
+    }
+
+    watchlistCountElement.textContent = watchlistFilmsCount.toFixed(0);
+    watchedCountElement.textContent = watchedFilmsCount.toFixed(0);
+    favoriteCountElement.textContent = favoriteFilmsCount.toFixed(0);
   }
 }

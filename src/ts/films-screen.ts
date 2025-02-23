@@ -1,7 +1,9 @@
 import mocksComments from './data/mock-comments';
+import Header from './header';
 import Filter from './model/enums/filter';
 import SortType from './model/enums/sort-type';
 import filterFilms from './model/filter-films';
+import getRank from './model/get-rank';
 import { getFilmsSummary } from './model/get-statistics';
 import sortFilms from './model/sort-films';
 import Popup from './popup';
@@ -14,18 +16,20 @@ import type Film from './model/types/film';
 type Props = {
   films: Film[];
   filter?: Filter;
-  sortType?: SortType;
+  header: Header;
   mainElement: Element;
+  sortType?: SortType;
 };
 
 export default class FilmsScreen {
   constructor({
-    films, filter, sortType, mainElement,
+    films, filter, sortType, mainElement, header,
   }: Props) {
     this._films = films;
     this._filter = filter ?? Filter.All;
     this._sortType = sortType ?? SortType.Default;
     this._mainElement = mainElement;
+    this._header = header;
 
     const filmsSummary = getFilmsSummary(this._films);
     const shownFilms = this._getShownFilms();
@@ -42,6 +46,9 @@ export default class FilmsScreen {
     this._navigationPanelView.onStatisticsOpen = this._onStatisticsOpen.bind(this);
     this._sortPanelView.onSort = this._onSort.bind(this);
     this._filmsView.onPopupOpen = this._onPopupOpen.bind(this);
+    this._filmsView.onWatchlistChange = this._onWatchlistChange.bind(this);
+    this._filmsView.onWatchedChange = this._onWatchedChange.bind(this);
+    this._filmsView.onFavoriteChange = this._onFavoriteChange.bind(this);
   }
 
   private _films: Film[];
@@ -52,6 +59,7 @@ export default class FilmsScreen {
   private _filmsView: FilmsView;
   private _element: Element | null = null;
   private _mainElement: Element;
+  private _header: Header;
 
   public get element(): Element {
     if (this._element) {
@@ -80,6 +88,7 @@ export default class FilmsScreen {
     const statisticsScreen = new StatisticsScreen({
       films: this._films,
       mainElement: this._mainElement,
+      header: this._header,
     });
     render(statisticsScreen.element, this._mainElement);
   }
@@ -102,6 +111,40 @@ export default class FilmsScreen {
     const popupCloseButtonElement = popup.element.querySelector('.film-details__close-btn');
     if (popupCloseButtonElement instanceof HTMLElement) {
       setTimeout(() => popupCloseButtonElement.focus());
+    }
+  }
+
+  private _onWatchlistChange(film: Film): void {
+    const { userDetails } = film;
+    userDetails.inWatchlist = !userDetails.inWatchlist;
+    this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+
+    if (this._filter === Filter.Watchlist && !userDetails.inWatchlist) {
+      this._filmsView.deleteFilmCard(film.id);
+    }
+  }
+
+  private _onWatchedChange(film: Film): void {
+    const { userDetails } = film;
+    userDetails.isWatched = !userDetails.isWatched;
+    userDetails.watchingDate = userDetails.isWatched ? new Date() : null;
+
+    const filmsSummary = getFilmsSummary(this._films);
+    this._navigationPanelView.updateFilmsSummary(filmsSummary);
+    this._header.updateRank(getRank(filmsSummary.watchedFilmsCount));
+
+    if (this._filter === Filter.Watched && !userDetails.isWatched) {
+      this._filmsView.deleteFilmCard(film.id);
+    }
+  }
+
+  private _onFavoriteChange(film: Film): void {
+    const { userDetails } = film;
+    userDetails.isFavorite = !userDetails.isFavorite;
+    this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+
+    if (this._filter === Filter.Favorite && !userDetails.isFavorite) {
+      this._filmsView.deleteFilmCard(film.id);
     }
   }
 

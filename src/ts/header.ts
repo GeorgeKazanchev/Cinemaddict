@@ -23,4 +23,8 @@ export default class Header {
   public get element(): Element {
     return this._headerView.element;
   }
+
+  public updateRank(rank: string): void {
+    this._headerView.updateRank(rank);
+  }
 }

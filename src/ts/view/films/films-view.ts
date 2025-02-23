@@ -45,11 +45,19 @@ export default class FilmsView extends AbstractView {
     /* eslint-disable no-param-reassign */
     this._filmCardViews.forEach((view) => {
       view.onPopupOpen = this.onPopupOpen.bind(this);
+      view.onWatchlistChange = this.onWatchlistChange.bind(this);
+      view.onWatchedChange = this.onWatchedChange.bind(this);
+      view.onFavoriteChange = this.onFavoriteChange.bind(this);
     });
+    /* eslint-enable no-param-reassign */
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPopupOpen(film: Film): void { }
+  public onWatchlistChange(film: Film): void { }
+  public onWatchedChange(film: Film): void { }
+  public onFavoriteChange(film: Film): void { }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateFilms(films: Film[]): void {
     this._films = films;
@@ -59,6 +67,13 @@ export default class FilmsView extends AbstractView {
     this._updateTitle(areFilmsShown);
     this._updateFilmsContainer(areFilmsShown);
     this.bind();
+  }
+
+  public deleteFilmCard(filmId: string): void {
+    const filmCardView = this._filmCardViews.find((view) => view.filmId === filmId);
+    if (filmCardView) {
+      filmCardView.element.remove();
+    }
   }
 
   private _updateTitle(areFilmsShown: boolean): void {

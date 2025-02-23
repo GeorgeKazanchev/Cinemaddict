@@ -14,9 +14,9 @@ if (!mainElement) {
   throw new Error('The ".main" element is absent from the page');
 }
 
-const filmsScreen = new FilmsScreen({ ...state, mainElement });
 const header = new Header({ films });
 const footer = new Footer({ totalFilmsCount: films.length });
+const filmsScreen = new FilmsScreen({ ...state, mainElement, header });
 
 render(filmsScreen.element, mainElement);
 renderHeader(header.element, mainElement);
