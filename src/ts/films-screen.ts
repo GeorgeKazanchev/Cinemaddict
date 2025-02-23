@@ -13,6 +13,8 @@ import { FilmsView, SortPanelView } from './view/films';
 import NavigationPanelView from './view/navigation-panel-view';
 import type Film from './model/types/film';
 
+const FILMS_PORTION_SIZE = 5;
+
 type Props = {
   films: Film[];
   filter?: Filter;
@@ -28,6 +30,7 @@ export default class FilmsScreen {
     this._films = films;
     this._filter = filter ?? Filter.All;
     this._sortType = sortType ?? SortType.Default;
+    this._shownFilmsCount = Math.min(FILMS_PORTION_SIZE, this._films.length);
     this._mainElement = mainElement;
     this._header = header;
 
@@ -54,6 +57,7 @@ export default class FilmsScreen {
   private _films: Film[];
   private _filter: Filter;
   private _sortType: SortType;
+  private _shownFilmsCount: number;
   private _navigationPanelView: NavigationPanelView;
   private _sortPanelView: SortPanelView;
   private _filmsView: FilmsView;
@@ -150,7 +154,8 @@ export default class FilmsScreen {
 
   private _getShownFilms(): Film[] {
     const filteredFilms = filterFilms(this._films, this._filter);
-    const shownFilms = sortFilms(filteredFilms, this._sortType);
+    const sortedFilms = sortFilms(filteredFilms, this._sortType);
+    const shownFilms = sortedFilms.slice(0, this._shownFilmsCount);
     return shownFilms;
   }
 }
