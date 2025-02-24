@@ -19,7 +19,7 @@ export default class PopupView extends AbstractView {
 
     this._closeButtonView = new CloseButtonView();
     this._infoView = new InfoView({ filmInfo: this._film.info });
-    this._controlsView = new ControlsView({ userDetails: this._film.userDetails });
+    this._controlsView = new ControlsView({ film: this._film });
     this._commentsView = new CommentsView({ comments: this._comments });
   }
 
@@ -68,8 +68,16 @@ export default class PopupView extends AbstractView {
         this.onClose();
       }
     }) as EventListener);
+
+    this._controlsView.onWatchlistChange = this.onWatchlistChange.bind(this);
+    this._controlsView.onWatchedChange = this.onWatchedChange.bind(this);
+    this._controlsView.onFavoriteChange = this.onFavoriteChange.bind(this);
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onClose(): void { }
+  public onWatchlistChange(film: Film): void { }
+  public onWatchedChange(film: Film): void { }
+  public onFavoriteChange(film: Film): void { }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 }

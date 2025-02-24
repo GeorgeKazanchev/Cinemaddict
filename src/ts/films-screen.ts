@@ -126,7 +126,13 @@ export default class FilmsScreen {
     document.querySelector('.film-details')?.remove();
 
     const comments = mocksComments.filter((comment) => film.commentsIds.includes(comment.id));
-    const popup = new Popup({ comments, film });
+    const popup = new Popup({
+      comments,
+      film,
+      onWatchlistChange: this._onWatchlistChange.bind(this),
+      onWatchedChange: this._onWatchedChange.bind(this),
+      onFavoriteChange: this._onFavoriteChange.bind(this),
+    });
     document.body.append(popup.element);
 
     const popupCloseButtonElement = popup.element.querySelector('.film-details__close-btn');
