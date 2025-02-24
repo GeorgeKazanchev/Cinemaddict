@@ -80,19 +80,16 @@ export default class FilmCardView extends AbstractView {
 
     const watchlistClickHandler = (evt: Event) => {
       evt.preventDefault();
-      watchlistButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
       this.onWatchlistChange(this._film);
     };
 
     const watchedClickHandler = (evt: Event) => {
       evt.preventDefault();
-      watchedButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
       this.onWatchedChange(this._film);
     };
 
     const favoriteClickHandler = (evt: Event) => {
       evt.preventDefault();
-      favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
       this.onFavoriteChange(this._film);
     };
 
@@ -110,4 +107,19 @@ export default class FilmCardView extends AbstractView {
   public onWatchedChange(film: Film): void { }
   public onFavoriteChange(film: Film): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public updateWatchlistButton(): void {
+    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
+    watchlistButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+  }
+
+  public updateWatchedButton(): void {
+    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+    watchedButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+  }
+
+  public updateFavoriteButton(): void {
+    const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
+    favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+  }
 }

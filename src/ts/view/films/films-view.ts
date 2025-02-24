@@ -84,6 +84,21 @@ export default class FilmsView extends AbstractView {
     this.bind();
   }
 
+  public updateWatchlistButton(film: Film): void {
+    const filmCardView = this._getFilmCardViewBy(film.id);
+    filmCardView?.updateWatchlistButton();
+  }
+
+  public updateWatchedButton(film: Film): void {
+    const filmCardView = this._getFilmCardViewBy(film.id);
+    filmCardView?.updateWatchedButton();
+  }
+
+  public updateFavoriteButton(film: Film): void {
+    const filmCardView = this._getFilmCardViewBy(film.id);
+    filmCardView?.updateFavoriteButton();
+  }
+
   public updateShowMoreButton(areAllShown: boolean): void {
     this._areAllShown = areAllShown;
 
@@ -135,5 +150,9 @@ export default class FilmsView extends AbstractView {
 
   private _getTitle(areFilmsShown: boolean): string {
     return areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+  }
+
+  private _getFilmCardViewBy(filmId: string): FilmCardView | null {
+    return this._filmCardViews.find((view) => view.filmId === filmId) ?? null;
   }
 }

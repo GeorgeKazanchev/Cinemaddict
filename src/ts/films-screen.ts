@@ -145,6 +145,7 @@ export default class FilmsScreen {
     const { userDetails } = film;
     userDetails.inWatchlist = !userDetails.inWatchlist;
     this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+    this._filmsView.updateWatchlistButton(film);
 
     if (this._filter === Filter.Watchlist && !userDetails.inWatchlist) {
       this._filmsView.deleteFilmCard(film.id);
@@ -158,6 +159,7 @@ export default class FilmsScreen {
 
     const filmsSummary = getFilmsSummary(this._films);
     this._navigationPanelView.updateFilmsSummary(filmsSummary);
+    this._filmsView.updateWatchedButton(film);
     this._header.updateRank(getRank(filmsSummary.watchedFilmsCount));
 
     if (this._filter === Filter.Watched && !userDetails.isWatched) {
@@ -169,6 +171,7 @@ export default class FilmsScreen {
     const { userDetails } = film;
     userDetails.isFavorite = !userDetails.isFavorite;
     this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+    this._filmsView.updateFavoriteButton(film);
 
     if (this._filter === Filter.Favorite && !userDetails.isFavorite) {
       this._filmsView.deleteFilmCard(film.id);
