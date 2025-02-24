@@ -1,3 +1,5 @@
+import getEmotionByName from '../../model/get-emotion-by-name';
+import { getElementFromTemplate, getTargetAsElement } from '../../util';
 import AbstractView from '../abstract-view';
 import CommentCardView from './comment-card-view';
 import type Comment from '../../model/types/comment';
@@ -54,7 +56,6 @@ export default class CommentsView extends AbstractView {
 
   public get element(): Element {
     const element = super.element;
-
     const commentsContainerElement = element.querySelector('.film-details__comments-list');
 
     if (commentsContainerElement && commentsContainerElement.children.length === 0) {
@@ -64,5 +65,32 @@ export default class CommentsView extends AbstractView {
     }
 
     return element;
+  }
+
+  public bind(): void {
+    const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
+
+    const emotionChangeHandler = (evt: Event) => {
+      const inputElement = getTargetAsElement(evt);
+      if (!(inputElement instanceof HTMLInputElement)) {
+        return;
+      }
+
+      const emotionContainerElement = this.element.querySelector('.film-details__add-emoji-label');
+      if (emotionContainerElement) {
+        emotionContainerElement.innerHTML = '';
+      }
+
+      const emotionImageElement = this._getEmotionImageElement(inputElement.value);
+      emotionContainerElement?.append(emotionImageElement);
+    };
+
+    newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
+  }
+
+  private _getEmotionImageElement(emotionName: string): Element {
+    const { imgSrc } = getEmotionByName(emotionName);
+    const template = `<img src="${imgSrc}" width="55" height="55" alt="emoji-${emotionName}">`;
+    return getElementFromTemplate(template);
   }
 }
