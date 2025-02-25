@@ -112,6 +112,27 @@ export default class CommentsView extends AbstractView {
     }
   }
 
+  public resetNewCommentText(): void {
+    const commentTextElement = this.element.querySelector('.film-details__comment-input');
+    if (commentTextElement instanceof HTMLTextAreaElement) {
+      commentTextElement.value = '';
+    }
+  }
+
+  public resetSelectedEmotion(): void {
+    const emotionContainerElement = this.element.querySelector('.film-details__add-emoji-label');
+    if (emotionContainerElement) {
+      emotionContainerElement.innerHTML = '';
+    }
+
+    const emotionInputElements = this.element.querySelectorAll('.film-details__emoji-item');
+    emotionInputElements.forEach((input) => {
+      if (input instanceof HTMLInputElement) {
+        input.checked = false; //  eslint-disable-line no-param-reassign
+      }
+    });
+  }
+
   private _getEmotionImageElement(emotionName: string): Element {
     const { imgSrc } = getEmotionByName(emotionName);
     const template = `<img src="${imgSrc}" width="55" height="55" alt="emoji-${emotionName}">`;

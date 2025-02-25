@@ -78,6 +78,27 @@ export default class PopupView extends AbstractView {
     /* eslint-disable no-param-reassign */
     this._closeButtonView.onClose = this.onClose.bind(this);
 
+    const commentFormElement = this.element.querySelector('.film-details__inner');
+    if (!(commentFormElement instanceof HTMLFormElement)) {
+      throw new Error('No form element found');
+    }
+
+    const commentKeyUpHandler = (evt: KeyboardEvent) => {
+      if (evt.key === 'Enter' && (evt.ctrlKey || evt.metaKey)) {
+        evt.preventDefault();
+        commentFormElement.requestSubmit();
+        this._commentsView.resetNewCommentText();
+        this._commentsView.resetSelectedEmotion();
+      }
+    };
+
+    const commentSubmitHandler = (evt: Event) => {
+      evt.preventDefault();
+    };
+
+    commentFormElement.addEventListener('keyup', commentKeyUpHandler);
+    commentFormElement.addEventListener('submit', commentSubmitHandler);
+
     this.element.addEventListener('keydown', ((evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
