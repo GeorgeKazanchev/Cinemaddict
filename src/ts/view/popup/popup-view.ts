@@ -89,8 +89,7 @@ export default class PopupView extends AbstractView {
       if (evt.key === 'Enter' && (evt.ctrlKey || evt.metaKey)) {
         evt.preventDefault();
         commentFormElement.requestSubmit();
-        this._commentsView.resetNewCommentText();
-        this._commentsView.resetSelectedEmotion();
+        this.onCommentSubmit();
       }
     };
 
@@ -111,6 +110,7 @@ export default class PopupView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onClose(): void { }
+  public onCommentSubmit(): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public deleteCommentCard(commentId: string): void {
@@ -119,5 +119,13 @@ export default class PopupView extends AbstractView {
 
   public updateCommentsCount(): void {
     this._commentsView.updateCommentsCount(this._comments.length);
+  }
+
+  public resetNewCommentText(): void {
+    this._commentsView.resetNewCommentText();
+  }
+
+  public resetSelectedEmotion(): void {
+    this._commentsView.resetSelectedEmotion();
   }
 }

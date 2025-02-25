@@ -41,6 +41,7 @@ export default class Popup {
     });
 
     this._popupView.onClose = this._onClose.bind(this);
+    this._popupView.onCommentSubmit = this._onCommentSubmit.bind(this);
   }
 
   private _comments: Comment[];
@@ -61,5 +62,10 @@ export default class Popup {
 
     this._popupView.deleteCommentCard(comment.id);
     this._popupView.updateCommentsCount();
+  }
+
+  private _onCommentSubmit(): void {
+    this._popupView.resetNewCommentText();
+    this._popupView.resetSelectedEmotion();
   }
 }
