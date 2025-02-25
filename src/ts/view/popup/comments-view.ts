@@ -1,3 +1,4 @@
+import he from 'he';
 import getEmotionByName from '../../model/get-emotion-by-name';
 import { CommentDeleteHandler } from '../../model/types/handlers';
 import { getElementFromTemplate, getTargetAsElement } from '../../util';
@@ -75,6 +76,7 @@ export default class CommentsView extends AbstractView {
 
   public bind(): void {
     const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
+    const commentTextElement = this.element.querySelector('.film-details__comment-input');
 
     const emotionChangeHandler = (evt: Event) => {
       const inputElement = getTargetAsElement(evt);
@@ -91,7 +93,14 @@ export default class CommentsView extends AbstractView {
       emotionContainerElement?.append(emotionImageElement);
     };
 
+    const commentTextChangeHandler = () => {
+      if (commentTextElement instanceof HTMLTextAreaElement) {
+        commentTextElement.value = he.encode(commentTextElement.value);
+      }
+    };
+
     newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
+    commentTextElement?.addEventListener('change', commentTextChangeHandler);
   }
 
   public updateCommentsCount(count: number): void {
