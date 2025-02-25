@@ -11,6 +11,7 @@ import StatisticsScreen from './statistics-screen';
 import { render } from './util';
 import { FilmsView, SortPanelView } from './view/films';
 import NavigationPanelView from './view/navigation-panel-view';
+import type Comment from './model/types/comment';
 import type Film from './model/types/film';
 
 const FILMS_PORTION_SIZE = 5;
@@ -132,6 +133,7 @@ export default class FilmsScreen {
       onWatchlistChange: this._onWatchlistChange.bind(this),
       onWatchedChange: this._onWatchedChange.bind(this),
       onFavoriteChange: this._onFavoriteChange.bind(this),
+      onCommentDelete: this._onCommentDelete.bind(this, film),
     });
     document.body.append(popup.element);
 
@@ -176,6 +178,15 @@ export default class FilmsScreen {
     if (this._filter === Filter.Favorite && !userDetails.isFavorite) {
       this._filmsView.deleteFilmCard(film.id);
     }
+  }
+
+  private _onCommentDelete(film: Film, comment: Comment): void {
+    const { commentsIds } = film;
+
+    const commentIndex = commentsIds.indexOf(comment.id);
+    commentsIds.splice(commentIndex, 1);
+
+    this._filmsView.updateCommentsCount(film);
   }
 
   private _getFilteredFilms(): Film[] {

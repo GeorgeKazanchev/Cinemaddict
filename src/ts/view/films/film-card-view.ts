@@ -37,7 +37,7 @@ export default class FilmCardView extends AbstractView {
         </p>
         <img src="${info.posterSrc}" alt="${info.title}" class="film-card__poster">
         <p class="film-card__description">${getLimitedDescription(info.description)}</p>
-        <a class="link film-card__comments">${commentsCount} ${commentsCount === 1 ? 'comment' : 'comments'}</a>
+        <a class="link film-card__comments">${this._getCommentsCountText(commentsCount)}</a>
         <div class="film-card__controls">
           <button
             class="film-card__controls-item button film-card__controls-item--add-to-watchlist
@@ -121,5 +121,16 @@ export default class FilmCardView extends AbstractView {
   public updateFavoriteButton(): void {
     const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
     favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+  }
+
+  public updateCommentsCount(count: number): void {
+    const commentsCountElement = this.element.querySelector('.film-card__comments');
+    if (commentsCountElement) {
+      commentsCountElement.textContent = this._getCommentsCountText(count);
+    }
+  }
+
+  private _getCommentsCountText(count: number): string {
+    return `${count} ${count === 1 ? 'comment' : 'comments'}`;
   }
 }

@@ -99,6 +99,11 @@ export default class FilmsView extends AbstractView {
     filmCardView?.updateFavoriteButton();
   }
 
+  public updateCommentsCount(film: Film): void {
+    const filmCardView = this._getFilmCardViewBy(film.id);
+    filmCardView?.updateCommentsCount(film.commentsIds.length);
+  }
+
   public updateShowMoreButton(areAllShown: boolean): void {
     this._areAllShown = areAllShown;
 

@@ -1,12 +1,12 @@
+import { CommentDeleteHandler, FilmControlsHandler } from './model/types/handlers';
 import PopupView from './view/popup/popup-view';
 import type Comment from './model/types/comment';
 import type Film from './model/types/film';
 
-type FilmControlsHandler = (film: Film) => void;
-
 type Props = {
   comments: Comment[];
   film: Film;
+  onCommentDelete: CommentDeleteHandler;
   onFavoriteChange: FilmControlsHandler;
   onWatchedChange: FilmControlsHandler;
   onWatchlistChange: FilmControlsHandler;
@@ -19,16 +19,27 @@ export default class Popup {
     onWatchlistChange,
     onWatchedChange,
     onFavoriteChange,
+    onCommentDelete,
   }: Props) {
     this._comments = comments;
     this._film = film;
 
-    this._popupView = new PopupView({ comments: this._comments, film: this._film });
+    //  Выполняется логика, пришедшая снаружи, а также собственная логика
+    const handleCommentDelete = (comment: Comment) => {
+      onCommentDelete(comment);
+      this._onCommentDelete(comment);
+    };
+
+    this._popupView = new PopupView({
+      comments: this._comments,
+      film: this._film,
+      onWatchlistChange,
+      onWatchedChange,
+      onFavoriteChange,
+      onCommentDelete: handleCommentDelete,
+    });
 
     this._popupView.onClose = this._onClose.bind(this);
-    this._popupView.onWatchlistChange = onWatchlistChange;
-    this._popupView.onWatchedChange = onWatchedChange;
-    this._popupView.onFavoriteChange = onFavoriteChange;
   }
 
   private _comments: Comment[];
@@ -41,5 +52,13 @@ export default class Popup {
 
   private _onClose(): void {
     this.element.remove();
+  }
+
+  private _onCommentDelete(comment: Comment): void {
+    const commentIndex = this._comments.findIndex((item) => item.id === comment.id);
+    this._comments.splice(commentIndex, 1);
+
+    this._popupView.deleteCommentCard(comment.id);
+    this._popupView.updateCommentsCount();
   }
 }

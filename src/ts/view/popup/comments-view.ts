@@ -1,4 +1,5 @@
 import getEmotionByName from '../../model/get-emotion-by-name';
+import { CommentDeleteHandler } from '../../model/types/handlers';
 import { getElementFromTemplate, getTargetAsElement } from '../../util';
 import AbstractView from '../abstract-view';
 import CommentCardView from './comment-card-view';
@@ -6,13 +7,18 @@ import type Comment from '../../model/types/comment';
 
 type Props = {
   comments: Comment[];
+  onCommentDelete: CommentDeleteHandler,
 };
 
 export default class CommentsView extends AbstractView {
-  constructor({ comments }: Props) {
+  constructor({ comments, onCommentDelete }: Props) {
     super();
     this._comments = comments;
     this._commentCardViews = comments.map((comment) => new CommentCardView({ comment }));
+
+    this._commentCardViews.forEach((view) => {
+      view.onCommentDelete = onCommentDelete; //  eslint-disable-line no-param-reassign
+    });
   }
 
   private _comments: Comment[];
@@ -86,6 +92,24 @@ export default class CommentsView extends AbstractView {
     };
 
     newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
+  }
+
+  public updateCommentsCount(count: number): void {
+    const commentsCountElement = this.element.querySelector('.film-details__comments-count');
+    if (commentsCountElement) {
+      commentsCountElement.textContent = count.toFixed(0);
+    }
+  }
+
+  public deleteCommentCard(commentId: string): void {
+    //  Удаляется только вьюшка комментария, сам комментарий из массива удаляется "снаружи"
+    const cardIndex = this._commentCardViews.findIndex((view) => view.commentId === commentId);
+    const commentCardView = this._commentCardViews[cardIndex];
+    this._commentCardViews.splice(cardIndex, 1);
+
+    if (commentCardView) {
+      commentCardView.element.remove();
+    }
   }
 
   private _getEmotionImageElement(emotionName: string): Element {

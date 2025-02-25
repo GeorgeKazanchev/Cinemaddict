@@ -1,3 +1,4 @@
+import { CommentDeleteHandler, FilmControlsHandler } from '../../model/types/handlers';
 import AbstractView from '../abstract-view';
 import CloseButtonView from './close-button-view';
 import CommentsView from './comments-view';
@@ -9,10 +10,21 @@ import type Film from '../../model/types/film';
 type Props = {
   comments: Comment[];
   film: Film;
+  onCommentDelete: CommentDeleteHandler;
+  onFavoriteChange: FilmControlsHandler;
+  onWatchedChange: FilmControlsHandler;
+  onWatchlistChange: FilmControlsHandler;
 };
 
 export default class PopupView extends AbstractView {
-  constructor({ comments, film }: Props) {
+  constructor({
+    comments,
+    film,
+    onWatchlistChange,
+    onWatchedChange,
+    onFavoriteChange,
+    onCommentDelete,
+  }: Props) {
     super();
     this._comments = comments;
     this._film = film;
@@ -20,7 +32,11 @@ export default class PopupView extends AbstractView {
     this._closeButtonView = new CloseButtonView();
     this._infoView = new InfoView({ filmInfo: this._film.info });
     this._controlsView = new ControlsView({ film: this._film });
-    this._commentsView = new CommentsView({ comments: this._comments });
+    this._commentsView = new CommentsView({ comments: this._comments, onCommentDelete });
+
+    this._controlsView.onWatchlistChange = onWatchlistChange;
+    this._controlsView.onWatchedChange = onWatchedChange;
+    this._controlsView.onFavoriteChange = onFavoriteChange;
   }
 
   private _comments: Comment[];
@@ -68,16 +84,17 @@ export default class PopupView extends AbstractView {
         this.onClose();
       }
     }) as EventListener);
-
-    this._controlsView.onWatchlistChange = this.onWatchlistChange.bind(this);
-    this._controlsView.onWatchedChange = this.onWatchedChange.bind(this);
-    this._controlsView.onFavoriteChange = this.onFavoriteChange.bind(this);
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onClose(): void { }
-  public onWatchlistChange(film: Film): void { }
-  public onWatchedChange(film: Film): void { }
-  public onFavoriteChange(film: Film): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public deleteCommentCard(commentId: string): void {
+    this._commentsView.deleteCommentCard(commentId);
+  }
+
+  public updateCommentsCount(): void {
+    this._commentsView.updateCommentsCount(this._comments.length);
+  }
 }
