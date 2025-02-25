@@ -1,8 +1,7 @@
+import { HIDDEN_CLASSNAME } from '../../model/consts';
 import AbstractView from '../abstract-view';
 import FilmCardView from './film-card-view';
 import type Film from '../../model/types/film';
-
-const HIDDEN_CLASSNAME = 'hidden';
 
 type Props = {
   areAllShown?: boolean;

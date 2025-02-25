@@ -1,5 +1,6 @@
 import mocksComments from './data/mock-comments';
 import Header from './header';
+import { FILMS_PORTION_SIZE } from './model/consts';
 import Filter from './model/enums/filter';
 import SortType from './model/enums/sort-type';
 import filterFilms from './model/filter-films';
@@ -13,8 +14,6 @@ import { FilmsView, SortPanelView } from './view/films';
 import NavigationPanelView from './view/navigation-panel-view';
 import type Comment from './model/types/comment';
 import type Film from './model/types/film';
-
-const FILMS_PORTION_SIZE = 5;
 
 type Props = {
   films: Film[];

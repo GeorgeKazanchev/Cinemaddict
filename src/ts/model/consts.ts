@@ -1,6 +1,8 @@
+export const FILMS_PORTION_SIZE = 5;
 export const MAX_DESCRIPTION_LENGTH = 140;
-export const ELLIPSIS = '…';
 export const STATS_SHOWN_GENRES_COUNT = 4;
+export const ELLIPSIS = '…';
+export const HIDDEN_CLASSNAME = 'hidden';
 
 export const Rating = {
   MAX: 10.0,

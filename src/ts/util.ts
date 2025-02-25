@@ -2,6 +2,7 @@ export const render = (element: Element, containerElement: Element): void => {
   /* eslint-disable no-param-reassign */
   containerElement.innerHTML = '';
   containerElement.append(element);
+  /* eslint-enable no-param-reassign */
 };
 
 export const renderHeader = (element: Element, mainElement: Element): void => {
