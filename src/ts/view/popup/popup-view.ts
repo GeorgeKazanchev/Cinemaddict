@@ -1,4 +1,4 @@
-import { CommentDeleteHandler, FilmControlsHandler } from '../../model/types/handlers';
+import { CommentDeleteHandler, FilmControlsHandler, NoParamHandler } from '../../model/types/handlers';
 import AbstractView from '../abstract-view';
 import CloseButtonView from './close-button-view';
 import CommentsView from './comments-view';
@@ -10,6 +10,7 @@ import type Film from '../../model/types/film';
 type Props = {
   comments: Comment[];
   film: Film;
+  onClose: NoParamHandler;
   onCommentDelete: CommentDeleteHandler;
   onFavoriteChange: FilmControlsHandler;
   onWatchedChange: FilmControlsHandler;
@@ -20,6 +21,7 @@ export default class PopupView extends AbstractView {
   constructor({
     comments,
     film,
+    onClose,
     onWatchlistChange,
     onWatchedChange,
     onFavoriteChange,
@@ -34,6 +36,9 @@ export default class PopupView extends AbstractView {
     this._controlsView = new ControlsView({ film: this._film });
     this._commentsView = new CommentsView({ comments: this._comments, onCommentDelete });
 
+    this.onClose = onClose;
+
+    this._closeButtonView.onClose = onClose;
     this._controlsView.onWatchlistChange = onWatchlistChange;
     this._controlsView.onWatchedChange = onWatchedChange;
     this._controlsView.onFavoriteChange = onFavoriteChange;
@@ -75,9 +80,6 @@ export default class PopupView extends AbstractView {
   }
 
   public bind(): void {
-    /* eslint-disable no-param-reassign */
-    this._closeButtonView.onClose = this.onClose.bind(this);
-
     const commentFormElement = this.element.querySelector('.film-details__inner');
     if (!(commentFormElement instanceof HTMLFormElement)) {
       throw new Error('No form element found');

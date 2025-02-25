@@ -33,6 +33,7 @@ export default class Popup {
     this._popupView = new PopupView({
       comments: this._comments,
       film: this._film,
+      onClose: this._onClose.bind(this),
       onWatchlistChange,
       onWatchedChange,
       onFavoriteChange,
