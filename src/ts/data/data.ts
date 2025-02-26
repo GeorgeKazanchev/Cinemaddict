@@ -1,6 +1,4 @@
-import Filter from '../model/enums/filter';
-import SortType from '../model/enums/sort-type';
-import StatisticsPeriod from '../model/enums/statistics-period';
+import { Filter, SortType, StatisticsPeriod } from '../model';
 import films from './mock-films';
 
 const initialState = {

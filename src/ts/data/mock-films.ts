@@ -1,4 +1,4 @@
-import type Film from '../model/types/film';
+import { Film } from '../model';
 
 const films: Film[] = [
   {

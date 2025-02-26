@@ -1,6 +1,6 @@
-import StatisticsPeriod from '../../model/enums/statistics-period';
-import { getTargetAsElement } from '../../util';
 import AbstractView from '../abstract-view';
+import { StatisticsPeriod } from '../model';
+import { getTargetAsElement } from '../util';
 
 const inputValuesToStatsPeriods = new Map<string, StatisticsPeriod>();
 inputValuesToStatsPeriods.set('all-time', StatisticsPeriod.AllTime);
@@ -94,6 +94,7 @@ export default class FiltersView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPeriodChanged(period: StatisticsPeriod): void { }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateActivePeriod(period: StatisticsPeriod): void {
     this._period = period;

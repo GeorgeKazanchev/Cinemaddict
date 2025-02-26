@@ -1,6 +1,5 @@
-import getFormattedCommentDate from '../../model/get-formatted-comment-date';
 import AbstractView from '../abstract-view';
-import type Comment from '../../model/types/comment';
+import { Comment, getFormattedCommentDate } from '../model';
 
 type Props = {
   comment: Comment;

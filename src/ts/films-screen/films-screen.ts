@@ -1,19 +1,22 @@
-import mocksComments from './data/mock-comments';
-import Header from './header';
-import { FILMS_PORTION_SIZE } from './model/consts';
-import Filter from './model/enums/filter';
-import SortType from './model/enums/sort-type';
-import filterFilms from './model/filter-films';
-import getRank from './model/get-rank';
-import { getFilmsSummary } from './model/get-statistics';
-import sortFilms from './model/sort-films';
-import Popup from './popup';
-import StatisticsScreen from './statistics-screen';
-import { render } from './util';
-import { FilmsView, SortPanelView } from './view/films';
-import NavigationPanelView from './view/navigation-panel-view';
-import type Comment from './model/types/comment';
-import type Film from './model/types/film';
+import mocksComments from '../data/mock-comments';
+import Header from '../header/header';
+import {
+  Constants,
+  Comment,
+  Film,
+  Filter,
+  SortType,
+  filterFilms,
+  getRank,
+  Statistics,
+  sortFilms,
+} from '../model';
+import NavigationPanelView from '../navigation-panel-view';
+import Popup from '../popup/popup';
+import StatisticsScreen from '../statistics-screen/statistics-screen';
+import { render } from '../util';
+import FilmsView from './films-view';
+import SortPanelView from './sort-panel-view';
 
 type Props = {
   films: Film[];
@@ -34,7 +37,7 @@ export default class FilmsScreen {
     this._mainElement = mainElement;
     this._header = header;
 
-    const filmsSummary = getFilmsSummary(this._films);
+    const filmsSummary = Statistics.getFilmsSummary(this._films);
     const shownFilms = this._getShownFilms();
 
     this._filmsView = new FilmsView({ films: shownFilms, areAllShown: this.areAllFilmsShown });
@@ -117,7 +120,7 @@ export default class FilmsScreen {
 
   private _onShowMore(): void {
     const filmsLeftCount = this._films.length - this._getShownFilms().length;
-    this._shownFilmsCount += Math.min(FILMS_PORTION_SIZE, filmsLeftCount);
+    this._shownFilmsCount += Math.min(Constants.FILMS_PORTION_SIZE, filmsLeftCount);
     this._filmsView.updateFilms(this._getShownFilms());
     this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
   }
@@ -145,7 +148,7 @@ export default class FilmsScreen {
   private _onWatchlistChange(film: Film): void {
     const { userDetails } = film;
     userDetails.inWatchlist = !userDetails.inWatchlist;
-    this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+    this._navigationPanelView.updateFilmsSummary(Statistics.getFilmsSummary(this._films));
     this._filmsView.updateWatchlistButton(film);
 
     if (this._filter === Filter.Watchlist && !userDetails.inWatchlist) {
@@ -158,7 +161,7 @@ export default class FilmsScreen {
     userDetails.isWatched = !userDetails.isWatched;
     userDetails.watchingDate = userDetails.isWatched ? new Date() : null;
 
-    const filmsSummary = getFilmsSummary(this._films);
+    const filmsSummary = Statistics.getFilmsSummary(this._films);
     this._navigationPanelView.updateFilmsSummary(filmsSummary);
     this._filmsView.updateWatchedButton(film);
     this._header.updateRank(getRank(filmsSummary.watchedFilmsCount));
@@ -171,7 +174,7 @@ export default class FilmsScreen {
   private _onFavoriteChange(film: Film): void {
     const { userDetails } = film;
     userDetails.isFavorite = !userDetails.isFavorite;
-    this._navigationPanelView.updateFilmsSummary(getFilmsSummary(this._films));
+    this._navigationPanelView.updateFilmsSummary(Statistics.getFilmsSummary(this._films));
     this._filmsView.updateFavoriteButton(film);
 
     if (this._filter === Filter.Favorite && !userDetails.isFavorite) {
@@ -199,6 +202,6 @@ export default class FilmsScreen {
   }
 
   private _getInitShownFilmsCount(): number {
-    return Math.min(FILMS_PORTION_SIZE, this._getFilteredFilms().length);
+    return Math.min(Constants.FILMS_PORTION_SIZE, this._getFilteredFilms().length);
   }
 }

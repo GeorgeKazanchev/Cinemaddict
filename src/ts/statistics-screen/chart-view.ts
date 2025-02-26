@@ -1,6 +1,5 @@
-import renderStatisticsChart from '../../model/render-statistics-chart';
 import AbstractView from '../abstract-view';
-import type Film from '../../model/types/film';
+import { Film, renderStatisticsChart } from '../model';
 
 type Props = {
   films: Film[];

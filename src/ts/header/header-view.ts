@@ -1,5 +1,5 @@
+import AbstractView from '../abstract-view';
 import { getElementFromTemplate } from '../util';
-import AbstractView from './abstract-view';
 
 type Props = {
   rank: string;

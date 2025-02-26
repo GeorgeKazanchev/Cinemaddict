@@ -1,8 +1,7 @@
-import getFormattedDuration from '../../model/get-formatted-duration';
-import getLimitedDescription from '../../model/get-limited-description';
-import getRatingClassname from '../../model/get-rating-classname';
 import AbstractView from '../abstract-view';
-import type Film from '../../model/types/film';
+import {
+  getFormattedDuration, getLimitedDescription, getRatingClassname, Film,
+} from '../model';
 
 const BUTTON_ACTIVE_CLASSNAME = 'film-card__controls-item--active';
 

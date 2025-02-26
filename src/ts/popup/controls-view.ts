@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import type Film from '../../model/types/film';
+import { Film } from '../model';
 
 type Props = {
   film: Film;

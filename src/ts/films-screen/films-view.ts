@@ -1,7 +1,6 @@
-import { HIDDEN_CLASSNAME } from '../../model/consts';
 import AbstractView from '../abstract-view';
+import { Constants, Film } from '../model';
 import FilmCardView from './film-card-view';
-import type Film from '../../model/types/film';
 
 type Props = {
   areAllShown?: boolean;
@@ -29,7 +28,7 @@ export default class FilmsView extends AbstractView {
         <section class="films-list">
           <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
           ${areFilmsShown ? '<div class="films-list__container"></div>' : ''}
-          <button class="films-list__show-more button ${this._areAllShown ? HIDDEN_CLASSNAME : ''}">Show more</button>
+          <button class="films-list__show-more button ${this._areAllShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>
       </section>`;
   }
@@ -112,9 +111,9 @@ export default class FilmsView extends AbstractView {
     }
 
     if (areAllShown) {
-      showMoreElement.classList.add(HIDDEN_CLASSNAME);
+      showMoreElement.classList.add(Constants.HIDDEN_CLASSNAME);
     } else {
-      showMoreElement.classList.remove(HIDDEN_CLASSNAME);
+      showMoreElement.classList.remove(Constants.HIDDEN_CLASSNAME);
     }
   }
 

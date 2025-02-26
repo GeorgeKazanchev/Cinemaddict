@@ -1,8 +1,11 @@
-import getFormattedDuration from '../../model/get-formatted-duration';
-import getFormattedReleaseDate from '../../model/get-formatted-release-date';
-import getRatingClassname from '../../model/get-rating-classname';
 import AbstractView from '../abstract-view';
-import type FilmInfo from '../../model/types/film-info';
+
+import {
+  getFormattedDuration,
+  getFormattedReleaseDate,
+  getRatingClassname,
+  FilmInfo,
+} from '../model';
 
 type Props = {
   filmInfo: FilmInfo;

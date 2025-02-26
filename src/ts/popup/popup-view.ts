@@ -1,20 +1,18 @@
-import { CommentDeleteHandler, FilmControlsHandler, NoParamHandler } from '../../model/types/handlers';
 import AbstractView from '../abstract-view';
+import { Comment, Film, Handlers } from '../model';
 import CloseButtonView from './close-button-view';
 import CommentsView from './comments-view';
 import ControlsView from './controls-view';
 import InfoView from './info-view';
-import type Comment from '../../model/types/comment';
-import type Film from '../../model/types/film';
 
 type Props = {
   comments: Comment[];
   film: Film;
-  onClose: NoParamHandler;
-  onCommentDelete: CommentDeleteHandler;
-  onFavoriteChange: FilmControlsHandler;
-  onWatchedChange: FilmControlsHandler;
-  onWatchlistChange: FilmControlsHandler;
+  onClose: Handlers.NoParamHandler;
+  onCommentDelete: Handlers.CommentDeleteHandler;
+  onFavoriteChange: Handlers.FilmControlsHandler;
+  onWatchedChange: Handlers.FilmControlsHandler;
+  onWatchlistChange: Handlers.FilmControlsHandler;
 };
 
 export default class PopupView extends AbstractView {

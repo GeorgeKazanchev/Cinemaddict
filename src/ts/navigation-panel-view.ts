@@ -1,7 +1,6 @@
-import Filter from '../model/enums/filter';
-import { getTargetAsElement } from '../util';
 import AbstractView from './abstract-view';
-import type FilmsSummary from '../model/types/films-summary';
+import { FilmsSummary, Filter } from './model';
+import { getTargetAsElement } from './util';
 
 const FILTER_ACTIVE_CLASSNAME = 'main-navigation__item--active';
 const STATS_ACTIVE_CLASSNAME = 'main-navigation__additional--active';
@@ -101,6 +100,7 @@ export default class NavigationPanelView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onFiltration(filter: Filter): void { }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public onStatisticsOpen(): void { }
 

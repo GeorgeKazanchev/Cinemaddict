@@ -1,15 +1,13 @@
-import { CommentDeleteHandler, FilmControlsHandler } from './model/types/handlers';
-import PopupView from './view/popup/popup-view';
-import type Comment from './model/types/comment';
-import type Film from './model/types/film';
+import { Comment, Film, Handlers } from '../model';
+import PopupView from './popup-view';
 
 type Props = {
   comments: Comment[];
   film: Film;
-  onCommentDelete: CommentDeleteHandler;
-  onFavoriteChange: FilmControlsHandler;
-  onWatchedChange: FilmControlsHandler;
-  onWatchlistChange: FilmControlsHandler;
+  onCommentDelete: Handlers.CommentDeleteHandler;
+  onFavoriteChange: Handlers.FilmControlsHandler;
+  onWatchedChange: Handlers.FilmControlsHandler;
+  onWatchlistChange: Handlers.FilmControlsHandler;
 };
 
 export default class Popup {

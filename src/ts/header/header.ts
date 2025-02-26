@@ -1,7 +1,5 @@
-import getRank from './model/get-rank';
-import { getFilmsSummary } from './model/get-statistics';
-import HeaderView from './view/header-view';
-import type Film from './model/types/film';
+import { getRank, Film, Statistics } from '../model';
+import HeaderView from './header-view';
 
 type Props = {
   films: Film[];
@@ -11,7 +9,7 @@ export default class Header {
   constructor({ films }: Props) {
     this._films = films;
 
-    const filmsSummary = getFilmsSummary(this._films);
+    const filmsSummary = Statistics.getFilmsSummary(this._films);
     const rank = getRank(filmsSummary.watchedFilmsCount);
 
     this._headerView = new HeaderView({ rank });

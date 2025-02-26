@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view';
+import AbstractView from '../abstract-view';
 
 type Props = {
   totalFilmsCount: number;

@@ -1,14 +1,12 @@
 import he from 'he';
-import getEmotionByName from '../../model/get-emotion-by-name';
-import { CommentDeleteHandler } from '../../model/types/handlers';
-import { getElementFromTemplate, getTargetAsElement } from '../../util';
 import AbstractView from '../abstract-view';
+import { Comment, Handlers, getEmotionByName } from '../model';
+import { getElementFromTemplate, getTargetAsElement } from '../util';
 import CommentCardView from './comment-card-view';
-import type Comment from '../../model/types/comment';
 
 type Props = {
   comments: Comment[];
-  onCommentDelete: CommentDeleteHandler,
+  onCommentDelete: Handlers.CommentDeleteHandler,
 };
 
 export default class CommentsView extends AbstractView {

@@ -1,6 +1,6 @@
-import SortType from '../../model/enums/sort-type';
-import { getTargetAsElement } from '../../util';
 import AbstractView from '../abstract-view';
+import { SortType } from '../model';
+import { getTargetAsElement } from '../util';
 
 const ACTIVE_CLASSNAME = 'sort__button--active';
 

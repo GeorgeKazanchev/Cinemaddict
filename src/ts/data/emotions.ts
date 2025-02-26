@@ -1,4 +1,4 @@
-import EmotionType from '../model/enums/emotion-type';
+import { EmotionType } from '../model';
 
 const Emotions = {
   angry: {

@@ -1,4 +1,4 @@
-import { getElementFromTemplate } from '../util';
+import { getElementFromTemplate } from './util';
 
 export default abstract class AbstractView {
   private _element: Element | null = null;

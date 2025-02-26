@@ -1,21 +1,18 @@
-import FilmsScreen from './films-screen';
-import Header from './header';
-import Filter from './model/enums/filter';
-import StatisticsPeriod from './model/enums/statistics-period';
-import getRank from './model/get-rank';
+import FilmsScreen from '../films-screen/films-screen';
+import Header from '../header/header';
 import {
-  getFavoriteGenre,
-  getFilmsSummary,
-  getStatisticsStartDate,
-  getTotalDuration,
-  getWatchedFilmsSince,
-} from './model/get-statistics';
-import { render } from './util';
-import NavigationPanelView from './view/navigation-panel-view';
-import {
-  ChartView, FiltersView, RankView, StatisticsView,
-} from './view/statistics';
-import type Film from './model/types/film';
+  getRank,
+  Film,
+  Filter,
+  Statistics,
+  StatisticsPeriod,
+} from '../model';
+import NavigationPanelView from '../navigation-panel-view';
+import { render } from '../util';
+import ChartView from './chart-view';
+import FiltersView from './filters-view';
+import RankView from './rank-view';
+import StatisticsView from './statistics-view';
 
 type Props = {
   films: Film[];
@@ -33,11 +30,11 @@ export default class StatisticsScreen {
     this._mainElement = mainElement;
     this._header = header;
 
-    const filmsSummary = getFilmsSummary(this._films);
+    const filmsSummary = Statistics.getFilmsSummary(this._films);
     const watchedFilmsInPeriod = this._getWatchedFilmsInPeriod();
     const filmsCount = watchedFilmsInPeriod.length;
-    const totalDuration = getTotalDuration(watchedFilmsInPeriod);
-    const favoriteGenre = getFavoriteGenre(watchedFilmsInPeriod);
+    const totalDuration = Statistics.getTotalDuration(watchedFilmsInPeriod);
+    const favoriteGenre = Statistics.getFavoriteGenre(watchedFilmsInPeriod);
 
     this._rankView = new RankView({ rank: getRank(filmsSummary.watchedFilmsCount) });
     this._filtersView = new FiltersView({ period: this._period });
@@ -102,8 +99,8 @@ export default class StatisticsScreen {
 
       const watchedFilmsInPeriod = this._getWatchedFilmsInPeriod();
       const filmsCount = watchedFilmsInPeriod.length;
-      const totalDuration = getTotalDuration(watchedFilmsInPeriod);
-      const favoriteGenre = getFavoriteGenre(watchedFilmsInPeriod);
+      const totalDuration = Statistics.getTotalDuration(watchedFilmsInPeriod);
+      const favoriteGenre = Statistics.getFavoriteGenre(watchedFilmsInPeriod);
 
       this._filtersView.updateActivePeriod(this._period);
       this._statisticsView.updateStatistics(favoriteGenre, filmsCount, totalDuration);
@@ -112,8 +109,8 @@ export default class StatisticsScreen {
   }
 
   private _getWatchedFilmsInPeriod(): Film[] {
-    const statisticsStartDate = getStatisticsStartDate(this._period);
-    const watchedFilmsInPeriod = getWatchedFilmsSince(statisticsStartDate, this._films);
+    const statisticsStartDate = Statistics.getStatisticsStartDate(this._period);
+    const watchedFilmsInPeriod = Statistics.getWatchedFilmsSince(statisticsStartDate, this._films);
     return watchedFilmsInPeriod;
   }
 }

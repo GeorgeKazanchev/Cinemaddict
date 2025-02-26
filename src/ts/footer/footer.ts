@@ -1,4 +1,4 @@
-import FooterView from './view/footer-view';
+import FooterView from './footer-view';
 
 type Props = {
   totalFilmsCount: number;

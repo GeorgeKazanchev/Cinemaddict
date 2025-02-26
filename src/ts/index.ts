@@ -1,7 +1,7 @@
 import initialState from './data/data';
-import FilmsScreen from './films-screen';
-import Footer from './footer';
-import Header from './header';
+import FilmsScreen from './films-screen/films-screen';
+import Footer from './footer/footer';
+import Header from './header/header';
 import { render, renderFooter, renderHeader } from './util';
 
 import '../scss/style.scss';

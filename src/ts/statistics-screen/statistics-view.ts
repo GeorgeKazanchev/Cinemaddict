@@ -1,5 +1,5 @@
-import getDurationComponents from '../../model/get-duration-components';
 import AbstractView from '../abstract-view';
+import { getDurationComponents } from '../model';
 
 type Props = {
   favoriteGenre: string;

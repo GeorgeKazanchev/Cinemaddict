@@ -1,5 +1,5 @@
+import { Comment } from '../model';
 import Emotions from './emotions';
-import type Comment from '../model/types/comment';
 
 const comments: Comment[] = [
   {
