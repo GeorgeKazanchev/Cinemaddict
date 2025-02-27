@@ -1,26 +1,31 @@
 import AbstractView from '../abstract-view';
 import { Comment, getFormattedCommentDate } from '../model';
+import Model from '../model/model';
 
 type Props = {
-  comment: Comment;
+  commentId: string;
+  model: Model;
 };
 
 export default class CommentCardView extends AbstractView {
-  constructor({ comment }: Props) {
+  constructor({ model, commentId }: Props) {
     super();
-    this._comment = comment;
+    this._model = model;
+    this._commentId = commentId;
   }
 
-  private _comment: Comment;
+  private _model: Model;
+  private _commentId: string;
 
   public get commentId(): string {
-    return this._comment.id;
+    return this._commentId;
   }
 
   public get template(): string {
+    const comment = this._model.getCommentById(this._commentId);
     const {
       author, date, emotion, text,
-    } = this._comment;
+    } = comment;
 
     return `
       <li class="film-details__comment">
@@ -39,11 +44,13 @@ export default class CommentCardView extends AbstractView {
   }
 
   public bind(): void {
+    const comment = this._model.getCommentById(this._commentId);
+
     const deleteButtonElement = this.element.querySelector('.film-details__comment-delete');
 
     const deleteClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onCommentDelete(this._comment);
+      this.onCommentDelete(comment);
     };
 
     deleteButtonElement?.addEventListener('click', deleteClickHandler);

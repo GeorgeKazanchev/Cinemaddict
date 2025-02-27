@@ -1,47 +1,31 @@
-import FilmsScreen from '../films-screen/films-screen';
-import Header from '../header/header';
+import Application from '../application';
+import FooterView from '../footer-view';
+import HeaderView from '../header-view';
 import {
   getRank,
-  Film,
   Filter,
-  Statistics,
   StatisticsPeriod,
 } from '../model';
+import Model from '../model/model';
 import NavigationPanelView from '../navigation-panel-view';
-import { render } from '../util';
 import ChartView from './chart-view';
 import FiltersView from './filters-view';
 import RankView from './rank-view';
 import StatisticsView from './statistics-view';
 
-type Props = {
-  films: Film[];
-  header: Header;
-  mainElement: Element;
-  period?: StatisticsPeriod;
-};
-
 export default class StatisticsScreen {
-  constructor({
-    films, period, mainElement, header,
-  }: Props) {
-    this._films = films;
-    this._period = period ?? StatisticsPeriod.AllTime;
-    this._mainElement = mainElement;
-    this._header = header;
+  constructor(model: Model) {
+    this._model = model;
 
-    const filmsSummary = Statistics.getFilmsSummary(this._films);
-    const watchedFilmsInPeriod = this._getWatchedFilmsInPeriod();
-    const filmsCount = watchedFilmsInPeriod.length;
-    const totalDuration = Statistics.getTotalDuration(watchedFilmsInPeriod);
-    const favoriteGenre = Statistics.getFavoriteGenre(watchedFilmsInPeriod);
+    const { watchedFilmsCount } = this._model.filmsSummary;
+    const rank = getRank(watchedFilmsCount);
 
-    this._rankView = new RankView({ rank: getRank(filmsSummary.watchedFilmsCount) });
-    this._filtersView = new FiltersView({ period: this._period });
-    this._statisticsView = new StatisticsView({ filmsCount, totalDuration, favoriteGenre });
-    this._chartView = new ChartView({ films: watchedFilmsInPeriod });
+    this._rankView = new RankView(rank);
+    this._filtersView = new FiltersView(model);
+    this._statisticsView = new StatisticsView(model);
+    this._chartView = new ChartView(model);
     this._navigationPanelView = new NavigationPanelView({
-      filmsSummary,
+      model: this._model,
       isFilmsScreen: false,
     });
 
@@ -49,24 +33,18 @@ export default class StatisticsScreen {
     this._filtersView.onPeriodChanged = this._onPeriodChanged.bind(this);
   }
 
-  private _films: Film[];
-  private _period: StatisticsPeriod;
+  private _model: Model;
   private _navigationPanelView: NavigationPanelView;
   private _rankView: RankView;
   private _filtersView: FiltersView;
   private _statisticsView: StatisticsView;
   private _chartView: ChartView;
   private _element: Element | null = null;
-  private _mainElement: Element;
-  private _header: Header;
 
   public get element(): Element {
     if (this._element) {
       return this._element;
     }
-
-    this._element = document.createElement('div');
-    this._element.append(this._navigationPanelView.element);
 
     const sectionElement = document.createElement('section');
     sectionElement.classList.add('statistic');
@@ -74,43 +52,35 @@ export default class StatisticsScreen {
     sectionElement.append(this._filtersView.element);
     sectionElement.append(this._statisticsView.element);
 
-    const filmsCount = this._getWatchedFilmsInPeriod().length;
+    const filmsCount = this._model.watchedFilmsInPeriod.length;
     if (filmsCount > 0) {
       sectionElement.append(this._chartView.element);
     }
 
-    this._element.append(sectionElement);
+    const mainElement = document.createElement('main');
+    mainElement.classList.add('main');
+    mainElement.append(this._navigationPanelView.element);
+    mainElement.append(sectionElement);
+
+    this._element = document.createElement('div');
+    this._element.append(new HeaderView(this._model).element);
+    this._element.append(mainElement);
+    this._element.append(new FooterView(this._model).element);
+
     return this._element;
   }
 
   private _onFiltration(selectedFilter: Filter): void {
-    const filmsScreen = new FilmsScreen({
-      films: this._films,
-      filter: selectedFilter,
-      mainElement: this._mainElement,
-      header: this._header,
-    });
-    render(filmsScreen.element, this._mainElement);
+    this._model.setFilter(selectedFilter);
+    Application.showFilmsScreen(this._model.state);
   }
 
   private _onPeriodChanged(selectedPeriod: StatisticsPeriod): void {
-    if (this._period !== selectedPeriod) {
-      this._period = selectedPeriod;
-
-      const watchedFilmsInPeriod = this._getWatchedFilmsInPeriod();
-      const filmsCount = watchedFilmsInPeriod.length;
-      const totalDuration = Statistics.getTotalDuration(watchedFilmsInPeriod);
-      const favoriteGenre = Statistics.getFavoriteGenre(watchedFilmsInPeriod);
-
-      this._filtersView.updateActivePeriod(this._period);
-      this._statisticsView.updateStatistics(favoriteGenre, filmsCount, totalDuration);
-      this._chartView.updateChart(watchedFilmsInPeriod);
+    const { state } = this._model;
+    if (state.period !== selectedPeriod) {
+      this._model.setStatisticsPeriod(selectedPeriod);
+      this._statisticsView.updateStatistics();
+      this._chartView.updateChart();
     }
-  }
-
-  private _getWatchedFilmsInPeriod(): Film[] {
-    const statisticsStartDate = Statistics.getStatisticsStartDate(this._period);
-    const watchedFilmsInPeriod = Statistics.getWatchedFilmsSince(statisticsStartDate, this._films);
-    return watchedFilmsInPeriod;
   }
 }

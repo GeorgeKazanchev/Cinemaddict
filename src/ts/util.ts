@@ -5,16 +5,6 @@ export const render = (element: Element, containerElement: Element): void => {
   /* eslint-enable no-param-reassign */
 };
 
-export const renderHeader = (element: Element, mainElement: Element): void => {
-  document.querySelector('.header')?.remove();
-  mainElement.before(element);
-};
-
-export const renderFooter = (element: Element, mainElement: Element): void => {
-  document.querySelector('.footer')?.remove();
-  mainElement.after(element);
-};
-
 export const getElementFromTemplate = (template: string): Element => {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = template.trim();

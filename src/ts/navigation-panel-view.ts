@@ -1,5 +1,6 @@
 import AbstractView from './abstract-view';
-import { FilmsSummary, Filter } from './model';
+import { Filter } from './model';
+import Model from './model/model';
 import { getTargetAsElement } from './util';
 
 const FILTER_ACTIVE_CLASSNAME = 'main-navigation__item--active';
@@ -12,21 +13,18 @@ hrefsToFilters.set('#history', Filter.Watched);
 hrefsToFilters.set('#favorites', Filter.Favorite);
 
 type Props = {
-  filmsSummary: FilmsSummary;
-  filter?: Filter;
   isFilmsScreen: boolean;
+  model: Model;
 };
 
 export default class NavigationPanelView extends AbstractView {
-  constructor({ filmsSummary, filter = Filter.All, isFilmsScreen }: Props) {
+  constructor({ model, isFilmsScreen }: Props) {
     super();
-    this._filmsSummary = filmsSummary;
-    this._filter = filter;
+    this._model = model;
     this._isFilmsScreen = isFilmsScreen;
   }
 
-  private _filmsSummary: FilmsSummary;
-  private _filter: Filter;
+  private _model: Model;
   private _isFilmsScreen: boolean;
 
   public get template(): string {
@@ -34,9 +32,9 @@ export default class NavigationPanelView extends AbstractView {
       watchlistFilmsCount,
       watchedFilmsCount,
       favoriteFilmsCount,
-    } = this._filmsSummary;
+    } = this._model.filmsSummary;
 
-    const filter = this._filter;
+    const { filter } = this._model.state;
     const isFilmsScreen = this._isFilmsScreen;
 
     const isStatsSelected = !isFilmsScreen;
@@ -104,31 +102,28 @@ export default class NavigationPanelView extends AbstractView {
 
   public onStatisticsOpen(): void { }
 
-  public updateActiveFilter(filter: Filter): void {
-    this._filter = filter;
-
+  public updateActiveFilter(): void {
     const activeFilterElement = this.element.querySelector(`.${FILTER_ACTIVE_CLASSNAME}`);
     if (activeFilterElement) {
       activeFilterElement.classList.remove(FILTER_ACTIVE_CLASSNAME);
     }
 
-    const filterHrefPair = [...hrefsToFilters].find(([, value]) => value === this._filter);
+    const { filter } = this._model.state;
+    const filterHrefPair = [...hrefsToFilters].find(([, value]) => value === filter);
     if (!filterHrefPair) {
-      throw new Error(`No href found matching filter ${this._filter}`);
+      throw new Error(`No href found matching filter ${filter}`);
     }
 
     const newActiveFilterElement = this.element.querySelector(`[href="${filterHrefPair[0]}"]`);
     newActiveFilterElement?.classList.add(FILTER_ACTIVE_CLASSNAME);
   }
 
-  public updateFilmsSummary(filmsSummary: FilmsSummary): void {
-    this._filmsSummary = filmsSummary;
-
+  public updateFilmsSummary(): void {
     const {
       watchlistFilmsCount,
       watchedFilmsCount,
       favoriteFilmsCount,
-    } = this._filmsSummary;
+    } = this._model.filmsSummary;
 
     const watchlistCountElement = this.element.querySelector('[href="#watchlist"] .main-navigation__item-count');
     const watchedCountElement = this.element.querySelector('[href="#history"] .main-navigation__item-count');

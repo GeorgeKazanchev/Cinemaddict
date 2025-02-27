@@ -1,11 +1,25 @@
-import { Filter, SortType, StatisticsPeriod } from '../model';
+import {
+  Comment, Constants, Film, Filter, SortType, StatisticsPeriod,
+} from '../model';
+import mockComments from './mock-comments';
 import films from './mock-films';
 
-const initialState = {
+export type State = {
+  comments: Comment[];
+  films: Film[];
+  filter: Filter;
+  period: StatisticsPeriod;
+  shownFilmsCount: number;
+  sortType: SortType;
+};
+
+const initialState: State = {
+  comments: mockComments,
   films,
   filter: Filter.All,
-  sortType: SortType.Default,
   period: StatisticsPeriod.AllTime,
+  shownFilmsCount: Constants.FILMS_PORTION_SIZE,
+  sortType: SortType.Default,
 };
 
 export default initialState;

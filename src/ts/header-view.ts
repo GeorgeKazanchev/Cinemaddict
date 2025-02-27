@@ -1,20 +1,19 @@
-import AbstractView from '../abstract-view';
-import { getElementFromTemplate } from '../util';
-
-type Props = {
-  rank: string;
-};
+import AbstractView from './abstract-view';
+import { getRank } from './model';
+import Model from './model/model';
+import { getElementFromTemplate } from './util';
 
 export default class HeaderView extends AbstractView {
-  constructor({ rank }: Props) {
+  constructor(model: Model) {
     super();
-    this._rank = rank;
+    this._model = model;
   }
 
-  private _rank: string;
+  private _model: Model;
 
   public get template(): string {
-    const profile = this._getProfileTemplate(this._rank);
+    const rank = getRank(this._model.filmsSummary.watchedFilmsCount);
+    const profile = this._getProfileTemplate(rank);
 
     return `
       <header class="header">
@@ -23,7 +22,8 @@ export default class HeaderView extends AbstractView {
       </header>`;
   }
 
-  public updateRank(rank: string): void {
+  public updateRank(): void {
+    const rank = getRank(this._model.filmsSummary.watchedFilmsCount);
     let profileElement = this.element.querySelector('.profile');
     if (rank) {
       if (!profileElement) {

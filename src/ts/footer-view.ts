@@ -1,19 +1,17 @@
-import AbstractView from '../abstract-view';
-
-type Props = {
-  totalFilmsCount: number;
-};
+import AbstractView from './abstract-view';
+import Model from './model/model';
 
 export default class FooterView extends AbstractView {
-  constructor({ totalFilmsCount }: Props) {
+  constructor(model: Model) {
     super();
-    this._totalFilmsCount = totalFilmsCount;
+    this._model = model;
   }
 
-  private _totalFilmsCount: number;
+  private _model: Model;
 
   public get template(): string {
-    const totalFilmsCount = this._totalFilmsCount;
+    const { state } = this._model;
+    const totalFilmsCount = state.films.length;
 
     return `
       <footer class="footer">

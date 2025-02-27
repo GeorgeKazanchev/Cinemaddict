@@ -1,26 +1,28 @@
 import AbstractView from '../abstract-view';
-
 import {
   getFormattedDuration,
   getFormattedReleaseDate,
   getRatingClassname,
-  FilmInfo,
 } from '../model';
+import Model from '../model/model';
 
 type Props = {
-  filmInfo: FilmInfo;
+  filmId: string;
+  model: Model
 };
 
 export default class InfoView extends AbstractView {
-  constructor({ filmInfo }: Props) {
+  constructor({ model, filmId }: Props) {
     super();
-    this._filmInfo = filmInfo;
+    this._model = model;
+    this._filmId = filmId;
   }
 
-  private _filmInfo: FilmInfo;
+  private _model: Model;
+  private _filmId: string;
 
   public get template(): string {
-    const info = this._filmInfo;
+    const { info } = this._model.getFilmById(this._filmId);
 
     const genreCells = info.genres.map((genre) => (
       `<span class="film-details__genre">${genre}</span>`

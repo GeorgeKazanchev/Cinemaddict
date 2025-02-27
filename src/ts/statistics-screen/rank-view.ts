@@ -1,11 +1,7 @@
 import AbstractView from '../abstract-view';
 
-type Props = {
-  rank: string;
-};
-
 export default class RankView extends AbstractView {
-  constructor({ rank }: Props) {
+  constructor(rank: string) {
     super();
     this._rank = rank;
   }

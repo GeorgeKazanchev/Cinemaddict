@@ -1,26 +1,21 @@
 import AbstractView from '../abstract-view';
 import { Constants, Film } from '../model';
+import Model from '../model/model';
 import FilmCardView from './film-card-view';
 
-type Props = {
-  areAllShown?: boolean;
-  films: Film[];
-};
-
 export default class FilmsView extends AbstractView {
-  constructor({ films, areAllShown }: Props) {
+  constructor(model: Model) {
     super();
-    this._films = films;
-    this._filmCardViews = films.map((film) => new FilmCardView({ film }));
-    this._areAllShown = areAllShown ?? true;
+    this._model = model;
+    this._filmCardViews = this._model.shownFilms
+      .map((film) => new FilmCardView({ model, filmId: film.id }));
   }
 
-  private _films: Film[];
+  private _model: Model;
   private _filmCardViews: FilmCardView[];
-  private _areAllShown: boolean;
 
   public get template(): string {
-    const areFilmsShown = this._films.length > 0;
+    const areFilmsShown = this._model.shownFilms.length > 0;
     const title = this._getTitle(areFilmsShown);
 
     return `
@@ -28,7 +23,7 @@ export default class FilmsView extends AbstractView {
         <section class="films-list">
           <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
           ${areFilmsShown ? '<div class="films-list__container"></div>' : ''}
-          <button class="films-list__show-more button ${this._areAllShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
+          <button class="films-list__show-more button ${this._model.areAllFilmsShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>
       </section>`;
   }
@@ -72,11 +67,12 @@ export default class FilmsView extends AbstractView {
   public onFavoriteChange(film: Film): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
-  public updateFilms(films: Film[]): void {
-    this._films = films;
-    this._filmCardViews = films.map((film) => new FilmCardView({ film }));
+  public updateShownFilms(): void {
+    const { shownFilms } = this._model;
+    this._filmCardViews = shownFilms
+      .map((film) => new FilmCardView({ model: this._model, filmId: film.id }));
 
-    const areFilmsShown = this._films.length > 0;
+    const areFilmsShown = shownFilms.length > 0;
     this._updateTitle(areFilmsShown);
     this._updateFilmsContainer(areFilmsShown);
     this.bind();
@@ -99,18 +95,16 @@ export default class FilmsView extends AbstractView {
 
   public updateCommentsCount(film: Film): void {
     const filmCardView = this._getFilmCardViewBy(film.id);
-    filmCardView?.updateCommentsCount(film.commentsIds.length);
+    filmCardView?.updateCommentsCount();
   }
 
-  public updateShowMoreButton(areAllShown: boolean): void {
-    this._areAllShown = areAllShown;
-
+  public updateShowMoreButton(): void {
     const showMoreElement = this.element.querySelector('.films-list__show-more');
     if (!showMoreElement) {
       throw new Error('The "Show more" button is not found');
     }
 
-    if (areAllShown) {
+    if (this._model.areAllFilmsShown) {
       showMoreElement.classList.add(Constants.HIDDEN_CLASSNAME);
     } else {
       showMoreElement.classList.remove(Constants.HIDDEN_CLASSNAME);

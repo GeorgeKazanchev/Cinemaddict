@@ -1,20 +1,24 @@
 import AbstractView from '../abstract-view';
 import { Film } from '../model';
+import Model from '../model/model';
 
 type Props = {
-  film: Film;
+  filmId: string;
+  model: Model;
 };
 
 export default class ControlsView extends AbstractView {
-  constructor({ film }: Props) {
+  constructor({ model, filmId }: Props) {
     super();
-    this._film = film;
+    this._model = model;
+    this._filmId = filmId;
   }
 
-  private _film: Film;
+  private _model: Model;
+  private _filmId: string;
 
   public get template(): string {
-    const { userDetails } = this._film;
+    const { userDetails } = this._model.getFilmById(this._filmId);
 
     return `
       <section class="film-details__controls">
@@ -48,20 +52,22 @@ export default class ControlsView extends AbstractView {
   }
 
   public bind(): void {
+    const film = this._model.getFilmById(this._filmId);
+
     const watchlistButtonElement = this.element.querySelector('.film-details__control-label--watchlist');
     const watchedButtonElement = this.element.querySelector('.film-details__control-label--watched');
     const favoriteButtonElement = this.element.querySelector('.film-details__control-label--favorite');
 
     const watchlistClickHandler = () => {
-      this.onWatchlistChange(this._film);
+      this.onWatchlistChange(film);
     };
 
     const watchedClickHandler = () => {
-      this.onWatchedChange(this._film);
+      this.onWatchedChange(film);
     };
 
     const favoriteClickHandler = () => {
-      this.onFavoriteChange(this._film);
+      this.onFavoriteChange(film);
     };
 
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);

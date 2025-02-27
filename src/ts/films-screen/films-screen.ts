@@ -1,50 +1,27 @@
-import mocksComments from '../data/mock-comments';
-import Header from '../header/header';
+import Application from '../application';
+import FooterView from '../footer-view';
+import HeaderView from '../header-view';
 import {
-  Constants,
   Comment,
   Film,
   Filter,
   SortType,
-  filterFilms,
-  getRank,
-  Statistics,
-  sortFilms,
 } from '../model';
+import Model from '../model/model';
 import NavigationPanelView from '../navigation-panel-view';
 import Popup from '../popup/popup';
-import StatisticsScreen from '../statistics-screen/statistics-screen';
-import { render } from '../util';
 import FilmsView from './films-view';
 import SortPanelView from './sort-panel-view';
 
-type Props = {
-  films: Film[];
-  filter?: Filter;
-  header: Header;
-  mainElement: Element;
-  sortType?: SortType;
-};
-
 export default class FilmsScreen {
-  constructor({
-    films, filter, sortType, mainElement, header,
-  }: Props) {
-    this._films = films;
-    this._filter = filter ?? Filter.All;
-    this._sortType = sortType ?? SortType.Default;
-    this._shownFilmsCount = this._getInitShownFilmsCount();
-    this._mainElement = mainElement;
-    this._header = header;
+  constructor(model: Model) {
+    this._model = model;
 
-    const filmsSummary = Statistics.getFilmsSummary(this._films);
-    const shownFilms = this._getShownFilms();
-
-    this._filmsView = new FilmsView({ films: shownFilms, areAllShown: this.areAllFilmsShown });
-    this._sortPanelView = new SortPanelView({ sortType: this._sortType });
+    this._headerView = new HeaderView(this._model);
+    this._filmsView = new FilmsView(this._model);
+    this._sortPanelView = new SortPanelView(this._model);
     this._navigationPanelView = new NavigationPanelView({
-      filmsSummary,
-      filter: this._filter,
+      model: this._model,
       isFilmsScreen: true,
     });
 
@@ -58,85 +35,75 @@ export default class FilmsScreen {
     this._filmsView.onFavoriteChange = this._onFavoriteChange.bind(this);
   }
 
-  private _films: Film[];
-  private _filter: Filter;
-  private _sortType: SortType;
-  private _shownFilmsCount: number;
+  private _model: Model;
+  private _headerView: HeaderView;
   private _navigationPanelView: NavigationPanelView;
   private _sortPanelView: SortPanelView;
   private _filmsView: FilmsView;
   private _element: Element | null = null;
-  private _mainElement: Element;
-  private _header: Header;
 
   public get element(): Element {
     if (this._element) {
       return this._element;
     }
 
+    const mainElement = document.createElement('main');
+    mainElement.classList.add('main');
+    mainElement.append(this._navigationPanelView.element);
+    mainElement.append(this._sortPanelView.element);
+    mainElement.append(this._filmsView.element);
+
     this._element = document.createElement('div');
-    this._element.append(this._navigationPanelView.element);
-    this._element.append(this._sortPanelView.element);
-    this._element.append(this._filmsView.element);
+    this._element.append(this._headerView.element);
+    this._element.append(mainElement);
+    this._element.append(new FooterView(this._model).element);
 
     return this._element;
   }
 
-  public get areAllFilmsShown(): boolean {
-    const filteredFilms = filterFilms(this._films, this._filter);
-    return this._shownFilmsCount >= filteredFilms.length;
-  }
-
   private _onFiltration(selectedFilter: Filter): void {
-    if (this._filter !== selectedFilter) {
-      this._filter = selectedFilter;
-      this._sortType = SortType.Default;
-      this._shownFilmsCount = this._getInitShownFilmsCount();
-      this._filmsView.updateFilms(this._getShownFilms());
-      this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
-      this._navigationPanelView.updateActiveFilter(this._filter);
-      this._sortPanelView.updateActiveSortType(this._sortType);
+    const { state } = this._model;
+    if (state.filter !== selectedFilter) {
+      this._model.setFilter(selectedFilter);
+      this._filmsView.updateShownFilms();
+      this._filmsView.updateShowMoreButton();
+      this._navigationPanelView.updateActiveFilter();
+      this._sortPanelView.updateActiveSortType();
     }
   }
 
   private _onStatisticsOpen(): void {
-    const statisticsScreen = new StatisticsScreen({
-      films: this._films,
-      mainElement: this._mainElement,
-      header: this._header,
-    });
-    render(statisticsScreen.element, this._mainElement);
+    Application.showStatistics(this._model.state);
   }
 
   private _onSort(selectedSortType: SortType): void {
-    if (this._sortType !== selectedSortType) {
-      this._sortType = selectedSortType;
-      this._shownFilmsCount = this._getInitShownFilmsCount();
-      this._filmsView.updateFilms(this._getShownFilms());
-      this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
-      this._sortPanelView.updateActiveSortType(this._sortType);
+    const { state } = this._model;
+    if (state.sortType !== selectedSortType) {
+      this._model.setSortType(selectedSortType);
+      this._filmsView.updateShownFilms();
+      this._filmsView.updateShowMoreButton();
+      this._sortPanelView.updateActiveSortType();
     }
   }
 
   private _onShowMore(): void {
-    const filmsLeftCount = this._films.length - this._getShownFilms().length;
-    this._shownFilmsCount += Math.min(Constants.FILMS_PORTION_SIZE, filmsLeftCount);
-    this._filmsView.updateFilms(this._getShownFilms());
-    this._filmsView.updateShowMoreButton(this.areAllFilmsShown);
+    this._model.increaseShownFilms();
+    this._filmsView.updateShownFilms();
+    this._filmsView.updateShowMoreButton();
   }
 
   private _onPopupOpen(film: Film): void {
     document.querySelector('.film-details')?.remove();
 
-    const comments = mocksComments.filter((comment) => film.commentsIds.includes(comment.id));
     const popup = new Popup({
-      comments,
-      film,
+      model: this._model,
+      filmId: film.id,
       onWatchlistChange: this._onWatchlistChange.bind(this),
       onWatchedChange: this._onWatchedChange.bind(this),
       onFavoriteChange: this._onFavoriteChange.bind(this),
       onCommentDelete: this._onCommentDelete.bind(this, film),
     });
+
     document.body.append(popup.element);
 
     const popupCloseButtonElement = popup.element.querySelector('.film-details__close-btn');
@@ -146,62 +113,44 @@ export default class FilmsScreen {
   }
 
   private _onWatchlistChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.inWatchlist = !userDetails.inWatchlist;
-    this._navigationPanelView.updateFilmsSummary(Statistics.getFilmsSummary(this._films));
+    const { state } = this._model;
+
+    this._model.onWatchlistChange(film);
+    this._navigationPanelView.updateFilmsSummary();
     this._filmsView.updateWatchlistButton(film);
 
-    if (this._filter === Filter.Watchlist && !userDetails.inWatchlist) {
+    if (state.filter === Filter.Watchlist && !film.userDetails.inWatchlist) {
       this._filmsView.deleteFilmCard(film.id);
     }
   }
 
   private _onWatchedChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.isWatched = !userDetails.isWatched;
-    userDetails.watchingDate = userDetails.isWatched ? new Date() : null;
+    this._model.onWatchedChange(film);
 
-    const filmsSummary = Statistics.getFilmsSummary(this._films);
-    this._navigationPanelView.updateFilmsSummary(filmsSummary);
+    const { state } = this._model;
+    this._navigationPanelView.updateFilmsSummary();
     this._filmsView.updateWatchedButton(film);
-    this._header.updateRank(getRank(filmsSummary.watchedFilmsCount));
+    this._headerView.updateRank();
 
-    if (this._filter === Filter.Watched && !userDetails.isWatched) {
+    if (state.filter === Filter.Watched && !film.userDetails.isWatched) {
       this._filmsView.deleteFilmCard(film.id);
     }
   }
 
   private _onFavoriteChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.isFavorite = !userDetails.isFavorite;
-    this._navigationPanelView.updateFilmsSummary(Statistics.getFilmsSummary(this._films));
+    const { state } = this._model;
+
+    this._model.onFavoriteChange(film);
+    this._navigationPanelView.updateFilmsSummary();
     this._filmsView.updateFavoriteButton(film);
 
-    if (this._filter === Filter.Favorite && !userDetails.isFavorite) {
+    if (state.filter === Filter.Favorite && !film.userDetails.isFavorite) {
       this._filmsView.deleteFilmCard(film.id);
     }
   }
 
   private _onCommentDelete(film: Film, comment: Comment): void {
-    const { commentsIds } = film;
-
-    const commentIndex = commentsIds.indexOf(comment.id);
-    commentsIds.splice(commentIndex, 1);
-
+    this._model.deleteComment(comment, film.id);
     this._filmsView.updateCommentsCount(film);
-  }
-
-  private _getFilteredFilms(): Film[] {
-    return filterFilms(this._films, this._filter);
-  }
-
-  private _getShownFilms(): Film[] {
-    const filteredFilms = this._getFilteredFilms();
-    const sortedFilms = sortFilms(filteredFilms, this._sortType);
-    return sortedFilms.slice(0, this._shownFilmsCount);
-  }
-
-  private _getInitShownFilmsCount(): number {
-    return Math.min(Constants.FILMS_PORTION_SIZE, this._getFilteredFilms().length);
   }
 }

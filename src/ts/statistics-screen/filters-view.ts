@@ -1,5 +1,6 @@
 import AbstractView from '../abstract-view';
 import { StatisticsPeriod } from '../model';
+import Model from '../model/model';
 import { getTargetAsElement } from '../util';
 
 const inputValuesToStatsPeriods = new Map<string, StatisticsPeriod>();
@@ -9,19 +10,17 @@ inputValuesToStatsPeriods.set('week', StatisticsPeriod.Week);
 inputValuesToStatsPeriods.set('month', StatisticsPeriod.Month);
 inputValuesToStatsPeriods.set('year', StatisticsPeriod.Year);
 
-type Props = {
-  period: StatisticsPeriod;
-};
-
 export default class FiltersView extends AbstractView {
-  constructor({ period }: Props) {
+  constructor(model: Model) {
     super();
-    this._period = period;
+    this._model = model;
   }
 
-  private _period: StatisticsPeriod;
+  private _model: Model;
 
   public get template(): string {
+    const { period } = this._model.state;
+
     return `
       <form action="#" method="get" class="statistic__filters">
         <p class="statistic__filters-description">Show stats:</p>
@@ -32,7 +31,7 @@ export default class FiltersView extends AbstractView {
           name="statistic-filter"
           id="statistic-all-time"
           value="all-time"
-          ${this._period === StatisticsPeriod.AllTime ? 'checked' : ''}
+          ${period === StatisticsPeriod.AllTime ? 'checked' : ''}
         >
         <label for="statistic-all-time" class="statistic__filters-label">All time</label>
 
@@ -42,7 +41,7 @@ export default class FiltersView extends AbstractView {
           name="statistic-filter"
           id="statistic-today"
           value="today"
-          ${this._period === StatisticsPeriod.Today ? 'checked' : ''}
+          ${period === StatisticsPeriod.Today ? 'checked' : ''}
         >
         <label for="statistic-today" class="statistic__filters-label">Today</label>
 
@@ -52,7 +51,7 @@ export default class FiltersView extends AbstractView {
           name="statistic-filter"
           id="statistic-week"
           value="week"
-          ${this._period === StatisticsPeriod.Week ? 'checked' : ''}
+          ${period === StatisticsPeriod.Week ? 'checked' : ''}
         >
         <label for="statistic-week" class="statistic__filters-label">Week</label>
 
@@ -62,7 +61,7 @@ export default class FiltersView extends AbstractView {
           name="statistic-filter"
           id="statistic-month"
           value="month"
-          ${this._period === StatisticsPeriod.Month ? 'checked' : ''}
+          ${period === StatisticsPeriod.Month ? 'checked' : ''}
         >
         <label for="statistic-month" class="statistic__filters-label">Month</label>
 
@@ -72,7 +71,7 @@ export default class FiltersView extends AbstractView {
           name="statistic-filter"
           id="statistic-year"
           value="year"
-          ${this._period === StatisticsPeriod.Year ? 'checked' : ''}
+          ${period === StatisticsPeriod.Year ? 'checked' : ''}
         >
         <label for="statistic-year" class="statistic__filters-label">Year</label>
       </form>`;
@@ -95,8 +94,4 @@ export default class FiltersView extends AbstractView {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPeriodChanged(period: StatisticsPeriod): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
-
-  public updateActivePeriod(period: StatisticsPeriod): void {
-    this._period = period;
-  }
 }

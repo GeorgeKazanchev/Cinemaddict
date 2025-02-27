@@ -1,33 +1,42 @@
 import he from 'he';
 import AbstractView from '../abstract-view';
-import { Comment, Handlers, getEmotionByName } from '../model';
+import { Handlers, getEmotionByName } from '../model';
+import Model from '../model/model';
 import { getElementFromTemplate, getTargetAsElement } from '../util';
 import CommentCardView from './comment-card-view';
 
 type Props = {
-  comments: Comment[];
+  filmId: string;
+  model: Model;
   onCommentDelete: Handlers.CommentDeleteHandler,
 };
 
 export default class CommentsView extends AbstractView {
-  constructor({ comments, onCommentDelete }: Props) {
+  constructor({ model, filmId, onCommentDelete }: Props) {
     super();
-    this._comments = comments;
-    this._commentCardViews = comments.map((comment) => new CommentCardView({ comment }));
+    this._model = model;
+    this._filmId = filmId;
+
+    const comments = this._model.getComments(this._filmId);
+    this._commentCardViews = comments
+      .map((comment) => new CommentCardView({ model, commentId: comment.id }));
 
     this._commentCardViews.forEach((view) => {
       view.onCommentDelete = onCommentDelete; //  eslint-disable-line no-param-reassign
     });
   }
 
-  private _comments: Comment[];
+  private _model: Model;
+  private _filmId: string;
   private _commentCardViews: CommentCardView[];
 
   public get template(): string {
+    const comments = this._model.getComments(this._filmId);
+
     return `
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
-          <span class="film-details__comments-count">${this._comments.length}</span>
+          <span class="film-details__comments-count">${comments.length}</span>
         </h3>
 
         <ul class="film-details__comments-list"></ul>
@@ -101,10 +110,11 @@ export default class CommentsView extends AbstractView {
     commentTextElement?.addEventListener('change', commentTextChangeHandler);
   }
 
-  public updateCommentsCount(count: number): void {
+  public updateCommentsCount(): void {
+    const commentsCount = this._model.getComments(this._filmId).length;
     const commentsCountElement = this.element.querySelector('.film-details__comments-count');
     if (commentsCountElement) {
-      commentsCountElement.textContent = count.toFixed(0);
+      commentsCountElement.textContent = commentsCount.toFixed(0);
     }
   }
 

@@ -1,5 +1,6 @@
 import AbstractView from '../abstract-view';
 import { SortType } from '../model';
+import Model from '../model/model';
 import { getTargetAsElement } from '../util';
 
 const ACTIVE_CLASSNAME = 'sort__button--active';
@@ -9,20 +10,16 @@ hrefsToSortTypes.set('#default', SortType.Default);
 hrefsToSortTypes.set('#date', SortType.Date);
 hrefsToSortTypes.set('#rating', SortType.Rating);
 
-type Props = {
-  sortType?: SortType;
-};
-
 export default class SortPanelView extends AbstractView {
-  constructor({ sortType = SortType.Default }: Props) {
+  constructor(model: Model) {
     super();
-    this._sortType = sortType;
+    this._model = model;
   }
 
-  private _sortType: SortType;
+  private _model: Model;
 
   public get template(): string {
-    const sortType = this._sortType;
+    const { sortType } = this._model.state;
 
     return `
       <ul class="sort">
@@ -71,17 +68,16 @@ export default class SortPanelView extends AbstractView {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onSort(sortType: SortType): void { }
 
-  public updateActiveSortType(sortType: SortType): void {
-    this._sortType = sortType;
-
+  public updateActiveSortType(): void {
     const activeSortTypeElement = this.element.querySelector(`.${ACTIVE_CLASSNAME}`);
     if (activeSortTypeElement) {
       activeSortTypeElement.classList.remove(ACTIVE_CLASSNAME);
     }
 
-    const sortTypeHrefPair = [...hrefsToSortTypes].find(([, value]) => value === this._sortType);
+    const { sortType } = this._model.state;
+    const sortTypeHrefPair = [...hrefsToSortTypes].find(([, value]) => value === sortType);
     if (!sortTypeHrefPair) {
-      throw new Error(`No href found matching sort type ${this._sortType}`);
+      throw new Error(`No href found matching sort type ${sortType}`);
     }
 
     const newActiveSortTypeElement = this.element.querySelector(`[href="${sortTypeHrefPair[0]}"]`);

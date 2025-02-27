@@ -2,28 +2,32 @@ import AbstractView from '../abstract-view';
 import {
   getFormattedDuration, getLimitedDescription, getRatingClassname, Film,
 } from '../model';
+import Model from '../model/model';
 
 const BUTTON_ACTIVE_CLASSNAME = 'film-card__controls-item--active';
 
 type Props = {
-  film: Film;
+  filmId: string;
+  model: Model;
 };
 
 export default class FilmCardView extends AbstractView {
-  constructor({ film }: Props) {
+  constructor({ model, filmId }: Props) {
     super();
-    this._film = film;
+    this._model = model;
+    this._filmId = filmId;
   }
 
-  private _film: Film;
+  private _model: Model;
+  private _filmId: string;
 
   public get filmId(): string {
-    return this._film.id;
+    return this._filmId;
   }
 
   public get template(): string {
-    const commentsCount = this._film.commentsIds.length;
-    const { info, userDetails } = this._film;
+    const commentsCount = this._model.getComments(this._filmId).length;
+    const { info, userDetails } = this._model.getFilmById(this.filmId);
 
     return `
       <article class="film-card">
@@ -64,6 +68,8 @@ export default class FilmCardView extends AbstractView {
   }
 
   public bind(): void {
+    const film = this._model.getFilmById(this._filmId);
+
     const titleElement = this.element.querySelector('.film-card__title');
     const posterElement = this.element.querySelector('.film-card__poster');
     const commentsElement = this.element.querySelector('.film-card__comments');
@@ -74,22 +80,22 @@ export default class FilmCardView extends AbstractView {
 
     const popupOpenHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onPopupOpen(this._film);
+      this.onPopupOpen(film);
     };
 
     const watchlistClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchlistChange(this._film);
+      this.onWatchlistChange(film);
     };
 
     const watchedClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchedChange(this._film);
+      this.onWatchedChange(film);
     };
 
     const favoriteClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onFavoriteChange(this._film);
+      this.onFavoriteChange(film);
     };
 
     titleElement?.addEventListener('click', popupOpenHandler);
@@ -122,10 +128,11 @@ export default class FilmCardView extends AbstractView {
     favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
   }
 
-  public updateCommentsCount(count: number): void {
+  public updateCommentsCount(): void {
+    const commentsCount = this._model.getComments(this._filmId).length;
     const commentsCountElement = this.element.querySelector('.film-card__comments');
     if (commentsCountElement) {
-      commentsCountElement.textContent = this._getCommentsCountText(count);
+      commentsCountElement.textContent = this._getCommentsCountText(commentsCount);
     }
   }
 

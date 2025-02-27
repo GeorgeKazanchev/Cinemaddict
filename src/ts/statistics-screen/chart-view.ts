@@ -1,17 +1,14 @@
 import AbstractView from '../abstract-view';
-import { Film, renderStatisticsChart } from '../model';
-
-type Props = {
-  films: Film[];
-};
+import { renderStatisticsChart } from '../model';
+import Model from '../model/model';
 
 export default class ChartView extends AbstractView {
-  constructor({ films }: Props) {
+  constructor(model: Model) {
     super();
-    this._films = films;
+    this._model = model;
   }
 
-  private _films: Film[];
+  private _model: Model;
 
   public get template(): string {
     return `
@@ -24,16 +21,15 @@ export default class ChartView extends AbstractView {
     const element = super.element;
     const canvasElement = element.querySelector('.statistic__chart');
     if (canvasElement instanceof HTMLCanvasElement) {
-      renderStatisticsChart(this._films, canvasElement);
+      renderStatisticsChart(this._model.state.films, canvasElement);
     }
     return element;
   }
 
-  public updateChart(films: Film[]): void {
-    this._films = films;
+  public updateChart(): void {
     const canvasElement = this.element.querySelector('.statistic__chart');
     if (canvasElement instanceof HTMLCanvasElement) {
-      renderStatisticsChart(this._films, canvasElement);
+      renderStatisticsChart(this._model.watchedFilmsInPeriod, canvasElement);
     }
   }
 }

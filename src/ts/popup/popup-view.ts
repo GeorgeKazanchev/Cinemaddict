@@ -1,13 +1,14 @@
 import AbstractView from '../abstract-view';
-import { Comment, Film, Handlers } from '../model';
+import { Handlers } from '../model';
+import Model from '../model/model';
 import CloseButtonView from './close-button-view';
 import CommentsView from './comments-view';
 import ControlsView from './controls-view';
 import InfoView from './info-view';
 
 type Props = {
-  comments: Comment[];
-  film: Film;
+  filmId: string;
+  model: Model;
   onClose: Handlers.NoParamHandler;
   onCommentDelete: Handlers.CommentDeleteHandler;
   onFavoriteChange: Handlers.FilmControlsHandler;
@@ -17,8 +18,8 @@ type Props = {
 
 export default class PopupView extends AbstractView {
   constructor({
-    comments,
-    film,
+    model,
+    filmId,
     onClose,
     onWatchlistChange,
     onWatchedChange,
@@ -26,13 +27,17 @@ export default class PopupView extends AbstractView {
     onCommentDelete,
   }: Props) {
     super();
-    this._comments = comments;
-    this._film = film;
+    this._model = model;
+    this._filmId = filmId;
 
     this._closeButtonView = new CloseButtonView();
-    this._infoView = new InfoView({ filmInfo: this._film.info });
-    this._controlsView = new ControlsView({ film: this._film });
-    this._commentsView = new CommentsView({ comments: this._comments, onCommentDelete });
+    this._infoView = new InfoView({ model: this._model, filmId: this._filmId });
+    this._controlsView = new ControlsView({ model: this._model, filmId: this._filmId });
+    this._commentsView = new CommentsView({
+      model: this._model,
+      filmId: this._filmId,
+      onCommentDelete,
+    });
 
     this.onClose = onClose;
 
@@ -42,8 +47,8 @@ export default class PopupView extends AbstractView {
     this._controlsView.onFavoriteChange = onFavoriteChange;
   }
 
-  private _comments: Comment[];
-  private _film: Film;
+  private _model: Model;
+  private _filmId: string;
   private _closeButtonView: CloseButtonView;
   private _infoView: InfoView;
   private _controlsView: ControlsView;
@@ -116,7 +121,7 @@ export default class PopupView extends AbstractView {
   }
 
   public updateCommentsCount(): void {
-    this._commentsView.updateCommentsCount(this._comments.length);
+    this._commentsView.updateCommentsCount();
   }
 
   public resetNewCommentText(): void {
