@@ -83,4 +83,13 @@ export default class SortPanelView extends AbstractView {
     const newActiveSortTypeElement = this.element.querySelector(`[href="${sortTypeHrefPair[0]}"]`);
     newActiveSortTypeElement?.classList.add(ACTIVE_CLASSNAME);
   }
+
+  public updateVisibility(): void {
+    const isVisible = this._model.shownFilms.length > 0;
+    if (isVisible) {
+      this.element.classList.remove('hidden');
+    } else {
+      this.element.classList.add('hidden');
+    }
+  }
 }

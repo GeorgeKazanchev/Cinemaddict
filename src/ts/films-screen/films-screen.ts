@@ -50,7 +50,9 @@ export default class FilmsScreen {
     const mainElement = document.createElement('main');
     mainElement.classList.add('main');
     mainElement.append(this._navigationPanelView.element);
-    mainElement.append(this._sortPanelView.element);
+    if (this._model.shownFilms.length > 0) {
+      mainElement.append(this._sortPanelView.element);
+    }
     mainElement.append(this._filmsView.element);
 
     this._element = document.createElement('div');
@@ -69,6 +71,7 @@ export default class FilmsScreen {
       this._filmsView.updateShowMoreButton();
       this._navigationPanelView.updateActiveFilter();
       this._sortPanelView.updateActiveSortType();
+      this._sortPanelView.updateVisibility();
     }
   }
 
@@ -121,6 +124,7 @@ export default class FilmsScreen {
 
     if (state.filter === Filter.Watchlist && !film.userDetails.inWatchlist) {
       this._filmsView.deleteFilmCard(film.id);
+      this._sortPanelView.updateVisibility();
     }
   }
 
@@ -134,6 +138,7 @@ export default class FilmsScreen {
 
     if (state.filter === Filter.Watched && !film.userDetails.isWatched) {
       this._filmsView.deleteFilmCard(film.id);
+      this._sortPanelView.updateVisibility();
     }
   }
 
@@ -146,6 +151,7 @@ export default class FilmsScreen {
 
     if (state.filter === Filter.Favorite && !film.userDetails.isFavorite) {
       this._filmsView.deleteFilmCard(film.id);
+      this._sortPanelView.updateVisibility();
     }
   }
 
