@@ -15,14 +15,13 @@ export default class FilmsView extends AbstractView {
   private _filmCardViews: FilmCardView[];
 
   public get template(): string {
-    const areFilmsShown = this._model.shownFilms.length > 0;
-    const title = this._getTitle(areFilmsShown);
+    const title = this._getTitle();
 
     return `
       <section class="films">
         <section class="films-list">
-          <h2 class="films-list__title ${areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
-          ${areFilmsShown ? '<div class="films-list__container"></div>' : ''}
+          <h2 class="films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
+          ${this._model.areFilmsShown ? '<div class="films-list__container"></div>' : ''}
           <button class="films-list__show-more button ${this._model.areAllFilmsShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>
       </section>`;
@@ -68,13 +67,11 @@ export default class FilmsView extends AbstractView {
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateShownFilms(): void {
-    const { shownFilms } = this._model;
-    this._filmCardViews = shownFilms
+    this._filmCardViews = this._model.shownFilms
       .map((film) => new FilmCardView({ model: this._model, filmId: film.id }));
 
-    const areFilmsShown = shownFilms.length > 0;
-    this._updateTitle(areFilmsShown);
-    this._updateFilmsContainer(areFilmsShown);
+    this._updateFilmsContainer();
+    this.updateTitle();
     this.bind();
   }
 
@@ -111,6 +108,16 @@ export default class FilmsView extends AbstractView {
     }
   }
 
+  public updateTitle(): void {
+    const title = this._getTitle();
+    const titleElement = this.element.querySelector('.films-list__title');
+
+    if (titleElement) {
+      titleElement.className = `films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}`;
+      titleElement.textContent = title;
+    }
+  }
+
   public deleteFilmCard(filmId: string): void {
     const filmCardView = this._filmCardViews.find((view) => view.filmId === filmId);
     if (filmCardView) {
@@ -118,19 +125,10 @@ export default class FilmsView extends AbstractView {
     }
   }
 
-  private _updateTitle(areFilmsShown: boolean): void {
-    const title = this._getTitle(areFilmsShown);
-    const titleElement = this.element.querySelector('.films-list__title');
-    if (titleElement) {
-      titleElement.className = `films-list__title ${areFilmsShown ? 'visually-hidden' : ''}`;
-      titleElement.textContent = title;
-    }
-  }
-
-  private _updateFilmsContainer(areFilmsShown: boolean): void {
+  private _updateFilmsContainer(): void {
     let filmsContainerElement = this.element.querySelector('.films-list__container');
 
-    if (areFilmsShown) {
+    if (this._model.areFilmsShown) {
       if (!filmsContainerElement) {
         filmsContainerElement = document.createElement('div');
         filmsContainerElement.classList.add('films-list__container');
@@ -145,8 +143,8 @@ export default class FilmsView extends AbstractView {
     }
   }
 
-  private _getTitle(areFilmsShown: boolean): string {
-    return areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+  private _getTitle(): string {
+    return this._model.areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
   }
 
   private _getFilmCardViewBy(filmId: string): FilmCardView | null {

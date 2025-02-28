@@ -45,6 +45,10 @@ export default class Model {
     return Statistics.getWatchedFilmsSince(statisticsStartDate, this._state.films);
   }
 
+  public get areFilmsShown(): boolean {
+    return this.shownFilms.length > 0;
+  }
+
   public get areAllFilmsShown(): boolean {
     return this._state.shownFilmsCount >= this.filteredFilms.length;
   }

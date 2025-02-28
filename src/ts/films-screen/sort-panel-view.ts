@@ -85,7 +85,7 @@ export default class SortPanelView extends AbstractView {
   }
 
   public updateVisibility(): void {
-    const isVisible = this._model.shownFilms.length > 0;
+    const isVisible = this._model.areFilmsShown;
     if (isVisible) {
       this.element.classList.remove('hidden');
     } else {
