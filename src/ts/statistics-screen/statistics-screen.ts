@@ -51,11 +51,7 @@ export default class StatisticsScreen {
     sectionElement.append(this._rankView.element);
     sectionElement.append(this._filtersView.element);
     sectionElement.append(this._statisticsView.element);
-
-    const filmsCount = this._model.watchedFilmsInPeriod.length;
-    if (filmsCount > 0) {
-      sectionElement.append(this._chartView.element);
-    }
+    sectionElement.append(this._chartView.element);
 
     const mainElement = document.createElement('main');
     mainElement.classList.add('main');

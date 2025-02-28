@@ -21,7 +21,7 @@ export default class ChartView extends AbstractView {
     const element = super.element;
     const canvasElement = element.querySelector('.statistic__chart');
     if (canvasElement instanceof HTMLCanvasElement) {
-      renderStatisticsChart(this._model.state.films, canvasElement);
+      this._renderChart(canvasElement);
     }
     return element;
   }
@@ -29,7 +29,11 @@ export default class ChartView extends AbstractView {
   public updateChart(): void {
     const canvasElement = this.element.querySelector('.statistic__chart');
     if (canvasElement instanceof HTMLCanvasElement) {
-      renderStatisticsChart(this._model.watchedFilmsInPeriod, canvasElement);
+      this._renderChart(canvasElement);
     }
+  }
+
+  private _renderChart(canvasElement: HTMLCanvasElement): void {
+    renderStatisticsChart(this._model.watchedFilmsInPeriod, canvasElement);
   }
 }

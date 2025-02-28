@@ -18,7 +18,6 @@ export default class StatisticsView extends AbstractView {
 
   public get template(): string {
     const { filmsCount, totalDuration, favoriteGenre } = this._getStatisticsData();
-    const { hours, minutes } = getDurationComponents(totalDuration);
 
     return `
       <ul class="statistic__text-list">
@@ -31,8 +30,7 @@ export default class StatisticsView extends AbstractView {
         <li class="statistic__text-item">
           <h4 class="statistic__item-title">Total duration</h4>
           <p class="statistic__item-text">
-            ${hours.toFixed(0)} <span class="statistic__item-description">h</span>
-            ${minutes.toFixed(0)} <span class="statistic__item-description">m</span>
+            ${this._getTotalDurationTemplate(totalDuration)}
           </p>
         </li>
         <li class="statistic__text-item">
@@ -65,18 +63,7 @@ export default class StatisticsView extends AbstractView {
   private _updateTotalDuration(totalDuration: number): void {
     const durationElement = this.element.querySelector('.statistic__text-item:nth-child(2) .statistic__item-text');
     if (durationElement) {
-      durationElement.innerHTML = '';
-
-      const hoursDescriptionElement = document.createElement('span');
-      const minutesDescriptionElement = document.createElement('span');
-      hoursDescriptionElement.classList.add('statistic__item-description');
-      minutesDescriptionElement.classList.add('statistic__item-description');
-      hoursDescriptionElement.textContent = 'h';
-      minutesDescriptionElement.textContent = 'm';
-
-      const { hours, minutes } = getDurationComponents(totalDuration);
-      durationElement.append(`${hours.toFixed(0)} `, hoursDescriptionElement);
-      durationElement.append(`${minutes.toFixed(0)} `, minutesDescriptionElement);
+      durationElement.innerHTML = this._getTotalDurationTemplate(totalDuration);
     }
   }
 
@@ -86,6 +73,13 @@ export default class StatisticsView extends AbstractView {
       favoriteGenreElement.innerHTML = '';
       favoriteGenreElement.textContent = favoriteGenre;
     }
+  }
+
+  private _getTotalDurationTemplate(totalDuration: number): string {
+    const { hours, minutes } = getDurationComponents(totalDuration);
+    let template = hours > 0 ? `${hours.toFixed(0)} <span class="statistic__item-description">h</span>` : '';
+    template += `${minutes.toFixed(0)} <span class="statistic__item-description">m</span>`;
+    return template;
   }
 
   private _getStatisticsData(): StatisticsData {
