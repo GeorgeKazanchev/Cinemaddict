@@ -13,7 +13,7 @@
 
 .page__body {
   width: 100%;
-  max-width: 1240px;
+  max-width: $page-max-width;
   padding: 0 $horizontal-gap;
   padding-top: $vertical-gap;
   box-sizing: border-box;

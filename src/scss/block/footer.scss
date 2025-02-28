@@ -1,7 +1,16 @@
+@import '/src/scss/variables.scss';
+
+$height: 100px;
+
 .footer {
+  position: absolute;
+  bottom: -$height;
+  left: 0;
   display: flex;
   align-items: center;
-  height: 100px;
+  width: 100%;
+  max-width: $page-max-width;
+  height: $height;
   background: url('./../img/background-footer.png');
   background-repeat: no-repeat;
   background-position: 50% -20px;
