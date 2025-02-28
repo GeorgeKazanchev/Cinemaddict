@@ -119,7 +119,9 @@ export default class FilmsView extends AbstractView {
   }
 
   public deleteFilmCard(filmId: string): void {
-    const filmCardView = this._filmCardViews.find((view) => view.filmId === filmId);
+    const cardIndex = this._filmCardViews.findIndex((view) => view.filmId === filmId);
+    const filmCardView = this._filmCardViews[cardIndex];
+    this._filmCardViews.splice(cardIndex, 1);
     if (filmCardView) {
       filmCardView.element.remove();
     }
@@ -132,6 +134,13 @@ export default class FilmsView extends AbstractView {
       if (!filmsContainerElement) {
         filmsContainerElement = document.createElement('div');
         filmsContainerElement.classList.add('films-list__container');
+
+        const titleElement = this.element.querySelector('.films-list__title');
+        if (!titleElement) {
+          throw new Error('No title element found');
+        }
+
+        titleElement.after(filmsContainerElement);
       }
 
       filmsContainerElement.innerHTML = '';
