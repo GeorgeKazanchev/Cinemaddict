@@ -47,15 +47,6 @@ export default class FilmsView extends AbstractView {
     };
 
     showMoreElement?.addEventListener('click', showMoreClickHandler);
-
-    /* eslint-disable no-param-reassign */
-    this._filmCardViews.forEach((view) => {
-      view.onPopupOpen = this.onPopupOpen.bind(this);
-      view.onWatchlistChange = this.onWatchlistChange.bind(this);
-      view.onWatchedChange = this.onWatchedChange.bind(this);
-      view.onFavoriteChange = this.onFavoriteChange.bind(this);
-    });
-    /* eslint-enable no-param-reassign */
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -70,9 +61,17 @@ export default class FilmsView extends AbstractView {
     this._filmCardViews = this._model.shownFilms
       .map((film) => new FilmCardView({ model: this._model, filmId: film.id }));
 
+    /* eslint-disable no-param-reassign */
+    this._filmCardViews.forEach((view) => {
+      view.onPopupOpen = this.onPopupOpen.bind(this);
+      view.onWatchlistChange = this.onWatchlistChange.bind(this);
+      view.onWatchedChange = this.onWatchedChange.bind(this);
+      view.onFavoriteChange = this.onFavoriteChange.bind(this);
+    });
+    /* eslint-enable no-param-reassign */
+
     this._updateFilmsContainer();
     this.updateTitle();
-    this.bind();
   }
 
   public updateWatchlistButton(film: Film): void {
