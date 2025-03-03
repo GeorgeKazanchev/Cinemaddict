@@ -16,6 +16,7 @@ const {
 } = require('./model/model');
 
 const PORT = 8081;
+const AUTH_REGEXP = /^Basic [a-zA-Z0-9]+$/;
 
 const app = express();
 
@@ -23,6 +24,14 @@ const filmsRouter = express.Router();
 const commentsRouter = express.Router();
 
 app.use(express.json());
+
+app.use((request, response, next) => {
+  const isAuthPassed = AUTH_REGEXP.test(request.headers.authorization);
+  if (!isAuthPassed) {
+    return response.status(401).json(new AuthorizationError());
+  }
+  next();
+});
 
 app.use((_, response, next) => {
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,7 +45,7 @@ filmsRouter.get('/', (_, response) => {
 
 //  Обновление пользовательской информации в фильме
 filmsRouter.put('/:id', (request, response) => {
-  const filmId = request.params['id'];
+  const filmId = request.params.id;
   const film = getFilmById(filmId);
 
   if (!film) {
@@ -50,7 +59,7 @@ filmsRouter.put('/:id', (request, response) => {
 
 //  Получение комментариев к фильму
 commentsRouter.get('/:filmId', (request, response) => {
-  const filmId = request.params['filmId'];
+  const filmId = request.params.filmId;
   const film = getFilmById(filmId);
 
   if (!film) {
@@ -62,7 +71,7 @@ commentsRouter.get('/:filmId', (request, response) => {
 
 //  Добавление комментария к фильму
 commentsRouter.post('/:filmId', (request, response) => {
-  const filmId = request.params['filmId'];
+  const filmId = request.params.filmId;
   const film = getFilmById(filmId);
 
   if (!film) {
@@ -80,7 +89,7 @@ commentsRouter.post('/:filmId', (request, response) => {
 
 //  Удаление комментария
 commentsRouter.delete('/:id', (request, response) => {
-  const commentId = request.params['id'];
+  const commentId = request.params.id;
   const comment = getCommentById(commentId);
   const film = getFilmByCommentId(commentId);
 
