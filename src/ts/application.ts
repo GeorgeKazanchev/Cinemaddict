@@ -8,16 +8,16 @@ export default class Application {
   public static showFilmsScreen(state: State) {
     const model = new Model(state);
     const filmsScreen = new FilmsScreen(model);
-    render(filmsScreen.element, Application.getAppContainer());
+    render(filmsScreen.element, Application._getAppContainer());
   }
 
   public static showStatistics(state: State) {
     const model = new Model(state);
     const statisticsScreen = new StatisticsScreen(model);
-    render(statisticsScreen.element, Application.getAppContainer());
+    render(statisticsScreen.element, Application._getAppContainer());
   }
 
-  public static getAppContainer(): Element {
+  private static _getAppContainer(): Element {
     const appElement = document.querySelector('.app');
     if (!appElement) {
       throw new Error('The ".app" element is absent from the page');
