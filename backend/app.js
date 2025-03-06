@@ -24,6 +24,7 @@ const filmsRouter = express.Router();
 const commentsRouter = express.Router();
 
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use((request, response, next) => {
   const isAuthPassed = AUTH_REGEXP.test(request.headers.authorization);

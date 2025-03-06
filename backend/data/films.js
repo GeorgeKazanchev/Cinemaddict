@@ -9,7 +9,7 @@ const films = [
       'title': 'The Man with the Golden Arm',
       'alternative_title': 'The Man with the Golden Arm',
       'total_rating': 9.0,
-      'poster': './img/debug-posters/the-man-with-the-golden-arm.jpg',
+      'poster': '/img/posters/the-man-with-the-golden-arm.jpg',
       'age_rating': 6,
       'director': 'Otto Preminger',
       'writers': [
@@ -47,7 +47,7 @@ const films = [
       'title': 'The Great Flamarion',
       'alternative_title': 'The Great Flamarion',
       'total_rating': 8.9,
-      'poster': './img/debug-posters/the-great-flamarion.jpg',
+      'poster': '/img/posters/the-great-flamarion.jpg',
       'age_rating': 6,
       'director': 'Anthony Mann',
       'writers': [
@@ -86,7 +86,7 @@ const films = [
       'title': 'Made for Each Other',
       'alternative_title': 'Made for Each Other',
       'total_rating': 5.8,
-      'poster': './img/debug-posters/made-for-each-other.jpg',
+      'poster': '/img/posters/made-for-each-other.jpg',
       'age_rating': 6,
       'director': 'John Cromwell',
       'writers': [
@@ -122,7 +122,7 @@ const films = [
       'title': 'Popeye the Sailor Meets Sindbad the Sailor',
       'alternative_title': 'Popeye the Sailor Meets Sindbad the Sailor',
       'total_rating': 6.3,
-      'poster': './img/debug-posters/popeye-meets-sinbad.jpg',
+      'poster': '/img/posters/popeye-meets-sinbad.jpg',
       'age_rating': 6,
       'director': 'Dave Fleischer',
       'writers': [
@@ -160,7 +160,7 @@ const films = [
       'title': 'Sagebrush Trail',
       'alternative_title': 'Sagebrush Trail',
       'total_rating': 5.4,
-      'poster': './img/debug-posters/sagebrush-trail.jpg',
+      'poster': '/img/posters/sagebrush-trail.jpg',
       'age_rating': 6,
       'director': 'Armand Schaefer',
       'writers': [
@@ -199,7 +199,7 @@ const films = [
       'title': 'Santa Claus Conquers the Martians',
       'alternative_title': 'Santa Claus Conquers the Martians',
       'total_rating': 2.7,
-      'poster': './img/debug-posters/santa-claus-conquers-the-martians.jpg',
+      'poster': '/img/posters/santa-claus-conquers-the-martians.jpg',
       'age_rating': 12,
       'director': 'Nicholas Webster',
       'writers': [
@@ -235,7 +235,7 @@ const films = [
       'title': 'The Dance of Life',
       'alternative_title': 'The Dance of Life',
       'total_rating': 6.8,
-      'poster': './img/debug-posters/the-dance-of-life.jpg',
+      'poster': '/img/posters/the-dance-of-life.jpg',
       'age_rating': 12,
       'director': 'John Cromwell',
       'writers': [
@@ -273,7 +273,7 @@ const films = [
       'title': 'Casablanca',
       'alternative_title': 'Casablanca',
       'total_rating': 8.5,
-      'poster': './img/debug-posters/casablanca.jpg',
+      'poster': '/img/posters/casablanca.jpg',
       'age_rating': 12,
       'director': 'Michael Curtiz',
       'writers': [
@@ -306,1142 +306,762 @@ const films = [
     },
   },
 
-  // {
-  //   commentsIds: [],
-  //   id: '6cec0f8a-390d-47bc-9e59-7c22986189d2',
-  //   info: {
-  //     actors: [
-  //       'James Stewart',
-  //       'Kim Novak',
-  //       'Barbara Bel Geddes',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Vertigo',
-  //     description: 'A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.',
-  //     director: 'Alfred Hitchcock',
-  //     durationMinutes: 128,
-  //     genres: [
-  //       'Detective',
-  //     ],
-  //     posterSrc: './img/debug-posters/vertigo.jpg',
-  //     rating: 8.3,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1958-04-09T00:00:00.000Z'),
-  //     },
-  //     title: 'Vertigo',
-  //     writers: [
-  //       'Alec Coppel',
-  //       'Samuel A. Taylor',
-  //       'Pierre Boileau',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2023-01-01'),
-  //   },
-  // },
+  {
+    'id': '6cec0f8a-390d-47bc-9e59-7c22986189d2',
+    'comments': [],
+    'film_info': {
+      'title': 'Vertigo',
+      'alternative_title': 'Vertigo',
+      'total_rating': 8.3,
+      'poster': '/img/posters/vertigo.jpg',
+      'age_rating': 12,
+      'director': 'Alfred Hitchcock',
+      'writers': [
+        'Alec Coppel',
+        'Samuel A. Taylor',
+        'Pierre Boileau',
+      ],
+      'actors': [
+        'James Stewart',
+        'Kim Novak',
+        'Barbara Bel Geddes',
+      ],
+      'release': {
+        'date': '1958-04-09T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 128,
+      'genre': [
+        'Detective',
+      ],
+      'description': 'A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2023-01-01',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '3aa39a59-50f1-4edd-b68e-d55f1c106a24',
-  //   info: {
-  //     actors: [
-  //       'Jack Nicholson',
-  //       'Faye Dunaway',
-  //       'John Huston',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'Chinatown',
-  //     description: 'A private detective hired to expose an adulterer in 1930s Los Angeles finds himself caught up in a web of deceit, corruption, and murder.',
-  //     director: 'Roman Polanski',
-  //     durationMinutes: 131,
-  //     genres: [
-  //       'Detective',
-  //       'Noir',
-  //     ],
-  //     posterSrc: './img/debug-posters/chinatown.jpg',
-  //     rating: 8.1,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1974-05-20T00:00:00.000Z'),
-  //     },
-  //     title: 'Chinatown',
-  //     writers: [
-  //       'Robert Towne',
-  //       'Roman Polanski',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2022-05-23'),
-  //   },
-  // },
+  {
+    'id': '3aa39a59-50f1-4edd-b68e-d55f1c106a24',
+    'comments': [],
+    'film_info': {
+      'title': 'Chinatown',
+      'alternative_title': 'Chinatown',
+      'total_rating': 8.1,
+      'poster': '/img/posters/chinatown.jpg',
+      'age_rating': 18,
+      'director': 'Roman Polanski',
+      'writers': [
+        'Robert Towne',
+        'Roman Polanski',
+      ],
+      'actors': [
+        'Jack Nicholson',
+        'Faye Dunaway',
+        'John Huston',
+      ],
+      'release': {
+        'date': '1974-05-20T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 131,
+      'genre': [
+        'Detective',
+        'Noir',
+      ],
+      'description': 'A private detective hired to expose an adulterer in 1930s Los Angeles finds himself caught up in a web of deceit, corruption, and murder.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2022-05-23',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '683b1320-ec35-4f6c-ac7d-9bc1bf052fa7',
-  //   info: {
-  //     actors: [
-  //       'James Stewart',
-  //       'Grace Kelly',
-  //       'Wendell Corey',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Rear Window',
-  //     description: 'A bored photographer recovering from a broken leg passes the time by watching his neighbors and begins to suspect one of them of murder.',
-  //     director: 'Alfred Hitchcock',
-  //     durationMinutes: 112,
-  //     genres: [
-  //       'Detective',
-  //       'Thriller',
-  //     ],
-  //     posterSrc: './img/debug-posters/rear-window.jpg',
-  //     rating: 8.5,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1954-08-01T00:00:00.000Z'),
-  //     },
-  //     title: 'Rear Window',
-  //     writers: [
-  //       'John Michael Hayes',
-  //       'Cornell Woolrich',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '683b1320-ec35-4f6c-ac7d-9bc1bf052fa7',
+    'comments': [],
+    'film_info': {
+      'title': 'Rear Window',
+      'alternative_title': 'Rear Window',
+      'total_rating': 8.5,
+      'poster': '/img/posters/rear-window.jpg',
+      'age_rating': 12,
+      'director': 'Alfred Hitchcock',
+      'writers': [
+        'John Michael Hayes',
+        'Cornell Woolrich',
+      ],
+      'actors': [
+        'James Stewart',
+        'Grace Kelly',
+        'Wendell Corey',
+      ],
+      'release': {
+        'date': '1954-08-01T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 112,
+      'genre': [
+        'Detective',
+        'Thriller',
+      ],
+      'description': 'A bored photographer recovering from a broken leg passes the time by watching his neighbors and begins to suspect one of them of murder.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '002dee29-9ae8-4644-9cf1-e28892a402b9',
-  //   info: {
-  //     actors: [
-  //       'Gene Tierney',
-  //       'Dana Andrews',
-  //       'Clifton Webb',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'Laura',
-  //     description: 'A police detective falls in love with the woman whose murder he is investigating.',
-  //     director: 'Otto Preminger',
-  //     durationMinutes: 88,
-  //     genres: [
-  //       'Detective',
-  //       'Noir',
-  //     ],
-  //     posterSrc: './img/debug-posters/laura.jpg',
-  //     rating: 7.9,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1944-09-11T00:00:00.000Z'),
-  //     },
-  //     title: 'Laura',
-  //     writers: [
-  //       'Vera Caspary',
-  //       'Jay Dratler',
-  //       'Samuel Hoffenstein',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '002dee29-9ae8-4644-9cf1-e28892a402b9',
+    'comments': [],
+    'film_info': {
+      'title': 'Laura',
+      'alternative_title': 'Laura',
+      'total_rating': 7.9,
+      'poster': '/img/posters/laura.jpg',
+      'age_rating': 6,
+      'director': 'Otto Preminger',
+      'writers': [
+        'Vera Caspary',
+        'Jay Dratler',
+        'Samuel Hoffenstein',
+      ],
+      'actors': [
+        'Gene Tierney',
+        'Dana Andrews',
+        'Clifton Webb',
+      ],
+      'release': {
+        'date': '1944-09-11T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 88,
+      'genre': [
+        'Detective',
+        'Noir',
+      ],
+      'description': 'A police detective falls in love with the woman whose murder he is investigating.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: 'e98160f4-a3b9-4ecb-83da-ed1ca7a4ab7c',
-  //   info: {
-  //     actors: [
-  //       'Humphrey Bogart',
-  //       'Mary Astor',
-  //       'Gladys George',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'The Maltese Falcon',
-  //     description: 'San Francisco private detective Sam Spade takes on a case that involves him with three eccentric criminals, a gorgeous liar and their quest for a priceless statuette, with the stakes rising after his partner is murdered.',
-  //     director: 'John Huston',
-  //     durationMinutes: 101,
-  //     genres: [
-  //       'Detective',
-  //       'Noir',
-  //     ],
-  //     posterSrc: './img/debug-posters/maltese-falcon.jpg',
-  //     rating: 7.9,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1941-09-18T00:00:00.000Z'),
-  //     },
-  //     title: 'The Maltese Falcon',
-  //     writers: [
-  //       'John Huston',
-  //       'Dashiell Hammett',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: true,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': 'e98160f4-a3b9-4ecb-83da-ed1ca7a4ab7c',
+    'comments': [],
+    'film_info': {
+      'title': 'The Maltese Falcon',
+      'alternative_title': 'The Maltese Falcon',
+      'total_rating': 7.9,
+      'poster': '/img/posters/maltese-falcon.jpg',
+      'age_rating': 12,
+      'director': 'John Huston',
+      'writers': [
+        'John Huston',
+        'Dashiell Hammett',
+      ],
+      'actors': [
+        'Humphrey Bogart',
+        'Mary Astor',
+        'Gladys George',
+      ],
+      'release': {
+        'date': '1941-09-18T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 101,
+      'genre': [
+        'Detective',
+        'Noir',
+      ],
+      'description': 'San Francisco private detective Sam Spade takes on a case that involves him with three eccentric criminals, a gorgeous liar and their quest for a priceless statuette, with the stakes rising after his partner is murdered.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '4b6a1bdf-12ea-401d-8c0a-e095e3541331',
-  //   info: {
-  //     actors: [
-  //       'Cary Grant',
-  //       'Eva Marie Saint',
-  //       'James Mason',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'North by Northwest',
-  //     description: 'A New York City advertising executive goes on the run after being mistaken for a government agent by a group of foreign spies, and falls for a woman whose loyalties he begins to doubt.',
-  //     director: 'Alfred Hitchcock',
-  //     durationMinutes: 136,
-  //     genres: [
-  //       'Detective',
-  //       'Action',
-  //     ],
-  //     posterSrc: './img/debug-posters/north-by-northwest.jpg',
-  //     rating: 8.3,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1959-06-01T00:00:00.000Z'),
-  //     },
-  //     title: 'North by Northwest',
-  //     writers: [
-  //       'Ernest Lehman',
-  //       'Gerald Devriès',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2025-01-28'),
-  //   },
-  // },
+  {
+    'id': '4b6a1bdf-12ea-401d-8c0a-e095e3541331',
+    'comments': [],
+    'film_info': {
+      'title': 'North by Northwest',
+      'alternative_title': 'North by Northwest',
+      'total_rating': 8.3,
+      'poster': '/img/posters/north-by-northwest.jpg',
+      'age_rating': 12,
+      'director': 'Alfred Hitchcock',
+      'writers': [
+        'Ernest Lehman',
+        'Gerald Devriès',
+      ],
+      'actors': [
+        'Cary Grant',
+        'Eva Marie Saint',
+        'James Mason',
+      ],
+      'release': {
+        'date': '1959-06-01T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 136,
+      'genre': [
+        'Detective',
+        'Action',
+      ],
+      'description': 'A New York City advertising executive goes on the run after being mistaken for a government agent by a group of foreign spies, and falls for a woman whose loyalties he begins to doubt.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2025-01-28',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '97d2c95d-34da-404e-bd77-c477aecfc41a',
-  //   info: {
-  //     actors: [
-  //       'Isabella Rossellini',
-  //       'Kyle MacLachlan',
-  //       'Dennis Hopper',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'Blue Velvet',
-  //     description: 'The discovery of a severed human ear found in a field leads a young man on an investigation related to a beautiful, mysterious nightclub singer and a group of psychopathic criminals who have kidnapped her child.',
-  //     director: 'David Lynch',
-  //     durationMinutes: 120,
-  //     genres: [
-  //       'Detective',
-  //       'Noir',
-  //     ],
-  //     posterSrc: './img/debug-posters/blue-velvet.jpg',
-  //     rating: 7.7,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1986-08-19T00:00:00.000Z'),
-  //     },
-  //     title: 'Blue Velvet',
-  //     writers: [
-  //       'David Lynch',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2022-10-12'),
-  //   },
-  // },
+  {
+    'id': '97d2c95d-34da-404e-bd77-c477aecfc41a',
+    'comments': [],
+    'film_info': {
+      'title': 'Blue Velvet',
+      'alternative_title': 'Blue Velvet',
+      'total_rating': 7.7,
+      'poster': '/img/posters/blue-velvet.jpg',
+      'age_rating': 18,
+      'director': 'David Lynch',
+      'writers': [
+        'David Lynch',
+      ],
+      'actors': [
+        'Isabella Rossellini',
+        'Kyle MacLachlan',
+        'Dennis Hopper',
+      ],
+      'release': {
+        'date': '1986-08-19T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 120,
+      'genre': [
+        'Detective',
+        'Noir',
+      ],
+      'description': 'The discovery of a severed human ear found in a field leads a young man on an investigation related to a beautiful, mysterious nightclub singer and a group of psychopathic criminals who have kidnapped her child.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': true,
+      'watching_date': '2022-10-12',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '94b8b0fd-6547-40e0-bbf4-33509ed45246',
-  //   info: {
-  //     actors: [
-  //       'Ray Milland',
-  //       'Grace Kelly',
-  //       'Robert Cummings',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Dial M for Murder',
-  //     description: 'A former tennis star arranges the murder of his adulterous wife.',
-  //     director: 'Alfred Hitchcock',
-  //     durationMinutes: 105,
-  //     genres: [
-  //       'Detective',
-  //       'Thriller',
-  //     ],
-  //     posterSrc: './img/debug-posters/dial-m-for-murder.jpg',
-  //     rating: 8.2,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1954-04-29T00:00:00.000Z'),
-  //     },
-  //     title: 'Dial M for Murder',
-  //     writers: [
-  //       'Frederick Knott',
-  //       'Charles Dorat',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: true,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '94b8b0fd-6547-40e0-bbf4-33509ed45246',
+    'comments': [],
+    'film_info': {
+      'title': 'Dial M for Murder',
+      'alternative_title': 'Dial M for Murder',
+      'total_rating': 8.2,
+      'poster': '/img/posters/dial-m-for-murder.jpg',
+      'age_rating': 12,
+      'director': 'Alfred Hitchcock',
+      'writers': [
+        'Frederick Knott',
+        'Charles Dorat',
+      ],
+      'actors': [
+        'Ray Milland',
+        'Grace Kelly',
+        'Robert Cummings',
+      ],
+      'release': {
+        'date': '1954-04-29T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 105,
+      'genre': [
+        'Detective',
+        'Thriller',
+      ],
+      'description': 'A former tennis star arranges the murder of his adulterous wife.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '4e396144-7810-4d91-8a7f-5fbb97cd35a2',
-  //   info: {
-  //     actors: [
-  //       'Kevin Spacey',
-  //       'Gabriel Byrne',
-  //       'Chazz Palminteri',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'The Usual Suspects',
-  //     description: 'The sole survivor of a pier shoot-out tells the story of how a notorious criminal influenced the events that began with five criminals meeting in a seemingly random police lineup.',
-  //     director: 'Bryan Singer',
-  //     durationMinutes: 106,
-  //     genres: [
-  //       'Detective',
-  //       'Crime',
-  //     ],
-  //     posterSrc: './img/debug-posters/usual-suspects.jpg',
-  //     rating: 8.5,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1995-07-16T00:00:00.000Z'),
-  //     },
-  //     title: 'The Usual Suspects',
-  //     writers: [
-  //       'Christopher McQuarrie',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '4e396144-7810-4d91-8a7f-5fbb97cd35a2',
+    'comments': [],
+    'film_info': {
+      'title': 'The Usual Suspects',
+      'alternative_title': 'The Usual Suspects',
+      'total_rating': 8.5,
+      'poster': '/img/posters/usual-suspects.jpg',
+      'age_rating': 18,
+      'director': 'Bryan Singer',
+      'writers': [
+        'Christopher McQuarrie',
+      ],
+      'actors': [
+        'Kevin Spacey',
+        'Gabriel Byrne',
+        'Chazz Palminteri',
+      ],
+      'release': {
+        'date': '1995-07-16T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 106,
+      'genre': [
+        'Detective',
+        'Crime',
+      ],
+      'description': 'The sole survivor of a pier shoot-out tells the story of how a notorious criminal influenced the events that began with five criminals meeting in a seemingly random police lineup.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '27296bc4-280e-4626-954f-b807a11e8693',
-  //   info: {
-  //     actors: [
-  //       'Orson Welles',
-  //       'Joseph Cotten',
-  //       'Alida Valli',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'The Third Man',
-  //     description: 'Pulp novelist Holly Martins travels to shadowy, postwar Vienna, only to find himself investigating the mysterious death of an old friend, Harry Lime.',
-  //     director: 'Carol Reed',
-  //     durationMinutes: 104,
-  //     genres: [
-  //       'Detective',
-  //       'Noir',
-  //     ],
-  //     posterSrc: './img/debug-posters/third-man.jpg',
-  //     rating: 8.1,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1950-01-02T00:00:00.000Z'),
-  //     },
-  //     title: 'The Third Man',
-  //     writers: [
-  //       'Graham Greene',
-  //       'Orson Welles',
-  //       'Alexander Korda',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '27296bc4-280e-4626-954f-b807a11e8693',
+    'comments': [],
+    'film_info': {
+      'title': 'The Third Man',
+      'alternative_title': 'The Third Man',
+      'total_rating': 8.1,
+      'poster': '/img/posters/third-man.jpg',
+      'age_rating': 12,
+      'director': 'Carol Reed',
+      'writers': [
+        'Graham Greene',
+        'Orson Welles',
+        'Alexander Korda',
+      ],
+      'actors': [
+        'Orson Welles',
+        'Joseph Cotten',
+        'Alida Valli',
+      ],
+      'release': {
+        'date': '1950-01-02T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 104,
+      'genre': [
+        'Detective',
+        'Noir',
+      ],
+      'description': 'Pulp novelist Holly Martins travels to shadowy, postwar Vienna, only to find himself investigating the mysterious death of an old friend, Harry Lime.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '0a940085-1cb5-48a8-96d5-e1dd62eebe62',
-  //   info: {
-  //     actors: [
-  //       'Keir Dullea',
-  //       'Gary Lockwood',
-  //       'William Sylvester',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: '2001: A Space Odyssey',
-  //     description: 'When a mysterious artifact is uncovered on the Moon, a spacecraft manned by two humans and one supercomputer is sent to Jupiter to find its origins.',
-  //     director: 'Stanley Kubrick',
-  //     durationMinutes: 139,
-  //     genres: [
-  //       'Sci-Fi',
-  //     ],
-  //     posterSrc: './img/debug-posters/2001-space-odyssey.jpg',
-  //     rating: 8.3,
-  //     release: {
-  //       country: 'United Kingdom',
-  //       date: new Date('1968-04-01T00:00:00.000Z'),
-  //     },
-  //     title: '2001: A Space Odyssey',
-  //     writers: [
-  //       'Stanley Kubrick',
-  //       'Arthur C. Clarke',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '0a940085-1cb5-48a8-96d5-e1dd62eebe62',
+    'comments': [],
+    'film_info': {
+      'title': '2001: A Space Odyssey',
+      'alternative_title': '2001: A Space Odyssey',
+      'total_rating': 8.3,
+      'poster': '/img/posters/2001-space-odyssey.jpg',
+      'age_rating': 6,
+      'director': 'Stanley Kubrick',
+      'writers': [
+        'Stanley Kubrick',
+        'Arthur C. Clarke',
+      ],
+      'actors': [
+        'Keir Dullea',
+        'Gary Lockwood',
+        'William Sylvester',
+      ],
+      'release': {
+        'date': '1968-04-01T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 139,
+      'genre': [
+        'Sci-Fi',
+      ],
+      'description': 'When a mysterious artifact is uncovered on the Moon, a spacecraft manned by two humans and one supercomputer is sent to Jupiter to find its origins.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '0e6a030d-1314-4c73-8d08-f4ac96321422',
-  //   info: {
-  //     actors: [
-  //       'Mark Hamill',
-  //       'Harrison Ford',
-  //       'Carrie Fisher',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Star Wars: Episode IV - A New Hope',
-  //     description: 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
-  //     director: 'George Lucas',
-  //     durationMinutes: 121,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Action',
-  //     ],
-  //     posterSrc: './img/debug-posters/star-wars-iv.jpg',
-  //     rating: 8.6,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1977-04-25T00:00:00.000Z'),
-  //     },
-  //     title: 'Star Wars: Episode IV - A New Hope',
-  //     writers: [
-  //       'George Lucas',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: true,
-  //     watchingDate: new Date('2019-03-18'),
-  //   },
-  // },
+  {
+    'id': '0e6a030d-1314-4c73-8d08-f4ac96321422',
+    'comments': [],
+    'film_info': {
+      'title': 'Star Wars: Episode IV - A New Hope',
+      'alternative_title': 'Star Wars: Episode IV - A New Hope',
+      'total_rating': 8.6,
+      'poster': '/img/posters/star-wars-iv.jpg',
+      'age_rating': 12,
+      'director': 'George Lucas',
+      'writers': [
+        'George Lucas',
+      ],
+      'actors': [
+        'Mark Hamill',
+        'Harrison Ford',
+        'Carrie Fisher',
+      ],
+      'release': {
+        'date': '1977-04-25T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 121,
+      'genre': [
+        'Sci-Fi',
+        'Action',
+      ],
+      'description': 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': true,
+      'watching_date': '2019-03-18',
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: 'f50ad014-04d3-4abc-bfe2-9fd857c88f0f',
-  //   info: {
-  //     actors: [
-  //       'Henry Thomas',
-  //       'Drew Barrymore',
-  //       'Peter Coyote',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'E.T. the Extra-Terrestrial',
-  //     description: 'A troubled child summons the courage to help a friendly alien escape from Earth and return to his home planet.',
-  //     director: 'Steven Spielberg',
-  //     durationMinutes: 114,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Family',
-  //     ],
-  //     posterSrc: './img/debug-posters/et.jpg',
-  //     rating: 7.9,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1982-05-11T00:00:00.000Z'),
-  //     },
-  //     title: 'E.T. the Extra-Terrestrial',
-  //     writers: [
-  //       'Melissa Mathison',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': 'f50ad014-04d3-4abc-bfe2-9fd857c88f0f',
+    'comments': [],
+    'film_info': {
+      'title': 'E.T. the Extra-Terrestrial',
+      'alternative_title': 'E.T. the Extra-Terrestrial',
+      'total_rating': 7.9,
+      'poster': '/img/posters/et.jpg',
+      'age_rating': 12,
+      'director': 'Steven Spielberg',
+      'writers': [
+        'Melissa Mathison',
+      ],
+      'actors': [
+        'Henry Thomas',
+        'Drew Barrymore',
+        'Peter Coyote',
+      ],
+      'release': {
+        'date': '1982-05-11T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 114,
+      'genre': [
+        'Sci-Fi',
+        'Family',
+      ],
+      'description': 'A troubled child summons the courage to help a friendly alien escape from Earth and return to his home planet.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: 'b58144b3-83fd-475c-bdd4-66536369003f',
-  //   info: {
-  //     actors: [
-  //       'Malcolm McDowell',
-  //       'Patrick Magee',
-  //       'Michael Bates',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'A Clockwork Orange',
-  //     description: 'Alex DeLarge and his droogs barbarize a decaying near-future.',
-  //     director: 'Stanley Kubrick',
-  //     durationMinutes: 136,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Crime',
-  //     ],
-  //     posterSrc: './img/debug-posters/clockwork-orange.jpg',
-  //     rating: 8.2,
-  //     release: {
-  //       country: 'United Kingdom',
-  //       date: new Date('1972-00-13T00:00:00.000Z'),
-  //     },
-  //     title: 'A Clockwork Orange',
-  //     writers: [
-  //       'Stanley Kubrick',
-  //       'Anthony Burgess',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2018-05-14'),
-  //   },
-  // },
+  {
+    'id': 'b58144b3-83fd-475c-bdd4-66536369003f',
+    'comments': [],
+    'film_info': {
+      'title': 'A Clockwork Orange',
+      'alternative_title': 'A Clockwork Orange',
+      'total_rating': 8.2,
+      'poster': '/img/posters/clockwork-orange.jpg',
+      'age_rating': 18,
+      'director': 'Stanley Kubrick',
+      'writers': [
+        'Stanley Kubrick',
+        'Anthony Burgess',
+      ],
+      'actors': [
+        'Malcolm McDowell',
+        'Patrick Magee',
+        'Michael Bates',
+      ],
+      'release': {
+        'date': '1972-00-13T00:00:00.000Z',
+        'release_country': 'United Kingdom',
+      },
+      'runtime': 136,
+      'genre': [
+        'Sci-Fi',
+        'Crime',
+      ],
+      'description': 'Alex DeLarge and his droogs barbarize a decaying near-future.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2018-05-14',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '3c9657c0-1235-48c3-a6eb-d30e6b6f264a',
-  //   info: {
-  //     actors: [
-  //       'Michael Rennie',
-  //       'Patricia Neal',
-  //       'Hugh Marlowe',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'The Day the Earth Stood Still',
-  //     description: 'An alien lands in Washington, D.C. and tells the people of Earth that they must live peacefully or be destroyed as a danger to other planets.',
-  //     director: 'Robert Wise',
-  //     durationMinutes: 92,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Drama',
-  //     ],
-  //     posterSrc: './img/debug-posters/day-the-earth-stood-still.jpg',
-  //     rating: 7.7,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1951-08-18T00:00:00.000Z'),
-  //     },
-  //     title: 'The Day the Earth Stood Still',
-  //     writers: [
-  //       'Edmund H. North',
-  //       'Harry Bates',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '3c9657c0-1235-48c3-a6eb-d30e6b6f264a',
+    'comments': [],
+    'film_info': {
+      'title': 'The Day the Earth Stood Still',
+      'alternative_title': 'The Day the Earth Stood Still',
+      'total_rating': 7.7,
+      'poster': '/img/posters/day-the-earth-stood-still.jpg',
+      'age_rating': 12,
+      'director': 'Robert Wise',
+      'writers': [
+        'Edmund H. North',
+        'Harry Bates',
+      ],
+      'actors': [
+        'Michael Rennie',
+        'Patricia Neal',
+        'Hugh Marlowe',
+      ],
+      'release': {
+        'date': '1951-08-18T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 92,
+      'genre': [
+        'Sci-Fi',
+        'Drama',
+      ],
+      'description': 'An alien lands in Washington, D.C. and tells the people of Earth that they must live peacefully or be destroyed as a danger to other planets.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '8adcf561-8a36-43ed-a70d-cd44602b741b',
-  //   info: {
-  //     actors: [
-  //       'Harrison Ford',
-  //       'Rutger Hauer',
-  //       'Sean Young',
-  //     ],
-  //     ageRating: 16,
-  //     alternativeTitle: 'Blade Runner',
-  //     description: 'A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.',
-  //     director: 'Ridley Scott',
-  //     durationMinutes: 117,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Cyberpunk',
-  //     ],
-  //     posterSrc: './img/debug-posters/blade-runner.jpg',
-  //     rating: 8.1,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1982-05-25T00:00:00.000Z'),
-  //     },
-  //     title: 'Blade Runner',
-  //     writers: [
-  //       'Hampton Fancher',
-  //       'David Webb Peoples',
-  //       'Philip K. Dick',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2024-09-16'),
-  //   },
-  // },
+  {
+    'id': '8adcf561-8a36-43ed-a70d-cd44602b741b',
+    'comments': [],
+    'film_info': {
+      'title': 'Blade Runner',
+      'alternative_title': 'Blade Runner',
+      'total_rating': 8.1,
+      'poster': '/img/posters/blade-runner.jpg',
+      'age_rating': 16,
+      'director': 'Ridley Scott',
+      'writers': [
+        'Hampton Fancher',
+        'David Webb Peoples',
+        'Philip K. Dick',
+      ],
+      'actors': [
+        'Harrison Ford',
+        'Rutger Hauer',
+        'Sean Young',
+      ],
+      'release': {
+        'date': '1982-05-25T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 117,
+      'genre': [
+        'Sci-Fi',
+        'Cyberpunk',
+      ],
+      'description': 'A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': true,
+      'watching_date': '2024-09-16',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '78c58752-fc80-48e2-8bab-97ff876f5110',
-  //   info: {
-  //     actors: [
-  //       'Sigourney Weaver',
-  //       'Tom Skerritt',
-  //       'John Hurt',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'Alien',
-  //     description: 'After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.',
-  //     director: 'Ridley Scott',
-  //     durationMinutes: 116,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Horror',
-  //     ],
-  //     posterSrc: './img/debug-posters/alien.jpg',
-  //     rating: 8.5,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1979-04-25T00:00:00.000Z'),
-  //     },
-  //     title: 'Alien',
-  //     writers: [
-  //       'Dan O\'Bannon',
-  //       'Ronald Shusett',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2015-05-03'),
-  //   },
-  // },
+  {
+    'id': '78c58752-fc80-48e2-8bab-97ff876f5110',
+    'comments': [],
+    'film_info': {
+      'title': 'Alien',
+      'alternative_title': 'Alien',
+      'total_rating': 8.5,
+      'poster': '/img/posters/alien.jpg',
+      'age_rating': 18,
+      'director': 'Ridley Scott',
+      'writers': [
+        'Dan O\'Bannon',
+        'Ronald Shusett',
+      ],
+      'actors': [
+        'Sigourney Weaver',
+        'Tom Skerritt',
+        'John Hurt',
+      ],
+      'release': {
+        'date': '1979-04-25T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 116,
+      'genre': [
+        'Sci-Fi',
+        'Horror',
+      ],
+      'description': 'After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2015-05-03',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: 'cd1abd77-54e2-4634-a504-7945d1c109be',
-  //   info: {
-  //     actors: [
-  //       'Arnold Schwarzenegger',
-  //       'Linda Hamilton',
-  //       'Edward Furlong',
-  //     ],
-  //     ageRating: 16,
-  //     alternativeTitle: 'Terminator 2: Judgment Day',
-  //     description: 'A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.',
-  //     director: 'James Cameron',
-  //     durationMinutes: 137,
-  //     genres: [
-  //       'Sci-Fi',
-  //     ],
-  //     posterSrc: './img/debug-posters/terminator-2.jpg',
-  //     rating: 8.6,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1991-06-03T00:00:00.000Z'),
-  //     },
-  //     title: 'Terminator 2: Judgment Day',
-  //     writers: [
-  //       'James Cameron',
-  //       'William Wisher',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2006-04-12'),
-  //   },
-  // },
+  {
+    'id': 'cd1abd77-54e2-4634-a504-7945d1c109be',
+    'comments': [],
+    'film_info': {
+      'title': 'Terminator 2: Judgment Day',
+      'alternative_title': 'Terminator 2: Judgment Day',
+      'total_rating': 8.6,
+      'poster': '/img/posters/terminator-2.jpg',
+      'age_rating': 16,
+      'director': 'James Cameron',
+      'writers': [
+        'James Cameron',
+        'William Wisher',
+      ],
+      'actors': [
+        'Arnold Schwarzenegger',
+        'Linda Hamilton',
+        'Edward Furlong',
+      ],
+      'release': {
+        'date': '1991-06-03T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 137,
+      'genre': [
+        'Sci-Fi',
+      ],
+      'description': 'A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2006-04-12',
+      'favorite': true,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: '863bf06b-48a4-42a5-9396-ccbff7f983b1',
-  //   info: {
-  //     actors: [
-  //       'Donald Sutherland',
-  //       'Brooke Adams',
-  //       'Jeff Goldblum',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Invasion of the Body Snatchers',
-  //     description: 'When strange seeds drift to earth from space, mysterious pods begin to grow and invade San Francisco, replicating the city\'s residents one body at a time.',
-  //     director: 'Philip Kaufman',
-  //     durationMinutes: 80,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Horror',
-  //     ],
-  //     posterSrc: './img/debug-posters/invasion-of-the-body-snatchers.jpg',
-  //     rating: 7.4,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1956-01-05T00:00:00.000Z'),
-  //     },
-  //     title: 'Invasion of the Body Snatchers',
-  //     writers: [
-  //       'W.D. Richter',
-  //       'Jack Finney',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': '863bf06b-48a4-42a5-9396-ccbff7f983b1',
+    'comments': [],
+    'film_info': {
+      'title': 'Invasion of the Body Snatchers',
+      'alternative_title': 'Invasion of the Body Snatchers',
+      'total_rating': 7.4,
+      'poster': '/img/posters/invasion-of-the-body-snatchers.jpg',
+      'age_rating': 12,
+      'director': 'Philip Kaufman',
+      'writers': [
+        'W.D. Richter',
+        'Jack Finney',
+      ],
+      'actors': [
+        'Donald Sutherland',
+        'Brooke Adams',
+        'Jeff Goldblum',
+      ],
+      'release': {
+        'date': '1956-01-05T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 80,
+      'genre': [
+        'Sci-Fi',
+        'Horror',
+      ],
+      'description': 'When strange seeds drift to earth from space, mysterious pods begin to grow and invade San Francisco, replicating the city\'s residents one body at a time.',
+    },
+    'user_details': {
+      'watchlist': true,
+      'already_watched': false,
+      'watching_date': null,
+      'favorite': false,
+    },
+  },
 
-  // {
-  //   commentsIds: [],
-  //   id: 'e30cd21b-7f42-4dd7-808f-51e339e2b5c0',
-  //   info: {
-  //     actors: [
-  //       'Michael J. Fox',
-  //       'Christopher Lloyd',
-  //       'Lea Thompson',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'Back to the Future',
-  //     description: 'Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown.',
-  //     director: 'Robert Zemeckis',
-  //     durationMinutes: 116,
-  //     genres: [
-  //       'Sci-Fi',
-  //       'Comedy',
-  //     ],
-  //     posterSrc: './img/debug-posters/back-to-the-future.jpg',
-  //     rating: 8.5,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1985-06-03T00:00:00.000Z'),
-  //     },
-  //     title: 'Back to the Future',
-  //     writers: [
-  //       'Robert Zemeckis',
-  //       'Bob Gale',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2017-01-02'),
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: 'c57f655d-0bea-43c2-b925-9e1277f74442',
-  //   info: {
-  //     actors: [
-  //       'John Wayne',
-  //       'Jeffrey Hunter',
-  //       'Vera Miles',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'The Searchers',
-  //     description: 'An American Civil War veteran embarks on a years-long journey to rescue his niece from the Comanches after the rest of his brother\'s family is massacred in a raid on their Texas farm.',
-  //     director: 'John Ford',
-  //     durationMinutes: 119,
-  //     genres: [
-  //       'Western',
-  //     ],
-  //     posterSrc: './img/debug-posters/searchers.jpg',
-  //     rating: 7.8,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1956-04-16T00:00:00.000Z'),
-  //     },
-  //     title: 'The Searchers',
-  //     writers: [
-  //       'Frank S. Nugent',
-  //       'Alan Le May',
-  //       'Charles Dorat',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2024-07-10'),
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '1fc1f6d9-e5c3-47a9-8960-87d4dda12e22',
-  //   info: {
-  //     actors: [
-  //       'Gary Cooper',
-  //       'Grace Kelly',
-  //       'Katy Jurado',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'High Noon',
-  //     description: 'A town Marshal, despite the disagreements of his newlywed bride and the townspeople around him, must face a gang of deadly killers alone at "high noon" when the gang leader, an outlaw he "sent up" years ago, arrives on the noon train.',
-  //     director: 'Fred Zinnemann',
-  //     durationMinutes: 85,
-  //     genres: [
-  //       'Western',
-  //       'Drama',
-  //       'Thriller',
-  //     ],
-  //     posterSrc: './img/debug-posters/high-noon.jpg',
-  //     rating: 7.9,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1952-06-24T00:00:00.000Z'),
-  //     },
-  //     title: 'High Noon',
-  //     writers: [
-  //       'Carl Foreman',
-  //       'John W. Cunningham',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2025-01-27'),
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: 'de9c2d3c-5b56-4a87-bbe0-58b31f1a3fb8',
-  //   info: {
-  //     actors: [
-  //       'Alan Ladd',
-  //       'Jean Arthur',
-  //       'Van Heflin',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'Shane',
-  //     description: 'An ex-gunfighter defends homesteaders in 1889 Wyoming.',
-  //     director: 'George Stevens',
-  //     durationMinutes: 118,
-  //     genres: [
-  //       'Western',
-  //       'Drama',
-  //     ],
-  //     posterSrc: './img/debug-posters/shane.jpg',
-  //     rating: 7.6,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1953-03-23T00:00:00.000Z'),
-  //     },
-  //     title: 'Shane',
-  //     writers: [
-  //       'A.B. Guthrie Jr.',
-  //       'Jack Sher',
-  //       'Jack Schaefer',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: 'c0595856-ea2f-4a85-8fb5-969cee353352',
-  //   info: {
-  //     actors: [
-  //       'Clint Eastwood',
-  //       'Gene Hackman',
-  //       'Morgan Freeman',
-  //     ],
-  //     ageRating: 16,
-  //     alternativeTitle: 'Unforgiven',
-  //     description: 'Retired Old West gunslinger Will Munny reluctantly takes on one last job to avenge an injustice with the help of his old partner and a newer outlaw known simply as The Schofield Kid.',
-  //     director: 'Clint Eastwood',
-  //     durationMinutes: 131,
-  //     genres: [
-  //       'Western',
-  //     ],
-  //     posterSrc: './img/debug-posters/unforgiven.jpg',
-  //     rating: 8.2,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1992-07-07T00:00:00.000Z'),
-  //     },
-  //     title: 'Unforgiven',
-  //     writers: [
-  //       'David Webb Peoples',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2024-05-11'),
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '1539da2c-ecc7-461f-b09b-59fb3d23a330',
-  //   info: {
-  //     actors: [
-  //       'William Holden',
-  //       'Ernest Borgnine',
-  //       'Robert Ryan',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'The Wild Bunch',
-  //     description: 'An aging group of outlaws in 1913 Texas look for one last big score, selling stolen Army rifles to a rogue Mexican general during that country\'s revolution, as the traditional American West is disappearing around them.',
-  //     director: 'Sam Peckinpah',
-  //     durationMinutes: 145,
-  //     genres: [
-  //       'Western',
-  //       'Action',
-  //     ],
-  //     posterSrc: './img/debug-posters/wild-bunchn.jpg',
-  //     rating: 7.9,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1969-05-18T00:00:00.000Z'),
-  //     },
-  //     title: 'The Wild Bunch',
-  //     writers: [
-  //       'Walon Greens',
-  //       'Sam Peckinpah',
-  //       'Roy N. Sickner',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: true,
-  //     isWatched: true,
-  //     watchingDate: new Date('2023-10-16'),
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '37d6911e-dcea-4fa1-86bc-cec0bdd9366e',
-  //   info: {
-  //     actors: [
-  //       'John Wayne',
-  //       'Montgomery Clift',
-  //       'Joanne Dru',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Red River',
-  //     description: 'Dunson leads a cattle drive, the culmination of over 14 years of work, to its destination in Missouri. But his tyrannical behavior along the way causes a mutiny, led by his adopted son.',
-  //     director: 'Howard Hawks',
-  //     durationMinutes: 127,
-  //     genres: [
-  //       'Western',
-  //       'Drama',
-  //     ],
-  //     posterSrc: './img/debug-posters/red-river.jpg',
-  //     rating: 7.7,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1948-07-26T00:00:00.000Z'),
-  //     },
-  //     title: 'Red River',
-  //     writers: [
-  //       'Borden Chase',
-  //       'Charles Schnee',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '6c7612c2-9e3a-4588-8616-d7d0588919f8',
-  //   info: {
-  //     actors: [
-  //       'Paul Newman',
-  //       'Robert Redford',
-  //       'Katharine Ross',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Butch Cassidy and the Sundance Kid',
-  //     description: 'In 1890s Wyoming, Butch Cassidy and The Sundance Kid lead a band of outlaws. When a train robbery goes wrong, they find themselves on the run with a posse hard on their heels..',
-  //     director: 'George Roy Hill',
-  //     durationMinutes: 110,
-  //     genres: [
-  //       'Western',
-  //     ],
-  //     posterSrc: './img/debug-posters/butch-cassidy-and-sundance-kid.jpg',
-  //     rating: 8.0,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1969-08-24T00:00:00.000Z'),
-  //     },
-  //     title: 'Butch Cassidy and the Sundance Kid',
-  //     writers: [
-  //       'William Goldman',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: 'eb180290-bb6f-4478-8133-13c13d4fee30',
-  //   info: {
-  //     actors: [
-  //       'Warren Beatty',
-  //       'Julie Christie',
-  //       'Rene Auberjonois',
-  //     ],
-  //     ageRating: 18,
-  //     alternativeTitle: 'McCabe & Mrs. Miller',
-  //     description: 'A gambler and a prostitute become business partners in a remote Old West mining town, and their enterprise thrives until a large corporation arrives on the scene.',
-  //     director: 'Robert Altman',
-  //     durationMinutes: 121,
-  //     genres: [
-  //       'Western',
-  //     ],
-  //     posterSrc: './img/debug-posters/mccabe-and-mrs-miller.jpg',
-  //     rating: 7.6,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1971-05-24T00:00:00.000Z'),
-  //     },
-  //     title: 'McCabe & Mrs. Miller',
-  //     writers: [
-  //       'Edmund Naughton',
-  //       'Robert Altman',
-  //       'Brian McKay',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '03f47ea1-acc5-423d-8891-2fd810a6ffcc',
-  //   info: {
-  //     actors: [
-  //       'John Wayne',
-  //       'Claire Trevor',
-  //       'Andy Devine',
-  //     ],
-  //     ageRating: 12,
-  //     alternativeTitle: 'Stagecoach',
-  //     description: 'A group of people traveling on a stagecoach find their journey complicated by the threat of Geronimo and learn something about each other in the process.',
-  //     director: 'John Ford',
-  //     durationMinutes: 96,
-  //     genres: [
-  //       'Western',
-  //       'Adventure',
-  //     ],
-  //     posterSrc: './img/debug-posters/stagecoach.jpg',
-  //     rating: 7.8,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1939-02-03T00:00:00.000Z'),
-  //     },
-  //     title: 'Stagecoach',
-  //     writers: [
-  //       'Ernest Haycox',
-  //       'Dudley Nichols',
-  //       'Ben Hecht',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: true,
-  //     isFavorite: true,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
-
-  // {
-  //   commentsIds: [],
-  //   id: '5c6ad8da-0267-45ca-a9ec-37cfcdb9439d',
-  //   info: {
-  //     actors: [
-  //       'Jane Fonda',
-  //       'Lee Marvin',
-  //       'Michael Callan',
-  //     ],
-  //     ageRating: 6,
-  //     alternativeTitle: 'Cat Ballou',
-  //     description: 'A young schoolteacher turns into an outlaw to avenge her murdered father.',
-  //     director: 'Elliot Silverstein',
-  //     durationMinutes: 96,
-  //     genres: [
-  //       'Western',
-  //     ],
-  //     posterSrc: './img/debug-posters/cat-ballou.jpg',
-  //     rating: 6.7,
-  //     release: {
-  //       country: 'United States',
-  //       date: new Date('1965-05-18T00:00:00.000Z'),
-  //     },
-  //     title: 'Cat Ballou',
-  //     writers: [
-  //       'Walter Newman',
-  //       'Frank Pierson',
-  //       'Roy Chanslor',
-  //     ],
-  //   },
-  //   userDetails: {
-  //     inWatchlist: false,
-  //     isFavorite: false,
-  //     isWatched: false,
-  //     watchingDate: null,
-  //   },
-  // },
+  {
+    'id': 'e30cd21b-7f42-4dd7-808f-51e339e2b5c0',
+    'comments': [],
+    'film_info': {
+      'title': 'Back to the Future',
+      'alternative_title': 'Back to the Future',
+      'total_rating': 8.5,
+      'poster': '/img/posters/back-to-the-future.jpg',
+      'age_rating': 6,
+      'director': 'Robert Zemeckis',
+      'writers': [
+        'Robert Zemeckis',
+        'Bob Gale',
+      ],
+      'actors': [
+        'Michael J. Fox',
+        'Christopher Lloyd',
+        'Lea Thompson',
+      ],
+      'release': {
+        'date': '1985-06-03T00:00:00.000Z',
+        'release_country': 'United States',
+      },
+      'runtime': 116,
+      'genre': [
+        'Sci-Fi',
+        'Comedy',
+      ],
+      'description': 'Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown.',
+    },
+    'user_details': {
+      'watchlist': false,
+      'already_watched': true,
+      'watching_date': '2017-01-02',
+      'favorite': true,
+    },
+  },
 ];
 
 module.exports = {
