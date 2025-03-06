@@ -1,20 +1,20 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 .page {
   display: flex;
   justify-content: center;
   position: relative;
   min-height: 100%;
-  font-family: $font-family;
-  font-size: $font-size;
-  color: $text-color;
+  font-family: var.$font-family;
+  font-size: var.$font-size;
+  color: var.$text-color;
   background: #121213 url('./../img/background.png') no-repeat 60% 0;
 }
 
 .page__body {
   width: 100%;
-  max-width: $page-max-width;
-  padding: 0 $horizontal-gap;
-  padding-top: $vertical-gap;
+  max-width: var.$page-max-width;
+  padding: 0 var.$horizontal-gap;
+  padding-top: var.$vertical-gap;
   box-sizing: border-box;
 }

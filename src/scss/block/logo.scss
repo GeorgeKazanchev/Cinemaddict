@@ -1,4 +1,4 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 .logo {
   font-size: 28px;
@@ -9,7 +9,7 @@
   cursor: default;
 
   &--smaller {
-    font-size: $font-size;
+    font-size: var.$font-size;
     letter-spacing: normal;
   }
 }

@@ -1,4 +1,4 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 $height: 100px;
 
@@ -9,7 +9,7 @@ $height: 100px;
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: $page-max-width;
+  max-width: var.$page-max-width;
   height: $height;
   background: url('./../img/background-footer.png');
   background-repeat: no-repeat;

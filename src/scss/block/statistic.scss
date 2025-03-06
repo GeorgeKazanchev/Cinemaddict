@@ -1,4 +1,4 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 .statistic {
   padding-top: 30px;
@@ -21,7 +21,7 @@
 }
 
 .statistic__rank-label {
-  color: $text-color-active;
+  color: var.$text-color-active;
 }
 
 .statistic__filters {
@@ -41,14 +41,14 @@
   cursor: pointer;
 
   &:hover {
-    color: $text-color-active;
+    color: var.$text-color-active;
     opacity: 0.8;
   }
 }
 
 .statistic__filters-input:checked + .statistic__filters-label {
   position: relative;
-  color: $text-color-active;
+  color: var.$text-color-active;
 
   &::before {
     content: '';
@@ -56,7 +56,7 @@
     bottom: -2px;
     width: 100%;
     height: 2px;
-    background-color: $text-color-active;
+    background-color: var.$text-color-active;
   }
 }
 

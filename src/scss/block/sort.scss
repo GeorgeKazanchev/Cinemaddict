@@ -1,4 +1,4 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 .sort {
   display: flex;
@@ -13,7 +13,7 @@
   border: 0;
   outline: none;
   text-decoration: none;
-  color: $text-color;
+  color: var.$text-color;
   background-color: transparent;
   cursor: pointer;
 
@@ -22,6 +22,6 @@
   }
 
   &--active {
-    color: $text-color-active;
+    color: var.$text-color-active;
   }
 }

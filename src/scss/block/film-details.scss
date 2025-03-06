@@ -1,4 +1,4 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 $container-width: 1070px;
 $comment-field-height: 50px;
@@ -143,11 +143,11 @@ $contols-border-color: #31353f;
   color: #42cd51;
 
   &--average {
-    color: $text-color-average;
+    color: var.$text-color-average;
   }
 
   &--poor {
-    color: $text-color-poor;
+    color: var.$text-color-poor;
   }
 }
 

@@ -1,15 +1,15 @@
-@import '/src/scss/variables.scss';
+@use '/src/scss/variables.scss' as var;
 
 .film-card {
   position: relative;
-  flex-basis: $poster-width;
+  flex-basis: var.$poster-width;
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 10px;
-  padding-top: calc($poster-height + 50px + 10px);
+  padding-top: calc(var.$poster-height + 50px + 10px);
 
   &--no-controls {
-    padding-top: calc($poster-height + 10px);
+    padding-top: calc(var.$poster-height + 10px);
   }
 }
 
@@ -25,14 +25,14 @@
 }
 
 .film-card__rating {
-  color: $text-color-good;
+  color: var.$text-color-good;
 
   &--average {
-    color: $text-color-average;
+    color: var.$text-color-average;
   }
 
   &--poor {
-    color: $text-color-poor;
+    color: var.$text-color-poor;
   }
 }
 
@@ -44,17 +44,17 @@
 
 .film-card__poster {
   position: absolute;
-  bottom: calc(100% - $poster-height);
+  bottom: calc(100% - var.$poster-height);
   z-index: 1;
   width: 100%;
-  height: $poster-height;
+  height: var.$poster-height;
   border: dotted 1px rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   overflow: hidden;
   transition: bottom 0.2s ease-out;
 
   &:hover {
-    box-shadow: 0 0 3px 2px $text-color-active;
+    box-shadow: 0 0 3px 2px var.$text-color-active;
   }
 }
 
@@ -64,15 +64,15 @@
 
 .film-card__description {
   padding-right: 30px;
-  font-size: $font-size-smaller;
+  font-size: var.$font-size-smaller;
 }
 
 .film-card__comments {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: $font-family;
-  font-size: $font-size;
+  font-family: var.$font-family;
+  font-size: var.$font-size;
   color: #687fad;
   background: none;
   opacity: 1;
@@ -86,7 +86,7 @@
 
 .film-card__controls {
   position: absolute;
-  bottom: calc(100% - $poster-height - 50px);
+  bottom: calc(100% - var.$poster-height - 50px);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -102,7 +102,7 @@
   flex-basis: 33%;
   height: 30px;
   border: 0;
-  border-right: solid 1px $outline-color;
+  border-right: solid 1px var.$outline-color;
   box-sizing: border-box;
   background-color: transparent;
   background-position: center;

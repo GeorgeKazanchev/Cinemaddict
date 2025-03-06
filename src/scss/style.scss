@@ -1,23 +1,23 @@
-@import 'variables.scss';
+@use 'variables.scss';
 
-@import '/src/scss/block/page.scss';
-@import '/src/scss/block/app.scss';
-@import '/src/scss/block/button.scss';
-@import '/src/scss/block/link.scss';
+@use '/src/scss/block/page.scss';
+@use '/src/scss/block/app.scss';
+@use '/src/scss/block/button.scss';
+@use '/src/scss/block/link.scss';
 
-@import '/src/scss/block/film-card.scss';
-@import '/src/scss/block/film-details.scss';
-@import '/src/scss/block/films-list.scss';
-@import '/src/scss/block/films.scss';
+@use '/src/scss/block/film-card.scss';
+@use '/src/scss/block/film-details.scss';
+@use '/src/scss/block/films-list.scss';
+@use '/src/scss/block/films.scss';
 
-@import '/src/scss/block/footer.scss';
-@import '/src/scss/block/header.scss';
-@import '/src/scss/block/logo.scss';
+@use '/src/scss/block/footer.scss';
+@use '/src/scss/block/header.scss';
+@use '/src/scss/block/logo.scss';
 
-@import '/src/scss/block/main-navigation.scss';
-@import '/src/scss/block/profile.scss';
-@import '/src/scss/block/sort.scss';
-@import '/src/scss/block/statistic.scss';
+@use '/src/scss/block/main-navigation.scss';
+@use '/src/scss/block/profile.scss';
+@use '/src/scss/block/sort.scss';
+@use '/src/scss/block/statistic.scss';
 
-@import '/src/scss/block/visually-hidden.scss';
-@import '/src/scss/block/hidden.scss';
+@use '/src/scss/block/visually-hidden.scss';
+@use '/src/scss/block/hidden.scss';
