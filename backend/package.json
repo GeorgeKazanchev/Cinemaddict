@@ -1,0 +1,16 @@
+{
+  "name": "cinemaddict_backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "George Kazanchev",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "start": "nodemon ./app.js"
+  },
+  "dependencies": {
+    "express": "4.21.2",
+    "nodemon": "3.1.9",
+    "uuid": "11.1.0"
+  }
+}
