@@ -123,9 +123,7 @@ export default class FilmsScreen {
     this._filmsView.updateWatchlistButton(film);
 
     if (state.filter === Filter.Watchlist && !film.userDetails.inWatchlist) {
-      this._filmsView.deleteFilmCard(film.id);
-      this._filmsView.updateTitle();
-      this._sortPanelView.updateVisibility();
+      this._updateFilmsSection();
     }
   }
 
@@ -138,9 +136,7 @@ export default class FilmsScreen {
     this._headerView.updateRank();
 
     if (state.filter === Filter.Watched && !film.userDetails.isWatched) {
-      this._filmsView.deleteFilmCard(film.id);
-      this._filmsView.updateTitle();
-      this._sortPanelView.updateVisibility();
+      this._updateFilmsSection();
     }
   }
 
@@ -152,10 +148,14 @@ export default class FilmsScreen {
     this._filmsView.updateFavoriteButton(film);
 
     if (state.filter === Filter.Favorite && !film.userDetails.isFavorite) {
-      this._filmsView.deleteFilmCard(film.id);
-      this._filmsView.updateTitle();
-      this._sortPanelView.updateVisibility();
+      this._updateFilmsSection();
     }
+  }
+
+  private _updateFilmsSection(): void {
+    this._filmsView.updateShownFilms();
+    this._filmsView.updateShowMoreButton();
+    this._sortPanelView.updateVisibility();
   }
 
   private _onCommentDelete(film: Film, comment: Comment): void {

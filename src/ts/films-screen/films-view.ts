@@ -117,15 +117,6 @@ export default class FilmsView extends AbstractView {
     }
   }
 
-  public deleteFilmCard(filmId: string): void {
-    const cardIndex = this._filmCardViews.findIndex((view) => view.filmId === filmId);
-    const filmCardView = this._filmCardViews[cardIndex];
-    this._filmCardViews.splice(cardIndex, 1);
-    if (filmCardView) {
-      filmCardView.element.remove();
-    }
-  }
-
   private _updateFilmsContainer(): void {
     let filmsContainerElement = this.element.querySelector('.films-list__container');
 
