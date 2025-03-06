@@ -122,7 +122,7 @@ export default class FilmsScreen {
     this._navigationPanelView.updateFilmsSummary();
     this._filmsView.updateWatchlistButton(film);
 
-    if (state.filter === Filter.Watchlist && !film.userDetails.inWatchlist) {
+    if (state.filter === Filter.Watchlist) {
       this._updateFilmsSection();
     }
   }
@@ -135,7 +135,7 @@ export default class FilmsScreen {
     this._filmsView.updateWatchedButton(film);
     this._headerView.updateRank();
 
-    if (state.filter === Filter.Watched && !film.userDetails.isWatched) {
+    if (state.filter === Filter.Watched) {
       this._updateFilmsSection();
     }
   }
@@ -147,7 +147,7 @@ export default class FilmsScreen {
     this._navigationPanelView.updateFilmsSummary();
     this._filmsView.updateFavoriteButton(film);
 
-    if (state.filter === Filter.Favorite && !film.userDetails.isFavorite) {
+    if (state.filter === Filter.Favorite) {
       this._updateFilmsSection();
     }
   }
