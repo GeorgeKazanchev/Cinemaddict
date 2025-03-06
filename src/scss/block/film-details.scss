@@ -1,8 +1,11 @@
 @import '/src/scss/variables.scss';
 
 $container-width: 1070px;
+$comment-field-height: 50px;
 $font-size-regular: 21px;
 $dark-gray: #212126;
+$light-gray: #979797;
+$gold: #f5df00;
 $contols-border-color: #31353f;
 
 .film-details {
@@ -249,7 +252,7 @@ $contols-border-color: #31353f;
 
 .film-details__control-input:checked {
   &+.film-details__control-label {
-    color: #f5df00;
+    color: $gold;
   }
 
   &+.film-details__control-label--watchlist::before {
@@ -266,7 +269,7 @@ $contols-border-color: #31353f;
 }
 
 .film-details__comments-wrap {
-  width: 630px;
+  width: 700px;
   color: #f6f6f6;
 }
 
@@ -348,10 +351,11 @@ $contols-border-color: #31353f;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 79px;
-  height: 68px;
+  flex-shrink: 0;
+  width: $comment-field-height + 15px;
+  height: $comment-field-height + 15px;
   margin-right: 14px;
-  border: dashed 1px #979797;
+  border: dashed 1px $light-gray;
   border-radius: 50%;
   font-size: 55px;
   line-height: 1;
@@ -364,9 +368,9 @@ $contols-border-color: #31353f;
 
 .film-details__comment-input {
   width: 100%;
-  height: 50px;
+  height: $comment-field-height;
   padding: 11px 10px;
-  border: solid 1px #979797;
+  border: solid 1px $light-gray;
   border-radius: 5px;
   outline: none;
   box-sizing: border-box;
@@ -378,6 +382,19 @@ $contols-border-color: #31353f;
 
   &::placeholder {
     color: $dark-gray;
+  }
+}
+
+.film-details__comment-submit {
+  height: $comment-field-height - 10px;
+  margin-left: 20px;
+  border: 0;
+  border-radius: 5px;
+  color: $dark-gray;
+  background-color: $gold;
+
+  &:hover {
+    background-color: rgba($gold, 0.8);
   }
 }
 

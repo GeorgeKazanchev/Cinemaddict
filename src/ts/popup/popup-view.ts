@@ -57,7 +57,7 @@ export default class PopupView extends AbstractView {
   public get template(): string {
     return `
       <section class="film-details">
-        <form class="film-details__inner" action="#" method="get">
+        <form class="film-details__inner" action="#" method="post" autocomplete="off">
           <div class="film-details__top-container"></div>
           <div class="film-details__bottom-container"></div>
         </form>
@@ -92,12 +92,12 @@ export default class PopupView extends AbstractView {
       if (evt.key === 'Enter' && (evt.ctrlKey || evt.metaKey)) {
         evt.preventDefault();
         commentFormElement.requestSubmit();
-        this.onCommentSubmit();
       }
     };
 
     const commentSubmitHandler = (evt: Event) => {
       evt.preventDefault();
+      this.onCommentSubmit();
     };
 
     commentFormElement.addEventListener('keyup', commentKeyUpHandler);

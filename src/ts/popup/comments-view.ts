@@ -44,10 +44,11 @@ export default class CommentsView extends AbstractView {
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
           <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+            <textarea class="film-details__comment-input" required placeholder="Select reaction below and write comment here" name="comment"></textarea>
           </label>
+          <button class="film-details__comment-submit button" type="submit">Submit</button>
           <div class="film-details__emoji-list">
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
+            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" required type="radio" id="emoji-smile" value="smile">
             <label class="film-details__emoji-label" for="emoji-smile">
               <img src="./img/emoji/smile.png" width="30" height="30" alt="emoji">
             </label>
@@ -84,6 +85,9 @@ export default class CommentsView extends AbstractView {
   public bind(): void {
     const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
     const commentTextElement = this.element.querySelector('.film-details__comment-input');
+    if (!(commentTextElement instanceof HTMLTextAreaElement)) {
+      throw new Error('No comment text field found');
+    }
 
     const emotionChangeHandler = (evt: Event) => {
       const inputElement = getTargetAsElement(evt);
@@ -101,13 +105,25 @@ export default class CommentsView extends AbstractView {
     };
 
     const commentTextChangeHandler = () => {
-      if (commentTextElement instanceof HTMLTextAreaElement) {
-        commentTextElement.value = he.encode(commentTextElement.value);
+      commentTextElement.value = he.encode(commentTextElement.value);
+    };
+
+    const commentTextInputHandler = () => {
+      commentTextElement.setCustomValidity('');
+    };
+
+    const commentValidationHandler = () => {
+      if (commentTextElement.validity.valueMissing) {
+        commentTextElement.setCustomValidity('Комментарий не может быть пустым!');
+        return;
       }
+      commentTextElement.setCustomValidity('');
     };
 
     newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
-    commentTextElement?.addEventListener('change', commentTextChangeHandler);
+    commentTextElement.addEventListener('change', commentTextChangeHandler);
+    commentTextElement.addEventListener('input', commentTextInputHandler);
+    commentTextElement.addEventListener('invalid', commentValidationHandler);
   }
 
   public updateCommentsCount(): void {
