@@ -27,6 +27,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use((request, response, next) => {
+  if (request.method.includes('OPTIONS')) {
+    next();
+  }
+
   const isAuthPassed = AUTH_REGEXP.test(request.headers.authorization);
   if (!isAuthPassed) {
     return response.status(401).json(new AuthorizationError());
@@ -36,6 +40,9 @@ app.use((request, response, next) => {
 
 app.use((_, response, next) => {
   response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.setHeader('Access-Control-Allow-Headers', 'Authorization, Origin, Content-Type');
+  response.setHeader('Access-Control-Max-Age', '86400');
   next();
 });
 
