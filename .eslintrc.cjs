@@ -37,5 +37,11 @@ module.exports = {
         'allowTemplateLiterals': true,
       },
     ],
+    '@typescript-eslint/unbound-method': [
+      'error',
+      {
+        'ignoreStatic': true,
+      },
+    ],
   },
 };

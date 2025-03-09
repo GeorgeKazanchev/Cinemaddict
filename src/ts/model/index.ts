@@ -12,6 +12,7 @@ import getFormattedDuration from './get-formatted-duration';
 import getFormattedReleaseDate from './get-formatted-release-date';
 import getLimitedDescription from './get-limited-description';
 import getMinDate from './get-min-date';
+import getRandomString from './get-random-string';
 import getRank from './get-rank';
 import getRatingClassname from './get-rating-classname';
 import * as Statistics from './get-statistics';
@@ -26,6 +27,7 @@ import type Emotion from './types/emotion';
 import type Film from './types/film';
 import type FilmInfo from './types/film-info';
 import type FilmsSummary from './types/films-summary';
+import type LocalComment from './types/local-comment';
 import type ReleaseInfo from './types/release-info';
 import type UserDetails from './types/user-details';
 
@@ -39,6 +41,7 @@ export {
   Film,
   FilmInfo,
   FilmsSummary,
+  LocalComment,
   ReleaseInfo,
   UserDetails,
   Handlers,
@@ -50,6 +53,7 @@ export {
   getFormattedReleaseDate,
   getLimitedDescription,
   getMinDate,
+  getRandomString,
   getRank,
   getRatingClassname,
   renderStatisticsChart,
