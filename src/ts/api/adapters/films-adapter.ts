@@ -3,7 +3,7 @@ import type FilmDto from '../types/film-dto';
 
 export default class FilmsAdapter {
   public static fromDtos(dtos: FilmDto[]): Film[] {
-    return dtos.map((dto) => this.fromDto(dto));
+    return dtos.map((dto) => FilmsAdapter.fromDto(dto));
   }
 
   public static fromDto(dto: FilmDto): Film {

@@ -2,7 +2,6 @@ import {
   Comment, Constants, Film, Filter, SortType, StatisticsPeriod,
 } from '../model';
 import mockComments from './mock-comments';
-import films from './mock-films';
 
 export type State = {
   comments: Comment[];
@@ -15,7 +14,7 @@ export type State = {
 
 const initialState: State = {
   comments: mockComments,
-  films,
+  films: [],
   filter: Filter.All,
   period: StatisticsPeriod.AllTime,
   shownFilmsCount: Constants.FILMS_PORTION_SIZE,

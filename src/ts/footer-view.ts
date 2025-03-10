@@ -10,15 +10,32 @@ export default class FooterView extends AbstractView {
   private _model: Model;
 
   public get template(): string {
-    const { state } = this._model;
-    const totalFilmsCount = state.films.length;
+    const statistics = this._getStatisticsTemplate();
 
     return `
       <footer class="footer">
         <section class="footer__logo logo logo--smaller">Cinemaddict</section>
         <section class="footer__statistics">
-          <p>${totalFilmsCount} ${totalFilmsCount === 1 ? 'movie' : 'movies'} inside</p>
+          ${statistics}
         </section>
       </footer>`;
+  }
+
+  public updateFilmsCount(): void {
+    const statisticsElement = this.element.querySelector('.footer__statistics');
+    if (!statisticsElement) {
+      throw new Error('No statistics element found in the footer');
+    }
+
+    statisticsElement.innerHTML = this._getStatisticsTemplate();
+  }
+
+  private _getStatisticsTemplate(): string {
+    const { state } = this._model;
+    const totalFilmsCount = state.films.length;
+
+    return (
+      `<p>${totalFilmsCount} ${totalFilmsCount === 1 ? 'movie' : 'movies'} inside</p>`
+    );
   }
 }

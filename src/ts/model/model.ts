@@ -12,12 +12,17 @@ import {
   StatisticsPeriod,
 } from '.';
 
+type LoadingState = 'pending' | 'success' | 'error';
+
 export default class Model {
   constructor(state: State) {
     this._state = state;
+    this.filmsLoadingState = 'pending';
   }
 
   private _state: State;
+
+  public filmsLoadingState: LoadingState;
 
   public get state(): State {
     return Object.freeze(this._state);
@@ -72,6 +77,13 @@ export default class Model {
       throw new Error(`Not comment found with id ${id}`);
     }
     return comment;
+  }
+
+  public setFilms(films: Film[]): void {
+    this._state = {
+      ...this._state,
+      films,
+    };
   }
 
   public setFilter(filter: Filter): void {

@@ -135,7 +135,16 @@ export default class FilmsView extends AbstractView {
   }
 
   private _getTitle(): string {
-    return this._model.areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+    switch (this._model.filmsLoadingState) {
+      case 'pending':
+        return 'Loading...';
+      case 'error':
+        return 'An error occurred. Try again later';
+      case 'success':
+        return this._model.areFilmsShown ? 'All movies. Upcoming' : 'There are no movies in our database';
+      default:
+        throw new Error('An incorrect films loading state is obtained');
+    }
   }
 
   private _getFilmCardViewBy(filmId: string): FilmCardView | null {

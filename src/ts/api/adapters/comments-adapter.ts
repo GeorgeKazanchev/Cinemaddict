@@ -4,7 +4,7 @@ import LocalCommentDto from '../types/local-comment-dto';
 
 export default class CommentsAdapter {
   public static fromDtos(dtos: CommentDto[]): Comment[] {
-    return dtos.map((dto) => this.fromDto(dto));
+    return dtos.map((dto) => CommentsAdapter.fromDto(dto));
   }
 
   public static fromDto(dto: CommentDto): Comment {

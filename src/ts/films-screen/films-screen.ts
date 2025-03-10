@@ -1,3 +1,4 @@
+import Api from '../api/api';
 import Application from '../application';
 import FooterView from '../footer-view';
 import HeaderView from '../header-view';
@@ -17,6 +18,8 @@ export default class FilmsScreen {
   constructor(model: Model) {
     this._model = model;
 
+    this._loadFilms();
+
     this._headerView = new HeaderView(this._model);
     this._filmsView = new FilmsView(this._model);
     this._sortPanelView = new SortPanelView(this._model);
@@ -24,6 +27,7 @@ export default class FilmsScreen {
       model: this._model,
       isFilmsScreen: true,
     });
+    this._footerView = new FooterView(this._model);
 
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._navigationPanelView.onStatisticsOpen = this._onStatisticsOpen.bind(this);
@@ -40,6 +44,7 @@ export default class FilmsScreen {
   private _navigationPanelView: NavigationPanelView;
   private _sortPanelView: SortPanelView;
   private _filmsView: FilmsView;
+  private _footerView: FooterView;
   private _element: Element | null = null;
 
   public get element(): Element {
@@ -58,9 +63,29 @@ export default class FilmsScreen {
     this._element = document.createElement('div');
     this._element.append(this._headerView.element);
     this._element.append(mainElement);
-    this._element.append(new FooterView(this._model).element);
+    this._element.append(this._footerView.element);
 
     return this._element;
+  }
+
+  private _loadFilms(): void {
+    Api.loadFilms()
+      .then((films) => {
+        this._model.setFilms(films);
+        this._model.filmsLoadingState = 'success';
+      })
+      .then(() => {
+        this._headerView.updateRank();
+        this._filmsView.updateShownFilms();
+        this._filmsView.updateShowMoreButton();
+        this._navigationPanelView.updateFilmsSummary();
+        this._sortPanelView.updateVisibility();
+        this._footerView.updateFilmsCount();
+      })
+      .catch(() => {
+        this._model.filmsLoadingState = 'error';
+        this._filmsView.updateShownFilms();
+      });
   }
 
   private _onFiltration(selectedFilter: Filter): void {
