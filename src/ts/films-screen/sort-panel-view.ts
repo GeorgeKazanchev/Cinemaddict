@@ -41,6 +41,12 @@ export default class SortPanelView extends AbstractView {
       </ul>`;
   }
 
+  public get element(): Element {
+    const element = super.element;
+    this._updateVisibility(element);
+    return element;
+  }
+
   public bind(): void {
     const sortButtonElements = this.element.querySelectorAll('.sort__button');
 
@@ -85,11 +91,15 @@ export default class SortPanelView extends AbstractView {
   }
 
   public updateVisibility(): void {
+    this._updateVisibility(this.element);
+  }
+
+  private _updateVisibility(element: Element): void {
     const isVisible = this._model.areFilmsShown;
     if (isVisible) {
-      this.element.classList.remove('hidden');
+      element.classList.remove('hidden');
     } else {
-      this.element.classList.add('hidden');
+      element.classList.add('hidden');
     }
   }
 }

@@ -29,6 +29,7 @@ app.use(express.static('public'));
 app.use((request, response, next) => {
   if (request.method.includes('OPTIONS')) {
     next();
+    return;
   }
 
   const isAuthPassed = AUTH_REGEXP.test(request.headers.authorization);

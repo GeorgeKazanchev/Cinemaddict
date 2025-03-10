@@ -54,9 +54,7 @@ export default class FilmsScreen {
     const mainElement = document.createElement('main');
     mainElement.classList.add('main');
     mainElement.append(this._navigationPanelView.element);
-    if (this._model.areFilmsShown) {
-      mainElement.append(this._sortPanelView.element);
-    }
+    mainElement.append(this._sortPanelView.element);
     mainElement.append(this._filmsView.element);
 
     this._element = document.createElement('div');
