@@ -16,30 +16,31 @@ export default class CommentsView extends AbstractView {
     super();
     this._model = model;
     this._filmId = filmId;
+    this._onCommentDelete = onCommentDelete;
 
     const comments = this._model.getComments(this._filmId);
     this._commentCardViews = comments
-      .map((comment) => new CommentCardView({ model, commentId: comment.id }));
+      .map((comment) => new CommentCardView({ model: this._model, commentId: comment.id }));
 
-    this._commentCardViews.forEach((view) => {
-      view.onCommentDelete = onCommentDelete; //  eslint-disable-line no-param-reassign
-    });
+    this._bindCommentCardsListeners();
   }
 
   private _model: Model;
   private _filmId: string;
   private _commentCardViews: CommentCardView[];
+  private _onCommentDelete: Handlers.CommentDeleteHandler;
 
   public get template(): string {
-    const comments = this._model.getComments(this._filmId);
+    const commentsCount = this._model.getCommentsCount(this._filmId);
+    const commentsTemplate = this._getCommentsTemplate();
 
     return `
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
-          <span class="film-details__comments-count">${comments.length}</span>
+          <span class="film-details__comments-count">${commentsCount}</span>
         </h3>
 
-        <ul class="film-details__comments-list"></ul>
+        ${commentsTemplate}
 
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
@@ -126,6 +127,14 @@ export default class CommentsView extends AbstractView {
     commentTextElement.addEventListener('invalid', commentValidationHandler);
   }
 
+  public updateShownComments(): void {
+    const comments = this._model.getComments(this._filmId);
+    this._commentCardViews = comments
+      .map((comment) => new CommentCardView({ model: this._model, commentId: comment.id }));
+    this._bindCommentCardsListeners();
+    this._updateCommentsContainer();
+  }
+
   public updateCommentsCount(): void {
     const commentsCount = this._model.getComments(this._filmId).length;
     const commentsCountElement = this.element.querySelector('.film-details__comments-count');
@@ -166,9 +175,50 @@ export default class CommentsView extends AbstractView {
     });
   }
 
+  private _updateCommentsContainer(): void {
+    let commentsContainerElement = this.element.querySelector('.film-details__comments-list');
+    commentsContainerElement?.remove();
+
+    const commentsTitleElement = this.element.querySelector('.film-details__comments-title');
+    if (!commentsTitleElement) {
+      throw new Error('No comments title element found');
+    }
+
+    const commentsTemplate = this._getCommentsTemplate();
+    commentsContainerElement = getElementFromTemplate(commentsTemplate);
+    commentsTitleElement.after(commentsContainerElement);
+
+    const areCommentsLoaded = this._model.commentsLoadingStates.get(this._filmId) === 'success';
+    if (areCommentsLoaded) {
+      this._commentCardViews.forEach((view) => {
+        commentsContainerElement.append(view.element);
+      });
+    }
+  }
+
+  private _getCommentsTemplate(): string {
+    const loadingState = this._model.commentsLoadingStates.get(this._filmId);
+    switch (loadingState) {
+      case 'pending':
+        return `<p class="film-details__comments-list">Loading...</p>`;
+      case 'error':
+        return `<p class="film-details__comments-list">The comments are not loaded. Try again later</p>`;
+      case 'success':
+        return `<ul class="film-details__comments-list"></ul>`;
+      default:
+        throw new Error('An incorrect comments loading state is obtained');
+    }
+  }
+
   private _getEmotionImageElement(emotionName: string): Element {
     const { imgSrc } = getEmotionByName(emotionName);
     const template = `<img src="${imgSrc}" width="55" height="55" alt="emoji-${emotionName}">`;
     return getElementFromTemplate(template);
+  }
+
+  private _bindCommentCardsListeners(): void {
+    this._commentCardViews.forEach((view) => {
+      view.onCommentDelete = this._onCommentDelete; //  eslint-disable-line no-param-reassign
+    });
   }
 }

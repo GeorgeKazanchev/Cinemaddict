@@ -18,11 +18,13 @@ export default class Model {
   constructor(state: State) {
     this._state = state;
     this.filmsLoadingState = 'pending';
+    this.commentsLoadingStates = this._getCommentsLoadingStates(this._state.films);
   }
 
   private _state: State;
 
   public filmsLoadingState: LoadingState;
+  public commentsLoadingStates: Map<string, LoadingState>;
 
   public get state(): State {
     return Object.freeze(this._state);
@@ -63,6 +65,11 @@ export default class Model {
     return this._state.comments.filter((comment) => commentsIds.includes(comment.id));
   }
 
+  public getCommentsCount(filmId: string): number {
+    const { commentsIds } = this.getFilmById(filmId);
+    return commentsIds.length;
+  }
+
   public getFilmById(id: string): Film {
     const film = this._state.films.find((item) => item.id === id);
     if (!film) {
@@ -84,6 +91,8 @@ export default class Model {
       ...this._state,
       films,
     };
+
+    this.commentsLoadingStates = this._getCommentsLoadingStates(films);
   }
 
   public setFilter(filter: Filter): void {
@@ -105,6 +114,13 @@ export default class Model {
 
   public setStatisticsPeriod(period: StatisticsPeriod): void {
     this._state = { ...this._state, period };
+  }
+
+  public addComments(comments: Comment[]): void {
+    this._state = {
+      ...this._state,
+      comments: this._state.comments.concat(comments),
+    };
   }
 
   public resetShownFilms(): void {
@@ -144,6 +160,14 @@ export default class Model {
   public onFavoriteChange(film: Film): void {
     const { userDetails } = film;
     userDetails.isFavorite = !userDetails.isFavorite;
+  }
+
+  private _getCommentsLoadingStates(films: Film[]): Map<string, LoadingState> {
+    const commentsLoadingStates = new Map<string, LoadingState>();
+    films.forEach((film) => {
+      commentsLoadingStates.set(film.id, 'pending');
+    });
+    return commentsLoadingStates;
   }
 
   private _getInitShownFilmsCount(filter: Filter): number {

@@ -1,3 +1,4 @@
+import Api from '../api/api';
 import { Comment, Handlers } from '../model';
 import Model from '../model/model';
 import PopupView from './popup-view';
@@ -20,6 +21,11 @@ export default class Popup {
     onFavoriteChange,
     onCommentDelete,
   }: Props) {
+    this._model = model;
+    this._filmId = filmId;
+
+    this._loadComments();
+
     //  Выполняется логика, пришедшая снаружи, а также собственная логика
     const handleCommentDelete = (comment: Comment) => {
       onCommentDelete(comment);
@@ -40,10 +46,30 @@ export default class Popup {
     this._popupView.onCommentSubmit = this._onCommentSubmit.bind(this);
   }
 
+  private _model: Model;
+  private _filmId: string;
   private _popupView: PopupView;
 
   public get element(): Element {
     return this._popupView.element;
+  }
+
+  private _loadComments(): void {
+    const areCommentsLoaded = this._model.commentsLoadingStates.get(this._filmId) === 'success';
+    if (areCommentsLoaded) {
+      return;
+    }
+
+    Api.loadComments(this._filmId)
+      .then((comments) => {
+        this._model.addComments(comments);
+        this._model.commentsLoadingStates.set(this._filmId, 'success');
+        this._popupView.updateShownComments();
+      })
+      .catch(() => {
+        this._model.commentsLoadingStates.set(this._filmId, 'error');
+        this._popupView.updateShownComments();
+      });
   }
 
   private _onClose(): void {

@@ -120,6 +120,10 @@ export default class PopupView extends AbstractView {
     this._commentsView.deleteCommentCard(commentId);
   }
 
+  public updateShownComments(): void {
+    this._commentsView.updateShownComments();
+  }
+
   public updateCommentsCount(): void {
     this._commentsView.updateCommentsCount();
   }

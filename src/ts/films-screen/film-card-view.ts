@@ -26,7 +26,7 @@ export default class FilmCardView extends AbstractView {
   }
 
   public get template(): string {
-    const commentsCount = this._model.getComments(this._filmId).length;
+    const commentsCount = this._model.getCommentsCount(this._filmId);
     const { info, userDetails } = this._model.getFilmById(this.filmId);
 
     return `
