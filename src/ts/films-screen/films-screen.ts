@@ -3,7 +3,6 @@ import Application from '../application';
 import FooterView from '../footer-view';
 import HeaderView from '../header-view';
 import {
-  Comment,
   Film,
   Filter,
   SortType,
@@ -183,8 +182,7 @@ export default class FilmsScreen {
     this._sortPanelView.updateVisibility();
   }
 
-  private _onCommentDelete(film: Film, comment: Comment): void {
-    this._model.deleteComment(comment, film.id);
+  private _onCommentDelete(film: Film): void {
     this._filmsView.updateCommentsCount(film);
   }
 }

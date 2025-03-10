@@ -23,14 +23,9 @@ export default class Popup {
   }: Props) {
     this._model = model;
     this._filmId = filmId;
+    this._onCommentDeleteFilmsScreen = onCommentDelete;
 
     this._loadComments();
-
-    //  Выполняется логика, пришедшая снаружи, а также собственная логика
-    const handleCommentDelete = (comment: Comment) => {
-      onCommentDelete(comment);
-      this._onCommentDelete(comment);
-    };
 
     this._popupView = new PopupView({
       model,
@@ -39,7 +34,7 @@ export default class Popup {
       onWatchlistChange,
       onWatchedChange,
       onFavoriteChange,
-      onCommentDelete: handleCommentDelete,
+      onCommentDelete: this._onCommentDelete.bind(this),
     });
 
     this._popupView.onClose = this._onClose.bind(this);
@@ -49,6 +44,7 @@ export default class Popup {
   private _model: Model;
   private _filmId: string;
   private _popupView: PopupView;
+  private _onCommentDeleteFilmsScreen: Handlers.CommentDeleteHandler;
 
   public get element(): Element {
     return this._popupView.element;
@@ -77,8 +73,17 @@ export default class Popup {
   }
 
   private _onCommentDelete(comment: Comment): void {
-    this._popupView.deleteCommentCard(comment.id);
-    this._popupView.updateCommentsCount();
+    this._popupView.makeDeleteButtonEnabled(comment.id, false);
+    Api.deleteComment(comment.id)
+      .then(() => {
+        this._model.deleteComment(comment, this._filmId);
+        this._popupView.updateShownComments();
+        this._popupView.updateCommentsCount();
+        this._onCommentDeleteFilmsScreen(comment);
+      })
+      .catch(() => {
+        this._popupView.makeDeleteButtonEnabled(comment.id, true);
+      });
   }
 
   private _onCommentSubmit(): void {

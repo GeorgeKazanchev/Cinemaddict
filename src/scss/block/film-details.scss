@@ -340,6 +340,16 @@ $contols-border-color: #31353f;
   &:hover {
     opacity: 0.7;
   }
+
+  &:disabled {
+    color: $light-gray;
+    text-decoration: none;
+    cursor: auto;
+  }
+
+  &:hover:disabled {
+    opacity: 1.0;
+  }
 }
 
 .film-details__new-comment {

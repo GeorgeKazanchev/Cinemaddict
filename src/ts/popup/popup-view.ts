@@ -116,16 +116,16 @@ export default class PopupView extends AbstractView {
   public onCommentSubmit(): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
-  public deleteCommentCard(commentId: string): void {
-    this._commentsView.deleteCommentCard(commentId);
-  }
-
   public updateShownComments(): void {
     this._commentsView.updateShownComments();
   }
 
   public updateCommentsCount(): void {
     this._commentsView.updateCommentsCount();
+  }
+
+  public makeDeleteButtonEnabled(commentId: string, isEnabled: boolean): void {
+    this._commentsView.makeDeleteButtonEnabled(commentId, isEnabled);
   }
 
   public resetNewCommentText(): void {

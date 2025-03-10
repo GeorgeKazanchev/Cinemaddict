@@ -143,15 +143,9 @@ export default class CommentsView extends AbstractView {
     }
   }
 
-  public deleteCommentCard(commentId: string): void {
-    //  Удаляется только вьюшка комментария, сам комментарий из массива удаляется "снаружи"
-    const cardIndex = this._commentCardViews.findIndex((view) => view.commentId === commentId);
-    const commentCardView = this._commentCardViews[cardIndex];
-    this._commentCardViews.splice(cardIndex, 1);
-
-    if (commentCardView) {
-      commentCardView.element.remove();
-    }
+  public makeDeleteButtonEnabled(commentId: string, isEnabled: boolean): void {
+    const commentCardView = this._commentCardViews.find((view) => view.commentId === commentId);
+    commentCardView?.makeDeleteButtonEnabled(isEnabled);
   }
 
   public resetNewCommentText(): void {

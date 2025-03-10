@@ -59,4 +59,14 @@ export default class CommentCardView extends AbstractView {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onCommentDelete(comment: Comment): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public makeDeleteButtonEnabled(isEnabled: boolean): void {
+    const deleteElement = this.element.querySelector('.film-details__comment-delete');
+    if (!(deleteElement instanceof HTMLButtonElement)) {
+      throw new Error('No delete button found');
+    }
+
+    deleteElement.textContent = isEnabled ? 'Delete' : 'Deleting...';
+    deleteElement.disabled = !isEnabled;
+  }
 }
