@@ -21,7 +21,7 @@ export default class CommentsAdapter {
     return {
       comment: comment.text,
       date: comment.date.toISOString(),
-      emotion: comment.emotion.type.toLowerCase(),
+      emotion: comment.emotion.toLowerCase(),
     };
   }
 }

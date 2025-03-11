@@ -1,8 +1,6 @@
-import type Emotion from './emotion';
-
 type LocalComment = {
   date: Date;
-  emotion: Emotion;
+  emotion: string;
   text: string;
 };
 

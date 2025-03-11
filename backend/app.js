@@ -88,7 +88,7 @@ commentsRouter.post('/:filmId', (request, response) => {
   }
 
   const comment = request.body;
-  const { updatedFilm, filmComments } = addCommentToFilm(comment, film);
+  const { film: updatedFilm, comments: filmComments } = addCommentToFilm(comment, film);
 
   response.json({
     film: updatedFilm,

@@ -6,7 +6,6 @@ export const getTestFilms = (): Film[] => (
     {
       commentsIds: [
         '50a689fb-90e9-48f8-937e-8028029b8fe8',
-        '1addf30c-170e-414a-92bb-0975c8c3f242',
       ],
       id: '841c7b78-f1f0-4635-9b67-82b9fcfb2675',
       info: {
@@ -162,7 +161,6 @@ export const getDtoTestFilms = (): FilmDto[] => (
       id: '841c7b78-f1f0-4635-9b67-82b9fcfb2675',
       comments: [
         '50a689fb-90e9-48f8-937e-8028029b8fe8',
-        '1addf30c-170e-414a-92bb-0975c8c3f242',
       ],
       film_info: {
         title: 'The Man with the Golden Arm',

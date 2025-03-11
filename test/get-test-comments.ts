@@ -62,7 +62,7 @@ export const getDtoTestComments = (): CommentDto[] => (
 export const getTestLocalComment = (): LocalComment => (
   {
     date: new Date('1999-12-11T00:00:00.000Z'),
-    emotion: Emotions.smile,
+    emotion: 'smile',
 
     text: 'This great movie brought out into the open the horrors of heroin addiction. It captured the struggle of a '
     + 'man, Frankie Machine, with a "monkey on his back". Frank Sinatra did his homework, well. The acting is '

@@ -4,10 +4,10 @@ import {
   Comment,
   LocalComment,
 } from '../model';
+import CommentPostResponseAdapter from './adapters/comment-post-response-adapter';
 import CommentsAdapter from './adapters/comments-adapter';
 import FilmsAdapter from './adapters/films-adapter';
 import RequestMethod from './enums/request-method';
-import CommentPostResponse from './types/comment-post-response';
 
 const SERVER_PORT = 8081;
 const RANDOM_STRING_LENGTH = 10;
@@ -42,6 +42,7 @@ const checkStatus = (response: Response): Response => {
   throw new Error(`${response.status}: ${response.statusText}`);
 };
 
+//  eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toJSON = (response: Response): Promise<any> => response.json();
 
 export default class Api {
@@ -70,14 +71,15 @@ export default class Api {
       .then(FilmsAdapter.fromDto);
   }
 
-  public static createComment(comment: LocalComment, filmId: string): Promise<CommentPostResponse> {
+  public static createComment(comment: LocalComment, filmId: string): Promise<[Film, Comment[]]> {
     const body = JSON.stringify(CommentsAdapter.toDto(comment));
     return fetch(
       `${baseUrl}/comments/${filmId}`,
       getFetchOptions(RequestMethod.POST, body),
     )
       .then(checkStatus)
-      .then(toJSON);
+      .then(toJSON)
+      .then(CommentPostResponseAdapter.fromDto);
   }
 
   public static deleteComment(id: string): Promise<void> {
