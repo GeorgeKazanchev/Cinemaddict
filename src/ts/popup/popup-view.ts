@@ -111,10 +111,16 @@ export default class PopupView extends AbstractView {
     }) as EventListener);
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   public onClose(): void { }
   public onCommentSubmit(): void { }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public getNewCommentText(): string {
+    return this._commentsView.getNewCommentText();
+  }
+
+  public getNewCommentEmotion(): string {
+    return this._commentsView.getNewCommentEmotion();
+  }
 
   public updateShownComments(): void {
     this._commentsView.updateShownComments();
@@ -128,11 +134,19 @@ export default class PopupView extends AbstractView {
     this._commentsView.makeDeleteButtonEnabled(commentId, isEnabled);
   }
 
+  public makeCommentFormEnabled(isEnabled: boolean): void {
+    this._commentsView.makeCommentFormEnabled(isEnabled);
+  }
+
   public resetNewCommentText(): void {
     this._commentsView.resetNewCommentText();
   }
 
-  public resetSelectedEmotion(): void {
-    this._commentsView.resetSelectedEmotion();
+  public resetNewCommentEmotion(): void {
+    this._commentsView.resetNewCommentEmotion();
+  }
+
+  public shakeCommentForm(): void {
+    this._commentsView.shakeCommentForm();
   }
 }

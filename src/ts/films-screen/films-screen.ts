@@ -126,7 +126,7 @@ export default class FilmsScreen {
       onWatchlistChange: this._onWatchlistChange.bind(this),
       onWatchedChange: this._onWatchedChange.bind(this),
       onFavoriteChange: this._onFavoriteChange.bind(this),
-      onCommentDelete: this._onCommentDelete.bind(this, film),
+      onCommentsCountChange: this._onCommentsCountChange.bind(this, film),
     });
 
     document.body.append(popup.element);
@@ -180,7 +180,7 @@ export default class FilmsScreen {
     this._sortPanelView.updateVisibility();
   }
 
-  private _onCommentDelete(film: Film): void {
+  private _onCommentsCountChange(film: Film): void {
     this._filmsView.updateCommentsCount(film);
   }
 }

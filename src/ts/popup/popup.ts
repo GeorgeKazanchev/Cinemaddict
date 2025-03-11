@@ -1,3 +1,4 @@
+import he from 'he';
 import Api from '../api/api';
 import { Comment, Handlers } from '../model';
 import Model from '../model/model';
@@ -6,7 +7,7 @@ import PopupView from './popup-view';
 type Props = {
   filmId: string;
   model: Model;
-  onCommentDelete: Handlers.CommentDeleteHandler;
+  onCommentsCountChange: Handlers.NoParamHandler;
   onFavoriteChange: Handlers.FilmControlsHandler;
   onWatchedChange: Handlers.FilmControlsHandler;
   onWatchlistChange: Handlers.FilmControlsHandler;
@@ -19,11 +20,11 @@ export default class Popup {
     onWatchlistChange,
     onWatchedChange,
     onFavoriteChange,
-    onCommentDelete,
+    onCommentsCountChange,
   }: Props) {
     this._model = model;
     this._filmId = filmId;
-    this._onCommentDeleteFilmsScreen = onCommentDelete;
+    this._onCommentsCountChange = onCommentsCountChange;
 
     this._loadComments();
 
@@ -44,7 +45,7 @@ export default class Popup {
   private _model: Model;
   private _filmId: string;
   private _popupView: PopupView;
-  private _onCommentDeleteFilmsScreen: Handlers.CommentDeleteHandler;
+  private _onCommentsCountChange: Handlers.NoParamHandler;
 
   public get element(): Element {
     return this._popupView.element;
@@ -79,7 +80,7 @@ export default class Popup {
         this._model.deleteComment(comment, this._filmId);
         this._popupView.updateShownComments();
         this._popupView.updateCommentsCount();
-        this._onCommentDeleteFilmsScreen(comment);
+        this._onCommentsCountChange();
       })
       .catch(() => {
         this._popupView.makeDeleteButtonEnabled(comment.id, true);
@@ -87,7 +88,32 @@ export default class Popup {
   }
 
   private _onCommentSubmit(): void {
-    this._popupView.resetNewCommentText();
-    this._popupView.resetSelectedEmotion();
+    this._popupView.makeCommentFormEnabled(false);
+
+    const comment = {
+      date: new Date(),
+      emotion: this._popupView.getNewCommentEmotion(),
+      text: he.encode(this._popupView.getNewCommentText()),
+    };
+
+    Api.createComment(comment, this._filmId)
+      .then(([film, comments]) => {
+        this._model.updateCommentsForFilm(film, comments);
+      })
+      .then(() => {
+        this._popupView.updateShownComments();
+        this._popupView.updateCommentsCount();
+        this._popupView.resetNewCommentText();
+        this._popupView.resetNewCommentEmotion();
+        this._onCommentsCountChange();
+      })
+      .catch(() => {
+        this._popupView.shakeCommentForm();
+      })
+      .then(() => {
+        this._popupView.makeCommentFormEnabled(true);
+      })
+      // Нужно, чтобы избавиться от ошибки линтера @typescript-eslint/no-floating-promises
+      .catch(() => Promise.resolve());
   }
 }

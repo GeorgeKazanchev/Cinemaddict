@@ -7,6 +7,7 @@ $dark-gray: #212126;
 $light-gray: #979797;
 $gold: #f5df00;
 $contols-border-color: #31353f;
+$opacity-disabled: 0.5;
 
 .film-details {
   position: fixed;
@@ -356,7 +357,14 @@ $contols-border-color: #31353f;
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0;
   padding-bottom: 60px;
+  border: 0;
+
+  &--error {
+    animation-name: shake;
+    animation-duration: 0.5s;
+  }
 }
 
 .film-details__add-emoji-label {
@@ -372,6 +380,10 @@ $contols-border-color: #31353f;
   font-size: 55px;
   line-height: 1;
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.film-details__new-comment:disabled .film-details__add-emoji-label {
+  opacity: $opacity-disabled;
 }
 
 .film-details__comment-label {
@@ -392,6 +404,10 @@ $contols-border-color: #31353f;
   background-color: #f6f6f6;
   resize: none;
 
+  &:disabled {
+    opacity: $opacity-disabled;
+  }
+
   &::placeholder {
     color: $dark-gray;
   }
@@ -405,8 +421,12 @@ $contols-border-color: #31353f;
   color: $dark-gray;
   background-color: $gold;
 
-  &:hover {
+  &:hover:enabled {
     background-color: rgba($gold, 0.8);
+  }
+
+  &:disabled {
+    opacity: $opacity-disabled;
   }
 }
 
@@ -436,4 +456,31 @@ $contols-border-color: #31353f;
 
 .film-details__emoji-item:checked + .film-details__emoji-label {
   opacity: 1;
+}
+
+.film-details__new-comment:disabled .film-details__emoji-label {
+  opacity: $opacity-disabled;
+  cursor: auto;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+      transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+      transform: translateX(-10px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+      transform: translateX(10px);
+  }
 }

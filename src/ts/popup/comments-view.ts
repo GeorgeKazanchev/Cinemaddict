@@ -1,4 +1,3 @@
-import he from 'he';
 import AbstractView from '../abstract-view';
 import { Handlers, getEmotionByName } from '../model';
 import Model from '../model/model';
@@ -18,17 +17,17 @@ export default class CommentsView extends AbstractView {
     this._filmId = filmId;
     this._onCommentDelete = onCommentDelete;
 
-    const comments = this._model.getComments(this._filmId);
-    this._commentCardViews = comments
-      .map((comment) => new CommentCardView({ model: this._model, commentId: comment.id }));
-
+    this._commentCardViews = this._getCommentCardViews();
     this._bindCommentCardsListeners();
   }
 
   private _model: Model;
   private _filmId: string;
   private _commentCardViews: CommentCardView[];
+
   private _onCommentDelete: Handlers.CommentDeleteHandler;
+  private _commentFormElement: HTMLFieldSetElement | null = null;
+  private _commentTextElement: HTMLTextAreaElement | null = null;
 
   public get template(): string {
     const commentsCount = this._model.getCommentsCount(this._filmId);
@@ -42,7 +41,7 @@ export default class CommentsView extends AbstractView {
 
         ${commentsTemplate}
 
-        <div class="film-details__new-comment">
+        <fieldset class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
           <label class="film-details__comment-label">
             <textarea class="film-details__comment-input" required placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -66,7 +65,7 @@ export default class CommentsView extends AbstractView {
               <img src="./img/emoji/angry.png" width="30" height="30" alt="emoji">
             </label>
           </div>
-        </div>
+        </fieldset>
       </section>`;
   }
 
@@ -83,12 +82,31 @@ export default class CommentsView extends AbstractView {
     return element;
   }
 
-  public bind(): void {
-    const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
-    const commentTextElement = this.element.querySelector('.film-details__comment-input');
-    if (!(commentTextElement instanceof HTMLTextAreaElement)) {
+  public get commentFormElement(): HTMLFieldSetElement {
+    if (this._commentFormElement) {
+      return this._commentFormElement;
+    }
+    const element = this.element.querySelector('.film-details__new-comment');
+    if (!(element instanceof HTMLFieldSetElement)) {
+      throw new Error('No comment submit form found');
+    }
+    return element;
+  }
+
+  public get commentTextElement(): HTMLTextAreaElement {
+    if (this._commentTextElement) {
+      return this._commentTextElement;
+    }
+    const textElement = this.element.querySelector('.film-details__comment-input');
+    if (!(textElement instanceof HTMLTextAreaElement)) {
       throw new Error('No comment text field found');
     }
+    return textElement;
+  }
+
+  public bind(): void {
+    //  Изменение выбранной эмоции
+    const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
 
     const emotionChangeHandler = (evt: Event) => {
       const inputElement = getTargetAsElement(evt);
@@ -105,9 +123,10 @@ export default class CommentsView extends AbstractView {
       emotionContainerElement?.append(emotionImageElement);
     };
 
-    const commentTextChangeHandler = () => {
-      commentTextElement.value = he.encode(commentTextElement.value);
-    };
+    newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
+
+    //  Добавление обработчиков на поле ввода комментария
+    const { commentTextElement } = this;
 
     const commentTextInputHandler = () => {
       commentTextElement.setCustomValidity('');
@@ -121,16 +140,21 @@ export default class CommentsView extends AbstractView {
       commentTextElement.setCustomValidity('');
     };
 
-    newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
-    commentTextElement.addEventListener('change', commentTextChangeHandler);
     commentTextElement.addEventListener('input', commentTextInputHandler);
     commentTextElement.addEventListener('invalid', commentValidationHandler);
   }
 
+  public getNewCommentText(): string {
+    return this.commentTextElement.value;
+  }
+
+  public getNewCommentEmotion(): string {
+    const selectedEmotionElement = this.element.querySelector('.film-details__emoji-item:checked');
+    return selectedEmotionElement instanceof HTMLInputElement ? selectedEmotionElement.value : '';
+  }
+
   public updateShownComments(): void {
-    const comments = this._model.getComments(this._filmId);
-    this._commentCardViews = comments
-      .map((comment) => new CommentCardView({ model: this._model, commentId: comment.id }));
+    this._commentCardViews = this._getCommentCardViews();
     this._bindCommentCardsListeners();
     this._updateCommentsContainer();
   }
@@ -148,14 +172,15 @@ export default class CommentsView extends AbstractView {
     commentCardView?.makeDeleteButtonEnabled(isEnabled);
   }
 
-  public resetNewCommentText(): void {
-    const commentTextElement = this.element.querySelector('.film-details__comment-input');
-    if (commentTextElement instanceof HTMLTextAreaElement) {
-      commentTextElement.value = '';
-    }
+  public makeCommentFormEnabled(isEnabled: boolean): void {
+    this.commentFormElement.disabled = !isEnabled;
   }
 
-  public resetSelectedEmotion(): void {
+  public resetNewCommentText(): void {
+    this.commentTextElement.value = '';
+  }
+
+  public resetNewCommentEmotion(): void {
     const emotionContainerElement = this.element.querySelector('.film-details__add-emoji-label');
     if (emotionContainerElement) {
       emotionContainerElement.innerHTML = '';
@@ -167,6 +192,14 @@ export default class CommentsView extends AbstractView {
         input.checked = false; //  eslint-disable-line no-param-reassign
       }
     });
+  }
+
+  public shakeCommentForm(): void {
+    // Здесь используется хак, чтобы форма могла "трястить" более одного раза
+    this.commentFormElement.classList.remove('film-details__new-comment--error');
+    // eslint-disable-next-line no-self-assign
+    this.commentFormElement.scrollTop = this.commentFormElement.scrollTop;
+    this.commentFormElement.classList.add('film-details__new-comment--error');
   }
 
   private _updateCommentsContainer(): void {
@@ -188,6 +221,12 @@ export default class CommentsView extends AbstractView {
         commentsContainerElement.append(view.element);
       });
     }
+  }
+
+  private _getCommentCardViews(): CommentCardView[] {
+    const comments = this._model.getComments(this._filmId);
+    return comments
+      .map((comment) => new CommentCardView({ model: this._model, commentId: comment.id }));
   }
 
   private _getCommentsTemplate(): string {

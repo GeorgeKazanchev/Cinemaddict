@@ -123,6 +123,21 @@ export default class Model {
     };
   }
 
+  public updateCommentsForFilm(film: Film, comments: Comment[]): void {
+    const foundFilm = this.getFilmById(film.id);
+    foundFilm.commentsIds = film.commentsIds;
+
+    const commentsIds = comments.map((comment) => comment.id);
+    const commentsNotRelatedToFilm = this._state.comments.filter((comment) => (
+      !commentsIds.includes(comment.id)
+    ));
+
+    this._state = {
+      ...this._state,
+      comments: commentsNotRelatedToFilm.concat(comments),
+    };
+  }
+
   public resetShownFilms(): void {
     const shownFilmsCount = Math.min(Constants.FILMS_PORTION_SIZE, this.filteredFilms.length);
     this._state = { ...this._state, shownFilmsCount };
