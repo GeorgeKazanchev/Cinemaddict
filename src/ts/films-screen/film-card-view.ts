@@ -101,17 +101,20 @@ export default class FilmCardView extends AbstractView {
 
     const watchlistClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchlistChange(this._getFilmFromModel());
+      this.onWatchlistChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     const watchedClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchedChange(this._getFilmFromModel());
+      this.onWatchedChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     const favoriteClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onFavoriteChange(this._getFilmFromModel());
+      this.onFavoriteChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     titleElement?.addEventListener('click', popupOpenHandler);
@@ -124,9 +127,9 @@ export default class FilmCardView extends AbstractView {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onPopupOpen(film: Film): void { }
-  public onWatchlistChange(film: Film): void { }
-  public onWatchedChange(film: Film): void { }
-  public onFavoriteChange(film: Film): void { }
+  public onWatchlistChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onWatchedChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onFavoriteChange(film: Film): Promise<void> { return Promise.resolve(); }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateWatchlistButton(): void {

@@ -122,12 +122,28 @@ export default class PopupView extends AbstractView {
     return this._commentsView.getNewCommentEmotion();
   }
 
+  public updateWatchlistButton(): void {
+    this._controlsView.updateWatchlistButton();
+  }
+
+  public updateWatchedButton(): void {
+    this._controlsView.updateWatchedButton();
+  }
+
+  public updateFavoriteButton(): void {
+    this._controlsView.updateFavoriteButton();
+  }
+
   public updateShownComments(): void {
     this._commentsView.updateShownComments();
   }
 
   public updateCommentsCount(): void {
     this._commentsView.updateCommentsCount();
+  }
+
+  public makeControlsEnabled(isEnabled: boolean): void {
+    this._controlsView.makeControlsEnabled(isEnabled);
   }
 
   public makeDeleteButtonEnabled(commentId: string, isEnabled: boolean): void {

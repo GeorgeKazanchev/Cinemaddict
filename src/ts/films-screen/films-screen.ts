@@ -138,8 +138,8 @@ export default class FilmsScreen {
     }
   }
 
-  private _onWatchlistChange(film: Film): void {
-    this._onFilmUpdate(
+  private _onWatchlistChange(film: Film): Promise<void> {
+    return this._onFilmUpdate(
       film,
       (initFilm) => {
         const sentFilm = cloneDeep(initFilm) as Film;
@@ -158,8 +158,8 @@ export default class FilmsScreen {
     );
   }
 
-  private _onWatchedChange(film: Film): void {
-    this._onFilmUpdate(
+  private _onWatchedChange(film: Film): Promise<void> {
+    return this._onFilmUpdate(
       film,
       (initFilm) => {
         const sentFilm = cloneDeep(initFilm) as Film;
@@ -180,8 +180,8 @@ export default class FilmsScreen {
     );
   }
 
-  private _onFavoriteChange(film: Film): void {
-    this._onFilmUpdate(
+  private _onFavoriteChange(film: Film): Promise<void> {
+    return this._onFilmUpdate(
       film,
       (initFilm) => {
         const sentFilm = cloneDeep(initFilm) as Film;
@@ -204,11 +204,11 @@ export default class FilmsScreen {
     film: Film,
     getSentFilm: (film: Film) => Film,
     onViewsUpdate: () => void,
-  ): void {
+  ): Promise<void> {
     this._filmsView.makeControlsEnabled(film.id, false);
     const sentFilm = getSentFilm(film);
 
-    Api.updateFilm(sentFilm)
+    return Api.updateFilm(sentFilm)
       .then((updatedFilm) => {
         this._model.updateFilm(updatedFilm);
         onViewsUpdate();

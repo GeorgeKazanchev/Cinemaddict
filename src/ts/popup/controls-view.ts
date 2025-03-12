@@ -21,7 +21,7 @@ export default class ControlsView extends AbstractView {
     const { userDetails } = this._model.getFilmById(this._filmId);
 
     return `
-      <section class="film-details__controls">
+      <fieldset class="film-details__controls">
         <input
           type="checkbox"
           class="film-details__control-input visually-hidden"
@@ -48,7 +48,31 @@ export default class ControlsView extends AbstractView {
           ${userDetails.isFavorite ? 'checked' : ''}
         >
         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
-      </section>`;
+      </fieldset>`;
+  }
+
+  public get watchlistInputElement(): HTMLInputElement {
+    const element = this.element.querySelector('#watchlist');
+    if (!(element instanceof HTMLInputElement)) {
+      throw new Error('No watchlist input found');
+    }
+    return element;
+  }
+
+  public get watchedInputElement(): HTMLInputElement {
+    const element = this.element.querySelector('#watched');
+    if (!(element instanceof HTMLInputElement)) {
+      throw new Error('No watched input found');
+    }
+    return element;
+  }
+
+  public get favoriteInputElement(): HTMLInputElement {
+    const element = this.element.querySelector('#favorite');
+    if (!(element instanceof HTMLInputElement)) {
+      throw new Error('No favorite input found');
+    }
+    return element;
   }
 
   public bind(): void {
@@ -57,15 +81,18 @@ export default class ControlsView extends AbstractView {
     const favoriteButtonElement = this.element.querySelector('.film-details__control-label--favorite');
 
     const watchlistClickHandler = () => {
-      this.onWatchlistChange(this._getFilmFromModel());
+      this.onWatchlistChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     const watchedClickHandler = () => {
-      this.onWatchedChange(this._getFilmFromModel());
+      this.onWatchedChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     const favoriteClickHandler = () => {
-      this.onFavoriteChange(this._getFilmFromModel());
+      this.onFavoriteChange(this._getFilmFromModel())
+        .catch(() => Promise.resolve());
     };
 
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
@@ -74,10 +101,32 @@ export default class ControlsView extends AbstractView {
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  public onWatchlistChange(film: Film): void { }
-  public onWatchedChange(film: Film): void { }
-  public onFavoriteChange(film: Film): void { }
+  public onWatchlistChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onWatchedChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onFavoriteChange(film: Film): Promise<void> { return Promise.resolve(); }
   /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public updateWatchlistButton(): void {
+    const { userDetails } = this._model.getFilmById(this._filmId);
+    this.watchlistInputElement.checked = userDetails.inWatchlist;
+  }
+
+  public updateWatchedButton(): void {
+    const { userDetails } = this._model.getFilmById(this._filmId);
+    this.watchedInputElement.checked = userDetails.isWatched;
+  }
+
+  public updateFavoriteButton(): void {
+    const { userDetails } = this._model.getFilmById(this._filmId);
+    this.favoriteInputElement.checked = userDetails.isFavorite;
+  }
+
+  public makeControlsEnabled(isEnabled: boolean): void {
+    if (!(this.element instanceof HTMLFieldSetElement)) {
+      throw new Error('No controls container found');
+    }
+    this.element.disabled = !isEnabled;
+  }
 
   private _getFilmFromModel(): Film {
     return this._model.getFilmById(this._filmId);

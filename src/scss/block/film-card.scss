@@ -2,7 +2,6 @@
 @use '/src/scss/mixins.scss' as mixins;
 
 $loader-radius: 20px;
-$opacity-disabled: 0.5;
 
 .film-card {
   position: relative;
@@ -130,7 +129,7 @@ $opacity-disabled: 0.5;
     opacity: 0.7;
   }
 
-  &:disabled:after {
+  &:disabled::after {
     content: '';
     position: absolute;
     top: calc(50% - #{$loader-radius} / 2);

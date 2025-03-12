@@ -1,6 +1,6 @@
 import he from 'he';
 import Api from '../api/api';
-import { Comment, Handlers } from '../model';
+import { Comment, Film, Handlers } from '../model';
 import Model from '../model/model';
 import PopupView from './popup-view';
 
@@ -24,7 +24,11 @@ export default class Popup {
   }: Props) {
     this._model = model;
     this._filmId = filmId;
+
     this._onCommentsCountChange = onCommentsCountChange;
+    this._onWatchlistChangeFilmsScreen = onWatchlistChange;
+    this._onWatchedChangeFilmsScreen = onWatchedChange;
+    this._onFavoriteChangeFilmsScreen = onFavoriteChange;
 
     this._loadComments();
 
@@ -32,9 +36,9 @@ export default class Popup {
       model,
       filmId,
       onClose: this._onClose.bind(this),
-      onWatchlistChange,
-      onWatchedChange,
-      onFavoriteChange,
+      onWatchlistChange: this._onWatchlistChange.bind(this),
+      onWatchedChange: this._onWatchedChange.bind(this),
+      onFavoriteChange: this._onFavoriteChange.bind(this),
       onCommentDelete: this._onCommentDelete.bind(this),
     });
 
@@ -46,6 +50,9 @@ export default class Popup {
   private _filmId: string;
   private _popupView: PopupView;
   private _onCommentsCountChange: Handlers.NoParamHandler;
+  private _onWatchlistChangeFilmsScreen: Handlers.FilmControlsHandler;
+  private _onWatchedChangeFilmsScreen: Handlers.FilmControlsHandler;
+  private _onFavoriteChangeFilmsScreen: Handlers.FilmControlsHandler;
 
   public get element(): Element {
     return this._popupView.element;
@@ -71,6 +78,33 @@ export default class Popup {
 
   private _onClose(): void {
     this.element.remove();
+  }
+
+  private _onWatchlistChange(film: Film): Promise<void> {
+    this._popupView.makeControlsEnabled(false);
+    return this._onWatchlistChangeFilmsScreen(film)
+      .then(() => {
+        this._popupView.makeControlsEnabled(true);
+        this._popupView.updateWatchlistButton();
+      });
+  }
+
+  private _onWatchedChange(film: Film): Promise<void> {
+    this._popupView.makeControlsEnabled(false);
+    return this._onWatchedChangeFilmsScreen(film)
+      .then(() => {
+        this._popupView.makeControlsEnabled(true);
+        this._popupView.updateWatchedButton();
+      });
+  }
+
+  private _onFavoriteChange(film: Film): Promise<void> {
+    this._popupView.makeControlsEnabled(false);
+    return this._onFavoriteChangeFilmsScreen(film)
+      .then(() => {
+        this._popupView.makeControlsEnabled(true);
+        this._popupView.updateFavoriteButton();
+      });
   }
 
   private _onCommentDelete(comment: Comment): void {

@@ -3,6 +3,7 @@
 
 $container-width: 1070px;
 $comment-field-height: 50px;
+$loader-radius: 20px;
 $font-size-regular: 21px;
 $dark-gray: #212126;
 $light-gray: #979797;
@@ -202,9 +203,18 @@ $opacity-disabled: 0.5;
   width: $container-width;
   margin: 0 auto;
   padding: 22px 50px;
+  border: 0;
   border-top: 1px solid $contols-border-color;
   border-bottom: 1px solid $contols-border-color;
   user-select: none;
+
+  &:disabled {
+    opacity: $opacity-disabled;
+  }
+
+  &--error {
+    @include mixins.shakeAnimation;
+  }
 }
 
 .film-details__control-label {
@@ -267,6 +277,26 @@ $opacity-disabled: 0.5;
 
   &+.film-details__control-label--favorite::before {
     background-image: url("./../img/icons/icon-favorite-active.svg");
+  }
+}
+
+.film-details__control-input:disabled+.film-details__control-label {
+  cursor: auto;
+
+  &:hover {
+    opacity: 1.0;
+  }
+
+  &::before {
+    width: $loader-radius;
+    height: $loader-radius;
+    border-top: 3px solid #ffffff;
+    border-right: 3px solid transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: none;
+
+    @include mixins.rotationAnimation;
   }
 }
 
@@ -350,7 +380,7 @@ $opacity-disabled: 0.5;
   }
 
   &:hover:disabled {
-    opacity: 1.0;
+    opacity: 1;
   }
 }
 

@@ -53,9 +53,9 @@ export default class FilmsView extends AbstractView {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   public onShowMore(): void { }
   public onPopupOpen(film: Film): void { }
-  public onWatchlistChange(film: Film): void { }
-  public onWatchedChange(film: Film): void { }
-  public onFavoriteChange(film: Film): void { }
+  public onWatchlistChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onWatchedChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onFavoriteChange(film: Film): Promise<void> { return Promise.resolve(); }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateShownFilms(): void {
