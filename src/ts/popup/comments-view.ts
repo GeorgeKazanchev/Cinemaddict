@@ -86,10 +86,13 @@ export default class CommentsView extends AbstractView {
     if (this._commentFormElement) {
       return this._commentFormElement;
     }
+
     const element = this.element.querySelector('.film-details__new-comment');
     if (!(element instanceof HTMLFieldSetElement)) {
       throw new Error('No comment submit form found');
     }
+
+    this._commentFormElement = element;
     return element;
   }
 
@@ -97,11 +100,14 @@ export default class CommentsView extends AbstractView {
     if (this._commentTextElement) {
       return this._commentTextElement;
     }
-    const textElement = this.element.querySelector('.film-details__comment-input');
-    if (!(textElement instanceof HTMLTextAreaElement)) {
+
+    const element = this.element.querySelector('.film-details__comment-input');
+    if (!(element instanceof HTMLTextAreaElement)) {
       throw new Error('No comment text field found');
     }
-    return textElement;
+
+    this._commentTextElement = element;
+    return element;
   }
 
   public bind(): void {

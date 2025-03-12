@@ -21,6 +21,8 @@ export default class FilmCardView extends AbstractView {
   private _model: Model;
   private _filmId: string;
 
+  private _controlsContainerElement: HTMLFieldSetElement | null = null;
+
   public get filmId(): string {
     return this._filmId;
   }
@@ -41,35 +43,49 @@ export default class FilmCardView extends AbstractView {
         <img src="${info.posterSrc}" alt="${info.title}" class="film-card__poster">
         <p class="film-card__description">${getLimitedDescription(info.description)}</p>
         <a class="link film-card__comments">${this._getCommentsCountText(commentsCount)}</a>
-        <div class="film-card__controls">
-          <button
-            class="film-card__controls-item button film-card__controls-item--add-to-watchlist
-              ${userDetails.inWatchlist ? BUTTON_ACTIVE_CLASSNAME : ''}"
-            type="button"
-          >
-            Add to watchlist
-          </button>
-          <button
-            class="film-card__controls-item button film-card__controls-item--mark-as-watched
-              ${userDetails.isWatched ? BUTTON_ACTIVE_CLASSNAME : ''}"
-            type="button"
-          >
-            Mark as watched
-          </button>
-          <button
-            class="film-card__controls-item button film-card__controls-item--favorite
-              ${userDetails.isFavorite ? BUTTON_ACTIVE_CLASSNAME : ''}"
-            type="button"
-          >
-            Mark as favorite
-          </button>
-        </div>
+        <form action="#" method="post" autocomplete="off">
+          <fieldset class="film-card__controls">
+            <button
+              class="film-card__controls-item button film-card__controls-item--add-to-watchlist
+                ${userDetails.inWatchlist ? BUTTON_ACTIVE_CLASSNAME : ''}"
+              type="button"
+            >
+              Add to watchlist
+            </button>
+            <button
+              class="film-card__controls-item button film-card__controls-item--mark-as-watched
+                ${userDetails.isWatched ? BUTTON_ACTIVE_CLASSNAME : ''}"
+              type="button"
+            >
+              Mark as watched
+            </button>
+            <button
+              class="film-card__controls-item button film-card__controls-item--favorite
+                ${userDetails.isFavorite ? BUTTON_ACTIVE_CLASSNAME : ''}"
+              type="button"
+            >
+              Mark as favorite
+            </button>
+          </fieldset>
+        </form>
       </article>`;
   }
 
-  public bind(): void {
-    const film = this._model.getFilmById(this._filmId);
+  public get controlsContainerElement() {
+    if (this._controlsContainerElement) {
+      return this._controlsContainerElement;
+    }
 
+    const element = this.element.querySelector('.film-card__controls');
+    if (!(element instanceof HTMLFieldSetElement)) {
+      throw new Error('No controls container found');
+    }
+
+    this._controlsContainerElement = element;
+    return element;
+  }
+
+  public bind(): void {
     const titleElement = this.element.querySelector('.film-card__title');
     const posterElement = this.element.querySelector('.film-card__poster');
     const commentsElement = this.element.querySelector('.film-card__comments');
@@ -80,22 +96,22 @@ export default class FilmCardView extends AbstractView {
 
     const popupOpenHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onPopupOpen(film);
+      this.onPopupOpen(this._getFilmFromModel());
     };
 
     const watchlistClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchlistChange(film);
+      this.onWatchlistChange(this._getFilmFromModel());
     };
 
     const watchedClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onWatchedChange(film);
+      this.onWatchedChange(this._getFilmFromModel());
     };
 
     const favoriteClickHandler = (evt: Event) => {
       evt.preventDefault();
-      this.onFavoriteChange(film);
+      this.onFavoriteChange(this._getFilmFromModel());
     };
 
     titleElement?.addEventListener('click', popupOpenHandler);
@@ -136,7 +152,22 @@ export default class FilmCardView extends AbstractView {
     }
   }
 
+  public makeControlsEnabled(isEnabled: boolean): void {
+    this.controlsContainerElement.disabled = !isEnabled;
+  }
+
+  public shakeControls(): void {
+    // Здесь используется хак, чтобы форма могла "трястить" более одного раза
+    this.controlsContainerElement.classList.remove('film-card__controls--error');
+    this.controlsContainerElement.scrollBy(0, 0);
+    this.controlsContainerElement.classList.add('film-card__controls--error');
+  }
+
   private _getCommentsCountText(count: number): string {
     return `${count} ${count === 1 ? 'comment' : 'comments'}`;
+  }
+
+  private _getFilmFromModel(): Film {
+    return this._model.getFilmById(this._filmId);
   }
 }

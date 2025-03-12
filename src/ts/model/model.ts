@@ -161,20 +161,15 @@ export default class Model {
     this._state = { ...this._state, comments };
   }
 
-  public onWatchlistChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.inWatchlist = !userDetails.inWatchlist;
-  }
+  public updateFilm(film: Film): void {
+    const filmIndex = this._state.films.findIndex((item) => item.id === film.id);
+    const updatedFilms = [...this._state.films];
+    updatedFilms.splice(filmIndex, 1, film);
 
-  public onWatchedChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.isWatched = !userDetails.isWatched;
-    userDetails.watchingDate = userDetails.isWatched ? new Date() : null;
-  }
-
-  public onFavoriteChange(film: Film): void {
-    const { userDetails } = film;
-    userDetails.isFavorite = !userDetails.isFavorite;
+    this._state = {
+      ...this._state,
+      films: updatedFilms,
+    };
   }
 
   private _getCommentsLoadingStates(films: Film[]): Map<string, LoadingState> {

@@ -109,6 +109,16 @@ export default class FilmsView extends AbstractView {
     }
   }
 
+  public makeControlsEnabled(filmId: string, isEnabled: boolean): void {
+    const filmCardView = this._getFilmCardViewBy(filmId);
+    filmCardView?.makeControlsEnabled(isEnabled);
+  }
+
+  public shakeControls(filmId: string): void {
+    const filmCardView = this._getFilmCardViewBy(filmId);
+    filmCardView?.shakeControls();
+  }
+
   private _updateFilmsContainer(): void {
     let filmsContainerElement = this.element.querySelector('.films-list__container');
 

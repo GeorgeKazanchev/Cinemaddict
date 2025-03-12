@@ -52,22 +52,20 @@ export default class ControlsView extends AbstractView {
   }
 
   public bind(): void {
-    const film = this._model.getFilmById(this._filmId);
-
     const watchlistButtonElement = this.element.querySelector('.film-details__control-label--watchlist');
     const watchedButtonElement = this.element.querySelector('.film-details__control-label--watched');
     const favoriteButtonElement = this.element.querySelector('.film-details__control-label--favorite');
 
     const watchlistClickHandler = () => {
-      this.onWatchlistChange(film);
+      this.onWatchlistChange(this._getFilmFromModel());
     };
 
     const watchedClickHandler = () => {
-      this.onWatchedChange(film);
+      this.onWatchedChange(this._getFilmFromModel());
     };
 
     const favoriteClickHandler = () => {
-      this.onFavoriteChange(film);
+      this.onFavoriteChange(this._getFilmFromModel());
     };
 
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
@@ -80,4 +78,8 @@ export default class ControlsView extends AbstractView {
   public onWatchedChange(film: Film): void { }
   public onFavoriteChange(film: Film): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  private _getFilmFromModel(): Film {
+    return this._model.getFilmById(this._filmId);
+  }
 }

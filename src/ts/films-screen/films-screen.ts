@@ -7,6 +7,7 @@ import {
   Filter,
   SortType,
 } from '../model';
+import cloneDeep from '../model/clone-deep';
 import Model from '../model/model';
 import NavigationPanelView from '../navigation-panel-view';
 import Popup from '../popup/popup';
@@ -138,40 +139,88 @@ export default class FilmsScreen {
   }
 
   private _onWatchlistChange(film: Film): void {
-    const { state } = this._model;
-
-    this._model.onWatchlistChange(film);
-    this._navigationPanelView.updateFilmsSummary();
-    this._filmsView.updateWatchlistButton(film);
-
-    if (state.filter === Filter.Watchlist) {
-      this._updateFilmsSection();
-    }
+    this._onFilmUpdate(
+      film,
+      (initFilm) => {
+        const sentFilm = cloneDeep(initFilm) as Film;
+        const { userDetails } = sentFilm;
+        userDetails.inWatchlist = !userDetails.inWatchlist;
+        return sentFilm;
+      },
+      () => {
+        this._navigationPanelView.updateFilmsSummary();
+        this._filmsView.updateWatchlistButton(film);
+        const { state } = this._model;
+        if (state.filter === Filter.Watchlist) {
+          this._updateFilmsSection();
+        }
+      },
+    );
   }
 
   private _onWatchedChange(film: Film): void {
-    this._model.onWatchedChange(film);
-
-    const { state } = this._model;
-    this._navigationPanelView.updateFilmsSummary();
-    this._filmsView.updateWatchedButton(film);
-    this._headerView.updateRank();
-
-    if (state.filter === Filter.Watched) {
-      this._updateFilmsSection();
-    }
+    this._onFilmUpdate(
+      film,
+      (initFilm) => {
+        const sentFilm = cloneDeep(initFilm) as Film;
+        const { userDetails } = sentFilm;
+        userDetails.isWatched = !userDetails.isWatched;
+        userDetails.watchingDate = userDetails.isWatched ? new Date() : null;
+        return sentFilm;
+      },
+      () => {
+        this._navigationPanelView.updateFilmsSummary();
+        this._filmsView.updateWatchedButton(film);
+        this._headerView.updateRank();
+        const { state } = this._model;
+        if (state.filter === Filter.Watched) {
+          this._updateFilmsSection();
+        }
+      },
+    );
   }
 
   private _onFavoriteChange(film: Film): void {
-    const { state } = this._model;
+    this._onFilmUpdate(
+      film,
+      (initFilm) => {
+        const sentFilm = cloneDeep(initFilm) as Film;
+        const { userDetails } = sentFilm;
+        userDetails.isFavorite = !userDetails.isFavorite;
+        return sentFilm;
+      },
+      () => {
+        this._navigationPanelView.updateFilmsSummary();
+        this._filmsView.updateFavoriteButton(film);
+        const { state } = this._model;
+        if (state.filter === Filter.Favorite) {
+          this._updateFilmsSection();
+        }
+      },
+    );
+  }
 
-    this._model.onFavoriteChange(film);
-    this._navigationPanelView.updateFilmsSummary();
-    this._filmsView.updateFavoriteButton(film);
+  private _onFilmUpdate(
+    film: Film,
+    getSentFilm: (film: Film) => Film,
+    onViewsUpdate: () => void,
+  ): void {
+    this._filmsView.makeControlsEnabled(film.id, false);
+    const sentFilm = getSentFilm(film);
 
-    if (state.filter === Filter.Favorite) {
-      this._updateFilmsSection();
-    }
+    Api.updateFilm(sentFilm)
+      .then((updatedFilm) => {
+        this._model.updateFilm(updatedFilm);
+        onViewsUpdate();
+      })
+      .catch(() => {
+        this._filmsView.shakeControls(film.id);
+      })
+      .then(() => {
+        this._filmsView.makeControlsEnabled(film.id, true);
+      })
+      // Нужно, чтобы избавиться от ошибки линтера @typescript-eslint/no-floating-promises
+      .catch(() => Promise.resolve());
   }
 
   private _updateFilmsSection(): void {
