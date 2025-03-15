@@ -65,7 +65,7 @@ export default class PopupView extends AbstractView {
   }
 
   public get element(): Element {
-    const element = super.element;
+    const element = this.createElementLazy();
 
     const topContainerElement = element.querySelector('.film-details__top-container');
     if (topContainerElement) {

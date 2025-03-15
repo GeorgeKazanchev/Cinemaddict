@@ -28,7 +28,7 @@ export default class FilmsView extends AbstractView {
   }
 
   public get element(): Element {
-    const element = super.element;
+    const element = this.createElementLazy();
     const filmsContainerElement = element.querySelector('.films-list__container');
     if (filmsContainerElement && filmsContainerElement.children.length === 0) {
       this._filmCardViews.forEach((view) => {

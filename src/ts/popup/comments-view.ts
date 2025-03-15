@@ -70,7 +70,7 @@ export default class CommentsView extends AbstractView {
   }
 
   public get element(): Element {
-    const element = super.element;
+    const element = this.createElementLazy();
     const commentsContainerElement = element.querySelector('.film-details__comments-list');
 
     if (commentsContainerElement && commentsContainerElement.children.length === 0) {

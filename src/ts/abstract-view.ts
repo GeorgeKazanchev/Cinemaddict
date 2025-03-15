@@ -6,14 +6,7 @@ export default abstract class AbstractView {
   public abstract get template(): string;
 
   public get element(): Element {
-    if (this._element) {
-      return this._element;
-    }
-
-    this._element = this.render();
-    this.bind();
-
-    return this._element;
+    return this.createElementLazy();
   }
 
   public render(): Element {
@@ -23,5 +16,16 @@ export default abstract class AbstractView {
   public bind(): void {
     //  An empty method. May be overriden outside the module.
     //  Bind event handlers if required
+  }
+
+  protected createElementLazy(): Element {
+    if (this._element) {
+      return this._element;
+    }
+
+    this._element = this.render();
+    this.bind();
+
+    return this._element;
   }
 }

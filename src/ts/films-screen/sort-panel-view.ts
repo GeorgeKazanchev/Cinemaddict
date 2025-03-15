@@ -42,7 +42,7 @@ export default class SortPanelView extends AbstractView {
   }
 
   public get element(): Element {
-    const element = super.element;
+    const element = this.createElementLazy();
     this._updateVisibility(element);
     return element;
   }

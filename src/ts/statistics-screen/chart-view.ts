@@ -18,7 +18,7 @@ export default class ChartView extends AbstractView {
   }
 
   public get element(): Element {
-    const element = super.element;
+    const element = this.createElementLazy();
     const canvasElement = element.querySelector('.statistic__chart');
     if (canvasElement instanceof HTMLCanvasElement) {
       this._renderChart(canvasElement);
