@@ -1,6 +1,11 @@
 import { it, describe, expect } from '@jest/globals';
 import FilmsAdapter from '../../src/ts/api/adapters/films-adapter';
-import { getDtoFilms, getEmptyFilm, getFilms } from '../get-films';
+import {
+  getDtoEmptyFilm,
+  getDtoFilms,
+  getEmptyFilm,
+  getFilms,
+} from '../get-films';
 
 describe('Films adapter', () => {
   describe('From DTOs', () => {
@@ -12,15 +17,21 @@ describe('Films adapter', () => {
   });
 
   describe('From DTO', () => {
-    it('should return a correct film', () => {
+    it('should return a correct film which has been watched', () => {
       const dto = getDtoFilms()[0];
       const expectedFilm = getFilms()[0];
+      expect(FilmsAdapter.fromDto(dto)).toStrictEqual(expectedFilm);
+    });
+
+    it('should return a correct film which has not been watched', () => {
+      const dto = getDtoEmptyFilm();
+      const expectedFilm = getEmptyFilm();
       expect(FilmsAdapter.fromDto(dto)).toStrictEqual(expectedFilm);
     });
   });
 
   describe('To DTO', () => {
-    it('should return a correct DTO for the film which have been watched', () => {
+    it('should return a correct DTO for the film which has been watched', () => {
       const film = getFilms()[0];
       const expectedDto = getDtoFilms()[0];
       expect(FilmsAdapter.toDto(film)).toStrictEqual(expectedDto);

@@ -28,6 +28,10 @@ describe('Get watched films function', () => {
   it('should return 0 films if all the films are out of range', () => {
     expect(getWatchedFilmsSince(new Date(2025, 0, 1), films)).toHaveLength(0);
   });
+
+  it('should return 0 films if there are no watched films', () => {
+    expect(getWatchedFilmsSince(new Date(2025, 0, 1), [getEmptyFilm()])).toHaveLength(0);
+  });
 });
 
 describe('Get total duration function', () => {

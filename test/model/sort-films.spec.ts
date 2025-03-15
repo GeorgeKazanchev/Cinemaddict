@@ -1,7 +1,7 @@
 import { it, describe, expect } from '@jest/globals';
 import SortType from '../../src/ts/model/enums/sort-type';
 import sortFilms from '../../src/ts/model/sort-films';
-import { getFilms } from '../get-films';
+import { getEmptyFilm, getFilms } from '../get-films';
 
 describe('Sort films function', () => {
   it('should return an empty array if the same one was passed', () => {
@@ -27,6 +27,12 @@ describe('Sort films function', () => {
     for (let i = 0; i < sortedFilms.length - 1; ++i) {
       expect(sortedFilms[i].info.release.date >= sortedFilms[i + 1].info.release.date).toBe(true);
     }
+  });
+
+  it('should not swap films if they have the same release date', () => {
+    const films = [getEmptyFilm(), getEmptyFilm()];
+    const sortedFilms = sortFilms(films, SortType.Date);
+    expect(sortedFilms[0].info.release.date).toStrictEqual(sortedFilms[1].info.release.date);
   });
 
   it('should correctly sort by rating', () => {

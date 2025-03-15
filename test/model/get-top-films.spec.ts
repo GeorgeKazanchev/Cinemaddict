@@ -54,6 +54,14 @@ describe('Get top commented films function', () => {
     expect(getTopCommentedFilms(films)).toHaveLength(films.length);
   });
 
+  it('should correctly deals with the films with different numbers of comments', () => {
+    const testFilms = [getEmptyFilm(), getEmptyFilm(), getEmptyFilm()];
+    testFilms[0].commentsIds = ['Comment 1', 'Comment 2'];
+    testFilms[1].commentsIds = ['Comment 3', 'Comment 4', 'Comment 5'];
+    testFilms[2].commentsIds = ['Comment 6'];
+    expect(getTopCommentedFilms(testFilms, 2)).toHaveLength(2);
+  });
+
   it('should return 2 films if films count was set to 2', () => {
     const topFilms = getTopCommentedFilms(films, 2);
     expect(topFilms).toHaveLength(2);

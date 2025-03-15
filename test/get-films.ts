@@ -236,3 +236,33 @@ export const getDtoFilms = (): FilmDto[] => (
     },
   ]
 );
+
+export const getDtoEmptyFilm = (): FilmDto => (
+  {
+    id: '',
+    comments: [],
+    film_info: {
+      title: 'Empty film',
+      alternative_title: 'Empty film',
+      total_rating: 0.0,
+      poster: '',
+      age_rating: 0,
+      director: '',
+      writers: [],
+      actors: [],
+      release: {
+        date: '1939-02-10',
+        release_country: '',
+      },
+      runtime: 0,
+      genre: [],
+      description: '',
+    },
+    user_details: {
+      watchlist: false,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  }
+);
