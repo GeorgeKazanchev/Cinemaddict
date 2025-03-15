@@ -1,3 +1,4 @@
+import cloneDeep from './clone-deep';
 import * as Constants from './consts';
 import EmotionType from './enums/emotion-type';
 import Filter from './enums/filter';
@@ -45,6 +46,7 @@ export {
   ReleaseInfo,
   UserDetails,
   Handlers,
+  cloneDeep,
   filterFilms,
   getDurationComponents,
   getEmotionByName,

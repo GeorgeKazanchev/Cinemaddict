@@ -2,7 +2,7 @@ type IndexedObject = Record<string, unknown>;
 
 const cloneDeep = (original: unknown): unknown => {
   if (original instanceof Date) {
-    return new Date(original.getDate());
+    return new Date(original.getTime());
   }
 
   if (original instanceof RegExp) {
