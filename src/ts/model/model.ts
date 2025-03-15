@@ -47,7 +47,7 @@ export default class Model {
   }
 
   public get initShownFilmsCount(): number {
-    return this._getInitShownFilmsCount(this._state.filter);
+    return this._getInitShownFilmsCount(this._state.films, this._state.filter);
   }
 
   public get watchedFilmsInPeriod(): Film[] {
@@ -93,6 +93,7 @@ export default class Model {
     this._state = {
       ...this._state,
       films,
+      shownFilmsCount: this._getInitShownFilmsCount(films, this._state.filter),
     };
 
     this.commentsLoadingStates = this._getInitCommentsLoadingStates(films);
@@ -103,7 +104,7 @@ export default class Model {
       ...this._state,
       filter,
       sortType: SortType.Default,
-      shownFilmsCount: this._getInitShownFilmsCount(filter),
+      shownFilmsCount: this._getInitShownFilmsCount(this._state.films, filter),
     };
   }
 
@@ -190,8 +191,8 @@ export default class Model {
     return commentsLoadingStates;
   }
 
-  private _getInitShownFilmsCount(filter: Filter): number {
-    const filteredFilms = filterFilms(this._state.films, filter);
+  private _getInitShownFilmsCount(films: Film[], filter: Filter): number {
+    const filteredFilms = filterFilms(films, filter);
     return Math.min(Constants.FILMS_PORTION_SIZE, filteredFilms.length);
   }
 }
