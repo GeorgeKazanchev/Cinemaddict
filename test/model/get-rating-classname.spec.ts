@@ -18,11 +18,11 @@ describe('Get rating classname function', () => {
   });
 
   it('should throw an error if a rating is incorrect', () => {
-    expect(() => getRatingClassname(Rating.MIN - 0.1, 'classname')).toThrowError();
-    expect(() => getRatingClassname(Rating.MAX + 0.1, 'classname')).toThrowError();
+    expect(() => getRatingClassname(Rating.MIN - 0.1, 'classname')).toThrowError(RangeError);
+    expect(() => getRatingClassname(Rating.MAX + 0.1, 'classname')).toThrowError(RangeError);
   });
 
   it('should throw an error if a base classname have 0 length', () => {
-    expect(() => getRatingClassname(Rating.MAX, '')).toThrowError();
+    expect(() => getRatingClassname(Rating.MAX, '')).toThrowError(RangeError);
   });
 });

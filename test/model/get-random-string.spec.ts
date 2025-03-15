@@ -12,17 +12,17 @@ describe('Get random string function', () => {
   });
 
   it('should throw an error for an empty string', () => {
-    expect(() => getRandomString(0)).toThrowError();
+    expect(() => getRandomString(0)).toThrowError(RangeError);
   });
 
   it('should throw an error for a string with the negative length', () => {
-    expect(() => getRandomString(-1)).toThrowError();
-    expect(() => getRandomString(-10)).toThrowError();
+    expect(() => getRandomString(-1)).toThrowError(RangeError);
+    expect(() => getRandomString(-10)).toThrowError(RangeError);
   });
 
   it('should throw an error for a string with the non-integer length', () => {
-    expect(() => getRandomString(1.5)).toThrowError();
-    expect(() => getRandomString(0.1)).toThrowError();
-    expect(() => getRandomString(-0.1)).toThrowError();
+    expect(() => getRandomString(1.5)).toThrowError(RangeError);
+    expect(() => getRandomString(0.1)).toThrowError(RangeError);
+    expect(() => getRandomString(-0.1)).toThrowError(RangeError);
   });
 });

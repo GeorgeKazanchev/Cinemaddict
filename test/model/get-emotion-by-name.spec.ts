@@ -11,8 +11,8 @@ describe('Get emotion by name function', () => {
   });
 
   it('should throw an error with an incorrect emotion name', () => {
-    expect(() => getEmotionByName('fear')).toThrowError();
-    expect(() => getEmotionByName('123')).toThrowError();
-    expect(() => getEmotionByName('')).toThrowError();
+    expect(() => getEmotionByName('fear')).toThrowError(RangeError);
+    expect(() => getEmotionByName('123')).toThrowError(RangeError);
+    expect(() => getEmotionByName('')).toThrowError(RangeError);
   });
 });

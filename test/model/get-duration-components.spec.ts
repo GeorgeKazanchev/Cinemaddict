@@ -25,8 +25,8 @@ describe('Get duration components function', () => {
   });
 
   it('should throw an error if the duration is negative', () => {
-    expect(() => getDurationComponents(-0.1)).toThrowError();
-    expect(() => getDurationComponents(-1)).toThrowError();
-    expect(() => getDurationComponents(-60)).toThrowError();
+    expect(() => getDurationComponents(-0.1)).toThrowError(RangeError);
+    expect(() => getDurationComponents(-1)).toThrowError(RangeError);
+    expect(() => getDurationComponents(-60)).toThrowError(RangeError);
   });
 });

@@ -1,6 +1,5 @@
 import { it, describe, expect } from '@jest/globals';
 import getMinDate from '../../src/ts/model/get-min-date';
-
 import {
   getWatchedFilmsSince,
   getTotalDuration,
@@ -8,10 +7,9 @@ import {
   getFavoriteGenre,
   getFilmsSummary,
 } from '../../src/ts/model/get-statistics';
+import { getEmptyFilm, getFilms } from '../get-films';
 
-import { getEmptyFilm, getTestFilms } from '../get-test-films';
-
-const films = getTestFilms();
+const films = getFilms();
 const emptyFilm = getEmptyFilm();
 
 describe('Get watched films function', () => {
@@ -51,7 +49,7 @@ describe('Get films count by genres', () => {
   it('should return a correct map if 1 film was passed', () => {
     const genresToFilmsCount = getFilmsCountByGenres([films[0]]);
     genresToFilmsCount.forEach((filmsCount, genre) => {
-      expect(films[0].info.genres.includes(genre)).toBe(true);
+      expect(films[0].info.genres).toContain(genre);
       expect(filmsCount).toEqual(1);
     });
   });
@@ -102,7 +100,7 @@ describe('Get films summary function', () => {
   });
 
   it('should correctly return a non-zero object', () => {
-    const filmsSummary = getFilmsSummary(getTestFilms());
+    const filmsSummary = getFilmsSummary(getFilms());
     expect(filmsSummary.watchlistFilmsCount).toBe(1);
     expect(filmsSummary.watchedFilmsCount).toBe(3);
     expect(filmsSummary.favoriteFilmsCount).toBe(2);

@@ -1,8 +1,8 @@
 import { it, describe, expect } from '@jest/globals';
 import { getTopCommentedFilms, getTopRatedFilms } from '../../src/ts/model/get-top-films';
-import { getEmptyFilm, getTestFilms } from '../get-test-films';
+import { getEmptyFilm, getFilms } from '../get-films';
 
-const films = getTestFilms();
+const films = getFilms();
 const emptyFilm = getEmptyFilm();
 
 describe('Get top rated films function', () => {
@@ -23,9 +23,9 @@ describe('Get top rated films function', () => {
   });
 
   it('should return 2 films if films count was set to 2', () => {
-    const topRatedFilms = getTopRatedFilms(films, 2);
-    expect(topRatedFilms).toHaveLength(2);
-    expect(topRatedFilms[0].info.rating >= topRatedFilms[1].info.rating).toBe(true);
+    const topFilms = getTopRatedFilms(films, 2);
+    expect(topFilms).toHaveLength(2);
+    expect(topFilms[0].info.rating).toBeGreaterThanOrEqual(topFilms[1].info.rating);
   });
 
   it('should return 0 films if films count was set to 0', () => {
@@ -55,10 +55,9 @@ describe('Get top commented films function', () => {
   });
 
   it('should return 2 films if films count was set to 2', () => {
-    const topCommentedFilms = getTopCommentedFilms(films, 2);
-    expect(topCommentedFilms).toHaveLength(2);
-    expect(topCommentedFilms[0].commentsIds.length >= topCommentedFilms[1].commentsIds.length)
-      .toBe(true);
+    const topFilms = getTopCommentedFilms(films, 2);
+    expect(topFilms).toHaveLength(2);
+    expect(topFilms[0].commentsIds.length).toBeGreaterThanOrEqual(topFilms[1].commentsIds.length);
   });
 
   it('should return 0 films if films count was set to 0', () => {

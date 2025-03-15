@@ -1,5 +1,5 @@
 import {
-  Comment, Constants, Film, Filter, SortType, StatisticsPeriod,
+  Comment, Film, Filter, SortType, StatisticsPeriod,
 } from '../model';
 
 export type State = {
@@ -16,7 +16,7 @@ const initialState: State = {
   films: [],
   filter: Filter.All,
   period: StatisticsPeriod.AllTime,
-  shownFilmsCount: Constants.FILMS_PORTION_SIZE,
+  shownFilmsCount: 0,
   sortType: SortType.Default,
 };
 

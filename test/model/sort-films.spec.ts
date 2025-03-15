@@ -1,7 +1,7 @@
 import { it, describe, expect } from '@jest/globals';
 import SortType from '../../src/ts/model/enums/sort-type';
 import sortFilms from '../../src/ts/model/sort-films';
-import { getTestFilms } from '../get-test-films';
+import { getFilms } from '../get-films';
 
 describe('Sort films function', () => {
   it('should return an empty array if the same one was passed', () => {
@@ -9,23 +9,19 @@ describe('Sort films function', () => {
   });
 
   it('should not mutate an initial array', () => {
-    const films = getTestFilms();
+    const films = getFilms();
     const sortedFilms = sortFilms(films, SortType.Default);
     expect(sortedFilms).not.toBe(films);
   });
 
   it('should return a copy of the initial array if the sortType === Default', () => {
-    const films = getTestFilms();
+    const films = getFilms();
     const sortedFilms = sortFilms(films, SortType.Default);
-
-    expect(sortedFilms).toHaveLength(films.length);
-    for (let i = 0; i < sortedFilms.length; ++i) {
-      expect(sortedFilms[i].id).toBe(films[i].id);
-    }
+    expect(sortedFilms).toStrictEqual(films);
   });
 
   it('should correctly sort by date', () => {
-    const films = getTestFilms();
+    const films = getFilms();
     const sortedFilms = sortFilms(films, SortType.Date);
 
     for (let i = 0; i < sortedFilms.length - 1; ++i) {
@@ -34,7 +30,7 @@ describe('Sort films function', () => {
   });
 
   it('should correctly sort by rating', () => {
-    const films = getTestFilms();
+    const films = getFilms();
     const sortedFilms = sortFilms(films, SortType.Rating);
 
     for (let i = 0; i < sortFilms.length - 1; ++i) {
