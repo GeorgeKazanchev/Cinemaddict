@@ -4,9 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "lint": "eslint . --ext .ts,.js",
+    "eslint": "eslint . --ext .ts,.js",
+    "stylelint": "stylelint src/**/*.scss",
     "jest": "jest",
-    "test": "npm run lint && npm run jest",
+    "test": "npm run eslint && npm run stylelint && npm run jest",
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
     "start": "webpack serve --env port=8080"
@@ -39,6 +40,8 @@
     "sass": "1.83.1",
     "sass-loader": "16.0.4",
     "style-loader": "4.0.0",
+    "stylelint": "16.16.0",
+    "stylelint-config-standard-scss": "14.0.0",
     "ts-loader": "9.5.2",
     "ts-node": "10.9.2",
     "typescript": "5.7.3",

@@ -1,9 +1,9 @@
-@mixin shakeAnimation() {
+@mixin shake-animation() {
   animation-name: shake;
   animation-duration: 0.5s;
 }
 
-@mixin rotationAnimation() {
+@mixin rotation-animation() {
   animation-name: rotation;
   animation-duration: 1s;
   animation-timing-function: linear;
@@ -36,6 +36,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

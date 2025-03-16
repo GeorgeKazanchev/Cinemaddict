@@ -103,7 +103,7 @@ $loader-radius: 20px;
   transition: height 0.1s ease-in;
 
   &--error {
-    @include mixins.shakeAnimation;
+    @include mixins.shake-animation;
   }
 }
 
@@ -141,7 +141,7 @@ $loader-radius: 20px;
     border-radius: 50%;
     box-sizing: border-box;
 
-    @include mixins.rotationAnimation;
+    @include mixins.rotation-animation;
   }
 
   &--add-to-watchlist {

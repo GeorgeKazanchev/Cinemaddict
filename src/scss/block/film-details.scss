@@ -213,7 +213,7 @@ $opacity-disabled: 0.5;
   }
 
   &--error {
-    @include mixins.shakeAnimation;
+    @include mixins.shake-animation;
   }
 }
 
@@ -296,7 +296,7 @@ $opacity-disabled: 0.5;
     box-sizing: border-box;
     background: none;
 
-    @include mixins.rotationAnimation;
+    @include mixins.rotation-animation;
   }
 }
 
@@ -393,7 +393,7 @@ $opacity-disabled: 0.5;
   border: 0;
 
   &--error {
-    @include mixins.shakeAnimation;
+    @include mixins.shake-animation;
   }
 }
 
@@ -451,12 +451,12 @@ $opacity-disabled: 0.5;
   color: $dark-gray;
   background-color: $gold;
 
-  &:hover:enabled {
-    background-color: rgba($gold, 0.8);
-  }
-
   &:disabled {
     opacity: $opacity-disabled;
+  }
+
+  &:hover:enabled {
+    background-color: rgba($gold, 0.8);
   }
 }
 
