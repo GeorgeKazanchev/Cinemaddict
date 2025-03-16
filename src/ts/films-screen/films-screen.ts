@@ -18,7 +18,7 @@ export default class FilmsScreen {
   constructor(model: Model) {
     this._model = model;
 
-    this._loadFilms();
+    this._loadFilmsFromServer();
 
     this._headerView = new HeaderView(this._model);
     this._filmsView = new FilmsView(this._model);
@@ -66,24 +66,27 @@ export default class FilmsScreen {
     return this._element;
   }
 
-  private _loadFilms(): void {
-    Api.loadFilms()
-      .then((films) => {
-        this._model.setFilms(films);
-        this._model.filmsLoadingState = 'success';
-      })
-      .then(() => {
-        this._headerView.updateRank();
-        this._filmsView.updateShownFilms();
-        this._filmsView.updateShowMoreButton();
-        this._navigationPanelView.updateFilmsSummary();
-        this._sortPanelView.updateVisibility();
-        this._footerView.updateFilmsCount();
-      })
-      .catch(() => {
-        this._model.filmsLoadingState = 'error';
-        this._filmsView.updateShownFilms();
-      });
+  private _loadFilmsFromServer(): void {
+    this._loadFilms().catch(() => Promise.resolve());
+  }
+
+  private async _loadFilms(): Promise<void> {
+    try {
+      const films = await Api.loadFilms();
+
+      this._model.setFilms(films);
+      this._model.filmsLoadingState = 'success';
+
+      this._headerView.updateRank();
+      this._filmsView.updateShownFilms();
+      this._filmsView.updateShowMoreButton();
+      this._navigationPanelView.updateFilmsSummary();
+      this._sortPanelView.updateVisibility();
+      this._footerView.updateFilmsCount();
+    } catch {
+      this._model.filmsLoadingState = 'error';
+      this._filmsView.updateShownFilms();
+    }
   }
 
   private _onFiltration(selectedFilter: Filter): void {
@@ -124,9 +127,9 @@ export default class FilmsScreen {
     const popup = new Popup({
       model: this._model,
       filmId: film.id,
-      onWatchlistChange: this._onWatchlistChange.bind(this),
-      onWatchedChange: this._onWatchedChange.bind(this),
-      onFavoriteChange: this._onFavoriteChange.bind(this),
+      onWatchlistChange: this._changeWatchlist.bind(this),
+      onWatchedChange: this._changeWatched.bind(this),
+      onFavoriteChange: this._changeFavorite.bind(this),
       onCommentsCountChange: this._onCommentsCountChange.bind(this, film),
     });
 
@@ -138,7 +141,19 @@ export default class FilmsScreen {
     }
   }
 
-  private _onWatchlistChange(film: Film): Promise<void> {
+  private _onWatchlistChange(film: Film): void {
+    this._changeWatchlist(film).catch(() => Promise.resolve());
+  }
+
+  private _onWatchedChange(film: Film): void {
+    this._changeWatched(film).catch(() => Promise.resolve());
+  }
+
+  private _onFavoriteChange(film: Film): void {
+    this._changeFavorite(film).catch(() => Promise.resolve());
+  }
+
+  private _changeWatchlist(film: Film): Promise<void> {
     return this._onFilmUpdate(
       film,
       (initFilm) => {
@@ -158,7 +173,7 @@ export default class FilmsScreen {
     );
   }
 
-  private _onWatchedChange(film: Film): Promise<void> {
+  private _changeWatched(film: Film): Promise<void> {
     return this._onFilmUpdate(
       film,
       (initFilm) => {
@@ -180,7 +195,7 @@ export default class FilmsScreen {
     );
   }
 
-  private _onFavoriteChange(film: Film): Promise<void> {
+  private _changeFavorite(film: Film): Promise<void> {
     return this._onFilmUpdate(
       film,
       (initFilm) => {
@@ -200,7 +215,7 @@ export default class FilmsScreen {
     );
   }
 
-  private _onFilmUpdate(
+  private async _onFilmUpdate(
     film: Film,
     getSentFilm: (film: Film) => Film,
     onViewsUpdate: () => void,
@@ -208,19 +223,15 @@ export default class FilmsScreen {
     this._filmsView.makeControlsEnabled(film.id, false);
     const sentFilm = getSentFilm(film);
 
-    return Api.updateFilm(sentFilm)
-      .then((updatedFilm) => {
-        this._model.updateFilm(updatedFilm);
-        onViewsUpdate();
-      })
-      .catch(() => {
-        this._filmsView.shakeControls(film.id);
-      })
-      .then(() => {
-        this._filmsView.makeControlsEnabled(film.id, true);
-      })
-      // Нужно, чтобы избавиться от ошибки линтера @typescript-eslint/no-floating-promises
-      .catch(() => Promise.resolve());
+    try {
+      const updatedFilm = await Api.updateFilm(sentFilm);
+      this._model.updateFilm(updatedFilm);
+      onViewsUpdate();
+    } catch {
+      this._filmsView.shakeControls(film.id);
+    } finally {
+      this._filmsView.makeControlsEnabled(film.id, true);
+    }
   }
 
   private _updateFilmsSection(): void {

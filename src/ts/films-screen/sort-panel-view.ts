@@ -71,7 +71,7 @@ export default class SortPanelView extends AbstractView {
     });
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public onSort(sortType: SortType): void { }
 
   public updateActiveSortType(): void {

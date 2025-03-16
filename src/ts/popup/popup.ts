@@ -8,9 +8,9 @@ type Props = {
   filmId: string;
   model: Model;
   onCommentsCountChange: Handlers.NoParamHandler;
-  onFavoriteChange: Handlers.FilmControlsHandler;
-  onWatchedChange: Handlers.FilmControlsHandler;
-  onWatchlistChange: Handlers.FilmControlsHandler;
+  onFavoriteChange: Handlers.FilmControlAsyncHandler;
+  onWatchedChange: Handlers.FilmControlAsyncHandler;
+  onWatchlistChange: Handlers.FilmControlAsyncHandler;
 };
 
 export default class Popup {
@@ -30,7 +30,7 @@ export default class Popup {
     this._onWatchedChangeFilmsScreen = onWatchedChange;
     this._onFavoriteChangeFilmsScreen = onFavoriteChange;
 
-    this._loadComments();
+    this._loadCommentsFromServer();
 
     this._popupView = new PopupView({
       model,
@@ -50,78 +50,94 @@ export default class Popup {
   private _filmId: string;
   private _popupView: PopupView;
   private _onCommentsCountChange: Handlers.NoParamHandler;
-  private _onWatchlistChangeFilmsScreen: Handlers.FilmControlsHandler;
-  private _onWatchedChangeFilmsScreen: Handlers.FilmControlsHandler;
-  private _onFavoriteChangeFilmsScreen: Handlers.FilmControlsHandler;
+  private _onWatchlistChangeFilmsScreen: Handlers.FilmControlAsyncHandler;
+  private _onWatchedChangeFilmsScreen: Handlers.FilmControlAsyncHandler;
+  private _onFavoriteChangeFilmsScreen: Handlers.FilmControlAsyncHandler;
 
   public get element(): Element {
     return this._popupView.element;
   }
 
-  private _loadComments(): void {
+  private _loadCommentsFromServer(): void {
+    this._loadComments().catch(() => Promise.resolve());
+  }
+
+  private async _loadComments(): Promise<void> {
     const areCommentsLoaded = this._model.commentsLoadingStates.get(this._filmId) === 'success';
     if (areCommentsLoaded) {
       return;
     }
 
-    Api.loadComments(this._filmId)
-      .then((comments) => {
-        this._model.addComments(comments);
-        this._model.commentsLoadingStates.set(this._filmId, 'success');
-        this._popupView.updateShownComments();
-      })
-      .catch(() => {
-        this._model.commentsLoadingStates.set(this._filmId, 'error');
-        this._popupView.updateShownComments();
-      });
+    try {
+      const comments = await Api.loadComments(this._filmId);
+      this._model.addComments(comments);
+      this._model.commentsLoadingStates.set(this._filmId, 'success');
+      this._popupView.updateShownComments();
+    } catch {
+      this._model.commentsLoadingStates.set(this._filmId, 'error');
+      this._popupView.updateShownComments();
+    }
   }
 
   private _onClose(): void {
     this.element.remove();
   }
 
-  private _onWatchlistChange(film: Film): Promise<void> {
-    this._popupView.makeControlsEnabled(false);
-    return this._onWatchlistChangeFilmsScreen(film)
-      .then(() => {
-        this._popupView.makeControlsEnabled(true);
-        this._popupView.updateWatchlistButton();
-      });
+  private _onWatchlistChange(film: Film): void {
+    this._changeWatchlist(film).catch(() => Promise.resolve());
   }
 
-  private _onWatchedChange(film: Film): Promise<void> {
-    this._popupView.makeControlsEnabled(false);
-    return this._onWatchedChangeFilmsScreen(film)
-      .then(() => {
-        this._popupView.makeControlsEnabled(true);
-        this._popupView.updateWatchedButton();
-      });
+  private _onWatchedChange(film: Film): void {
+    this._changeWatched(film).catch(() => Promise.resolve());
   }
 
-  private _onFavoriteChange(film: Film): Promise<void> {
+  private _onFavoriteChange(film: Film): void {
+    this._changeFavorite(film).catch(() => Promise.resolve());
+  }
+
+  private async _changeWatchlist(film: Film): Promise<void> {
     this._popupView.makeControlsEnabled(false);
-    return this._onFavoriteChangeFilmsScreen(film)
-      .then(() => {
-        this._popupView.makeControlsEnabled(true);
-        this._popupView.updateFavoriteButton();
-      });
+    await this._onWatchlistChangeFilmsScreen(film);
+    this._popupView.makeControlsEnabled(true);
+    this._popupView.updateWatchlistButton();
+  }
+
+  private async _changeWatched(film: Film): Promise<void> {
+    this._popupView.makeControlsEnabled(false);
+    await this._onWatchedChangeFilmsScreen(film);
+    this._popupView.makeControlsEnabled(true);
+    this._popupView.updateWatchedButton();
+  }
+
+  private async _changeFavorite(film: Film): Promise<void> {
+    this._popupView.makeControlsEnabled(false);
+    await this._onFavoriteChangeFilmsScreen(film);
+    this._popupView.makeControlsEnabled(true);
+    this._popupView.updateFavoriteButton();
   }
 
   private _onCommentDelete(comment: Comment): void {
-    this._popupView.makeDeleteButtonEnabled(comment.id, false);
-    Api.deleteComment(comment.id)
-      .then(() => {
-        this._model.deleteComment(comment, this._filmId);
-        this._popupView.updateShownComments();
-        this._popupView.updateCommentsCount();
-        this._onCommentsCountChange();
-      })
-      .catch(() => {
-        this._popupView.makeDeleteButtonEnabled(comment.id, true);
-      });
+    this._deleteComment(comment).catch(() => Promise.resolve());
   }
 
   private _onCommentSubmit(): void {
+    this._submitComment().catch(() => Promise.resolve());
+  }
+
+  private async _deleteComment(comment: Comment): Promise<void> {
+    this._popupView.makeDeleteButtonEnabled(comment.id, false);
+    try {
+      await Api.deleteComment(comment.id);
+      this._model.deleteComment(comment, this._filmId);
+      this._popupView.updateShownComments();
+      this._popupView.updateCommentsCount();
+      this._onCommentsCountChange();
+    } catch {
+      this._popupView.makeDeleteButtonEnabled(comment.id, true);
+    }
+  }
+
+  private async _submitComment(): Promise<void> {
     this._popupView.makeCommentFormEnabled(false);
 
     const comment = {
@@ -130,24 +146,18 @@ export default class Popup {
       text: he.encode(this._popupView.getNewCommentText()),
     };
 
-    Api.createComment(comment, this._filmId)
-      .then(([film, comments]) => {
-        this._model.updateCommentsForFilm(film, comments);
-      })
-      .then(() => {
-        this._popupView.updateShownComments();
-        this._popupView.updateCommentsCount();
-        this._popupView.resetNewCommentText();
-        this._popupView.resetNewCommentEmotion();
-        this._onCommentsCountChange();
-      })
-      .catch(() => {
-        this._popupView.shakeCommentForm();
-      })
-      .then(() => {
-        this._popupView.makeCommentFormEnabled(true);
-      })
-      // Нужно, чтобы избавиться от ошибки линтера @typescript-eslint/no-floating-promises
-      .catch(() => Promise.resolve());
+    try {
+      const [film, comments] = await Api.createComment(comment, this._filmId);
+      this._model.updateCommentsForFilm(film, comments);
+      this._popupView.updateShownComments();
+      this._popupView.updateCommentsCount();
+      this._popupView.resetNewCommentText();
+      this._popupView.resetNewCommentEmotion();
+      this._onCommentsCountChange();
+    } catch {
+      this._popupView.shakeCommentForm();
+    } finally {
+      this._popupView.makeCommentFormEnabled(true);
+    }
   }
 }

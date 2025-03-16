@@ -91,7 +91,6 @@ export default class FiltersView extends AbstractView {
     });
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public onPeriodChanged(period: StatisticsPeriod): void { }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 }

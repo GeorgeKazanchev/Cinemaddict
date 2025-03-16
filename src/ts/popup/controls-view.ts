@@ -81,18 +81,15 @@ export default class ControlsView extends AbstractView {
     const favoriteButtonElement = this.element.querySelector('.film-details__control-label--favorite');
 
     const watchlistClickHandler = () => {
-      this.onWatchlistChange(this._getFilmFromModel())
-        .catch(() => Promise.resolve());
+      this.onWatchlistChange(this._getFilmFromModel());
     };
 
     const watchedClickHandler = () => {
-      this.onWatchedChange(this._getFilmFromModel())
-        .catch(() => Promise.resolve());
+      this.onWatchedChange(this._getFilmFromModel());
     };
 
     const favoriteClickHandler = () => {
-      this.onFavoriteChange(this._getFilmFromModel())
-        .catch(() => Promise.resolve());
+      this.onFavoriteChange(this._getFilmFromModel());
     };
 
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
@@ -101,9 +98,9 @@ export default class ControlsView extends AbstractView {
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  public onWatchlistChange(film: Film): Promise<void> { return Promise.resolve(); }
-  public onWatchedChange(film: Film): Promise<void> { return Promise.resolve(); }
-  public onFavoriteChange(film: Film): Promise<void> { return Promise.resolve(); }
+  public onWatchlistChange(film: Film): void { }
+  public onWatchedChange(film: Film): void { }
+  public onFavoriteChange(film: Film): void { }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateWatchlistButton(): void {
