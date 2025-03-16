@@ -7,7 +7,6 @@
 @use '/src/scss/block/films';
 @use '/src/scss/block/footer';
 @use '/src/scss/block/header';
-@use '/src/scss/block/hidden';
 @use '/src/scss/block/link';
 @use '/src/scss/block/logo';
 @use '/src/scss/block/main-navigation';
@@ -15,4 +14,5 @@
 @use '/src/scss/block/profile';
 @use '/src/scss/block/sort';
 @use '/src/scss/block/statistic';
+@use '/src/scss/block/hidden';
 @use '/src/scss/block/visually-hidden';

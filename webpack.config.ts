@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack, { ModuleOptions } from 'webpack';
+import autoprefixer from 'autoprefixer';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 
@@ -19,11 +20,25 @@ export default (env: EnvVariables) => {
       },
     };
 
+    const postCssLoader = {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: [
+            autoprefixer({
+              overrideBrowserslist: ['ie >= 9', 'last 4 versions'],
+            }),
+          ],
+        },
+      },
+    };
+
     const stylesLoader = {
       test: /\.s[ac]ss$/i,
       use: [
         !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
         cssLoader,
+        postCssLoader,
         'sass-loader',
       ],
     };
