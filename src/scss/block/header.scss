@@ -1,5 +1,9 @@
 @use '/src/scss/variables.scss' as var;
 
+$menu-toggler-width: 25px;
+$menu-toggler-height: 18px;
+$menu-stripe-height: 2px;
+
 .header {
   position: fixed;
   top: 0;
@@ -34,8 +38,8 @@
 
 .header__menu-toggler {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: $menu-toggler-width;
+  height: $menu-toggler-height;
   border: 0;
   box-sizing: border-box;
   font-size: 1.5rem;
@@ -46,13 +50,25 @@
     opacity: 0.7;
   }
 
-  &::before {
-    content: '☰';
+  &::before,
+  &::after {
+    content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
+    height: $menu-stripe-height;
+    background-color: var.$text-color;
+  }
+
+  &::before {
+    top: 0;
+    box-shadow: 0 calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2) 0 0 var.$text-color;
+    transition: box-shadow 0.3s 0.15s, top 0.3s 0.15s, transform 0.3s;
+  }
+
+  &::after {
+    bottom: 0;
+    transition: bottom 0.3s 0.15s, transform 0.3s;
   }
 
   @media (min-width: var.$tablet-min-width) {
@@ -60,6 +76,15 @@
   }
 
   &--expanded::before {
-    content: '✕';
+    top: calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2);
+    box-shadow: 0 6px 0 rgba(var.$text-color, 0.0);
+    transform: rotate(45deg);
+    transition: box-shadow 0.15s, top 0.3s, transform 0.3s 0.15s;
+  }
+
+  &--expanded::after {
+    bottom: calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2);
+    transform: rotate(-45deg);
+    transition: bottom 0.3s, transform 0.3s 0.15s;
   }
 }
