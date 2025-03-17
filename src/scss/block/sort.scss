@@ -2,8 +2,15 @@
 
 .sort {
   display: flex;
+  flex-direction: column;
+  row-gap: 15px;
   padding-left: 0;
   list-style: none;
+
+  @media (min-width: var.$tablet-min-width) {
+    flex-direction: row;
+    row-gap: 0;
+  }
 }
 
 .sort__button {

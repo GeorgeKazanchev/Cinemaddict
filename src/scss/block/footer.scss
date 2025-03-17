@@ -11,11 +11,24 @@ $height: 100px;
   width: 100%;
   max-width: var.$page-max-width;
   height: $height;
-  background: url('./../img/background-footer.png');
-  background-repeat: no-repeat;
-  background-position: 50% -20px;
+
+  @media (min-width: var.$tablet-min-width) {
+    background: url('./../img/background-footer.png');
+    background-position: 50% -20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  @media (min-width: var.$desktop-min-width) {
+    background-position: 50% -40px;
+  }
 }
 
 .footer__logo {
-  margin-right: auto;
+  display: none;
+
+  @media (min-width: var.$tablet-min-width) {
+    display: block;
+    margin-right: auto;
+  }
 }

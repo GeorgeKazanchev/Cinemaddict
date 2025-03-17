@@ -29,6 +29,7 @@ export default class FilmsScreen {
     });
     this._footerView = new FooterView(this._model);
 
+    this._headerView.onMenuToggle = this._onMenuToggle.bind(this);
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._navigationPanelView.onStatisticsOpen = this._onStatisticsOpen.bind(this);
     this._sortPanelView.onSort = this._onSort.bind(this);
@@ -87,6 +88,10 @@ export default class FilmsScreen {
       this._model.filmsLoadingState = 'error';
       this._filmsView.updateShownFilms();
     }
+  }
+
+  private _onMenuToggle(): void {
+    this._navigationPanelView.toggleMenuVisibility();
   }
 
   private _onFiltration(selectedFilter: Filter): void {

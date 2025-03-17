@@ -137,4 +137,9 @@ export default class NavigationPanelView extends AbstractView {
     watchedCountElement.textContent = watchedFilmsCount.toFixed(0);
     favoriteCountElement.textContent = favoriteFilmsCount.toFixed(0);
   }
+
+  //  Метод предназначен для открытия/закрытия меню в мобильной версии вёрстки
+  public toggleMenuVisibility(): void {
+    this.element.classList.toggle('main-navigation--shown');
+  }
 }

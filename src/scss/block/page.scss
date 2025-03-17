@@ -8,13 +8,29 @@
   font-family: var.$font-family;
   font-size: var.$font-size;
   color: var.$text-color;
-  background: #121213 url('./../img/background.png') no-repeat 60% 0;
+  background-color: #121213;
+  background-image: url('./../img/background.png');
+  background-repeat: no-repeat;
+  background-position: 60% -50%;
+
+  @media (min-width: var.$tablet-min-width) {
+    background-position: 60% 0;
+  }
 }
 
 .page__body {
   width: 100%;
   max-width: var.$page-max-width;
   padding: 0 var.$horizontal-gap;
-  padding-top: var.$vertical-gap;
+  padding-top: 2.5 * var.$vertical-gap;
   box-sizing: border-box;
+
+  @media (min-width: var.$tablet-min-width) {
+    padding-top: var.$vertical-gap;
+  }
+}
+
+.page__noscript {
+  position: fixed;
+  top: 1.5rem;
 }

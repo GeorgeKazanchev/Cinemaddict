@@ -1,7 +1,13 @@
+@use '/src/scss/variables.scss' as var;
+
 .profile {
-  display: flex;
+  display: none;
   align-items: center;
   margin-left: auto;
+
+  @media (min-width: var.$tablet-min-width) {
+    display: flex;
+  }
 }
 
 .profile__rating {

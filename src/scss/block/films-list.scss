@@ -3,18 +3,31 @@
 .films-list {
   flex-basis: 100%;
   flex-shrink: 0;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
+
+  @media (min-width: var.$tablet-min-width) {
+    padding-bottom: 60px;
+  }
 
   .film-card {
     margin-top: 50px;
+  }
+
+  .film-card:first-child {
+    margin-top: 20px;
   }
 }
 
 .films-list__container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   align-items: baseline;
   padding-bottom: var.$vertical-gap;
+
+  @media (min-width: var.$desktop-min-width) {
+    justify-content: flex-start;
+  }
 }
 
 .films-list__show-more {

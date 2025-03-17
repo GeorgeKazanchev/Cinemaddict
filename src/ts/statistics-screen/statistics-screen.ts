@@ -20,6 +20,7 @@ export default class StatisticsScreen {
     const { watchedFilmsCount } = this._model.filmsSummary;
     const rank = getRank(watchedFilmsCount);
 
+    this._headerView = new HeaderView(model);
     this._rankView = new RankView(rank);
     this._filtersView = new FiltersView(model);
     this._statisticsView = new StatisticsView(model);
@@ -29,11 +30,13 @@ export default class StatisticsScreen {
       isFilmsScreen: false,
     });
 
+    this._headerView.onMenuToggle = this._onMenuToggle.bind(this);
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._filtersView.onPeriodChanged = this._onPeriodChanged.bind(this);
   }
 
   private _model: Model;
+  private _headerView: HeaderView;
   private _navigationPanelView: NavigationPanelView;
   private _rankView: RankView;
   private _filtersView: FiltersView;
@@ -59,11 +62,15 @@ export default class StatisticsScreen {
     mainElement.append(sectionElement);
 
     this._element = document.createElement('div');
-    this._element.append(new HeaderView(this._model).element);
+    this._element.append(this._headerView.element);
     this._element.append(mainElement);
     this._element.append(new FooterView(this._model).element);
 
     return this._element;
+  }
+
+  private _onMenuToggle(): void {
+    this._navigationPanelView.toggleMenuVisibility();
   }
 
   private _onFiltration(selectedFilter: Filter): void {

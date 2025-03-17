@@ -1,12 +1,16 @@
 @use '/src/scss/variables.scss' as var;
 
 .logo {
-  font-size: 28px;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 4px;
   text-align: center;
   text-transform: uppercase;
   cursor: default;
+
+  @media (min-width: var.$tablet-min-width) {
+    font-size: 28px;
+  }
 
   &--smaller {
     font-size: var.$font-size;

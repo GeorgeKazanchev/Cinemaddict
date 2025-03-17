@@ -18,9 +18,27 @@ export default class HeaderView extends AbstractView {
     return `
       <header class="header">
         <h1 class="header__logo logo">Cinemaddict</h1>
+        <button class="header__menu-toggler button" type="button" aria-label="Toggle menu"></button>
         ${profile}
       </header>`;
   }
+
+  public bind(): void {
+    const menuTogglerElement = this.element.querySelector('.header__menu-toggler');
+    if (!menuTogglerElement) {
+      throw new Error('No navigation menu toggler element found');
+    }
+
+    const menuTogglerClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      this.onMenuToggle();
+      menuTogglerElement.classList.toggle('header__menu-toggler--expanded');
+    };
+
+    menuTogglerElement.addEventListener('click', menuTogglerClickHandler);
+  }
+
+  public onMenuToggle(): void { }
 
   public updateRank(): void {
     const rank = getRank(this._model.filmsSummary.watchedFilmsCount);

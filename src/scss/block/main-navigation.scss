@@ -1,27 +1,59 @@
 @use '/src/scss/variables.scss' as var;
 
 .main-navigation {
-  display: flex;
+  position: fixed;
+  top: var.$header-height-mobile;
+  left: 0;
+  right: 0;
+  z-index: calc(#{var.$z-index-header} / 2);
+  display: none; /* В мобильной версии меню изначально скрыто; раскрывается добавлением модификатора */
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 0 var.$horizontal-gap;
+  padding-top: var.$vertical-gap;
   border-bottom: solid 2px var.$outline-color;
   font-size: var.$font-size-bigger;
   font-weight: 800;
+  background-color: #121213;
+
+  @media (min-width: var.$tablet-min-width) {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+  }
+
+  &--shown {
+    display: flex;
+  }
 }
 
 .main-navigation__items {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  @media (min-width: var.$tablet-min-width) {
+    flex-direction: row;
+  }
 }
 
 .main-navigation__item {
-  margin-right: 40px;
-  padding: var.$vertical-gap 0;
+  margin: 0 40px;
+  padding: 10px 0;
   color: var.$text-color;
 
   &:first-child {
+    margin-left: 0;
     margin-right: 130px;
+  }
+
+  @media (min-width: var.$tablet-min-width) {
+    margin: 0;
+    margin-right: 40px;
+    padding: var.$vertical-gap 0;
   }
 
   &--active {
@@ -35,12 +67,23 @@
   border-radius: 18px;
   font-weight: 500;
   background:rgba(0, 46, 255, 0.4);
+
+  @media (min-width: var.$tablet-min-width) {
+    display: none;
+  }
+
+  @media (min-width: var.$desktop-min-width) {
+    display: inline;
+  }
 }
 
 .main-navigation__additional {
-  margin-left: auto;
   padding: var.$vertical-gap 0;
   color: var.$text-color;
+
+  @media (min-width: var.$tablet-min-width) {
+    margin-left: auto;
+  }
 
   &--active {
     color: var.$text-color-active;
