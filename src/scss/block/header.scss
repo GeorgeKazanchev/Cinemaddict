@@ -33,7 +33,11 @@ $menu-stripe-height: 2px;
   flex-basis: 165px;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: 68px;
+  margin-right: 10px;
+
+  @media (min-width: var.$tablet-min-width) {
+    margin-right: 68px;
+  }
 }
 
 .header__menu-toggler {

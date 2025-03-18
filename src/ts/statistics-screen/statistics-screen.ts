@@ -10,6 +10,7 @@ import Model from '../model/model';
 import NavigationPanelView from '../navigation-panel-view';
 import ChartView from './chart-view';
 import FiltersView from './filters-view';
+import GenresView from './genres-view';
 import RankView from './rank-view';
 import StatisticsView from './statistics-view';
 
@@ -25,6 +26,7 @@ export default class StatisticsScreen {
     this._filtersView = new FiltersView(model);
     this._statisticsView = new StatisticsView(model);
     this._chartView = new ChartView(model);
+    this._genresView = new GenresView(model);
     this._navigationPanelView = new NavigationPanelView({
       model: this._model,
       isFilmsScreen: false,
@@ -42,6 +44,7 @@ export default class StatisticsScreen {
   private _filtersView: FiltersView;
   private _statisticsView: StatisticsView;
   private _chartView: ChartView;
+  private _genresView: GenresView;
   private _element: Element | null = null;
 
   public get element(): Element {
@@ -55,6 +58,7 @@ export default class StatisticsScreen {
     sectionElement.append(this._filtersView.element);
     sectionElement.append(this._statisticsView.element);
     sectionElement.append(this._chartView.element);
+    sectionElement.append(this._genresView.element);
 
     const mainElement = document.createElement('main');
     mainElement.classList.add('main');
@@ -84,6 +88,7 @@ export default class StatisticsScreen {
       this._model.setStatisticsPeriod(selectedPeriod);
       this._statisticsView.updateStatistics();
       this._chartView.updateChart();
+      this._genresView.updateGenres();
     }
   }
 }
