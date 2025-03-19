@@ -1,5 +1,5 @@
 enum StatisticsPeriod {
-  AllTime = 'AllTime',
+  AllTime = 'All time',
   Month = 'Month',
   Today = 'Today',
   Week = 'Week',

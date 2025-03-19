@@ -53,17 +53,49 @@
 
 .statistic__filters {
   display: flex;
+  align-items: center;
   margin-bottom: 50px;
+  padding-bottom: 20px;
   border-bottom: 2px solid #31353f;
 
   @media (min-width: var.$tablet-min-width) {
+    align-items: flex-start;
     margin-bottom: 110px;
+    padding-bottom: 0;
   }
 }
 
 .statistic__filters-description {
   margin: 0;
   margin-right: 30px;
+}
+
+.statistic__select {
+  display: block;
+  width: 200px;
+  height: 40px;
+  padding: 0 0.8rem;
+  border: 1px solid #6f6f6f;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  color: var.$text-color;
+  background-color: var.$background-color;
+
+  &:focus {
+    outline: 1px solid var.$text-color-active;
+  }
+
+  @media (min-width: var.$tablet-min-width) {
+    display: none;
+  }
+}
+
+.statistic__radio-buttons {
+  display: none;
+
+  @media (min-width: var.$tablet-min-width) {
+    display: flex;
+  }
 }
 
 .statistic__filters-label {
