@@ -19,8 +19,9 @@ export default class FilmsView extends AbstractView {
 
     return `
       <section class="films">
+        <h2 class="visually-hidden">Films</h2>
         <section class="films-list">
-          <h2 class="films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}">${title}</h2>
+          <h3 class="films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}">${title}</h3>
           ${this._model.areFilmsShown ? '<div class="films-list__container"></div>' : ''}
           <button class="films-list__show-more button ${this._model.areAllFilmsShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>

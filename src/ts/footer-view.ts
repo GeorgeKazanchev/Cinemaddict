@@ -14,7 +14,9 @@ export default class FooterView extends AbstractView {
 
     return `
       <footer class="footer">
-        <section class="footer__logo logo logo--smaller">Cinemaddict</section>
+        <section class="footer__logo logo logo--smaller">
+          <h2 class="logo__title">Cinemaddict</h2>
+        </section>
         <section class="footer__statistics">
           ${statistics}
         </section>
@@ -35,7 +37,8 @@ export default class FooterView extends AbstractView {
     const totalFilmsCount = state.films.length;
 
     return (
-      `<p>${totalFilmsCount} ${totalFilmsCount === 1 ? 'movie' : 'movies'} inside</p>`
+      `<h2 class="visually-hidden">Number of films in the app</h2>
+      <p>${totalFilmsCount} ${totalFilmsCount === 1 ? 'movie' : 'movies'} inside</p>`
     );
   }
 }
