@@ -80,13 +80,14 @@ $opacity-disabled: 0.5;
 
 .film-details__close-btn {
   position: relative;
-  width: 25px;
+  width: 21px;
   height: 25px;
   margin: 0;
   margin-bottom: 30px;
   margin-left: auto;
-  padding: 0;
-  border: 0;
+  padding: 15px;
+  border: 2px solid transparent;
+  border-radius: 4px;
   outline: none;
   font-size: 0;
   background-color: transparent;
@@ -94,8 +95,8 @@ $opacity-disabled: 0.5;
   &::before {
     content: "✕";
     position: absolute;
-    top: 0;
-    left: 0;
+    top: calc(50% - 25px / 2);
+    left: calc(50% - 21px / 2);
     font-size: 25px;
     line-height: 1;
     font-weight: 700;
@@ -105,6 +106,10 @@ $opacity-disabled: 0.5;
 
   &:hover::before {
     opacity: 0.7;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
   }
 }
 
@@ -317,6 +322,11 @@ $opacity-disabled: 0.5;
     opacity: 0.7;
   }
 
+  &:focus-visible {
+    outline: 2px solid var.$text-color;
+    outline-offset: 5px;
+  }
+
   &:not(:last-of-type) {
     border-bottom: 1px solid $contols-border-color;
   }
@@ -483,7 +493,8 @@ $opacity-disabled: 0.5;
 
 .film-details__comment-delete {
   padding: 0;
-  border: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
   outline: none;
   text-decoration: underline;
   color: #687fad;
@@ -491,6 +502,10 @@ $opacity-disabled: 0.5;
 
   &:hover {
     opacity: 0.7;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
   }
 
   &:disabled {
@@ -566,6 +581,10 @@ $opacity-disabled: 0.5;
     color: $dark-gray;
   }
 
+  &:focus::placeholder {
+    visibility: hidden;
+  }
+
   @media (min-width: var.$desktop-min-width) {
     height: $comment-field-height;
   }
@@ -574,17 +593,20 @@ $opacity-disabled: 0.5;
 .film-details__comment-submit {
   height: $comment-field-height - 10px;
   margin-left: 20px;
-  border: 0;
-  border-radius: 5px;
-  color: $dark-gray;
-  background-color: $gold;
+  border: 2px solid var.$text-color;
+  border-radius: 4px;
+  outline: none;
+  color: var.$text-color;
+  background-color: var.$background-color;
 
   &:disabled {
     opacity: $opacity-disabled;
   }
 
-  &:hover:enabled {
-    background-color: rgba($gold, 0.8);
+  &:hover:enabled,
+  &:focus-visible:enabled {
+    color: var.$text-color-active;
+    border-color: var.$text-color-active;
   }
 }
 
@@ -615,7 +637,8 @@ $opacity-disabled: 0.5;
   }
 }
 
-.film-details__emoji-item:checked + .film-details__emoji-label {
+.film-details__emoji-item:checked + .film-details__emoji-label,
+.film-details__emoji-item:focus-visible + .film-details__emoji-label {
   opacity: 1;
 }
 

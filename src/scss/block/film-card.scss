@@ -25,6 +25,10 @@ $loader-radius: 20px;
 .film-card__title {
   margin-right: 0.5em;
   cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var.$text-color;
+  }
 }
 
 .film-card__rating {
@@ -56,7 +60,8 @@ $loader-radius: 20px;
   overflow: hidden;
   transition: bottom 0.2s ease-out;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     box-shadow: 0 0 3px 2px var.$text-color-active;
   }
 }
@@ -71,9 +76,12 @@ $loader-radius: 20px;
 }
 
 .film-card__comments {
+  display: block;
+  width: fit-content;
   margin: 0;
-  padding: 0;
-  border: 0;
+  padding: 5px 0;
+  border: 2px solid transparent;
+  box-sizing: border-box;
   font-family: var.$font-family;
   font-size: var.$font-size;
   color: #687fad;
@@ -84,6 +92,10 @@ $loader-radius: 20px;
 
   &:hover {
     opacity: 0.7;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
   }
 }
 

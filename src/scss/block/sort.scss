@@ -16,8 +16,10 @@
 .sort__button {
   display: block;
   margin-right: 32px;
-  padding: 0;
-  border: 0;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
   outline: none;
   text-decoration: none;
   color: var.$text-color;
@@ -26,6 +28,10 @@
 
   &:hover {
     opacity: 0.7;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
   }
 
   &--active {

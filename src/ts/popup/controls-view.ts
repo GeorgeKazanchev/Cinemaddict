@@ -28,8 +28,15 @@ export default class ControlsView extends AbstractView {
           id="watchlist"
           name="watchlist"
           ${userDetails.inWatchlist ? 'checked' : ''}
+          tabindex="-1"
         >
-        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
+        <label
+          for="watchlist"
+          class="film-details__control-label film-details__control-label--watchlist"
+          tabindex="0"
+        >
+          Add to watchlist
+        </label>
 
         <input
           type="checkbox"
@@ -37,8 +44,15 @@ export default class ControlsView extends AbstractView {
           id="watched"
           name="watched"
           ${userDetails.isWatched ? 'checked' : ''}
+          tabindex="-1"
         >
-        <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
+        <label
+          for="watched"
+          class="film-details__control-label film-details__control-label--watched"
+          tabindex="0"
+        >
+          Already watched
+        </label>
 
         <input
           type="checkbox"
@@ -46,8 +60,15 @@ export default class ControlsView extends AbstractView {
           id="favorite"
           name="favorite"
           ${userDetails.isFavorite ? 'checked' : ''}
+          tabindex="-1"
         >
-        <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
+        <label
+          for="favorite"
+          class="film-details__control-label film-details__control-label--favorite"
+          tabindex="0"
+        >
+          Add to favorites
+        </label>
       </fieldset>`;
   }
 
@@ -92,9 +113,33 @@ export default class ControlsView extends AbstractView {
       this.onFavoriteChange(this._getFilmFromModel());
     };
 
+    const watchlistKeydownHandler = (evt: KeyboardEvent) => {
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        this.onWatchlistChange(this._getFilmFromModel());
+      }
+    };
+
+    const watchedKeydownHandler = (evt: KeyboardEvent) => {
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        this.onWatchedChange(this._getFilmFromModel());
+      }
+    };
+
+    const favoriteKeydownHandler = (evt: KeyboardEvent) => {
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        this.onFavoriteChange(this._getFilmFromModel());
+      }
+    };
+
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
     watchedButtonElement?.addEventListener('click', watchedClickHandler);
     favoriteButtonElement?.addEventListener('click', favoriteClickHandler);
+    watchlistButtonElement?.addEventListener('keydown', watchlistKeydownHandler as EventListener);
+    watchedButtonElement?.addEventListener('keydown', watchedKeydownHandler as EventListener);
+    favoriteButtonElement?.addEventListener('keydown', favoriteKeydownHandler as EventListener);
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */

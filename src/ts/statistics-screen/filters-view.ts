@@ -41,6 +41,7 @@ export default class FiltersView extends AbstractView {
             id="statistic-all-time"
             value="all-time"
             ${period === StatisticsPeriod.AllTime ? 'checked' : ''}
+            tabindex="-1"
           >
           <label for="statistic-all-time" class="statistic__filters-label" tabindex="0">All time</label>
 
@@ -51,6 +52,7 @@ export default class FiltersView extends AbstractView {
             id="statistic-today"
             value="today"
             ${period === StatisticsPeriod.Today ? 'checked' : ''}
+            tabindex="-1"
           >
           <label for="statistic-today" class="statistic__filters-label" tabindex="0">Today</label>
 
@@ -61,6 +63,7 @@ export default class FiltersView extends AbstractView {
             id="statistic-week"
             value="week"
             ${period === StatisticsPeriod.Week ? 'checked' : ''}
+            tabindex="-1"
           >
           <label for="statistic-week" class="statistic__filters-label" tabindex="0">Week</label>
 
@@ -71,6 +74,7 @@ export default class FiltersView extends AbstractView {
             id="statistic-month"
             value="month"
             ${period === StatisticsPeriod.Month ? 'checked' : ''}
+            tabindex="-1"
           >
           <label for="statistic-month" class="statistic__filters-label" tabindex="0">Month</label>
 
@@ -81,6 +85,7 @@ export default class FiltersView extends AbstractView {
             id="statistic-year"
             value="year"
             ${period === StatisticsPeriod.Year ? 'checked' : ''}
+            tabindex="-1"
           >
           <label for="statistic-year" class="statistic__filters-label" tabindex="0">Year</label>
         </div>

@@ -33,14 +33,14 @@ export default class FilmCardView extends AbstractView {
 
     return `
       <article class="film-card">
-        <h3 class="film-card__title">${info.title}</h3>
+        <h3 class="film-card__title" tabindex="0">${info.title}</h3>
         <p class="${getRatingClassname(info.rating, 'film-card__rating')}">${info.rating.toFixed(1)}</p>
         <p class="film-card__info">
           <span class="film-card__year">${info.release.date.getFullYear()}</span>
           <span class="film-card__duration">${getFormattedDuration(info.durationMinutes)}</span>
           <span class="film-card__genre">${info.genres.join(', ')}</span>
         </p>
-        <img src="${info.posterSrc}" alt="${info.title}" class="film-card__poster">
+        <img class="film-card__poster" src="${info.posterSrc}" alt="${info.title}" tabindex="0">
         <p class="film-card__description">${getLimitedDescription(info.description)}</p>
         <a class="link film-card__comments">${this._getCommentsCountText(commentsCount)}</a>
         <form action="#" method="post" autocomplete="off">
@@ -94,9 +94,16 @@ export default class FilmCardView extends AbstractView {
     const watchedButtonElement = this.element.querySelector('.film-card__controls-item--mark-as-watched');
     const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
 
-    const popupOpenHandler = (evt: Event) => {
+    const popupOpenClickHandler = (evt: Event) => {
       evt.preventDefault();
       this.onPopupOpen(this._getFilmFromModel());
+    };
+
+    const popupOpenKeydownHandler = (evt: KeyboardEvent) => {
+      if (evt.key === 'Enter') {
+        evt.preventDefault();
+        this.onPopupOpen(this._getFilmFromModel());
+      }
     };
 
     const watchlistClickHandler = (evt: Event) => {
@@ -114,9 +121,12 @@ export default class FilmCardView extends AbstractView {
       this.onFavoriteChange(this._getFilmFromModel());
     };
 
-    titleElement?.addEventListener('click', popupOpenHandler);
-    posterElement?.addEventListener('click', popupOpenHandler);
-    commentsElement?.addEventListener('click', popupOpenHandler);
+    titleElement?.addEventListener('click', popupOpenClickHandler);
+    posterElement?.addEventListener('click', popupOpenClickHandler);
+    commentsElement?.addEventListener('click', popupOpenClickHandler);
+    titleElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
+    posterElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
+    commentsElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
     watchedButtonElement?.addEventListener('click', watchedClickHandler);
     favoriteButtonElement?.addEventListener('click', favoriteClickHandler);
