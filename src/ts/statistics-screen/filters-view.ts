@@ -3,12 +3,12 @@ import { StatisticsPeriod } from '../model';
 import Model from '../model/model';
 import { getTargetAsElement } from '../util';
 
-const inputValuesToStatsPeriods = new Map<string, StatisticsPeriod>();
-inputValuesToStatsPeriods.set('all-time', StatisticsPeriod.AllTime);
-inputValuesToStatsPeriods.set('today', StatisticsPeriod.Today);
-inputValuesToStatsPeriods.set('week', StatisticsPeriod.Week);
-inputValuesToStatsPeriods.set('month', StatisticsPeriod.Month);
-inputValuesToStatsPeriods.set('year', StatisticsPeriod.Year);
+const valuesToStatsPeriods = new Map<string, StatisticsPeriod>();
+valuesToStatsPeriods.set('all-time', StatisticsPeriod.AllTime);
+valuesToStatsPeriods.set('today', StatisticsPeriod.Today);
+valuesToStatsPeriods.set('week', StatisticsPeriod.Week);
+valuesToStatsPeriods.set('month', StatisticsPeriod.Month);
+valuesToStatsPeriods.set('year', StatisticsPeriod.Year);
 
 export default class FiltersView extends AbstractView {
   constructor(model: Model) {
@@ -42,7 +42,7 @@ export default class FiltersView extends AbstractView {
             value="all-time"
             ${period === StatisticsPeriod.AllTime ? 'checked' : ''}
           >
-          <label for="statistic-all-time" class="statistic__filters-label">All time</label>
+          <label for="statistic-all-time" class="statistic__filters-label" tabindex="0">All time</label>
 
           <input
             type="radio"
@@ -52,7 +52,7 @@ export default class FiltersView extends AbstractView {
             value="today"
             ${period === StatisticsPeriod.Today ? 'checked' : ''}
           >
-          <label for="statistic-today" class="statistic__filters-label">Today</label>
+          <label for="statistic-today" class="statistic__filters-label" tabindex="0">Today</label>
 
           <input
             type="radio"
@@ -62,7 +62,7 @@ export default class FiltersView extends AbstractView {
             value="week"
             ${period === StatisticsPeriod.Week ? 'checked' : ''}
           >
-          <label for="statistic-week" class="statistic__filters-label">Week</label>
+          <label for="statistic-week" class="statistic__filters-label" tabindex="0">Week</label>
 
           <input
             type="radio"
@@ -72,7 +72,7 @@ export default class FiltersView extends AbstractView {
             value="month"
             ${period === StatisticsPeriod.Month ? 'checked' : ''}
           >
-          <label for="statistic-month" class="statistic__filters-label">Month</label>
+          <label for="statistic-month" class="statistic__filters-label" tabindex="0">Month</label>
 
           <input
             type="radio"
@@ -82,7 +82,7 @@ export default class FiltersView extends AbstractView {
             value="year"
             ${period === StatisticsPeriod.Year ? 'checked' : ''}
           >
-          <label for="statistic-year" class="statistic__filters-label">Year</label>
+          <label for="statistic-year" class="statistic__filters-label" tabindex="0">Year</label>
         </div>
       </form>`;
   }
@@ -101,13 +101,53 @@ export default class FiltersView extends AbstractView {
         this._changePeriodByValue(selectElement.value);
       }
     });
+
+    const inputsContainerElement = this.element.querySelector('.statistic__radio-buttons');
+
+    const inputsContainerKeydownHandler = (evt: KeyboardEvent) => {
+      const targetElement = getTargetAsElement(evt);
+      if (!(targetElement instanceof HTMLLabelElement)) {
+        return;
+      }
+
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        const inputElement = this.element.querySelector(`#${targetElement.htmlFor}`);
+        if (!(inputElement instanceof HTMLInputElement)) {
+          throw new Error('No statistics filter input found');
+        }
+        this._changePeriodByValue(inputElement.value);
+      }
+    };
+
+    inputsContainerElement?.addEventListener('keydown', inputsContainerKeydownHandler as EventListener);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public onPeriodChanged(period: StatisticsPeriod): void { }
 
+  public updateActiveFilter(): void {
+    const activeFilterElement = this.element.querySelector('.statistic__filters-input:checked');
+    if (activeFilterElement instanceof HTMLInputElement) {
+      activeFilterElement.checked = false;
+    }
+
+    const { period } = this._model.state;
+    const valuePair = [...valuesToStatsPeriods].find(([, value]) => value === period);
+    if (!valuePair) {
+      throw new Error(`No input value found matching statistics period ${period}`);
+    }
+
+    const newActiveFilterElement = this.element
+      .querySelector(`.statistic__filters-input[value="${valuePair[0]}"]`);
+    if (!(newActiveFilterElement instanceof HTMLInputElement)) {
+      throw new Error('No new active input for statistics found');
+    }
+    newActiveFilterElement.checked = true;
+  }
+
   private _changePeriodByValue(value: string): void {
-    const period = inputValuesToStatsPeriods.get(value);
+    const period = valuesToStatsPeriods.get(value);
     if (period) {
       this.onPeriodChanged(period);
     }

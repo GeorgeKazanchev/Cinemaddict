@@ -86,6 +86,7 @@ export default class StatisticsScreen {
     const { state } = this._model;
     if (state.period !== selectedPeriod) {
       this._model.setStatisticsPeriod(selectedPeriod);
+      this._filtersView.updateActiveFilter();
       this._statisticsView.updateStatistics();
       this._chartView.updateChart();
       this._genresView.updateGenres();
