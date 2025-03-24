@@ -1,14 +1,14 @@
 @use '/src/scss/variables.scss' as var;
 
 .page {
+  position: relative;
   display: flex;
   justify-content: center;
-  position: relative;
   min-height: 100%;
   font-family: var.$font-family;
   font-size: var.$font-size;
   color: var.$text-color;
-  background-color: #121213;
+  background-color: var.$background-color;
   background-image: url('./../img/background.png');
   background-repeat: no-repeat;
   background-position: 60% -50%;

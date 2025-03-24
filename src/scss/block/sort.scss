@@ -15,6 +15,7 @@
 
 .sort__button {
   display: block;
+  max-width: 200px;
   margin-right: 32px;
   padding: 5px;
   border: 2px solid transparent;
@@ -24,10 +25,12 @@
   text-decoration: none;
   color: var.$text-color;
   background-color: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
 
   &:hover {
-    opacity: 0.7;
+    opacity: var.$opacity-hover;
   }
 
   &:focus-visible {

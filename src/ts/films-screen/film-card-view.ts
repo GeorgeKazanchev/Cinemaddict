@@ -33,34 +33,36 @@ export default class FilmCardView extends AbstractView {
 
     return `
       <article class="film-card">
-        <h3 class="film-card__title" tabindex="0">${info.title}</h3>
-        <p class="${getRatingClassname(info.rating, 'film-card__rating')}">${info.rating.toFixed(1)}</p>
-        <p class="film-card__info">
-          <span class="film-card__year">${info.release.date.getFullYear()}</span>
-          <span class="film-card__duration">${getFormattedDuration(info.durationMinutes)}</span>
-          <span class="film-card__genre">${info.genres.join(', ')}</span>
-        </p>
-        <img class="film-card__poster" src="${info.posterSrc}" alt="${info.title}" tabindex="0">
-        <p class="film-card__description">${getLimitedDescription(info.description)}</p>
-        <a class="link film-card__comments">${this._getCommentsCountText(commentsCount)}</a>
+        <img class="film-card__poster" src="${info.posterSrc}" alt="${info.title}" width="230" height="340" tabindex="0">
+        <div class="film-card__info-wrap">
+          <h3 class="film-card__title" tabindex="0">${info.title}</h3>
+          <p class="${getRatingClassname(info.rating, 'film-card__rating')}">${info.rating.toFixed(1)}</p>
+          <p class="film-card__info">
+            <span class="film-card__year">${info.release.date.getFullYear()}</span>
+            <span class="film-card__duration">${getFormattedDuration(info.durationMinutes)}</span>
+            <span class="film-card__genre">${info.genres.join(', ')}</span>
+          </p>
+          <p class="film-card__description">${getLimitedDescription(info.description)}</p>
+          <a class="link film-card__comments" tabindex="0">${this._getCommentsCountText(commentsCount)}</a>
+        </div>
         <form action="#" method="post" autocomplete="off">
           <fieldset class="film-card__controls">
             <button
-              class="film-card__controls-item button film-card__controls-item--add-to-watchlist
+              class="button film-card__controls-item film-card__controls-item--add-to-watchlist
                 ${userDetails.inWatchlist ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >
               Add to watchlist
             </button>
             <button
-              class="film-card__controls-item button film-card__controls-item--mark-as-watched
+              class="button film-card__controls-item film-card__controls-item--mark-as-watched
                 ${userDetails.isWatched ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >
               Mark as watched
             </button>
             <button
-              class="film-card__controls-item button film-card__controls-item--favorite
+              class="button film-card__controls-item film-card__controls-item--favorite
                 ${userDetails.isFavorite ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >

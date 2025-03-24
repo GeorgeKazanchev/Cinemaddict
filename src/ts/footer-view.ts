@@ -37,7 +37,7 @@ export default class FooterView extends AbstractView {
     const totalFilmsCount = state.films.length;
 
     return (
-      `<h2 class="visually-hidden">Number of films in the app</h2>
+      `<h2 class="visually-hidden">Total films number</h2>
       <p>${totalFilmsCount} ${totalFilmsCount === 1 ? 'movie' : 'movies'} inside</p>`
     );
   }

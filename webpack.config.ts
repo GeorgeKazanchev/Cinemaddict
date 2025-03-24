@@ -73,8 +73,8 @@ export default (env: EnvVariables) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'css/style.css',
-        chunkFilename: 'css/style.css',
+        filename: 'css/style.min.css',
+        chunkFilename: 'css/style.min.css',
       }),
     ],
     resolve: {

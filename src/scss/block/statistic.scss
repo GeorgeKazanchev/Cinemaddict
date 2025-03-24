@@ -38,7 +38,6 @@
 }
 
 .statistic__img {
-  display: inline-block;
   margin-left: 0;
   margin-right: 24px;
 
@@ -92,6 +91,7 @@
 
 .statistic__radio-buttons {
   display: none;
+  max-width: 75%;
 
   @media (min-width: var.$tablet-min-width) {
     display: flex;
@@ -99,8 +99,11 @@
 }
 
 .statistic__filters-label {
+  max-width: 20%;
   margin-right: 30px;
   padding-bottom: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
 
   &:hover {
@@ -138,6 +141,14 @@
     flex-direction: row;
     row-gap: 0;
     margin-bottom: 100px;
+  }
+}
+
+.statistic__text-item {
+  overflow: hidden;
+
+  @media (min-width: var.$tablet-min-width) {
+    max-width: 33%;
   }
 }
 

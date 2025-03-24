@@ -2,16 +2,19 @@
 
 .profile {
   display: none;
-  align-items: center;
   margin-left: auto;
 
   @media (min-width: var.$tablet-min-width) {
     display: flex;
+    align-items: center;
   }
 }
 
 .profile__rating {
+  max-width: 250px;
   font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile__avatar {

@@ -31,7 +31,7 @@ export default class InfoView extends AbstractView {
     return `
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="${info.posterSrc}" alt="${info.title}">
+          <img class="film-details__poster-img" src="${info.posterSrc}" alt="${info.title}" width="338" height="500">
           <p class="film-details__age">${info.ageRating.toFixed(0)}+</p>
         </div>
         <div class="film-details__info">

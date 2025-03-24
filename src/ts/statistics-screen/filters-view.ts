@@ -39,55 +39,60 @@ export default class FiltersView extends AbstractView {
             class="statistic__filters-input visually-hidden"
             name="statistic-filter"
             id="statistic-all-time"
+            aria-labelledby="statistic-all-time-label"
             value="all-time"
             ${period === StatisticsPeriod.AllTime ? 'checked' : ''}
             tabindex="-1"
           >
-          <label for="statistic-all-time" class="statistic__filters-label" tabindex="0">All time</label>
+          <label for="statistic-all-time" class="statistic__filters-label" id="statistic-all-time-label" tabindex="0">All time</label>
 
           <input
             type="radio"
             class="statistic__filters-input visually-hidden"
             name="statistic-filter"
             id="statistic-today"
+            aria-labelledby="statistic-today-label"
             value="today"
             ${period === StatisticsPeriod.Today ? 'checked' : ''}
             tabindex="-1"
           >
-          <label for="statistic-today" class="statistic__filters-label" tabindex="0">Today</label>
+          <label for="statistic-today" class="statistic__filters-label" id="statistic-today-label" tabindex="0">Today</label>
 
           <input
             type="radio"
             class="statistic__filters-input visually-hidden"
             name="statistic-filter"
             id="statistic-week"
+            aria-labelledby="statistic-week-label"
             value="week"
             ${period === StatisticsPeriod.Week ? 'checked' : ''}
             tabindex="-1"
           >
-          <label for="statistic-week" class="statistic__filters-label" tabindex="0">Week</label>
+          <label for="statistic-week" class="statistic__filters-label" id="statistic-week-label" tabindex="0">Week</label>
 
           <input
             type="radio"
             class="statistic__filters-input visually-hidden"
             name="statistic-filter"
             id="statistic-month"
+            aria-labelledby="statistic-month-label"
             value="month"
             ${period === StatisticsPeriod.Month ? 'checked' : ''}
             tabindex="-1"
           >
-          <label for="statistic-month" class="statistic__filters-label" tabindex="0">Month</label>
+          <label for="statistic-month" class="statistic__filters-label" id="statistic-month-label" tabindex="0">Month</label>
 
           <input
             type="radio"
             class="statistic__filters-input visually-hidden"
             name="statistic-filter"
             id="statistic-year"
+            aria-labelledby="statistic-year-label"
             value="year"
             ${period === StatisticsPeriod.Year ? 'checked' : ''}
             tabindex="-1"
           >
-          <label for="statistic-year" class="statistic__filters-label" tabindex="0">Year</label>
+          <label for="statistic-year" class="statistic__filters-label" id="statistic-year-label" tabindex="0">Year</label>
         </div>
       </form>`;
   }

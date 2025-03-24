@@ -11,9 +11,11 @@ $height: 100px;
   width: 100%;
   max-width: var.$page-max-width;
   height: $height;
+  overflow: hidden;
 
   @media (min-width: var.$tablet-min-width) {
-    background: url('./../img/background-footer.png');
+    background-color: var.$background-color;
+    background-image: url('./../img/background-footer.png');
     background-position: 50% -20px;
     background-repeat: no-repeat;
     background-size: cover;

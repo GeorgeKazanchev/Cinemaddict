@@ -26,12 +26,14 @@ export default class ControlsView extends AbstractView {
           type="checkbox"
           class="film-details__control-input visually-hidden"
           id="watchlist"
+          aria-labelledby="watchlist-label"
           name="watchlist"
           ${userDetails.inWatchlist ? 'checked' : ''}
           tabindex="-1"
         >
         <label
           for="watchlist"
+          id="watchlist-label"
           class="film-details__control-label film-details__control-label--watchlist"
           tabindex="0"
         >
@@ -42,12 +44,14 @@ export default class ControlsView extends AbstractView {
           type="checkbox"
           class="film-details__control-input visually-hidden"
           id="watched"
+          aria-labelledby="watched-label"
           name="watched"
           ${userDetails.isWatched ? 'checked' : ''}
           tabindex="-1"
         >
         <label
           for="watched"
+          id="watched-label"
           class="film-details__control-label film-details__control-label--watched"
           tabindex="0"
         >
@@ -58,12 +62,14 @@ export default class ControlsView extends AbstractView {
           type="checkbox"
           class="film-details__control-input visually-hidden"
           id="favorite"
+          aria-labelledby="favorite-label"
           name="favorite"
           ${userDetails.isFavorite ? 'checked' : ''}
           tabindex="-1"
         >
         <label
           for="favorite"
+          id="favorite-label"
           class="film-details__control-label film-details__control-label--favorite"
           tabindex="0"
         >

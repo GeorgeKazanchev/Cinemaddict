@@ -43,26 +43,66 @@ export default class CommentsView extends AbstractView {
 
         <fieldset class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
-          <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" required placeholder="Select reaction below and write comment here" name="comment"></textarea>
+          <label class="film-details__comment-label">Comment text:
+            <textarea
+              class="film-details__comment-input"
+              name="comment"
+              placeholder="Select reaction below and write comment here"
+              required
+              aria-required="true"
+            ></textarea>
           </label>
           <button class="film-details__comment-submit button" type="submit">Submit</button>
+
           <div class="film-details__emoji-list">
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" required type="radio" id="emoji-smile" value="smile">
-            <label class="film-details__emoji-label" for="emoji-smile">
-              <img src="./img/emoji/smile.png" width="30" height="30" alt="emoji">
+            <input
+              class="film-details__emoji-item visually-hidden"
+              type="radio"
+              id="emoji-smile"
+              aria-labelledby="emoji-smile-label"
+              name="comment-emoji"
+              value="smile"
+              required
+              aria-required="true"
+            >
+            <label class="film-details__emoji-label" for="emoji-smile" id="emoji-smile-label">
+              <img src="./img/emoji/smile.png" width="30" height="30" alt="Smiley emoji">
             </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-            <label class="film-details__emoji-label" for="emoji-sleeping">
-              <img src="./img/emoji/sleeping.png" width="30" height="30" alt="emoji">
+
+            <input
+              class="film-details__emoji-item visually-hidden"
+              type="radio"
+              id="emoji-sleeping"
+              aria-labelledby="emoji-sleeping-label"
+              name="comment-emoji"
+              value="sleeping"
+            >
+            <label class="film-details__emoji-label" for="emoji-sleeping" id="emoji-sleeping-label">
+              <img src="./img/emoji/sleeping.png" width="30" height="30" alt="Sleeping emoji">
             </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-            <label class="film-details__emoji-label" for="emoji-puke">
-              <img src="./img/emoji/puke.png" width="30" height="30" alt="emoji">
+
+            <input
+              class="film-details__emoji-item visually-hidden"
+              type="radio"
+              id="emoji-puke"
+              aria-labelledby="emoji-puke-label"
+              name="comment-emoji"
+              value="puke"
+            >
+            <label class="film-details__emoji-label" for="emoji-puke" id="emoji-puke-label">
+              <img src="./img/emoji/puke.png" width="30" height="30" alt="Puking emoji">
             </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-            <label class="film-details__emoji-label" for="emoji-angry">
-              <img src="./img/emoji/angry.png" width="30" height="30" alt="emoji">
+
+            <input
+              class="film-details__emoji-item visually-hidden"
+              type="radio"
+              id="emoji-angry"
+              aria-labelledby="emoji-angry-label"
+              name="comment-emoji"
+              value="angry"
+            >
+            <label class="film-details__emoji-label" for="emoji-angry" id="emoji-angry-label">
+              <img src="./img/emoji/angry.png" width="30" height="30" alt="Angry emoji">
             </label>
           </div>
         </fieldset>

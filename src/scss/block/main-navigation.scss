@@ -15,7 +15,7 @@
   border-bottom: solid 2px var.$outline-color;
   font-size: var.$font-size-bigger;
   font-weight: 800;
-  background-color: #121213;
+  background-color: var.$background-color;
 
   @media (min-width: var.$tablet-min-width) {
     position: static;
@@ -38,6 +38,13 @@
   @media (min-width: var.$tablet-min-width) {
     flex-direction: row;
   }
+}
+
+.main-navigation__item,
+.main-navigation__additional {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .main-navigation__item {
@@ -66,7 +73,7 @@
   padding: 0 10px;
   border-radius: 18px;
   font-weight: 500;
-  background:rgba(0, 46, 255, 0.4);
+  background-color:rgba(0, 46, 255, 0.4);
 
   @media (min-width: var.$tablet-min-width) {
     display: none;
