@@ -47,6 +47,11 @@
   &:hover {
     opacity: var.$opacity-hover;
   }
+
+  &:focus-visible {
+    border-color: var.$text-color;
+    outline: none;
+  }
 }
 
 .films-list--extra {

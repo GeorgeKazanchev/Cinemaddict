@@ -43,6 +43,9 @@
 .main-navigation__item,
 .main-navigation__additional {
   max-width: 200px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -55,6 +58,11 @@
   &:first-child {
     margin-left: 0;
     margin-right: 130px;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
+    outline: none;
   }
 
   @media (min-width: var.$tablet-min-width) {
@@ -87,6 +95,11 @@
 .main-navigation__additional {
   padding: var.$vertical-gap 0;
   color: var.$text-color;
+
+  &:focus-visible {
+    border-color: var.$text-color;
+    outline: none;
+  }
 
   @media (min-width: var.$tablet-min-width) {
     margin-left: auto;

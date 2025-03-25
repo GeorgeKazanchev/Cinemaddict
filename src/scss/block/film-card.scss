@@ -30,6 +30,7 @@ $loader-radius: 20px;
 
   &:hover,
   &:focus-visible {
+    outline: none;
     box-shadow: 0 0 3px 2px var.$text-color-active;
   }
 }
@@ -136,7 +137,7 @@ $loader-radius: 20px;
   position: relative;
   flex-basis: 33%;
   height: 30px;
-  border: 0;
+  border: 1px solid transparent;
   border-right: solid 1px var.$outline-color;
   box-sizing: border-box;
   background-color: transparent;
@@ -152,6 +153,12 @@ $loader-radius: 20px;
 
   &:hover {
     opacity: var.$opacity-hover;
+  }
+
+  &:focus-visible {
+    border-color: var.$text-color;
+    border-radius: 4px;
+    outline: none;
   }
 
   &:disabled::after {

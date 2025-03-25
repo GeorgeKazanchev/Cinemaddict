@@ -567,7 +567,7 @@ $opacity-disabled: 0.5;
   }
 
   &:focus::placeholder {
-    visibility: hidden;
+    opacity: 0;
   }
 
   @media (min-width: var.$desktop-min-width) {
