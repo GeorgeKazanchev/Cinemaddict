@@ -166,37 +166,32 @@ $loader-radius: 20px;
 
     @include mixins.rotation-animation;
   }
+}
 
-  &--add-to-watchlist {
-    background-image: url('./../img/icons/icon-watchlist.svg');
-    background-size: 17px 15px;
+.film-card__controls-icon {
+  position: absolute;
+  fill: #7c7c7c;
+
+  .film-card__controls-item--active & {
+    fill: var.$text-color-active;
   }
 
-  &--mark-as-watched {
-    background-image: url('./../img/icons/icon-watched.svg');
-    background-size: 14px 10px;
+  .film-card__controls-item:disabled & {
+    opacity: 0.5;
+  }
+
+  &--watchlist {
+    top: calc(50% - 17px / 2);
+    left: calc(50% - 15px / 2);
+  }
+
+  &--watched {
+    top: calc(50% - 8px / 2);
+    left: calc(50% - 12px / 2);
   }
 
   &--favorite {
-    background-image: url('./../img/icons/icon-favorite.svg');
-    background-size: 18px 18px;
+    top: calc(50% - 18px / 2);
+    left: calc(50% - 18px / 2);
   }
-}
-
-.film-card__controls-item--active {
-  &.film-card__controls-item--add-to-watchlist {
-    background-image: url('./../img/icons/icon-watchlist-active.svg');
-  }
-
-  &.film-card__controls-item--mark-as-watched {
-    background-image: url('./../img/icons/icon-watched-active.svg');
-  }
-
-  &.film-card__controls-item--favorite {
-    background-image: url('./../img/icons/icon-favorite-active.svg');
-  }
-}
-
-.film-card__controls-item:disabled {
-  background-image: none;
 }

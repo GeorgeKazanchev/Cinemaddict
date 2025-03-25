@@ -37,6 +37,9 @@ export default class ControlsView extends AbstractView {
           class="film-details__control-label film-details__control-label--watchlist"
           tabindex="0"
         >
+          <svg class="film-details__control-icon film-details__control-icon--watchlist" width="17" height="17" role="img">
+            <use xlink:href="img/sprite.svg#watchlist-icon"></use>
+          </svg>
           Add to watchlist
         </label>
 
@@ -55,6 +58,9 @@ export default class ControlsView extends AbstractView {
           class="film-details__control-label film-details__control-label--watched"
           tabindex="0"
         >
+          <svg class="film-details__control-icon film-details__control-icon--watched" width="14" height="10" role="img">
+            <use xlink:href="img/sprite.svg#watched-icon"></use>
+          </svg>
           Already watched
         </label>
 
@@ -73,6 +79,9 @@ export default class ControlsView extends AbstractView {
           class="film-details__control-label film-details__control-label--favorite"
           tabindex="0"
         >
+          <svg class="film-details__control-icon film-details__control-icon--favorite" width="18" height="18" role="img">
+            <use xlink:href="img/sprite.svg#favorite-icon"></use>
+          </svg>
           Add to favorites
         </label>
       </fieldset>`;

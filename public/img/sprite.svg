@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="watchlist-icon" viewBox="0 0 17 15">
+    <g fill-rule="nonzero">
+      <path d="M3 3V0h1v3h3v1H4v3H3V4H0V3h3zm4 3h10v1H7V6zM3 10h14v1H3zM3 14h14v1H3z"/>
+    </g>
+  </symbol>
+
+  <symbol id="watched-icon" viewBox="0 0 14 10">
+    <g fill-rule="nonzero">
+      <path d="M12.96 0l.794.607-7.227 9.458L0 3.433l.713-.702 5.719 5.811z"/>
+    </g>
+  </symbol>
+
+  <symbol id="favorite-icon" viewBox="0 0 18 18">
+    <g fill-rule="nonzero">
+      <path fill-rule="nonzero" d="M9 13.435l4.038 2.123-.771-4.496 3.267-3.185-4.515-.656L9 3.13 6.98 7.22l-4.514.657 3.267 3.185-.771 4.496L9 13.435zm-5.366 3.951l1.025-5.975L.317 7.179l6-.872L9 .87l2.683 5.437 6 .872-4.342 4.232 1.025 5.975L9 14.565l-5.366 2.821z"/>
+    </g>
+  </symbol>
+</svg>

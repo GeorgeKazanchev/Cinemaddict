@@ -318,10 +318,11 @@ $opacity-disabled: 0.5;
 
 .film-details__control-label {
   position: relative;
-  width: 50%;
+  display: flex;
+  align-items: center;
+  width: fit-content;
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 80px;
   font-size: $font-size-regular;
   cursor: pointer;
 
@@ -341,30 +342,10 @@ $opacity-disabled: 0.5;
   &::before {
     content: '';
     position: absolute;
-    top: 17px;
-    left: 40px;
-    width: 17px;
-    height: 17px;
-    background-color: transparent;
-  }
-
-  &--watchlist::before {
-    background-image: url("./../img/icons/icon-watchlist.svg");
-    background-repeat: no-repeat;
-    background-size: 17px 15px;
-  }
-
-  &--watched::before {
-    top: 22px;
-    background-image: url("./../img/icons/icon-watched.svg");
-    background-repeat: no-repeat;
-    background-size: 17px 10px;
-  }
-
-  &--favorite::before {
-    background-image: url("./../img/icons/icon-favorite.svg");
-    background-repeat: no-repeat;
-    background-size: 18px;
+    top: calc(50% - #{$loader-radius} / 2);
+    left: -20px;
+    width: 0;
+    height: 0;
   }
 }
 
@@ -373,6 +354,7 @@ $opacity-disabled: 0.5;
     width: 20%;
     padding-top: 0;
     padding-bottom: 0;
+    padding-left: 80px;
     padding-right: 5px;
 
     &:not(:first-of-type) {
@@ -384,11 +366,7 @@ $opacity-disabled: 0.5;
     }
 
     &::before {
-      top: 3px;
-    }
-
-    &--watched::before {
-      top: 7px;
+      left: 20px;
     }
   }
 }
@@ -400,21 +378,18 @@ $opacity-disabled: 0.5;
   }
 }
 
-.film-details__control-input:checked {
-  & + .film-details__control-label {
-    color: $gold;
-  }
+.film-details__control-icon {
+  position: relative;
+  top: 0;
+  left: -20px;
+  fill: #7c7c7c;
+}
 
-  & + .film-details__control-label--watchlist::before {
-    background-image: url("./../img/icons/icon-watchlist-active.svg");
-  }
+.film-details__control-input:checked + .film-details__control-label {
+  color: $gold;
 
-  & + .film-details__control-label--watched::before {
-    background-image: url("./../img/icons/icon-watched-active.svg");
-  }
-
-  & + .film-details__control-label--favorite::before {
-    background-image: url("./../img/icons/icon-favorite-active.svg");
+  .film-details__control-icon {
+    fill: $gold;
   }
 }
 

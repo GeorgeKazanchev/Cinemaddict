@@ -48,24 +48,35 @@ export default class FilmCardView extends AbstractView {
         <form action="#" method="post" autocomplete="off">
           <fieldset class="film-card__controls">
             <button
-              class="button film-card__controls-item film-card__controls-item--add-to-watchlist
+              class="button film-card__controls-item film-card__controls-item--watchlist
                 ${userDetails.inWatchlist ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >
+              <svg class="film-card__controls-icon film-card__controls-icon--watchlist" width="17" height="17" role="img">
+                <use xlink:href="img/sprite.svg#watchlist-icon"></use>
+              </svg>
               Add to watchlist
             </button>
+
             <button
-              class="button film-card__controls-item film-card__controls-item--mark-as-watched
+              class="button film-card__controls-item film-card__controls-item--watched
                 ${userDetails.isWatched ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >
+              <svg class="film-card__controls-icon film-card__controls-icon--watched" width="14" height="10" role="img">
+                <use xlink:href="img/sprite.svg#watched-icon"></use>
+              </svg>
               Mark as watched
             </button>
+
             <button
               class="button film-card__controls-item film-card__controls-item--favorite
                 ${userDetails.isFavorite ? BUTTON_ACTIVE_CLASSNAME : ''}"
               type="button"
             >
+              <svg class="film-card__controls-icon film-card__controls-icon--favorite" width="18" height="18" role="img">
+                <use xlink:href="img/sprite.svg#favorite-icon"></use>
+              </svg>
               Mark as favorite
             </button>
           </fieldset>
@@ -92,8 +103,8 @@ export default class FilmCardView extends AbstractView {
     const posterElement = this.element.querySelector('.film-card__poster');
     const commentsElement = this.element.querySelector('.film-card__comments');
 
-    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
-    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--watchlist');
+    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--watched');
     const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
 
     const popupOpenClickHandler = (evt: Event) => {
@@ -142,12 +153,12 @@ export default class FilmCardView extends AbstractView {
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateWatchlistButton(): void {
-    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
+    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--watchlist');
     watchlistButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
   }
 
   public updateWatchedButton(): void {
-    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--watched');
     watchedButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
   }
 
