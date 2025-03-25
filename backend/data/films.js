@@ -1,3 +1,7 @@
+const { PORT } = require('../settings.js');
+
+const POSTER_BASE_PATH = `http://localhost:${PORT}/img`;
+
 const films = [
   {
     id: '841c7b78-f1f0-4635-9b67-82b9fcfb2675',
@@ -9,7 +13,7 @@ const films = [
       title: 'The Man with the Golden Arm',
       alternative_title: 'The Man with the Golden Arm',
       total_rating: 9.0,
-      poster: 'https://lh3.google.com/u/0/d/12hKyRaDGhI6thJatQQeBXTgUdlMnUvz7=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/the-man-with-the-golden-arm.jpg`,
       age_rating: 6,
       director: 'Otto Preminger',
       writers: [
@@ -47,7 +51,7 @@ const films = [
       title: 'The Great Flamarion',
       alternative_title: 'The Great Flamarion',
       total_rating: 8.9,
-      poster: 'https://lh3.google.com/u/0/d/1a69N9bAqpCECNjMX1Hd1mSDT0C3rLgHo=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/the-great-flamarion.jpg`,
       age_rating: 6,
       director: 'Anthony Mann',
       writers: [
@@ -86,7 +90,7 @@ const films = [
       title: 'Made for Each Other',
       alternative_title: 'Made for Each Other',
       total_rating: 5.8,
-      poster: 'https://lh3.google.com/u/0/d/1OQXA4fvXW1PGkId3wXSMYl-OxjNY8NNJ=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/made-for-each-other.jpg`,
       age_rating: 6,
       director: 'John Cromwell',
       writers: [
@@ -122,7 +126,7 @@ const films = [
       title: 'Popeye the Sailor Meets Sindbad the Sailor',
       alternative_title: 'Popeye the Sailor Meets Sindbad the Sailor',
       total_rating: 6.3,
-      poster: 'https://lh3.google.com/u/0/d/18WvEXWYW4W3V-AkRTEOIEot3w_hdQDO2=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/popeye-meets-sinbad.jpg`,
       age_rating: 6,
       director: 'Dave Fleischer',
       writers: [
@@ -160,7 +164,7 @@ const films = [
       title: 'Sagebrush Trail',
       alternative_title: 'Sagebrush Trail',
       total_rating: 5.4,
-      poster: 'https://lh3.google.com/u/0/d/1B9KmgCJ5SpOyjtoOPWw9lTx8v7-d1uv-=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/sagebrush-trail.jpg`,
       age_rating: 6,
       director: 'Armand Schaefer',
       writers: [
@@ -199,7 +203,7 @@ const films = [
       title: 'Santa Claus Conquers the Martians',
       alternative_title: 'Santa Claus Conquers the Martians',
       total_rating: 2.7,
-      poster: 'https://lh3.google.com/u/0/d/17Ri3A7wZx_8H62Uw1nhJG_jRXK1b6Fug=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/santa-claus-conquers-the-martians.jpg`,
       age_rating: 12,
       director: 'Nicholas Webster',
       writers: [
@@ -235,7 +239,7 @@ const films = [
       title: 'The Dance of Life',
       alternative_title: 'The Dance of Life',
       total_rating: 6.8,
-      poster: 'https://lh3.google.com/u/0/d/16AuFg8a1-BKSASKxu6R3lnuYBXNhlMW7=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/the-dance-of-life.jpg`,
       age_rating: 12,
       director: 'John Cromwell',
       writers: [
@@ -273,7 +277,7 @@ const films = [
       title: 'Casablanca',
       alternative_title: 'Casablanca',
       total_rating: 8.5,
-      poster: 'https://lh3.google.com/u/0/d/1MqqoQ-Byu6HYJDjMBHzcSohcEMPVsJW6=w1920-h922-iv2',
+      poster: `${POSTER_BASE_PATH}/casablanca.jpg`,
       age_rating: 12,
       director: 'Michael Curtiz',
       writers: [
@@ -313,7 +317,7 @@ const films = [
       title: 'Vertigo',
       alternative_title: 'Vertigo',
       total_rating: 8.3,
-      poster: 'https://lh3.google.com/u/0/d/1tQlwtksnt8X1GaZrYFTNzq_ruYx2Bo_G=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/vertigo.jpg`,
       age_rating: 12,
       director: 'Alfred Hitchcock',
       writers: [
@@ -351,7 +355,7 @@ const films = [
       title: 'Chinatown',
       alternative_title: 'Chinatown',
       total_rating: 8.1,
-      poster: 'https://lh3.google.com/u/0/d/1kXnyqRw0a7_BtFMgS-rtJcEFu1aQ06tr=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/chinatown.jpg`,
       age_rating: 18,
       director: 'Roman Polanski',
       writers: [
@@ -389,7 +393,7 @@ const films = [
       title: 'Rear Window',
       alternative_title: 'Rear Window',
       total_rating: 8.5,
-      poster: 'https://lh3.google.com/u/0/d/14V8SUW6SNMId4kZ_xfPP6uSJqBB0PFWX=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/rear-window.jpg`,
       age_rating: 12,
       director: 'Alfred Hitchcock',
       writers: [
@@ -427,7 +431,7 @@ const films = [
       title: 'Laura',
       alternative_title: 'Laura',
       total_rating: 7.9,
-      poster: 'https://lh3.google.com/u/0/d/1QCXVffBvVifznQ8_5Lt5rlAP6ySy3DQ8=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/laura.jpg`,
       age_rating: 6,
       director: 'Otto Preminger',
       writers: [
@@ -466,7 +470,7 @@ const films = [
       title: 'The Maltese Falcon',
       alternative_title: 'The Maltese Falcon',
       total_rating: 7.9,
-      poster: 'https://lh3.google.com/u/0/d/17C9k91lOGSbyCRP4QXMkcsMNM9ZUBgxd=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/maltese-falcon.jpg`,
       age_rating: 12,
       director: 'John Huston',
       writers: [
@@ -504,7 +508,7 @@ const films = [
       title: 'North by Northwest',
       alternative_title: 'North by Northwest',
       total_rating: 8.3,
-      poster: 'https://lh3.google.com/u/0/d/1lfFMfrE3XYNZMeltmThbQcnop6TfPdbn=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/north-by-northwest.jpg`,
       age_rating: 12,
       director: 'Alfred Hitchcock',
       writers: [
@@ -542,7 +546,7 @@ const films = [
       title: 'Blue Velvet',
       alternative_title: 'Blue Velvet',
       total_rating: 7.7,
-      poster: 'https://lh3.google.com/u/0/d/1iZmBfX4zPxfo0jPjVSrH4LQO_ILpsRhg=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/blue-velvet.jpg`,
       age_rating: 18,
       director: 'David Lynch',
       writers: [
@@ -579,7 +583,7 @@ const films = [
       title: 'Dial M for Murder',
       alternative_title: 'Dial M for Murder',
       total_rating: 8.2,
-      poster: 'https://lh3.google.com/u/0/d/1qWQgNgKfnJUYme5WES1NrjatNZbUQeW4=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/dial-m-for-murder.jpg`,
       age_rating: 12,
       director: 'Alfred Hitchcock',
       writers: [
@@ -617,7 +621,7 @@ const films = [
       title: 'The Usual Suspects',
       alternative_title: 'The Usual Suspects',
       total_rating: 8.5,
-      poster: 'https://lh3.google.com/u/0/d/1KqHYpRt91aa6rj_R3A7O5qjAYTl-ae8f=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/usual-suspects.jpg`,
       age_rating: 18,
       director: 'Bryan Singer',
       writers: [
@@ -654,7 +658,7 @@ const films = [
       title: 'The Third Man',
       alternative_title: 'The Third Man',
       total_rating: 8.1,
-      poster: 'https://lh3.google.com/u/0/d/1wRxvhGwk8CrAoFGRWj8VqFRsWMERvFZb=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/third-man.jpg`,
       age_rating: 12,
       director: 'Carol Reed',
       writers: [
@@ -693,7 +697,7 @@ const films = [
       title: '2001: A Space Odyssey',
       alternative_title: '2001: A Space Odyssey',
       total_rating: 8.3,
-      poster: 'https://lh3.google.com/u/0/d/12DACFD8EdLcHPdnUzzyGc_uJ3ID0Cl-V=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/2001-space-odyssey.jpg`,
       age_rating: 6,
       director: 'Stanley Kubrick',
       writers: [
@@ -730,7 +734,7 @@ const films = [
       title: 'Star Wars: Episode IV - A New Hope',
       alternative_title: 'Star Wars: Episode IV - A New Hope',
       total_rating: 8.6,
-      poster: 'https://lh3.google.com/u/0/d/1IxDHYjihMF3PNjZvU5_CEMehQmxBTvbN=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/star-wars-iv.jpg`,
       age_rating: 12,
       director: 'George Lucas',
       writers: [
@@ -767,7 +771,7 @@ const films = [
       title: 'E.T. the Extra-Terrestrial',
       alternative_title: 'E.T. the Extra-Terrestrial',
       total_rating: 7.9,
-      poster: 'https://lh3.google.com/u/0/d/1TkILu9kYgSHY3J15daAKey3WaSlO-cJU=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/et.jpg`,
       age_rating: 12,
       director: 'Steven Spielberg',
       writers: [
@@ -804,7 +808,7 @@ const films = [
       title: 'A Clockwork Orange',
       alternative_title: 'A Clockwork Orange',
       total_rating: 8.2,
-      poster: 'https://lh3.google.com/u/0/d/1c9KL2YwkmpCjWzxZsJDeTQGkwxcCCT_6=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/clockwork-orange.jpg`,
       age_rating: 18,
       director: 'Stanley Kubrick',
       writers: [
@@ -842,7 +846,7 @@ const films = [
       title: 'The Day the Earth Stood Still',
       alternative_title: 'The Day the Earth Stood Still',
       total_rating: 7.7,
-      poster: 'https://lh3.google.com/u/0/d/13Xd_98OufiQy2X7A-4himgg_p5f5U6Jb=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/day-the-earth-stood-still.jpg`,
       age_rating: 12,
       director: 'Robert Wise',
       writers: [
@@ -880,7 +884,7 @@ const films = [
       title: 'Blade Runner',
       alternative_title: 'Blade Runner',
       total_rating: 8.1,
-      poster: 'https://lh3.google.com/u/0/d/1krK5y_oU0OzsSDz6voPJAp2xloSitEnw=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/blade-runner.jpg`,
       age_rating: 16,
       director: 'Ridley Scott',
       writers: [
@@ -919,7 +923,7 @@ const films = [
       title: 'Alien',
       alternative_title: 'Alien',
       total_rating: 8.5,
-      poster: 'https://lh3.google.com/u/0/d/1-6kS6G-IEY3ohl4dGhMG1oMY6XN-1QZr=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/alien.jpg`,
       age_rating: 18,
       director: 'Ridley Scott',
       writers: [
@@ -957,7 +961,7 @@ const films = [
       title: 'Terminator 2: Judgment Day',
       alternative_title: 'Terminator 2: Judgment Day',
       total_rating: 8.6,
-      poster: 'https://lh3.google.com/u/0/d/1DqJsO5yVMhlnAnuAQrCqzZupIFT1beHU=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/terminator-2.jpg`,
       age_rating: 16,
       director: 'James Cameron',
       writers: [
@@ -994,7 +998,7 @@ const films = [
       title: 'Invasion of the Body Snatchers',
       alternative_title: 'Invasion of the Body Snatchers',
       total_rating: 7.4,
-      poster: 'https://lh3.google.com/u/0/d/1DaEaqYFFXyUI6vJbN_S6mpZNrHPZbUe3=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/invasion-of-the-body-snatchers.jpg`,
       age_rating: 12,
       director: 'Philip Kaufman',
       writers: [
@@ -1032,7 +1036,7 @@ const films = [
       title: 'Back to the Future',
       alternative_title: 'Back to the Future',
       total_rating: 8.5,
-      poster: 'https://lh3.google.com/u/0/d/13Xn7IKGEuBIfFrfL8pKcFfEb3wa1o31x=w1920-h922-iv1',
+      poster: `${POSTER_BASE_PATH}/back-to-the-future.jpg`,
       age_rating: 6,
       director: 'Robert Zemeckis',
       writers: [
