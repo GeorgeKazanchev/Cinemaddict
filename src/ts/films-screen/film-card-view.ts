@@ -43,7 +43,7 @@ export default class FilmCardView extends AbstractView {
             <span class="film-card__genre">${info.genres.join(', ')}</span>
           </p>
           <p class="film-card__description">${getLimitedDescription(info.description)}</p>
-          <a class="link film-card__comments" tabindex="0">${this._getCommentsCountText(commentsCount)}</a>
+          <a class="link film-card__comments" href="#">${this._getCommentsCountText(commentsCount)}</a>
         </div>
         <form action="#" method="post" autocomplete="off">
           <fieldset class="film-card__controls">
