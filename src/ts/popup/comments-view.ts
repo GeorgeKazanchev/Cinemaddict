@@ -66,7 +66,10 @@ export default class CommentsView extends AbstractView {
               aria-required="true"
             >
             <label class="film-details__emoji-label" for="emoji-smile" id="emoji-smile-label">
-              <img src="./img/emoji/smile.png" width="30" height="30" alt="Smiley emoji">
+              <picture>
+                <source type="image/webp" srcset="./img/emoji/smile.webp">
+                <img src="./img/emoji/smile.png" width="30" height="30" alt="Smiley emoji">
+              </picture>
             </label>
 
             <input
@@ -78,7 +81,10 @@ export default class CommentsView extends AbstractView {
               value="sleeping"
             >
             <label class="film-details__emoji-label" for="emoji-sleeping" id="emoji-sleeping-label">
-              <img src="./img/emoji/sleeping.png" width="30" height="30" alt="Sleeping emoji">
+              <picture>
+                <source type="image/webp" srcset="./img/emoji/sleeping.webp">
+                <img src="./img/emoji/sleeping.png" width="30" height="30" alt="Sleeping emoji">
+              </picture>
             </label>
 
             <input
@@ -90,7 +96,10 @@ export default class CommentsView extends AbstractView {
               value="puke"
             >
             <label class="film-details__emoji-label" for="emoji-puke" id="emoji-puke-label">
-              <img src="./img/emoji/puke.png" width="30" height="30" alt="Puking emoji">
+              <picture>
+                <source type="image/webp" srcset="./img/emoji/puke.webp">
+                <img src="./img/emoji/puke.png" width="30" height="30" alt="Puking emoji">
+              </picture>
             </label>
 
             <input
@@ -102,7 +111,10 @@ export default class CommentsView extends AbstractView {
               value="angry"
             >
             <label class="film-details__emoji-label" for="emoji-angry" id="emoji-angry-label">
-              <img src="./img/emoji/angry.png" width="30" height="30" alt="Angry emoji">
+              <picture>
+                <source type="image/webp" srcset="./img/emoji/angry.webp">
+                <img src="./img/emoji/angry.png" width="30" height="30" alt="Angry emoji">
+              </picture>
             </label>
           </div>
         </fieldset>

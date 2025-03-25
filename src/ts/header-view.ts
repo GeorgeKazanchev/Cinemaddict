@@ -69,7 +69,11 @@ export default class HeaderView extends AbstractView {
         ? `<section class="header__profile profile">
             <h2 class="visually-hidden">User info</h2>
             <p class="profile__rating">${rank}</p>
-            <img class="profile__avatar" src="img/bitmap@2x.png" alt="Avatar" width="35" height="35">
+            <picture>
+              <source type="image/webp" srcset="img/bitmap.webp 1x, img/bitmap@2x.webp 2x, img/bitmap@3x.webp 3x">
+              <img class="profile__avatar" src="img/bitmap.png" srcset="img/bitmap@2x.png 2x, img/bitmap@3x.png 3x"
+                alt="Avatar" width="35" height="35">
+            </picture>
           </section>`
         : ''
     );
