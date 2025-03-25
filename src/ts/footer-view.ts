@@ -15,7 +15,10 @@ export default class FooterView extends AbstractView {
     return `
       <footer class="footer">
         <section class="footer__logo logo logo--smaller">
-          <h2 class="logo__title">Cinemaddict</h2>
+          <svg class="logo__img" width="120" height="24" role="img">
+            <use xlink:href="img/sprite.svg#logo"></use>
+          </svg>
+          <h2 class="visually-hidden">Cinemaddict</h2>
         </section>
         <section class="footer__statistics">
           ${statistics}

@@ -17,7 +17,12 @@ export default class HeaderView extends AbstractView {
 
     return `
       <header class="header">
-        <h1 class="header__logo logo">Cinemaddict</h1>
+        <h1 class="header__logo logo">
+          <svg class="logo__img" width="180" height="32" role="img">
+            <use xlink:href="img/sprite.svg#logo"></use>
+          </svg>
+          <span class="visually-hidden">Cinemaddict</span>
+        </h1>
         <button class="header__menu-toggler button" type="button" aria-label="Toggle menu"></button>
         ${profile}
       </header>`;
