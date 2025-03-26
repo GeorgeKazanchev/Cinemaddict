@@ -1,5 +1,6 @@
+import moment from 'moment';
 import AbstractView from '../abstract-view';
-import { Comment, getFormattedCommentDate } from '../model';
+import { Comment } from '../model';
 import Model from '../model/model';
 
 type Props = {
@@ -36,7 +37,7 @@ export default class CommentCardView extends AbstractView {
           <p class="film-details__comment-text">${text}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${author}</span>
-            <span class="film-details__comment-day">${getFormattedCommentDate(date)}</span>
+            <span class="film-details__comment-day">${moment(date).fromNow()}</span>
             <button class="film-details__comment-delete button" type="button">Delete</button>
           </p>
         </div>
