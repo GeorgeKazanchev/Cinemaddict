@@ -112,6 +112,6 @@ commentsRouter.delete('/:id', (request, response) => {
 app.use('/movies', filmsRouter);
 app.use('/comments', commentsRouter);
 
-app.listen(PORT, 'localhost', function() {
+app.listen(PORT, function() {
   console.log(`Server is started at port ${PORT}`);
 });
