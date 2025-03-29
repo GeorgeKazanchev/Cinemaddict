@@ -30,6 +30,7 @@ export default class FilmsScreen {
     this._footerView = new FooterView(this._model);
 
     this._headerView.onMenuToggle = this._onMenuToggle.bind(this);
+    this._headerView.onMainScreenOpen = this._onMainScreenOpen.bind(this);
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._navigationPanelView.onStatisticsOpen = this._onStatisticsOpen.bind(this);
     this._sortPanelView.onSort = this._onSort.bind(this);
@@ -94,6 +95,14 @@ export default class FilmsScreen {
     this._navigationPanelView.toggleMenuVisibility();
   }
 
+  private _onMainScreenOpen(): void {
+    this._closePopup();
+    this._model.setFilter(Filter.All);
+    this._model.setSortType(SortType.Default);
+    Application.showFilmsScreen(this._model.state);
+    window.scrollTo(0, 0);
+  }
+
   private _onFiltration(selectedFilter: Filter): void {
     const { state } = this._model;
     if (state.filter !== selectedFilter) {
@@ -127,7 +136,7 @@ export default class FilmsScreen {
   }
 
   private _onPopupOpen(film: Film): void {
-    document.querySelector('.film-details')?.remove();
+    this._closePopup();
 
     const popup = new Popup({
       model: this._model,
@@ -247,5 +256,9 @@ export default class FilmsScreen {
 
   private _onCommentsCountChange(film: Film): void {
     this._filmsView.updateCommentsCount(film);
+  }
+
+  private _closePopup(): void {
+    document.querySelector('.film-details')?.remove();
   }
 }

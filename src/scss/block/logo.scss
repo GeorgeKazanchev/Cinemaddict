@@ -1,6 +1,7 @@
 @use '/src/scss/variables.scss' as var;
 
 .logo__img {
+  display: block;
   width: 160px;
   height: 32px;
 

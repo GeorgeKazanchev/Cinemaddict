@@ -18,32 +18,58 @@ export default class HeaderView extends AbstractView {
     return `
       <header class="header">
         <h1 class="header__logo logo">
-          <svg class="logo__img" width="180" height="32" role="img">
-            <use xlink:href="img/sprite.svg#logo"></use>
-          </svg>
+          <a href="#" class="header__link-to-main link">
+            <svg class="logo__img" width="180" height="32" role="img">
+              <use xlink:href="img/sprite.svg#logo"></use>
+            </svg>
+          </a>
           <span class="visually-hidden">Cinemaddict</span>
         </h1>
-        <button class="header__menu-toggler button" type="button" aria-label="Toggle menu"></button>
+        <button
+          class="header__menu-toggle button"
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="main-navigation"
+        ></button>
         ${profile}
       </header>`;
   }
 
   public bind(): void {
-    const menuTogglerElement = this.element.querySelector('.header__menu-toggler');
-    if (!menuTogglerElement) {
-      throw new Error('No navigation menu toggler element found');
+    const menuToggleElement = this.element.querySelector('.header__menu-toggle');
+    if (!menuToggleElement) {
+      throw new Error('No navigation menu toggle element found');
     }
 
-    const menuTogglerClickHandler = (evt: Event) => {
+    const linkToMainElement = this.element.querySelector('.header__link-to-main');
+    if (!linkToMainElement) {
+      throw new Error('No link to main element found');
+    }
+
+    const menuToggleClickHandler = (evt: Event) => {
       evt.preventDefault();
       this.onMenuToggle();
-      menuTogglerElement.classList.toggle('header__menu-toggler--expanded');
+      menuToggleElement.classList.toggle('header__menu-toggle--expanded');
+
+      if (menuToggleElement.getAttribute('aria-expanded') === 'true') {
+        menuToggleElement.setAttribute('aria-expanded', 'false');
+      } else {
+        menuToggleElement.setAttribute('aria-expanded', 'true');
+      }
     };
 
-    menuTogglerElement.addEventListener('click', menuTogglerClickHandler);
+    const linkToMainClickHandler = (evt: Event) => {
+      evt.preventDefault();
+      this.onMainScreenOpen();
+    };
+
+    menuToggleElement.addEventListener('click', menuToggleClickHandler);
+    linkToMainElement.addEventListener('click', linkToMainClickHandler);
   }
 
   public onMenuToggle(): void { }
+  public onMainScreenOpen(): void { }
 
   public updateRank(): void {
     const rank = getRank(this._model.filmsSummary.watchedFilmsCount);

@@ -44,7 +44,7 @@ export default class NavigationPanelView extends AbstractView {
     const isFavoriteSelected = isFilmsScreen && filter === Filter.Favorite;
 
     return `
-      <nav class="main-navigation">
+      <nav class="main-navigation" id="main-navigation" aria-label="Website">
         <div class="main-navigation__items">
           <a href="#all" class="link main-navigation__item ${isAllSelected ? FILTER_ACTIVE_CLASSNAME : ''}">
             All movies

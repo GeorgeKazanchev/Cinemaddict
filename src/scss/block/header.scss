@@ -1,8 +1,8 @@
 @use 'sass:color';
 @use '/src/scss/variables.scss' as var;
 
-$menu-toggler-width: 25px;
-$menu-toggler-height: 18px;
+$menu-toggle-width: 25px;
+$menu-toggle-height: 18px;
 $menu-stripe-height: 2px;
 $gradient-bg-color-stop: #121250;
 
@@ -36,6 +36,7 @@ $gradient-bg-color-stop: #121250;
   flex-basis: 165px;
   flex-grow: 0;
   flex-shrink: 0;
+  margin: 0;
   margin-right: 10px;
 
   @media (min-width: var.$tablet-min-width) {
@@ -43,10 +44,10 @@ $gradient-bg-color-stop: #121250;
   }
 }
 
-.header__menu-toggler {
+.header__menu-toggle {
   position: relative;
-  width: $menu-toggler-width;
-  height: $menu-toggler-height;
+  width: 40px;
+  height: 40px;
   border: 0;
   box-sizing: border-box;
   font-size: 1.5rem;
@@ -61,20 +62,20 @@ $gradient-bg-color-stop: #121250;
   &::after {
     content: '';
     position: absolute;
-    left: 0;
-    width: 100%;
+    left: calc(50% - #{$menu-toggle-width} / 2);
+    width: $menu-toggle-width;
     height: $menu-stripe-height;
     background-color: var.$text-color;
   }
 
   &::before {
-    top: 0;
-    box-shadow: 0 calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2) 0 0 var.$text-color;
+    top: calc(50% - #{$menu-toggle-height} / 2);
+    box-shadow: 0 calc((#{$menu-toggle-height} - #{$menu-stripe-height}) / 2) 0 0 var.$text-color;
     transition: box-shadow 0.3s 0.15s, top 0.3s 0.15s, transform 0.3s;
   }
 
   &::after {
-    bottom: 0;
+    bottom: calc(50% - #{$menu-toggle-height} / 2);
     transition: bottom 0.3s 0.15s, transform 0.3s;
   }
 
@@ -83,14 +84,14 @@ $gradient-bg-color-stop: #121250;
   }
 
   &--expanded::before {
-    top: calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2);
+    top: calc(50% - $menu-stripe-height);
     box-shadow: 0 6px 0 rgba(var.$text-color, 0.0);
     transform: rotate(45deg);
     transition: box-shadow 0.15s, top 0.3s, transform 0.3s 0.15s;
   }
 
   &--expanded::after {
-    bottom: calc((#{$menu-toggler-height} - #{$menu-stripe-height}) / 2);
+    bottom: 50%;
     transform: rotate(-45deg);
     transition: bottom 0.3s, transform 0.3s 0.15s;
   }

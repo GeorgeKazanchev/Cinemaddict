@@ -4,6 +4,7 @@ import HeaderView from '../header-view';
 import {
   getRank,
   Filter,
+  SortType,
   StatisticsPeriod,
 } from '../model';
 import Model from '../model/model';
@@ -33,6 +34,7 @@ export default class StatisticsScreen {
     });
 
     this._headerView.onMenuToggle = this._onMenuToggle.bind(this);
+    this._headerView.onMainScreenOpen = this._onMainScreenOpen.bind(this);
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
     this._filtersView.onPeriodChanged = this._onPeriodChanged.bind(this);
   }
@@ -75,6 +77,13 @@ export default class StatisticsScreen {
 
   private _onMenuToggle(): void {
     this._navigationPanelView.toggleMenuVisibility();
+  }
+
+  private _onMainScreenOpen(): void {
+    this._model.setFilter(Filter.All);
+    this._model.setSortType(SortType.Default);
+    Application.showFilmsScreen(this._model.state);
+    window.scrollTo(0, 0);
   }
 
   private _onFiltration(selectedFilter: Filter): void {
