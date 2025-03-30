@@ -1,4 +1,6 @@
 export const FILMS_PORTION_SIZE = 5;
+export const TOP_RATED_FILMS_COUNT = 2;
+export const MOST_COMMENTED_FILMS_COUNT = 2;
 export const MAX_DESCRIPTION_LENGTH = 140;
 export const STATS_SHOWN_GENRES_COUNT = 4;
 export const ELLIPSIS = '…';

@@ -1,5 +1,5 @@
 import { it, describe, expect } from '@jest/globals';
-import { getTopCommentedFilms, getTopRatedFilms } from '../../src/ts/model/get-top-films';
+import { getMostCommentedFilms, getTopRatedFilms } from '../../src/ts/model/get-top-films';
 import { getEmptyFilm, getFilms } from '../get-films';
 
 const films = getFilms();
@@ -37,21 +37,21 @@ describe('Get top rated films function', () => {
   });
 });
 
-describe('Get top commented films function', () => {
+describe('Get most commented films function', () => {
   it('should return an empty array if there are no films', () => {
-    expect(getTopCommentedFilms([])).toHaveLength(0);
+    expect(getMostCommentedFilms([])).toHaveLength(0);
   });
 
   it('should return an empty array if all the films have 0 comments', () => {
-    expect(getTopCommentedFilms([emptyFilm])).toHaveLength(0);
+    expect(getMostCommentedFilms([emptyFilm])).toHaveLength(0);
   });
 
   it('should return 1 film if 2 films were passed (one of them has 0 comments)', () => {
-    expect(getTopCommentedFilms([films[0], emptyFilm])).toHaveLength(1);
+    expect(getMostCommentedFilms([films[0], emptyFilm])).toHaveLength(1);
   });
 
   it('should return all the films have been passed', () => {
-    expect(getTopCommentedFilms(films)).toHaveLength(films.length);
+    expect(getMostCommentedFilms(films)).toHaveLength(films.length);
   });
 
   it('should correctly deals with the films with different numbers of comments', () => {
@@ -59,20 +59,20 @@ describe('Get top commented films function', () => {
     testFilms[0].commentsIds = ['Comment 1', 'Comment 2'];
     testFilms[1].commentsIds = ['Comment 3', 'Comment 4', 'Comment 5'];
     testFilms[2].commentsIds = ['Comment 6'];
-    expect(getTopCommentedFilms(testFilms, 2)).toHaveLength(2);
+    expect(getMostCommentedFilms(testFilms, 2)).toHaveLength(2);
   });
 
   it('should return 2 films if films count was set to 2', () => {
-    const topFilms = getTopCommentedFilms(films, 2);
+    const topFilms = getMostCommentedFilms(films, 2);
     expect(topFilms).toHaveLength(2);
     expect(topFilms[0].commentsIds.length).toBeGreaterThanOrEqual(topFilms[1].commentsIds.length);
   });
 
   it('should return 0 films if films count was set to 0', () => {
-    expect(getTopCommentedFilms(films, 0)).toHaveLength(0);
+    expect(getMostCommentedFilms(films, 0)).toHaveLength(0);
   });
 
   it('should return all the films if films count exceeds the films array length', () => {
-    expect(getTopCommentedFilms(films, 1e+6)).toHaveLength(films.length);
+    expect(getMostCommentedFilms(films, 1e+6)).toHaveLength(films.length);
   });
 });

@@ -19,7 +19,7 @@ export const getTopRatedFilms = (films: Film[], count: number | null = null): Fi
   return topRatedFilms;
 };
 
-export const getTopCommentedFilms = (films: Film[], count: number | null = null): Film[] => {
+export const getMostCommentedFilms = (films: Film[], count: number | null = null): Film[] => {
   let topCommentedFilms = [...films];
 
   topCommentedFilms.sort((a, b) => b.commentsIds.length - a.commentsIds.length);

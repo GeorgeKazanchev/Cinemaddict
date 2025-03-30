@@ -1,4 +1,6 @@
 import { State } from '../data/data';
+import { MOST_COMMENTED_FILMS_COUNT, TOP_RATED_FILMS_COUNT } from './consts';
+import { getMostCommentedFilms, getTopRatedFilms } from './get-top-films';
 import {
   Comment,
   Constants,
@@ -40,6 +42,14 @@ export default class Model {
 
   public get shownFilms(): Film[] {
     return this.sortedFilms.slice(0, this._state.shownFilmsCount);
+  }
+
+  public get topRatedFilms(): Film[] {
+    return getTopRatedFilms(this._state.films, TOP_RATED_FILMS_COUNT);
+  }
+
+  public get mostCommentedFilms(): Film[] {
+    return getMostCommentedFilms(this._state.films, MOST_COMMENTED_FILMS_COUNT);
   }
 
   public get filmsSummary(): FilmsSummary {

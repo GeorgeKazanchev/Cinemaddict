@@ -24,7 +24,6 @@ export default class CommentsView extends AbstractView {
   private _model: Model;
   private _filmId: string;
   private _commentCardViews: CommentCardView[];
-
   private _onCommentDelete: Handlers.CommentDeleteHandler;
   private _commentFormElement: HTMLFieldSetElement | null = null;
   private _commentTextElement: HTMLTextAreaElement | null = null;
