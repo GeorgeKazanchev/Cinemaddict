@@ -8,15 +8,17 @@
       "DOM",
       "DOM.Iterable",
     ],
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "strictNullChecks": true
   },
   "ts-node": {
     "compilerOptions": {
