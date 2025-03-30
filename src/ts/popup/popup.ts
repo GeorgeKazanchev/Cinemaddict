@@ -70,7 +70,8 @@ export default class Popup {
 
     try {
       const comments = await Api.loadComments(this._filmId);
-      this._model.addComments(comments);
+      const film = this._model.getFilmById(this._filmId);
+      this._model.updateCommentsForFilm(film, comments);
       this._model.commentsLoadingStates.set(this._filmId, 'success');
       this._popupView.updateShownComments();
     } catch {

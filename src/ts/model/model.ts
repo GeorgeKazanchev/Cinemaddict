@@ -184,11 +184,10 @@ export default class Model {
   }
 
   private _getInitCommentsLoadingStates(films: Film[]): Map<string, LoadingState> {
-    const commentsLoadingStates = new Map<string, LoadingState>();
-    films.forEach((film) => {
-      commentsLoadingStates.set(film.id, 'pending');
-    });
-    return commentsLoadingStates;
+    return films.reduce((states, film) => {
+      states.set(film.id, 'pending');
+      return states;
+    }, new Map<string, LoadingState>());
   }
 
   private _getInitShownFilmsCount(films: Film[], filter: Filter): number {
