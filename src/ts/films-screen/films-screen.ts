@@ -256,6 +256,8 @@ export default class FilmsScreen {
 
   private _onCommentsCountChange(film: Film): void {
     this._filmsView.updateCommentsCount(film);
+    this._filmsView.updateTopRatedFilms();
+    this._filmsView.updateMostCommentedFilms();
   }
 
   private _closePopup(): void {
