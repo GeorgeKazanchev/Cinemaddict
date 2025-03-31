@@ -16,7 +16,7 @@ const SERVER_HOST = '85.119.146.124';
 const SERVER_PORT = 8081;
 const RANDOM_STRING_LENGTH = 10;
 
-const baseUrl = `http://${SERVER_HOST}:${SERVER_PORT}`;
+const baseUrl = `https://${SERVER_HOST}:${SERVER_PORT}`;
 const authHeader = `Basic ${getRandomString(RANDOM_STRING_LENGTH)}`;
 
 const getRequestHeaders = (method: RequestMethod): Headers => {
