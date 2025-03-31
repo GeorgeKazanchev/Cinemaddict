@@ -1,6 +1,6 @@
 const { HOST, PORT } = require('../settings.js');
 
-const POSTER_BASE_PATH = `https://${HOST}:${PORT}/img`;
+const POSTER_BASE_PATH = `http://${HOST}:${PORT}/img`;
 
 const films = [
   {
