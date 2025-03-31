@@ -1,19 +1,18 @@
 export const render = (element: Element, containerElement: Element): void => {
-  /* eslint-disable no-param-reassign */
+  // eslint-disable-next-line no-param-reassign
   containerElement.innerHTML = '';
   containerElement.append(element);
-  /* eslint-enable no-param-reassign */
 };
 
 export const getElementFromTemplate = (template: string): Element => {
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = template.trim();
+  const wrapperElement = document.createElement('div');
+  wrapperElement.innerHTML = template.trim();
 
-  if (!wrapper.firstElementChild) {
+  if (!wrapperElement.firstElementChild) {
     throw new Error('Failed to create an element from the template');
   }
 
-  return wrapper.firstElementChild;
+  return wrapperElement.firstElementChild;
 };
 
 export const getTargetAsElement = (evt: Event): Element => {

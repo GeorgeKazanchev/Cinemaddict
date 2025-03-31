@@ -27,6 +27,7 @@ export default class CommentsView extends AbstractView {
   private _onCommentDelete: Handlers.CommentDeleteHandler;
   private _commentFormElement: HTMLFieldSetElement | null = null;
   private _commentTextElement: HTMLTextAreaElement | null = null;
+  private _emotionContainerElement: Element | null = null;
 
   public get template(): string {
     const commentsCount = this._model.getCommentsCount(this._filmId);
@@ -122,11 +123,11 @@ export default class CommentsView extends AbstractView {
 
   public get element(): Element {
     const element = this.createElementLazy();
-    const commentsContainerElement = element.querySelector('.film-details__comments-list');
+    const containerElement = element.querySelector('.film-details__comments-list');
 
-    if (commentsContainerElement && commentsContainerElement.children.length === 0) {
+    if (containerElement) {
       this._commentCardViews.forEach((view) => {
-        commentsContainerElement.append(view.element);
+        containerElement.append(view.element);
       });
     }
 
@@ -161,23 +162,33 @@ export default class CommentsView extends AbstractView {
     return element;
   }
 
+  public get emotionContainerElement(): Element {
+    if (this._emotionContainerElement) {
+      return this._emotionContainerElement;
+    }
+
+    const element = this.element.querySelector('.film-details__add-emoji-label');
+    if (!element) {
+      throw new Error('No emoji container element found');
+    }
+
+    this._emotionContainerElement = element;
+    return element;
+  }
+
   public bind(): void {
     //  Изменение выбранной эмоции
     const newCommentContainerElement = this.element.querySelector('.film-details__new-comment');
 
-    const emotionChangeHandler = (evt: Event) => {
+    const emotionChangeHandler = (evt: Event): void => {
       const inputElement = getTargetAsElement(evt);
       if (!(inputElement instanceof HTMLInputElement)) {
         return;
       }
 
-      const emotionContainerElement = this.element.querySelector('.film-details__add-emoji-label');
-      if (emotionContainerElement) {
-        emotionContainerElement.innerHTML = '';
-      }
-
+      this.emotionContainerElement.innerHTML = '';
       const emotionImageElement = this._getEmotionImageElement(inputElement.value);
-      emotionContainerElement?.append(emotionImageElement);
+      this.emotionContainerElement.append(emotionImageElement);
     };
 
     newCommentContainerElement?.addEventListener('change', emotionChangeHandler);
@@ -185,11 +196,11 @@ export default class CommentsView extends AbstractView {
     //  Добавление обработчиков на поле ввода комментария
     const { commentTextElement } = this;
 
-    const commentTextInputHandler = () => {
+    const commentTextInputHandler = (): void => {
       commentTextElement.setCustomValidity('');
     };
 
-    const commentValidationHandler = () => {
+    const commentValidationHandler = (): void => {
       if (commentTextElement.validity.valueMissing) {
         commentTextElement.setCustomValidity('Комментарий не может быть пустым!');
         return;
@@ -238,11 +249,7 @@ export default class CommentsView extends AbstractView {
   }
 
   public resetNewCommentEmotion(): void {
-    const emotionContainerElement = this.element.querySelector('.film-details__add-emoji-label');
-    if (emotionContainerElement) {
-      emotionContainerElement.innerHTML = '';
-    }
-
+    this.emotionContainerElement.innerHTML = '';
     const emotionInputElements = this.element.querySelectorAll('.film-details__emoji-item');
     emotionInputElements.forEach((input) => {
       if (input instanceof HTMLInputElement) {

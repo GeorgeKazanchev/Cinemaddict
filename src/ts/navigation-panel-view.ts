@@ -71,10 +71,10 @@ export default class NavigationPanelView extends AbstractView {
     const statisticsElement = this.element.querySelector('.main-navigation__additional');
 
     filterButtonElements.forEach((element) => {
-      element.addEventListener('click', (evt: Event) => {
+      element.addEventListener('click', (evt: Event): void => {
         evt.preventDefault();
         const linkElement = getTargetAsElement(evt).closest('.main-navigation__item');
-        if (!(linkElement instanceof HTMLAnchorElement)) {
+        if (!linkElement) {
           return;
         }
 
@@ -90,16 +90,14 @@ export default class NavigationPanelView extends AbstractView {
       });
     });
 
-    statisticsElement?.addEventListener('click', (evt: Event) => {
+    statisticsElement?.addEventListener('click', (evt: Event): void => {
       evt.preventDefault();
       this.onStatisticsOpen();
     });
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public onFiltration(filter: Filter): void { }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
-
   public onStatisticsOpen(): void { }
 
   public updateActiveFilter(): void {

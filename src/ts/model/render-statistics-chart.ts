@@ -59,22 +59,22 @@ const renderFilmsCount = (
 
 const renderGenreColumns = (
   ctx: CanvasRenderingContext2D,
-  genresData: [string, number][],
+  filmsCountByGenres: [string, number][],
   canvasWidth: number,
   canvasHeight: number,
 ): void => {
-  const columnsCount = genresData.length;
+  const columnsCount = filmsCountByGenres.length;
   if (columnsCount === 0) {
     return;
   }
 
   const x0 = (canvasWidth - columnsCount * COLUMN_WIDTH - (columnsCount - 1) * COLUMN_GAP) / 2;
   const maxColumnHeight = MAX_COLUMN_HEIGHT_COEFFICIENT * canvasHeight;
-  const topGenreFilmsCount = genresData[0][1];
+  const topGenreFilmsCount = filmsCountByGenres[0][1];
 
   for (let i = 0; i < columnsCount; ++i) {
-    const genreName = genresData[i][0];
-    const filmsCount = genresData[i][1];
+    const genreName = filmsCountByGenres[i][0];
+    const filmsCount = filmsCountByGenres[i][1];
 
     const columnHeight = maxColumnHeight * (filmsCount / topGenreFilmsCount);
 
@@ -93,12 +93,12 @@ const renderGenreColumns = (
 const renderStatisticsChart = (films: Film[], canvasElement: HTMLCanvasElement): void => {
   const ctx = canvasElement.getContext('2d');
   if (ctx) {
-    let genresData = Array.from(getFilmsCountByGenres(films));
-    genresData.sort((a, b) => b[1] - a[1]);
-    genresData = genresData.slice(0, STATS_SHOWN_GENRES_COUNT);
+    let filmsCountByGenres = Array.from(getFilmsCountByGenres(films));
+    filmsCountByGenres.sort((a, b) => b[1] - a[1]);
+    filmsCountByGenres = filmsCountByGenres.slice(0, STATS_SHOWN_GENRES_COUNT);
 
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    renderGenreColumns(ctx, genresData, canvasElement.width, canvasElement.height);
+    renderGenreColumns(ctx, filmsCountByGenres, canvasElement.width, canvasElement.height);
   }
 };
 

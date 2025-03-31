@@ -5,13 +5,13 @@ import StatisticsScreen from './statistics-screen/statistics-screen';
 import { render } from './util';
 
 export default class Application {
-  public static showFilmsScreen(state: State) {
+  public static showFilmsScreen(state: State): void {
     const model = new Model(state);
     const filmsScreen = new FilmsScreen(model);
     render(filmsScreen.element, Application._getAppContainer());
   }
 
-  public static showStatistics(state: State) {
+  public static showStatistics(state: State): void {
     const model = new Model(state);
     const statisticsScreen = new StatisticsScreen(model);
     render(statisticsScreen.element, Application._getAppContainer());

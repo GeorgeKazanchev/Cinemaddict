@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import { SortType } from '../model';
+import { Constants, SortType } from '../model';
 import Model from '../model/model';
 import { getTargetAsElement } from '../util';
 
@@ -51,10 +51,10 @@ export default class SortPanelView extends AbstractView {
     const sortButtonElements = this.element.querySelectorAll('.sort__button');
 
     sortButtonElements.forEach((element) => {
-      element.addEventListener('click', (evt: Event) => {
+      element.addEventListener('click', (evt: Event): void => {
         evt.preventDefault();
         const linkElement = getTargetAsElement(evt).closest('.sort__button');
-        if (!(linkElement instanceof HTMLAnchorElement)) {
+        if (!linkElement) {
           return;
         }
 
@@ -97,9 +97,9 @@ export default class SortPanelView extends AbstractView {
   private _updateVisibility(element: Element): void {
     const isVisible = this._model.areFilmsShown;
     if (isVisible) {
-      element.classList.remove('hidden');
+      element.classList.remove(Constants.HIDDEN_CLASSNAME);
     } else {
-      element.classList.add('hidden');
+      element.classList.add(Constants.HIDDEN_CLASSNAME);
     }
   }
 }

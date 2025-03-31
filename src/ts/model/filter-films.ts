@@ -12,7 +12,7 @@ const filterFilms = (films: Film[], filter: Filter): Film[] => {
     case Filter.Favorite:
       return films.filter(({ userDetails }) => userDetails.isFavorite);
     default:
-      throw new RangeError(`Filter isn't supported by the filtration method`);
+      throw new RangeError(`Filter is not supported by the filtration method`);
   }
 };
 

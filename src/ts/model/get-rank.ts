@@ -1,6 +1,6 @@
 const getRank = (watchedFilmsCount: number): string => {
   if (watchedFilmsCount < 0 || !Number.isInteger(watchedFilmsCount)) {
-    throw new RangeError(`Watched films count ${watchedFilmsCount} is not a positive integer number`);
+    throw new RangeError(`Watched films count ${watchedFilmsCount} is not a positive integer`);
   }
 
   if (watchedFilmsCount === 0) {

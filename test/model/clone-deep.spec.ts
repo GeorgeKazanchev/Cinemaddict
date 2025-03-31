@@ -6,10 +6,10 @@ import { getFilms } from '../get-films';
 const films = getFilms();
 const comments = getComments();
 
-const checkArraysAreEqual = (arr1: unknown[], arr2: unknown[]): void => {
-  for (let i = 0; i < arr1.length; ++i) {
-    expect(arr2[i]).not.toBe(arr1[i]);
-    expect(arr2[i]).toStrictEqual(arr1[i]);
+const checkArraysAreEqual = (array1: unknown[], array2: unknown[]): void => {
+  for (let i = 0; i < array1.length; ++i) {
+    expect(array2[i]).not.toBe(array1[i]);
+    expect(array2[i]).toStrictEqual(array1[i]);
   }
 };
 

@@ -107,29 +107,29 @@ export default class FilmCardView extends AbstractView {
     const watchedButtonElement = this.element.querySelector('.film-card__controls-item--watched');
     const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
 
-    const popupOpenClickHandler = (evt: Event) => {
+    const popupOpenClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onPopupOpen(this._getFilmFromModel());
     };
 
-    const popupOpenKeydownHandler = (evt: KeyboardEvent) => {
+    const popupOpenEnterPressHandler = (evt: KeyboardEvent): void => {
       if (evt.key === 'Enter') {
         evt.preventDefault();
         this.onPopupOpen(this._getFilmFromModel());
       }
     };
 
-    const watchlistClickHandler = (evt: Event) => {
+    const watchlistClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onWatchlistChange(this._getFilmFromModel());
     };
 
-    const watchedClickHandler = (evt: Event) => {
+    const watchedClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onWatchedChange(this._getFilmFromModel());
     };
 
-    const favoriteClickHandler = (evt: Event) => {
+    const favoriteClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onFavoriteChange(this._getFilmFromModel());
     };
@@ -137,9 +137,9 @@ export default class FilmCardView extends AbstractView {
     titleElement?.addEventListener('click', popupOpenClickHandler);
     posterElement?.addEventListener('click', popupOpenClickHandler);
     commentsElement?.addEventListener('click', popupOpenClickHandler);
-    titleElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
-    posterElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
-    commentsElement?.addEventListener('keydown', popupOpenKeydownHandler as EventListener);
+    titleElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
+    posterElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
+    commentsElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
     watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
     watchedButtonElement?.addEventListener('click', watchedClickHandler);
     favoriteButtonElement?.addEventListener('click', favoriteClickHandler);

@@ -98,7 +98,7 @@ export default class FiltersView extends AbstractView {
   }
 
   public bind(): void {
-    this.element.addEventListener('change', (evt: Event) => {
+    this.element.addEventListener('change', (evt: Event): void => {
       const targetElement = getTargetAsElement(evt);
       const inputElement = targetElement.closest('.statistic__filters-input');
       const selectElement = targetElement.closest('.statistic__select');
@@ -114,7 +114,7 @@ export default class FiltersView extends AbstractView {
 
     const inputsContainerElement = this.element.querySelector('.statistic__radio-buttons');
 
-    const inputsContainerKeydownHandler = (evt: KeyboardEvent) => {
+    const inputsContainerKeydownHandler = (evt: KeyboardEvent): void => {
       const targetElement = getTargetAsElement(evt);
       if (!(targetElement instanceof HTMLLabelElement)) {
         return;
@@ -134,7 +134,7 @@ export default class FiltersView extends AbstractView {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public onPeriodChanged(period: StatisticsPeriod): void { }
+  public onPeriodChange(period: StatisticsPeriod): void { }
 
   public updateActiveFilter(): void {
     const activeFilterElement = this.element.querySelector('.statistic__filters-input:checked');
@@ -143,13 +143,13 @@ export default class FiltersView extends AbstractView {
     }
 
     const { period } = this._model.state;
-    const valuePair = [...valuesToStatsPeriods].find(([, value]) => value === period);
-    if (!valuePair) {
+    const statsPeriodValuePair = [...valuesToStatsPeriods].find(([, value]) => value === period);
+    if (!statsPeriodValuePair) {
       throw new Error(`No input value found matching statistics period ${period}`);
     }
 
     const newActiveFilterElement = this.element
-      .querySelector(`.statistic__filters-input[value="${valuePair[0]}"]`);
+      .querySelector(`.statistic__filters-input[value="${statsPeriodValuePair[0]}"]`);
     if (!(newActiveFilterElement instanceof HTMLInputElement)) {
       throw new Error('No new active input for statistics found');
     }
@@ -159,7 +159,7 @@ export default class FiltersView extends AbstractView {
   private _changePeriodByValue(value: string): void {
     const period = valuesToStatsPeriods.get(value);
     if (period) {
-      this.onPeriodChanged(period);
+      this.onPeriodChange(period);
     }
   }
 }

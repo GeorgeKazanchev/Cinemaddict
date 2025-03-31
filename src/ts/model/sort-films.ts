@@ -1,7 +1,7 @@
 import SortType from './enums/sort-type';
 import type Film from './types/film';
 
-const dateComparator = (a: Date, b: Date): number => {
+const compareDates = (a: Date, b: Date): number => {
   if (b > a) {
     return 1;
   }
@@ -19,11 +19,11 @@ const sortFilms = (films: Film[], sortType: SortType): Film[] => {
     case SortType.Default:
       return [...films];
     case SortType.Date:
-      return [...films].sort((a, b) => dateComparator(a.info.release.date, b.info.release.date));
+      return [...films].sort((a, b) => compareDates(a.info.release.date, b.info.release.date));
     case SortType.Rating:
       return [...films].sort((a, b) => b.info.rating - a.info.rating);
     default:
-      throw new RangeError(`Sort type isn't supported by the sorting method`);
+      throw new RangeError(`Sort type is not supported by the sorting method`);
   }
 };
 

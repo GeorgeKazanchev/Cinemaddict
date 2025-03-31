@@ -36,7 +36,7 @@ export default class StatisticsScreen {
     this._headerView.onMenuToggle = this._onMenuToggle.bind(this);
     this._headerView.onMainScreenOpen = this._onMainScreenOpen.bind(this);
     this._navigationPanelView.onFiltration = this._onFiltration.bind(this);
-    this._filtersView.onPeriodChanged = this._onPeriodChanged.bind(this);
+    this._filtersView.onPeriodChange = this._onPeriodChange.bind(this);
   }
 
   private _model: Model;
@@ -91,7 +91,7 @@ export default class StatisticsScreen {
     Application.showFilmsScreen(this._model.state);
   }
 
-  private _onPeriodChanged(selectedPeriod: StatisticsPeriod): void {
+  private _onPeriodChange(selectedPeriod: StatisticsPeriod): void {
     const { state } = this._model;
     if (state.period !== selectedPeriod) {
       this._model.setStatisticsPeriod(selectedPeriod);

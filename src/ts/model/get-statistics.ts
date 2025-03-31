@@ -34,7 +34,7 @@ export const getStatisticsStartDate = (period: StatisticsPeriod): Date => {
       date.setFullYear(date.getFullYear() - 1);
       return date;
     default:
-      throw new RangeError(`Statistics period isn't supported`);
+      throw new RangeError(`Statistics period is not supported`);
   }
 };
 
@@ -59,8 +59,8 @@ export const getFilmsCountByGenres = (films: Film[]): Map<string, number> => {
   const genresToFilmsCount = new Map<string, number>();
   films.forEach(({ info: { genres } }) => {
     genres.forEach((genre) => {
-      const currentFilmsCount = genresToFilmsCount.get(genre) ?? 0;
-      genresToFilmsCount.set(genre, currentFilmsCount + 1);
+      const filmsCountOfGenre = genresToFilmsCount.get(genre) ?? 0;
+      genresToFilmsCount.set(genre, filmsCountOfGenre + 1);
     });
   });
   return genresToFilmsCount;

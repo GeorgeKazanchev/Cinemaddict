@@ -56,10 +56,6 @@ export default class Model {
     return Statistics.getFilmsSummary(this._state.films);
   }
 
-  public get initShownFilmsCount(): number {
-    return this._getInitShownFilmsCount(this._state.films, this._state.filter);
-  }
-
   public get watchedFilmsInPeriod(): Film[] {
     const statisticsStartDate = Statistics.getStatisticsStartDate(this._state.period);
     return Statistics.getWatchedFilmsSince(statisticsStartDate, this._state.films);
@@ -122,19 +118,12 @@ export default class Model {
     this._state = {
       ...this._state,
       sortType,
-      shownFilmsCount: this.initShownFilmsCount,
+      shownFilmsCount: this._getInitShownFilmsCount(this._state.films, this._state.filter),
     };
   }
 
   public setStatisticsPeriod(period: StatisticsPeriod): void {
     this._state = { ...this._state, period };
-  }
-
-  public addComments(comments: Comment[]): void {
-    this._state = {
-      ...this._state,
-      comments: this._state.comments.concat(comments),
-    };
   }
 
   public updateCommentsForFilm(film: Film, comments: Comment[]): void {
@@ -149,11 +138,6 @@ export default class Model {
       ...this._state,
       comments: commentsNotRelatedToFilm.concat(comments),
     };
-  }
-
-  public resetShownFilms(): void {
-    const shownFilmsCount = Math.min(Constants.FILMS_PORTION_SIZE, this.filteredFilms.length);
-    this._state = { ...this._state, shownFilmsCount };
   }
 
   public increaseShownFilms(): void {

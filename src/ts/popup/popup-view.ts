@@ -88,22 +88,22 @@ export default class PopupView extends AbstractView {
       throw new Error('No form element found');
     }
 
-    const commentKeyUpHandler = (evt: KeyboardEvent) => {
+    const commentKeyUpSubmitHandler = (evt: KeyboardEvent): void => {
       if (evt.key === 'Enter' && (evt.ctrlKey || evt.metaKey)) {
         evt.preventDefault();
         commentFormElement.requestSubmit();
       }
     };
 
-    const commentSubmitHandler = (evt: Event) => {
+    const commentSubmitHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onCommentSubmit();
     };
 
-    commentFormElement.addEventListener('keyup', commentKeyUpHandler);
+    commentFormElement.addEventListener('keyup', commentKeyUpSubmitHandler);
     commentFormElement.addEventListener('submit', commentSubmitHandler);
 
-    this.element.addEventListener('keydown', ((evt: KeyboardEvent) => {
+    this.element.addEventListener('keydown', ((evt: KeyboardEvent): void => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
         this.onClose();

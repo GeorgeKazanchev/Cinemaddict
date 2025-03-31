@@ -116,33 +116,33 @@ export default class ControlsView extends AbstractView {
     const watchedButtonElement = this.element.querySelector('.film-details__control-label--watched');
     const favoriteButtonElement = this.element.querySelector('.film-details__control-label--favorite');
 
-    const watchlistClickHandler = () => {
+    const watchlistClickHandler = (): void => {
       this.onWatchlistChange(this._getFilmFromModel());
     };
 
-    const watchedClickHandler = () => {
+    const watchedClickHandler = (): void => {
       this.onWatchedChange(this._getFilmFromModel());
     };
 
-    const favoriteClickHandler = () => {
+    const favoriteClickHandler = (): void => {
       this.onFavoriteChange(this._getFilmFromModel());
     };
 
-    const watchlistKeydownHandler = (evt: KeyboardEvent) => {
+    const watchlistKeydownHandler = (evt: KeyboardEvent): void => {
       if (evt.key === 'Enter' || evt.key === ' ') {
         evt.preventDefault();
         this.onWatchlistChange(this._getFilmFromModel());
       }
     };
 
-    const watchedKeydownHandler = (evt: KeyboardEvent) => {
+    const watchedKeydownHandler = (evt: KeyboardEvent): void => {
       if (evt.key === 'Enter' || evt.key === ' ') {
         evt.preventDefault();
         this.onWatchedChange(this._getFilmFromModel());
       }
     };
 
-    const favoriteKeydownHandler = (evt: KeyboardEvent) => {
+    const favoriteKeydownHandler = (evt: KeyboardEvent): void => {
       if (evt.key === 'Enter' || evt.key === ' ') {
         evt.preventDefault();
         this.onFavoriteChange(this._getFilmFromModel());

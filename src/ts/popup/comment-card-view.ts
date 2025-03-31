@@ -23,10 +23,9 @@ export default class CommentCardView extends AbstractView {
   }
 
   public get template(): string {
-    const comment = this._model.getCommentById(this._commentId);
     const {
       author, date, emotion, text,
-    } = comment;
+    } = this._model.getCommentById(this._commentId);
 
     return `
       <li class="film-details__comment">
@@ -44,30 +43,30 @@ export default class CommentCardView extends AbstractView {
       </li>`;
   }
 
+  public get deleteButtonElement(): HTMLButtonElement {
+    const element = this.element.querySelector('.film-details__comment-delete');
+    if (!(element instanceof HTMLButtonElement)) {
+      throw new Error('No delete button found');
+    }
+    return element;
+  }
+
   public bind(): void {
     const comment = this._model.getCommentById(this._commentId);
 
-    const deleteButtonElement = this.element.querySelector('.film-details__comment-delete');
-
-    const deleteClickHandler = (evt: Event) => {
+    const deleteClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onCommentDelete(comment);
     };
 
-    deleteButtonElement?.addEventListener('click', deleteClickHandler);
+    this.deleteButtonElement.addEventListener('click', deleteClickHandler);
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public onCommentDelete(comment: Comment): void { }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public makeDeleteButtonEnabled(isEnabled: boolean): void {
-    const deleteElement = this.element.querySelector('.film-details__comment-delete');
-    if (!(deleteElement instanceof HTMLButtonElement)) {
-      throw new Error('No delete button found');
-    }
-
-    deleteElement.textContent = isEnabled ? 'Delete' : 'Deleting...';
-    deleteElement.disabled = !isEnabled;
+    this.deleteButtonElement.textContent = isEnabled ? 'Delete' : 'Deleting...';
+    this.deleteButtonElement.disabled = !isEnabled;
   }
 }

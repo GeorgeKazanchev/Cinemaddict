@@ -20,19 +20,19 @@ export const getTopRatedFilms = (films: Film[], count: number | null = null): Fi
 };
 
 export const getMostCommentedFilms = (films: Film[], count: number | null = null): Film[] => {
-  let topCommentedFilms = [...films];
+  let mostCommentedFilms = [...films];
 
-  topCommentedFilms.sort((a, b) => b.commentsIds.length - a.commentsIds.length);
-  topCommentedFilms = topCommentedFilms.filter((film) => film.commentsIds.length > 0);
+  mostCommentedFilms.sort((a, b) => b.commentsIds.length - a.commentsIds.length);
+  mostCommentedFilms = mostCommentedFilms.filter((film) => film.commentsIds.length > 0);
 
-  const maxComments = topCommentedFilms[0]?.commentsIds.length;
-  if (topCommentedFilms.every((film) => film.commentsIds.length === maxComments)) {
-    shuffle(topCommentedFilms);
+  const maxCommentsCount = mostCommentedFilms[0]?.commentsIds.length;
+  if (mostCommentedFilms.every((film) => film.commentsIds.length === maxCommentsCount)) {
+    shuffle(mostCommentedFilms);
   }
 
   if (count !== null) {
-    topCommentedFilms = topCommentedFilms.slice(0, count);
+    mostCommentedFilms = mostCommentedFilms.slice(0, count);
   }
 
-  return topCommentedFilms;
+  return mostCommentedFilms;
 };

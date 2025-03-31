@@ -47,7 +47,7 @@ export default class HeaderView extends AbstractView {
       throw new Error('No link to main element found');
     }
 
-    const menuToggleClickHandler = (evt: Event) => {
+    const menuToggleClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onMenuToggle();
       menuToggleElement.classList.toggle('header__menu-toggle--expanded');
@@ -59,7 +59,7 @@ export default class HeaderView extends AbstractView {
       }
     };
 
-    const linkToMainClickHandler = (evt: Event) => {
+    const linkToMainClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onMainScreenOpen();
     };

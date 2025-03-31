@@ -11,12 +11,12 @@ export default class GenresView extends AbstractView {
   private _model: Model;
 
   public get template(): string {
-    const areFilmsExist = this._model.watchedFilmsInPeriod.length > 0;
+    const areFilmsInPeriod = this._model.watchedFilmsInPeriod.length > 0;
     const listItems = this._getListItemsTemplate();
 
     return `
       <section class="statistic__genres">
-        <h2 class="statistic__genres-title ${areFilmsExist ? '' : 'visually-hidden'}">
+        <h2 class="statistic__genres-title ${areFilmsInPeriod ? '' : 'visually-hidden'}">
           Films count by genres
         </h2>
         <ol class="statistic__genres-list">
@@ -31,8 +31,8 @@ export default class GenresView extends AbstractView {
       throw new Error('No title for the statistics by genres found');
     }
 
-    const areFilmsExist = this._model.watchedFilmsInPeriod.length > 0;
-    if (areFilmsExist) {
+    const areFilmsInPeriod = this._model.watchedFilmsInPeriod.length > 0;
+    if (areFilmsInPeriod) {
       titleElement.classList.remove('visually-hidden');
     } else {
       titleElement.classList.add('visually-hidden');
@@ -48,17 +48,17 @@ export default class GenresView extends AbstractView {
 
   private _getListItemsTemplate(): string {
     const films = this._model.watchedFilmsInPeriod;
-    const genresData = Array.from(getFilmsCountByGenres(films));
-    genresData.sort((a, b) => b[1] - a[1]);
+    const filmsCountByGenres = Array.from(getFilmsCountByGenres(films));
+    filmsCountByGenres.sort((a, b) => b[1] - a[1]);
 
-    return genresData.map(([genre, filmsCount], index) => this
+    return filmsCountByGenres.map(([genre, filmsCount], index) => this
       ._getListItemTemplate(index + 1, genre, filmsCount)).join('');
   }
 
-  private _getListItemTemplate(position: number, genre: string, filmsCount: number): string {
+  private _getListItemTemplate(numberInList: number, genre: string, filmsCount: number): string {
     return `
       <li class="statistic__genres-item">
-        ${position.toFixed(0)}. ${genre} <span class="statistic__films-count">${filmsCount}</span>
+        ${numberInList.toFixed(0)}. ${genre} <span class="statistic__films-count">${filmsCount}</span>
       </li>`;
   }
 }

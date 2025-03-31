@@ -9,12 +9,12 @@ export default class CloseButtonView extends AbstractView {
   }
 
   public bind(): void {
-    this.element.addEventListener('click', (evt: Event) => {
+    this.element.addEventListener('click', (evt: Event): void => {
       evt.preventDefault();
       this.onClose();
     });
 
-    this.element.addEventListener('keydown', ((evt: KeyboardEvent) => {
+    this.element.addEventListener('keydown', ((evt: KeyboardEvent): void => {
       if (evt.key === 'Enter') {
         evt.preventDefault();
         this.onClose();

@@ -20,13 +20,13 @@ export default class FilmsView extends AbstractView {
   public get template(): string {
     const title = this._getTitle();
 
-    const areTopRatedShown = this._model.topRatedFilms.length > 0;
-    const areMostCommentedShown = this._model.mostCommentedFilms.length > 0;
+    const areTopRatedFilmsShown = this._model.topRatedFilms.length > 0;
+    const areMostCommentedFilmsShown = this._model.mostCommentedFilms.length > 0;
 
     const topRatedFilms = `
       <section
         class="films-list films-list--extra films-list--top-rated
-        ${areTopRatedShown ? '' : ' films-list--hidden'}"
+        ${areTopRatedFilmsShown ? '' : ' films-list--hidden'}"
       >
         <h3 class="films-list__title">Top rated</h3>
         <div class="films-list__container"></div>
@@ -35,7 +35,7 @@ export default class FilmsView extends AbstractView {
     const mostCommentedFilms = `
       <section
         class="films-list films-list--extra films-list--most-commented
-        ${areMostCommentedShown ? '' : ' films-list--hidden'}"
+        ${areMostCommentedFilmsShown ? '' : ' films-list--hidden'}"
       >
         <h3 class="films-list__title">Most commented</h3>
         <div class="films-list__container"></div>
@@ -56,28 +56,34 @@ export default class FilmsView extends AbstractView {
 
   public get element(): Element {
     const element = this.createElementLazy();
-    const filmsContainerElement = element.querySelector('.films-list__container');
-    if (filmsContainerElement && filmsContainerElement.children.length === 0) {
+    const containerElement = element.querySelector('.films-list__container');
+    if (containerElement) {
       this._filmCardViews.forEach((view) => {
-        filmsContainerElement.append(view.element);
+        containerElement.append(view.element);
       });
     }
     return element;
   }
 
-  public bind(): void {
-    const showMoreElement = this.element.querySelector('.films-list__show-more');
+  public get showMoreElement(): Element {
+    const element = this.element.querySelector('.films-list__show-more');
+    if (!element) {
+      throw new Error('The "Show more" button is not found');
+    }
+    return element;
+  }
 
-    const showMoreClickHandler = (evt: Event) => {
+  public bind(): void {
+    const showMoreClickHandler = (evt: Event): void => {
       evt.preventDefault();
       this.onShowMore();
     };
 
-    showMoreElement?.addEventListener('click', showMoreClickHandler);
+    this.showMoreElement.addEventListener('click', showMoreClickHandler);
 
-    this._filmCardViews.forEach((view) => this._bindFilmCardListeners(view));
-    this._topRatedFilmCardViews.forEach((view) => this._bindFilmCardListeners(view));
-    this._mostCommentedFilmCardViews.forEach((view) => this._bindFilmCardListeners(view));
+    this._filmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
+    this._topRatedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
+    this._mostCommentedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -121,15 +127,10 @@ export default class FilmsView extends AbstractView {
   }
 
   public updateShowMoreButton(): void {
-    const showMoreElement = this.element.querySelector('.films-list__show-more');
-    if (!showMoreElement) {
-      throw new Error('The "Show more" button is not found');
-    }
-
     if (this._model.areAllFilmsShown) {
-      showMoreElement.classList.add(Constants.HIDDEN_CLASSNAME);
+      this.showMoreElement.classList.add(Constants.HIDDEN_CLASSNAME);
     } else {
-      showMoreElement.classList.remove(Constants.HIDDEN_CLASSNAME);
+      this.showMoreElement.classList.remove(Constants.HIDDEN_CLASSNAME);
     }
   }
 
@@ -145,10 +146,10 @@ export default class FilmsView extends AbstractView {
 
   public updateTopRatedFilms(): void {
     this._topRatedFilmCardViews = this._getFilmCardViews(this._model.topRatedFilms);
-    this._topRatedFilmCardViews.forEach((view) => this._bindFilmCardListeners(view));
+    this._topRatedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
 
     const filmsListElement = this.element.querySelector('.films-list--top-rated');
-    if (!(filmsListElement instanceof HTMLElement)) {
+    if (!filmsListElement) {
       throw new Error('No top rated films list found');
     }
 
@@ -168,10 +169,10 @@ export default class FilmsView extends AbstractView {
 
   public updateMostCommentedFilms(): void {
     this._mostCommentedFilmCardViews = this._getFilmCardViews(this._model.mostCommentedFilms);
-    this._mostCommentedFilmCardViews.forEach((view) => this._bindFilmCardListeners(view));
+    this._mostCommentedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
 
     const filmsListElement = this.element.querySelector('.films-list--most-commented');
-    if (!(filmsListElement instanceof HTMLElement)) {
+    if (!filmsListElement) {
       throw new Error('No most commented films list found');
     }
 
@@ -207,10 +208,10 @@ export default class FilmsView extends AbstractView {
   }
 
   private _updateFilmsContainer(): void {
-    this._filmCardViews.forEach((view) => this._bindFilmCardListeners(view));
+    this._filmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
 
     const containerElement = this.element.querySelector('.films-list__container');
-    if (!(containerElement instanceof HTMLElement)) {
+    if (!containerElement) {
       throw new Error('No main films container found');
     }
 

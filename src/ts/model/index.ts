@@ -8,7 +8,6 @@ import StatisticsPeriod from './enums/statistics-period';
 import filterFilms from './filter-films';
 import getDurationComponents from './get-duration-components';
 import getEmotionByName from './get-emotion-by-name';
-import getFormattedCommentDate from './get-formatted-comment-date';
 import getFormattedDuration from './get-formatted-duration';
 import getFormattedReleaseDate from './get-formatted-release-date';
 import getLimitedDescription from './get-limited-description';
@@ -50,7 +49,6 @@ export {
   filterFilms,
   getDurationComponents,
   getEmotionByName,
-  getFormattedCommentDate,
   getFormattedDuration,
   getFormattedReleaseDate,
   getLimitedDescription,
