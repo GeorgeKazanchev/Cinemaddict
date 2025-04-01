@@ -1,6 +1,5 @@
 const express = require('express');
 
-const { PORT } = require('./settings.js');
 const { films } = require('./data/films');
 
 const { NotFoundError } = require('./model/not-found-error');
@@ -16,6 +15,7 @@ const {
   deleteCommentFromFilm,
 } = require('./model/model');
 
+const PORT = 8081;
 const AUTH_REGEXP = /^Basic [a-zA-Z0-9]+$/;
 
 const app = express();

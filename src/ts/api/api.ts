@@ -12,11 +12,8 @@ import type CommentDto from './types/comment-dto';
 import type CommentPostResponse from './types/comment-post-response';
 import type FilmDto from './types/film-dto';
 
-const SERVER_HOST = '85.119.146.124';
-const SERVER_PORT = 8081;
 const RANDOM_STRING_LENGTH = 10;
 
-const baseUrl = `http://${SERVER_HOST}:${SERVER_PORT}`;
 const authHeader = `Basic ${getRandomString(RANDOM_STRING_LENGTH)}`;
 
 const getRequestHeaders = (method: RequestMethod): Headers => {
@@ -49,14 +46,14 @@ const toJSON = (response: Response): Promise<unknown> => response.json();
 
 export default class Api {
   public static async loadFilms(): Promise<Film[]> {
-    const response = await fetch(`${baseUrl}/movies`, getFetchOptions());
+    const response = await fetch('/movies', getFetchOptions());
     checkStatus(response);
     const responseData = await toJSON(response);
     return FilmsAdapter.fromDtos(responseData as FilmDto[]);
   }
 
   public static async loadComments(filmId: string): Promise<Comment[]> {
-    const response = await fetch(`${baseUrl}/comments/${filmId}`, getFetchOptions());
+    const response = await fetch(`/comments/${filmId}`, getFetchOptions());
     checkStatus(response);
     const responseData = await toJSON(response);
     return CommentsAdapter.fromDtos(responseData as CommentDto[]);
@@ -64,10 +61,7 @@ export default class Api {
 
   public static async updateFilm(film: Film): Promise<Film> {
     const body = JSON.stringify(FilmsAdapter.toDto(film));
-    const response = await fetch(
-      `${baseUrl}/movies/${film.id}`,
-      getFetchOptions(RequestMethod.PUT, body),
-    );
+    const response = await fetch(`/movies/${film.id}`, getFetchOptions(RequestMethod.PUT, body));
     checkStatus(response);
     const responseData = await toJSON(response);
     return FilmsAdapter.fromDto(responseData as FilmDto);
@@ -78,17 +72,14 @@ export default class Api {
     filmId: string,
   ): Promise<[Film, Comment[]]> {
     const body = JSON.stringify(CommentsAdapter.toDto(comment));
-    const response = await fetch(
-      `${baseUrl}/comments/${filmId}`,
-      getFetchOptions(RequestMethod.POST, body),
-    );
+    const response = await fetch(`/comments/${filmId}`, getFetchOptions(RequestMethod.POST, body));
     checkStatus(response);
     const responseData = await toJSON(response);
     return CommentPostResponseAdapter.fromDto(responseData as CommentPostResponse);
   }
 
   public static async deleteComment(id: string): Promise<void> {
-    const response = await fetch(`${baseUrl}/comments/${id}`, getFetchOptions(RequestMethod.DELETE));
+    const response = await fetch(`/comments/${id}`, getFetchOptions(RequestMethod.DELETE));
     checkStatus(response);
   }
 }
