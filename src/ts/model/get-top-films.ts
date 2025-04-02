@@ -1,3 +1,4 @@
+import { Rating } from './consts';
 import shuffle from './shuffle';
 import type Film from './types/film';
 
@@ -5,7 +6,7 @@ export const getTopRatedFilms = (films: Film[], count: number | null = null): Fi
   let topRatedFilms = [...films];
 
   topRatedFilms.sort((a, b) => b.info.rating - a.info.rating);
-  topRatedFilms = topRatedFilms.filter(({ info: { rating } }) => rating > 0.0);
+  topRatedFilms = topRatedFilms.filter(({ info: { rating } }) => rating > Rating.MIN);
 
   const topRating = topRatedFilms[0]?.info.rating;
   if (topRatedFilms.every(({ info: { rating } }) => rating === topRating)) {

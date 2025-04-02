@@ -1,7 +1,7 @@
 import AbstractView from '../abstract-view';
+import { getTargetAsElement } from '../dom-util';
 import { Constants, SortType } from '../model';
 import Model from '../model/model';
-import { getTargetAsElement } from '../util';
 
 const ACTIVE_CLASSNAME = 'sort__button--active';
 

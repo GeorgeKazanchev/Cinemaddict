@@ -1,7 +1,9 @@
 import AbstractView from '../abstract-view';
+import { getTargetAsElement } from '../dom-util';
 import { StatisticsPeriod } from '../model';
 import Model from '../model/model';
-import { getTargetAsElement } from '../util';
+
+const FILTERS_CLASSNAME = 'statistic__filters-input';
 
 const valuesToStatsPeriods = new Map<string, StatisticsPeriod>();
 valuesToStatsPeriods.set('all-time', StatisticsPeriod.AllTime);
@@ -100,7 +102,7 @@ export default class FiltersView extends AbstractView {
   public bind(): void {
     this.element.addEventListener('change', (evt: Event): void => {
       const targetElement = getTargetAsElement(evt);
-      const inputElement = targetElement.closest('.statistic__filters-input');
+      const inputElement = targetElement.closest(`.${FILTERS_CLASSNAME}`);
       const selectElement = targetElement.closest('.statistic__select');
 
       if (inputElement instanceof HTMLInputElement) {
@@ -137,9 +139,9 @@ export default class FiltersView extends AbstractView {
   public onPeriodChange(period: StatisticsPeriod): void { }
 
   public updateActiveFilter(): void {
-    const activeFilterElement = this.element.querySelector('.statistic__filters-input:checked');
-    if (activeFilterElement instanceof HTMLInputElement) {
-      activeFilterElement.checked = false;
+    const activeElement = this.element.querySelector(`.${FILTERS_CLASSNAME}:checked`);
+    if (activeElement instanceof HTMLInputElement) {
+      activeElement.checked = false;
     }
 
     const { period } = this._model.state;
@@ -148,12 +150,12 @@ export default class FiltersView extends AbstractView {
       throw new Error(`No input value found matching statistics period ${period}`);
     }
 
-    const newActiveFilterElement = this.element
-      .querySelector(`.statistic__filters-input[value="${statsPeriodValuePair[0]}"]`);
-    if (!(newActiveFilterElement instanceof HTMLInputElement)) {
+    const periodName = statsPeriodValuePair[0];
+    const newActiveElement = this.element.querySelector(`.${FILTERS_CLASSNAME}[value="${periodName}"]`);
+    if (!(newActiveElement instanceof HTMLInputElement)) {
       throw new Error('No new active input for statistics found');
     }
-    newActiveFilterElement.checked = true;
+    newActiveElement.checked = true;
   }
 
   private _changePeriodByValue(value: string): void {

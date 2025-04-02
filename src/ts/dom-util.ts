@@ -22,3 +22,28 @@ export const getTargetAsElement = (evt: Event): Element => {
 
   return evt.target;
 };
+
+export const loadElementLazy = (
+  cachedElement: Element | null,
+  containerElement: Element,
+  selector: string,
+  errorMessage: string,
+): Element => {
+  if (cachedElement) {
+    return cachedElement;
+  }
+
+  const element = containerElement.querySelector(selector);
+  if (!element) {
+    throw new Error(errorMessage);
+  }
+
+  return element;
+};
+
+export const shakeElement = (element: Element, shakingClassname: string): void => {
+  // Здесь используется хак, чтобы форма могла "трястить" более одного раза
+  element.classList.remove(shakingClassname);
+  element.scrollBy(0, 0);
+  element.classList.add(shakingClassname);
+};

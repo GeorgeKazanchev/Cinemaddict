@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
+import { getTargetAsElement, loadElementLazy } from './dom-util';
 import { Filter } from './model';
 import Model from './model/model';
-import { getTargetAsElement } from './util';
 
 const FILTER_ACTIVE_CLASSNAME = 'main-navigation__item--active';
 const STATS_ACTIVE_CLASSNAME = 'main-navigation__additional--active';
@@ -26,6 +26,9 @@ export default class NavigationPanelView extends AbstractView {
 
   private _model: Model;
   private _isFilmsScreen: boolean;
+  private _watchlistCountElement: Element | null = null;
+  private _watchedCountElement: Element | null = null;
+  private _favoriteCountElement: Element | null = null;
 
   public get template(): string {
     const {
@@ -64,6 +67,36 @@ export default class NavigationPanelView extends AbstractView {
           Stats
         </a>
       </nav>`;
+  }
+
+  public get watchlistCountElement(): Element {
+    this._watchlistCountElement = loadElementLazy(
+      this._watchlistCountElement,
+      this.element,
+      '[href="#watchlist"] .main-navigation__item-count',
+      'No watchlist films count element found in the navigation panel',
+    );
+    return this._watchlistCountElement;
+  }
+
+  public get watchedCountElement(): Element {
+    this._watchedCountElement = loadElementLazy(
+      this._watchedCountElement,
+      this.element,
+      '[href="#history"] .main-navigation__item-count',
+      'No watched films count element found in the navigation panel',
+    );
+    return this._watchedCountElement;
+  }
+
+  public get favoriteCountElement(): Element {
+    this._favoriteCountElement = loadElementLazy(
+      this._favoriteCountElement,
+      this.element,
+      '[href="#favorites"] .main-navigation__item-count',
+      'No favorite films count element found in the navigation panel',
+    );
+    return this._favoriteCountElement;
   }
 
   public bind(): void {
@@ -123,17 +156,9 @@ export default class NavigationPanelView extends AbstractView {
       favoriteFilmsCount,
     } = this._model.filmsSummary;
 
-    const watchlistCountElement = this.element.querySelector('[href="#watchlist"] .main-navigation__item-count');
-    const watchedCountElement = this.element.querySelector('[href="#history"] .main-navigation__item-count');
-    const favoriteCountElement = this.element.querySelector('[href="#favorites"] .main-navigation__item-count');
-
-    if (!watchlistCountElement || !watchedCountElement || !favoriteCountElement) {
-      throw new Error('No films count label in the navigation panel found');
-    }
-
-    watchlistCountElement.textContent = watchlistFilmsCount.toFixed(0);
-    watchedCountElement.textContent = watchedFilmsCount.toFixed(0);
-    favoriteCountElement.textContent = favoriteFilmsCount.toFixed(0);
+    this.watchlistCountElement.textContent = watchlistFilmsCount.toFixed(0);
+    this.watchedCountElement.textContent = watchedFilmsCount.toFixed(0);
+    this.favoriteCountElement.textContent = favoriteFilmsCount.toFixed(0);
   }
 
   //  Метод предназначен для открытия/закрытия меню в мобильной версии вёрстки

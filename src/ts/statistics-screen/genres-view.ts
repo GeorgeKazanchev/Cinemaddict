@@ -1,5 +1,6 @@
 import AbstractView from '../abstract-view';
-import { getFilmsCountByGenres } from '../model/get-statistics';
+import { loadElementLazy } from '../dom-util';
+import { Constants, Statistics } from '../model';
 import Model from '../model/model';
 
 export default class GenresView extends AbstractView {
@@ -9,6 +10,8 @@ export default class GenresView extends AbstractView {
   }
 
   private _model: Model;
+  private _titleElement: Element | null = null;
+  private _listElement: Element | null = null;
 
   public get template(): string {
     const areFilmsInPeriod = this._model.watchedFilmsInPeriod.length > 0;
@@ -16,7 +19,7 @@ export default class GenresView extends AbstractView {
 
     return `
       <section class="statistic__genres">
-        <h2 class="statistic__genres-title ${areFilmsInPeriod ? '' : 'visually-hidden'}">
+        <h2 class="statistic__genres-title ${areFilmsInPeriod ? '' : Constants.VISUALLY_HIDDEN_CLASSNAME}">
           Films count by genres
         </h2>
         <ol class="statistic__genres-list">
@@ -25,37 +28,48 @@ export default class GenresView extends AbstractView {
       </section>`;
   }
 
-  public updateGenres(): void {
-    const titleElement = this.element.querySelector('.statistic__genres-title');
-    if (!titleElement) {
-      throw new Error('No title for the statistics by genres found');
-    }
+  public get titleElement(): Element {
+    this._titleElement = loadElementLazy(
+      this._titleElement,
+      this.element,
+      '.statistic__genres-title',
+      'No title for the statistics by genres found',
+    );
+    return this._titleElement;
+  }
 
+  public get listElement(): Element {
+    this._listElement = loadElementLazy(
+      this._listElement,
+      this.element,
+      '.statistic__genres-list',
+      'No list with the statistics by genres found',
+    );
+    return this._listElement;
+  }
+
+  public updateGenres(): void {
+    this.listElement.innerHTML = this._getListItemsTemplate();
     const areFilmsInPeriod = this._model.watchedFilmsInPeriod.length > 0;
     if (areFilmsInPeriod) {
-      titleElement.classList.remove('visually-hidden');
+      this.titleElement.classList.remove(Constants.VISUALLY_HIDDEN_CLASSNAME);
     } else {
-      titleElement.classList.add('visually-hidden');
+      this.titleElement.classList.add(Constants.VISUALLY_HIDDEN_CLASSNAME);
     }
-
-    const listElement = this.element.querySelector('.statistic__genres-list');
-    if (!listElement) {
-      throw new Error('No list with the statistics by genres found');
-    }
-
-    listElement.innerHTML = this._getListItemsTemplate();
   }
 
   private _getListItemsTemplate(): string {
     const films = this._model.watchedFilmsInPeriod;
-    const filmsCountByGenres = Array.from(getFilmsCountByGenres(films));
-    filmsCountByGenres.sort((a, b) => b[1] - a[1]);
-
-    return filmsCountByGenres.map(([genre, filmsCount], index) => this
+    const filmsCountByGenres = Statistics.getFilmsCountByGenresArray(films);
+    return filmsCountByGenres.map(([genre, filmsCount], index) => GenresView
       ._getListItemTemplate(index + 1, genre, filmsCount)).join('');
   }
 
-  private _getListItemTemplate(numberInList: number, genre: string, filmsCount: number): string {
+  private static _getListItemTemplate(
+    numberInList: number,
+    genre: string,
+    filmsCount: number,
+  ): string {
     return `
       <li class="statistic__genres-item">
         ${numberInList.toFixed(0)}. ${genre} <span class="statistic__films-count">${filmsCount}</span>

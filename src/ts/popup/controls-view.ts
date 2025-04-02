@@ -1,4 +1,5 @@
 import AbstractView from '../abstract-view';
+import { loadElementLazy } from '../dom-util';
 import { Film } from '../model';
 import Model from '../model/model';
 
@@ -16,6 +17,9 @@ export default class ControlsView extends AbstractView {
 
   private _model: Model;
   private _filmId: string;
+  private _watchlistInputElement: HTMLInputElement | null = null;
+  private _watchedInputElement: HTMLInputElement | null = null;
+  private _favoriteInputElement: HTMLInputElement | null = null;
 
   public get template(): string {
     const { userDetails } = this._model.getFilmById(this._filmId);
@@ -88,27 +92,33 @@ export default class ControlsView extends AbstractView {
   }
 
   public get watchlistInputElement(): HTMLInputElement {
-    const element = this.element.querySelector('#watchlist');
-    if (!(element instanceof HTMLInputElement)) {
-      throw new Error('No watchlist input found');
-    }
-    return element;
+    this._watchlistInputElement = loadElementLazy(
+      this._watchlistInputElement,
+      this.element,
+      '#watchlist',
+      'No watchlist input element found',
+    ) as HTMLInputElement;
+    return this._watchlistInputElement;
   }
 
   public get watchedInputElement(): HTMLInputElement {
-    const element = this.element.querySelector('#watched');
-    if (!(element instanceof HTMLInputElement)) {
-      throw new Error('No watched input found');
-    }
-    return element;
+    this._watchedInputElement = loadElementLazy(
+      this._watchedInputElement,
+      this.element,
+      '#watched',
+      'No watched input element found',
+    ) as HTMLInputElement;
+    return this._watchedInputElement;
   }
 
   public get favoriteInputElement(): HTMLInputElement {
-    const element = this.element.querySelector('#favorite');
-    if (!(element instanceof HTMLInputElement)) {
-      throw new Error('No favorite input found');
-    }
-    return element;
+    this._favoriteInputElement = loadElementLazy(
+      this._favoriteInputElement,
+      this.element,
+      '#favorite',
+      'No favorite input element found',
+    ) as HTMLInputElement;
+    return this._favoriteInputElement;
   }
 
   public bind(): void {

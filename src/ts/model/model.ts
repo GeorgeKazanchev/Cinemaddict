@@ -20,7 +20,7 @@ export default class Model {
   constructor(state: State) {
     this._state = state;
     this.filmsLoadingState = 'pending';
-    this.commentsLoadingStates = this._getInitCommentsLoadingStates(this._state.films);
+    this.commentsLoadingStates = Model._getInitCommentsLoadingStates(this._state.films);
   }
 
   private _state: State;
@@ -99,10 +99,10 @@ export default class Model {
     this._state = {
       ...this._state,
       films,
-      shownFilmsCount: this._getInitShownFilmsCount(films, this._state.filter),
+      shownFilmsCount: Model._getInitShownFilmsCount(films, this._state.filter),
     };
 
-    this.commentsLoadingStates = this._getInitCommentsLoadingStates(films);
+    this.commentsLoadingStates = Model._getInitCommentsLoadingStates(films);
   }
 
   public setFilter(filter: Filter): void {
@@ -110,7 +110,7 @@ export default class Model {
       ...this._state,
       filter,
       sortType: SortType.Default,
-      shownFilmsCount: this._getInitShownFilmsCount(this._state.films, filter),
+      shownFilmsCount: Model._getInitShownFilmsCount(this._state.films, filter),
     };
   }
 
@@ -118,7 +118,7 @@ export default class Model {
     this._state = {
       ...this._state,
       sortType,
-      shownFilmsCount: this._getInitShownFilmsCount(this._state.films, this._state.filter),
+      shownFilmsCount: Model._getInitShownFilmsCount(this._state.films, this._state.filter),
     };
   }
 
@@ -177,14 +177,14 @@ export default class Model {
     };
   }
 
-  private _getInitCommentsLoadingStates(films: Film[]): Map<string, LoadingState> {
+  private static _getInitCommentsLoadingStates(films: Film[]): Map<string, LoadingState> {
     return films.reduce((states, film) => {
       states.set(film.id, 'pending');
       return states;
     }, new Map<string, LoadingState>());
   }
 
-  private _getInitShownFilmsCount(films: Film[], filter: Filter): number {
+  private static _getInitShownFilmsCount(films: Film[], filter: Filter): number {
     const filteredFilms = filterFilms(films, filter);
     return Math.min(Constants.FILMS_PORTION_SIZE, filteredFilms.length);
   }

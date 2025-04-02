@@ -508,13 +508,27 @@ $opacity-disabled: 0.5;
 .film-details__new-comment {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 0;
   padding-bottom: 60px;
   border: 0;
 
+  @media (min-width: var.$tablet-min-width) {
+    flex-direction: row;
+  }
+
   &--error {
     @include mixins.shake-animation;
+  }
+}
+
+.film-details__new-comment-text-wrapper {
+  display: flex;
+  align-items: center;
+
+  @media (min-width: var.$tablet-min-width) {
+    display: block;
   }
 }
 
@@ -596,8 +610,12 @@ $opacity-disabled: 0.5;
 }
 
 .film-details__emoji-list {
-  position: absolute;
   bottom: 5px;
+  margin-top: 20px;
+
+  @media (min-width: var.$tablet-min-width) {
+    position: absolute;
+  }
 
   @media (min-width: var.$desktop-min-width) {
     margin-left: 81px;

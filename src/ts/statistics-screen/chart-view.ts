@@ -19,21 +19,23 @@ export default class ChartView extends AbstractView {
 
   public get element(): Element {
     const element = this.createElementLazy();
-    const canvasElement = element.querySelector('.statistic__chart');
-    if (canvasElement instanceof HTMLCanvasElement) {
-      this._renderChart(canvasElement);
-    }
+    this._renderChart(ChartView._getCanvasElement(element));
     return element;
   }
 
   public updateChart(): void {
-    const canvasElement = this.element.querySelector('.statistic__chart');
-    if (canvasElement instanceof HTMLCanvasElement) {
-      this._renderChart(canvasElement);
-    }
+    this._renderChart(ChartView._getCanvasElement(this.element));
   }
 
   private _renderChart(canvasElement: HTMLCanvasElement): void {
     renderStatisticsChart(this._model.watchedFilmsInPeriod, canvasElement);
+  }
+
+  private static _getCanvasElement(containerElement: Element): HTMLCanvasElement {
+    const element = containerElement.querySelector('.statistic__chart');
+    if (!(element instanceof HTMLCanvasElement)) {
+      throw new Error('No canvas element found');
+    }
+    return element;
   }
 }

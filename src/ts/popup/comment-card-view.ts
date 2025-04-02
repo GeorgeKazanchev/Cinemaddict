@@ -1,5 +1,6 @@
 import moment from 'moment';
 import AbstractView from '../abstract-view';
+import { loadElementLazy } from '../dom-util';
 import { Comment } from '../model';
 import Model from '../model/model';
 
@@ -17,6 +18,7 @@ export default class CommentCardView extends AbstractView {
 
   private _model: Model;
   private _commentId: string;
+  private _deleteButtonElement: HTMLButtonElement | null = null;
 
   public get commentId(): string {
     return this._commentId;
@@ -44,11 +46,13 @@ export default class CommentCardView extends AbstractView {
   }
 
   public get deleteButtonElement(): HTMLButtonElement {
-    const element = this.element.querySelector('.film-details__comment-delete');
-    if (!(element instanceof HTMLButtonElement)) {
-      throw new Error('No delete button found');
-    }
-    return element;
+    this._deleteButtonElement = loadElementLazy(
+      this._deleteButtonElement,
+      this.element,
+      '.film-details__comment-delete',
+      'No delete comment button found',
+    ) as HTMLButtonElement;
+    return this._deleteButtonElement;
   }
 
   public bind(): void {

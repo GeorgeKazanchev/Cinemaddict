@@ -6,6 +6,7 @@ import {
   getFilmsCountByGenres,
   getFavoriteGenre,
   getFilmsSummary,
+  getFilmsCountByGenresArray,
 } from '../../src/ts/model/get-statistics';
 import { getEmptyFilm, getFilms } from '../get-films';
 
@@ -61,6 +62,35 @@ describe('Get films count by genres', () => {
   it('should return a correct map if > 1 films were passed', () => {
     const genresToFilmsCount = getFilmsCountByGenres(films);
     genresToFilmsCount.forEach((filmsCount, genre) => {
+      const isGenreExists = films.some(({ info: { genres } }) => (
+        genres.includes(genre)
+      ));
+
+      expect(isGenreExists).toBe(true);
+      expect(filmsCount).toBeGreaterThanOrEqual(1);
+      expect(filmsCount).toBeLessThanOrEqual(films.length);
+    });
+  });
+});
+
+describe('Get films count by genres array', () => {
+  it('should return an empty array if the init array is empty', () => {
+    expect(getFilmsCountByGenresArray([])).toHaveLength(0);
+  });
+
+  it('should return a correct array if 1 film was passed', () => {
+    const genresToFilmsCountArray = getFilmsCountByGenresArray([films[0]]);
+    expect(genresToFilmsCountArray).toHaveLength(1);
+
+    const firstGenre = genresToFilmsCountArray[0];
+    expect(firstGenre[0]).toBe('Drama');
+    expect(firstGenre[1]).toBe(1);
+    expect(films[0].info.genres).toContain(firstGenre[0]);
+  });
+
+  it('should return a correct array if > 1 films were passed', () => {
+    const genresToFilmsCountArray = getFilmsCountByGenresArray(films);
+    genresToFilmsCountArray.forEach(([genre, filmsCount]) => {
       const isGenreExists = films.some(({ info: { genres } }) => (
         genres.includes(genre)
       ));

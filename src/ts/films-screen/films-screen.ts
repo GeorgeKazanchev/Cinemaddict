@@ -1,4 +1,4 @@
-import Api from '../api/api';
+import HttpClient from '../api/http-client';
 import Application from '../application';
 import FooterView from '../footer-view';
 import HeaderView from '../header-view';
@@ -74,7 +74,7 @@ export default class FilmsScreen {
 
   private async _loadFilms(): Promise<void> {
     try {
-      const films = await Api.loadFilms();
+      const films = await HttpClient.loadFilms();
 
       this._model.setFilms(films);
       this._model.filmsLoadingState = 'success';
@@ -96,7 +96,7 @@ export default class FilmsScreen {
   }
 
   private _onMainScreenOpen(): void {
-    this._closePopup();
+    FilmsScreen._closePopup();
     this._model.setFilter(Filter.All);
     this._model.setSortType(SortType.Default);
     Application.showFilmsScreen(this._model.state);
@@ -117,6 +117,7 @@ export default class FilmsScreen {
 
   private _onStatisticsOpen(): void {
     Application.showStatistics(this._model.state);
+    window.scrollTo(0, 0);
   }
 
   private _onSort(selectedSortType: SortType): void {
@@ -136,7 +137,7 @@ export default class FilmsScreen {
   }
 
   private _onPopupOpen(film: Film): void {
-    this._closePopup();
+    FilmsScreen._closePopup();
 
     const popup = new Popup({
       model: this._model,
@@ -238,7 +239,7 @@ export default class FilmsScreen {
     const sentFilm = getSentFilm(film);
 
     try {
-      const updatedFilm = await Api.updateFilm(sentFilm);
+      const updatedFilm = await HttpClient.updateFilm(sentFilm);
       this._model.updateFilm(updatedFilm);
       onViewsUpdate();
     } catch {
@@ -260,7 +261,7 @@ export default class FilmsScreen {
     this._filmsView.updateMostCommentedFilms();
   }
 
-  private _closePopup(): void {
+  private static _closePopup(): void {
     document.querySelector('.film-details')?.remove();
   }
 }

@@ -1,7 +1,11 @@
 import AbstractView from '../abstract-view';
+import { loadElementLazy } from '../dom-util';
 import { Constants, Film } from '../model';
 import Model from '../model/model';
 import FilmCardView from './film-card-view';
+
+const CONTAINER_HIDDEN_CLASSNAME = 'films-list__container--hidden';
+const LIST_HIDDEN_CLASSNAME = 'films-list--hidden';
 
 export default class FilmsView extends AbstractView {
   constructor(model: Model) {
@@ -16,6 +20,8 @@ export default class FilmsView extends AbstractView {
   private _filmCardViews: FilmCardView[];
   private _topRatedFilmCardViews: FilmCardView[];
   private _mostCommentedFilmCardViews: FilmCardView[];
+  private _titleElement: Element | null = null;
+  private _showMoreElement: Element | null = null;
 
   public get template(): string {
     const title = this._getTitle();
@@ -45,8 +51,8 @@ export default class FilmsView extends AbstractView {
       <section class="films">
         <h2 class="visually-hidden">Films</h2>
         <section class="films-list">
-          <h3 class="films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}">${title}</h3>
-          <div class="films-list__container ${this._model.areFilmsShown ? '' : 'films-list__container--hidden'}"></div>
+          <h3 class="films-list__title ${this._model.areFilmsShown ? Constants.VISUALLY_HIDDEN_CLASSNAME : ''}">${title}</h3>
+          <div class="films-list__container ${this._model.areFilmsShown ? '' : CONTAINER_HIDDEN_CLASSNAME}"></div>
           <button class="films-list__show-more button ${this._model.areAllFilmsShown ? Constants.HIDDEN_CLASSNAME : ''}">Show more</button>
         </section>
         ${topRatedFilms}
@@ -65,12 +71,24 @@ export default class FilmsView extends AbstractView {
     return element;
   }
 
+  public get titleElement(): Element {
+    this._titleElement = loadElementLazy(
+      this._titleElement,
+      this.element,
+      '.films-list__title',
+      'The films title element is not found',
+    );
+    return this._titleElement;
+  }
+
   public get showMoreElement(): Element {
-    const element = this.element.querySelector('.films-list__show-more');
-    if (!element) {
-      throw new Error('The "Show more" button is not found');
-    }
-    return element;
+    this._showMoreElement = loadElementLazy(
+      this._showMoreElement,
+      this.element,
+      '.films-list__show-more',
+      'The "Show more" button is not found',
+    );
+    return this._showMoreElement;
   }
 
   public bind(): void {
@@ -103,27 +121,28 @@ export default class FilmsView extends AbstractView {
   }
 
   public updateWatchlistButton(film: Film): void {
-    this._getFilmCardViewBy(this._filmCardViews, film.id)?.updateWatchlistButton();
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateWatchlistButton();
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateWatchlistButton();
+    FilmsView._getFilmCardViewBy(this._filmCardViews, film.id)?.updateWatchlistButton();
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateWatchlistButton();
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)
+      ?.updateWatchlistButton();
   }
 
   public updateWatchedButton(film: Film): void {
-    this._getFilmCardViewBy(this._filmCardViews, film.id)?.updateWatchedButton();
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateWatchedButton();
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateWatchedButton();
+    FilmsView._getFilmCardViewBy(this._filmCardViews, film.id)?.updateWatchedButton();
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateWatchedButton();
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateWatchedButton();
   }
 
   public updateFavoriteButton(film: Film): void {
-    this._getFilmCardViewBy(this._filmCardViews, film.id)?.updateFavoriteButton();
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateFavoriteButton();
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateFavoriteButton();
+    FilmsView._getFilmCardViewBy(this._filmCardViews, film.id)?.updateFavoriteButton();
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateFavoriteButton();
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateFavoriteButton();
   }
 
   public updateCommentsCount(film: Film): void {
-    this._getFilmCardViewBy(this._filmCardViews, film.id)?.updateCommentsCount();
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateCommentsCount();
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateCommentsCount();
+    FilmsView._getFilmCardViewBy(this._filmCardViews, film.id)?.updateCommentsCount();
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, film.id)?.updateCommentsCount();
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, film.id)?.updateCommentsCount();
   }
 
   public updateShowMoreButton(): void {
@@ -135,72 +154,32 @@ export default class FilmsView extends AbstractView {
   }
 
   public updateTitle(): void {
-    const title = this._getTitle();
-    const titleElement = this.element.querySelector('.films-list__title');
-
-    if (titleElement) {
-      titleElement.className = `films-list__title ${this._model.areFilmsShown ? 'visually-hidden' : ''}`;
-      titleElement.textContent = title;
-    }
+    this.titleElement.className = `films-list__title ${this._model.areFilmsShown
+      ? Constants.VISUALLY_HIDDEN_CLASSNAME
+      : ''}`;
+    this.titleElement.textContent = this._getTitle();
   }
 
   public updateTopRatedFilms(): void {
-    this._topRatedFilmCardViews = this._getFilmCardViews(this._model.topRatedFilms);
-    this._topRatedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
-
-    const filmsListElement = this.element.querySelector('.films-list--top-rated');
-    if (!filmsListElement) {
-      throw new Error('No top rated films list found');
-    }
-
-    if (this._topRatedFilmCardViews.length > 0) {
-      filmsListElement.classList.remove('films-list--hidden');
-      const containerElement = filmsListElement.querySelector('.films-list__container');
-      if (containerElement) {
-        containerElement.innerHTML = '';
-        this._topRatedFilmCardViews.forEach((view) => {
-          containerElement.append(view.element);
-        });
-      }
-    } else {
-      filmsListElement.classList.add('films-list--hidden');
-    }
+    this._updateExtraFilmsList(this._model.topRatedFilms, 'top-rated');
   }
 
   public updateMostCommentedFilms(): void {
-    this._mostCommentedFilmCardViews = this._getFilmCardViews(this._model.mostCommentedFilms);
-    this._mostCommentedFilmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
-
-    const filmsListElement = this.element.querySelector('.films-list--most-commented');
-    if (!filmsListElement) {
-      throw new Error('No most commented films list found');
-    }
-
-    if (this._mostCommentedFilmCardViews.length > 0) {
-      filmsListElement.classList.remove('films-list--hidden');
-      const containerElement = filmsListElement.querySelector('.films-list__container');
-      if (containerElement) {
-        containerElement.innerHTML = '';
-        this._mostCommentedFilmCardViews.forEach((view) => {
-          containerElement.append(view.element);
-        });
-      }
-    } else {
-      filmsListElement.classList.add('films-list--hidden');
-    }
+    this._updateExtraFilmsList(this._model.mostCommentedFilms, 'most-commented');
   }
 
   public makeControlsEnabled(filmId: string, isEnabled: boolean): void {
-    this._getFilmCardViewBy(this._filmCardViews, filmId)?.makeControlsEnabled(isEnabled);
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, filmId)?.makeControlsEnabled(isEnabled);
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, filmId)
+    FilmsView._getFilmCardViewBy(this._filmCardViews, filmId)?.makeControlsEnabled(isEnabled);
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, filmId)
+      ?.makeControlsEnabled(isEnabled);
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, filmId)
       ?.makeControlsEnabled(isEnabled);
   }
 
   public shakeControls(filmId: string): void {
-    this._getFilmCardViewBy(this._filmCardViews, filmId)?.shakeControls();
-    this._getFilmCardViewBy(this._topRatedFilmCardViews, filmId)?.shakeControls();
-    this._getFilmCardViewBy(this._mostCommentedFilmCardViews, filmId)?.shakeControls();
+    FilmsView._getFilmCardViewBy(this._filmCardViews, filmId)?.shakeControls();
+    FilmsView._getFilmCardViewBy(this._topRatedFilmCardViews, filmId)?.shakeControls();
+    FilmsView._getFilmCardViewBy(this._mostCommentedFilmCardViews, filmId)?.shakeControls();
   }
 
   private _getFilmCardViews(films: Film[]): FilmCardView[] {
@@ -216,13 +195,40 @@ export default class FilmsView extends AbstractView {
     }
 
     if (this._model.areFilmsShown) {
-      containerElement.classList.remove('films-list__container--hidden');
+      containerElement.classList.remove(CONTAINER_HIDDEN_CLASSNAME);
       containerElement.innerHTML = '';
       this._filmCardViews.forEach((view) => {
         containerElement.append(view.element);
       });
     } else {
-      containerElement.classList.add('films-list__container--hidden');
+      containerElement.classList.add(CONTAINER_HIDDEN_CLASSNAME);
+    }
+  }
+
+  private _updateExtraFilmsList(films: Film[], listType: 'top-rated' | 'most-commented'): void {
+    const filmCardViews = this._getFilmCardViews(films);
+    filmCardViews.forEach((view) => { this._bindFilmCardListeners(view); });
+
+    if (listType === 'top-rated') {
+      this._topRatedFilmCardViews = filmCardViews;
+    } else if (listType === 'most-commented') {
+      this._mostCommentedFilmCardViews = filmCardViews;
+    }
+
+    const listElement = this.element.querySelector(`.films-list--${listType}`);
+    if (!listElement) {
+      throw new Error(`No extra list found with type ${listType}`);
+    }
+
+    if (filmCardViews.length > 0) {
+      listElement.classList.remove(LIST_HIDDEN_CLASSNAME);
+      const containerElement = listElement.querySelector('.films-list__container');
+      if (containerElement) {
+        containerElement.innerHTML = '';
+        filmCardViews.forEach((view) => { containerElement.append(view.element); });
+      }
+    } else {
+      listElement.classList.add(LIST_HIDDEN_CLASSNAME);
     }
   }
 
@@ -239,10 +245,6 @@ export default class FilmsView extends AbstractView {
     }
   }
 
-  private _getFilmCardViewBy(views: FilmCardView[], filmId: string): FilmCardView | null {
-    return views.find((view) => view.filmId === filmId) ?? null;
-  }
-
   private _bindFilmCardListeners(view: FilmCardView): void {
     /* eslint-disable no-param-reassign */
     view.onPopupOpen = this.onPopupOpen.bind(this);
@@ -250,5 +252,9 @@ export default class FilmsView extends AbstractView {
     view.onWatchedChange = this.onWatchedChange.bind(this);
     view.onFavoriteChange = this.onFavoriteChange.bind(this);
     /* eslint-enable no-param-reassign */
+  }
+
+  private static _getFilmCardViewBy(views: FilmCardView[], filmId: string): FilmCardView | null {
+    return views.find((view) => view.filmId === filmId) ?? null;
   }
 }

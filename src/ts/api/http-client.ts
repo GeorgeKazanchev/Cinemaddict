@@ -44,7 +44,7 @@ const checkStatus = (response: Response): void => {
 
 const toJSON = (response: Response): Promise<unknown> => response.json();
 
-export default class Api {
+export default class HttpClient {
   public static async loadFilms(): Promise<Film[]> {
     const response = await fetch('/movies', getFetchOptions());
     checkStatus(response);

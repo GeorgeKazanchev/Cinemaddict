@@ -1,8 +1,8 @@
 import { State } from './data/data';
+import { render } from './dom-util';
 import FilmsScreen from './films-screen/films-screen';
 import Model from './model/model';
 import StatisticsScreen from './statistics-screen/statistics-screen';
-import { render } from './util';
 
 export default class Application {
   public static showFilmsScreen(state: State): void {

@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+import { loadElementLazy } from './dom-util';
 import Model from './model/model';
 
 export default class FooterView extends AbstractView {
@@ -8,6 +9,7 @@ export default class FooterView extends AbstractView {
   }
 
   private _model: Model;
+  private _statisticsElement: Element | null = null;
 
   public get template(): string {
     const statistics = this._getStatisticsTemplate();
@@ -26,13 +28,18 @@ export default class FooterView extends AbstractView {
       </footer>`;
   }
 
-  public updateFilmsCount(): void {
-    const statisticsElement = this.element.querySelector('.footer__statistics');
-    if (!statisticsElement) {
-      throw new Error('No statistics element found in the footer');
-    }
+  public get statisticsElement(): Element {
+    this._statisticsElement = loadElementLazy(
+      this._statisticsElement,
+      this.element,
+      '.footer__statistics',
+      'No statistics element found in the footer',
+    );
+    return this._statisticsElement;
+  }
 
-    statisticsElement.innerHTML = this._getStatisticsTemplate();
+  public updateFilmsCount(): void {
+    this.statisticsElement.innerHTML = this._getStatisticsTemplate();
   }
 
   private _getStatisticsTemplate(): string {

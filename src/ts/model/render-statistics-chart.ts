@@ -1,5 +1,5 @@
 import { STATS_SHOWN_GENRES_COUNT } from './consts';
-import { getFilmsCountByGenres } from './get-statistics';
+import { getFilmsCountByGenresArray } from './get-statistics';
 import type Film from './types/film';
 
 const Y0 = 60;
@@ -68,7 +68,11 @@ const renderGenreColumns = (
     return;
   }
 
-  const x0 = (canvasWidth - columnsCount * COLUMN_WIDTH - (columnsCount - 1) * COLUMN_GAP) / 2;
+  //  Столбцы диаграммы должны отрисовываться в центре канваса. Зная количество столбцов, мы можем
+  //  найти суммарную ширину всех столбцов и отступов между ними, и затем рассчитать координату
+  //  x0 первого столбца, при которой диаграмма будет выровнена по центру
+  const emptyHorSpace = canvasWidth - columnsCount * COLUMN_WIDTH - (columnsCount - 1) * COLUMN_GAP;
+  const x0 = emptyHorSpace / 2;
   const maxColumnHeight = MAX_COLUMN_HEIGHT_COEFFICIENT * canvasHeight;
   const topGenreFilmsCount = filmsCountByGenres[0][1];
 
@@ -93,8 +97,7 @@ const renderGenreColumns = (
 const renderStatisticsChart = (films: Film[], canvasElement: HTMLCanvasElement): void => {
   const ctx = canvasElement.getContext('2d');
   if (ctx) {
-    let filmsCountByGenres = Array.from(getFilmsCountByGenres(films));
-    filmsCountByGenres.sort((a, b) => b[1] - a[1]);
+    let filmsCountByGenres = getFilmsCountByGenresArray(films);
     filmsCountByGenres = filmsCountByGenres.slice(0, STATS_SHOWN_GENRES_COUNT);
 
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);

@@ -1,5 +1,5 @@
 import he from 'he';
-import Api from '../api/api';
+import HttpClient from '../api/http-client';
 import { Comment, Film, Handlers } from '../model';
 import Model from '../model/model';
 import PopupView from './popup-view';
@@ -69,7 +69,7 @@ export default class Popup {
     }
 
     try {
-      const comments = await Api.loadComments(this._filmId);
+      const comments = await HttpClient.loadComments(this._filmId);
       const film = this._model.getFilmById(this._filmId);
       this._model.updateCommentsForFilm(film, comments);
       this._model.commentsLoadingStates.set(this._filmId, 'success');
@@ -128,7 +128,7 @@ export default class Popup {
   private async _deleteComment(comment: Comment): Promise<void> {
     this._popupView.makeDeleteButtonEnabled(comment.id, false);
     try {
-      await Api.deleteComment(comment.id);
+      await HttpClient.deleteComment(comment.id);
       this._model.deleteComment(comment, this._filmId);
       this._popupView.updateShownComments();
       this._popupView.updateCommentsCount();
@@ -148,7 +148,7 @@ export default class Popup {
     };
 
     try {
-      const [film, comments] = await Api.createComment(comment, this._filmId);
+      const [film, comments] = await HttpClient.createComment(comment, this._filmId);
       this._model.updateCommentsForFilm(film, comments);
       this._popupView.updateShownComments();
       this._popupView.updateCommentsCount();

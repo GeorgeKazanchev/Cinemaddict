@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
+import { getElementFromTemplate } from './dom-util';
 import { getRank } from './model';
 import Model from './model/model';
-import { getElementFromTemplate } from './util';
 
 export default class HeaderView extends AbstractView {
   constructor(model: Model) {
@@ -13,7 +13,7 @@ export default class HeaderView extends AbstractView {
 
   public get template(): string {
     const rank = getRank(this._model.filmsSummary.watchedFilmsCount);
-    const profile = this._getProfileTemplate(rank);
+    const profile = HeaderView._getProfileTemplate(rank);
 
     return `
       <header class="header">
@@ -76,7 +76,7 @@ export default class HeaderView extends AbstractView {
     let profileElement = this.element.querySelector('.profile');
     if (rank) {
       if (!profileElement) {
-        profileElement = getElementFromTemplate(this._getProfileTemplate(rank));
+        profileElement = getElementFromTemplate(HeaderView._getProfileTemplate(rank));
         this.element.append(profileElement);
       } else {
         const ratingElement = this.element.querySelector('.profile__rating');
@@ -89,7 +89,7 @@ export default class HeaderView extends AbstractView {
     }
   }
 
-  private _getProfileTemplate(rank: string): string {
+  private static _getProfileTemplate(rank: string): string {
     return (
       rank
         ? `<section class="header__profile profile">

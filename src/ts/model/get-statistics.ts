@@ -66,6 +66,12 @@ export const getFilmsCountByGenres = (films: Film[]): Map<string, number> => {
   return genresToFilmsCount;
 };
 
+export const getFilmsCountByGenresArray = (films: Film[]): [string, number][] => {
+  const array = [...getFilmsCountByGenres(films)];
+  array.sort((a, b) => b[1] - a[1]);
+  return array;
+};
+
 export const getFavoriteGenre = (films: Film[]): string => {
   const genresToFilmsCount = getFilmsCountByGenres(films);
 

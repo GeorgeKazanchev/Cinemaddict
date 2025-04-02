@@ -1,10 +1,12 @@
 import AbstractView from '../abstract-view';
+import { loadElementLazy, shakeElement } from '../dom-util';
 import {
   getFormattedDuration, getLimitedDescription, getRatingClassname, Film,
 } from '../model';
 import Model from '../model/model';
 
 const BUTTON_ACTIVE_CLASSNAME = 'film-card__controls-item--active';
+const CONTROLS_ERROR_CLASSNAME = 'film-card__controls--error';
 
 type Props = {
   filmId: string;
@@ -20,8 +22,11 @@ export default class FilmCardView extends AbstractView {
 
   private _model: Model;
   private _filmId: string;
-
   private _controlsContainerElement: HTMLFieldSetElement | null = null;
+  private _commentsCountElement: Element | null = null;
+  private _watchlistButtonElement: Element | null = null;
+  private _watchedButtonElement: Element | null = null;
+  private _favoriteButtonElement: Element | null = null;
 
   public get filmId(): string {
     return this._filmId;
@@ -43,7 +48,7 @@ export default class FilmCardView extends AbstractView {
             <span class="film-card__genre">${info.genres.join(', ')}</span>
           </p>
           <p class="film-card__description">${getLimitedDescription(info.description)}</p>
-          <a class="link film-card__comments" href="#">${this._getCommentsCountText(commentsCount)}</a>
+          <a class="link film-card__comments" href="#">${FilmCardView._getCommentsCountText(commentsCount)}</a>
         </div>
         <form action="#" method="post" autocomplete="off">
           <fieldset class="film-card__controls">
@@ -84,28 +89,59 @@ export default class FilmCardView extends AbstractView {
       </article>`;
   }
 
-  public get controlsContainerElement() {
-    if (this._controlsContainerElement) {
-      return this._controlsContainerElement;
-    }
+  public get controlsContainerElement(): HTMLFieldSetElement {
+    this._controlsContainerElement = loadElementLazy(
+      this._controlsContainerElement,
+      this.element,
+      '.film-card__controls',
+      'No controls container found',
+    ) as HTMLFieldSetElement;
+    return this._controlsContainerElement;
+  }
 
-    const element = this.element.querySelector('.film-card__controls');
-    if (!(element instanceof HTMLFieldSetElement)) {
-      throw new Error('No controls container found');
-    }
+  public get commentsCountElement(): Element {
+    this._commentsCountElement = loadElementLazy(
+      this._commentsCountElement,
+      this.element,
+      '.film-card__comments',
+      'No film card comments count element found',
+    );
+    return this._commentsCountElement;
+  }
 
-    this._controlsContainerElement = element;
-    return element;
+  public get watchlistButtonElement(): Element {
+    this._watchlistButtonElement = loadElementLazy(
+      this._watchlistButtonElement,
+      this.element,
+      '.film-card__controls-item--watchlist',
+      'No "Add to watchlist" button found',
+    );
+    return this._watchlistButtonElement;
+  }
+
+  public get watchedButtonElement(): Element {
+    this._watchedButtonElement = loadElementLazy(
+      this._watchedButtonElement,
+      this.element,
+      '.film-card__controls-item--watched',
+      'No "Mark as watched" button found',
+    );
+    return this._watchedButtonElement;
+  }
+
+  public get favoriteButtonElement(): Element {
+    this._favoriteButtonElement = loadElementLazy(
+      this._favoriteButtonElement,
+      this.element,
+      '.film-card__controls-item--favorite',
+      'No "Add to favorites" button found',
+    );
+    return this._favoriteButtonElement;
   }
 
   public bind(): void {
     const titleElement = this.element.querySelector('.film-card__title');
     const posterElement = this.element.querySelector('.film-card__poster');
-    const commentsElement = this.element.querySelector('.film-card__comments');
-
-    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--watchlist');
-    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--watched');
-    const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
 
     const popupOpenClickHandler = (evt: Event): void => {
       evt.preventDefault();
@@ -136,13 +172,15 @@ export default class FilmCardView extends AbstractView {
 
     titleElement?.addEventListener('click', popupOpenClickHandler);
     posterElement?.addEventListener('click', popupOpenClickHandler);
-    commentsElement?.addEventListener('click', popupOpenClickHandler);
+    this.commentsCountElement.addEventListener('click', popupOpenClickHandler);
+
     titleElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
     posterElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
-    commentsElement?.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
-    watchlistButtonElement?.addEventListener('click', watchlistClickHandler);
-    watchedButtonElement?.addEventListener('click', watchedClickHandler);
-    favoriteButtonElement?.addEventListener('click', favoriteClickHandler);
+    this.commentsCountElement.addEventListener('keydown', popupOpenEnterPressHandler as EventListener);
+
+    this.watchlistButtonElement.addEventListener('click', watchlistClickHandler);
+    this.watchedButtonElement.addEventListener('click', watchedClickHandler);
+    this.favoriteButtonElement.addEventListener('click', favoriteClickHandler);
   }
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -153,26 +191,20 @@ export default class FilmCardView extends AbstractView {
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public updateWatchlistButton(): void {
-    const watchlistButtonElement = this.element.querySelector('.film-card__controls-item--watchlist');
-    watchlistButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+    FilmCardView._toggleButtonSelection(this.watchlistButtonElement);
   }
 
   public updateWatchedButton(): void {
-    const watchedButtonElement = this.element.querySelector('.film-card__controls-item--watched');
-    watchedButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+    FilmCardView._toggleButtonSelection(this.watchedButtonElement);
   }
 
   public updateFavoriteButton(): void {
-    const favoriteButtonElement = this.element.querySelector('.film-card__controls-item--favorite');
-    favoriteButtonElement?.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
+    FilmCardView._toggleButtonSelection(this.favoriteButtonElement);
   }
 
   public updateCommentsCount(): void {
-    const commentsCount = this._model.getComments(this._filmId).length;
-    const commentsCountElement = this.element.querySelector('.film-card__comments');
-    if (commentsCountElement) {
-      commentsCountElement.textContent = this._getCommentsCountText(commentsCount);
-    }
+    const commentsCount = this._model.getCommentsCount(this._filmId);
+    this.commentsCountElement.textContent = FilmCardView._getCommentsCountText(commentsCount);
   }
 
   public makeControlsEnabled(isEnabled: boolean): void {
@@ -180,17 +212,18 @@ export default class FilmCardView extends AbstractView {
   }
 
   public shakeControls(): void {
-    // Здесь используется хак, чтобы форма могла "трястить" более одного раза
-    this.controlsContainerElement.classList.remove('film-card__controls--error');
-    this.controlsContainerElement.scrollBy(0, 0);
-    this.controlsContainerElement.classList.add('film-card__controls--error');
-  }
-
-  private _getCommentsCountText(count: number): string {
-    return `${count} ${count === 1 ? 'comment' : 'comments'}`;
+    shakeElement(this.controlsContainerElement, CONTROLS_ERROR_CLASSNAME);
   }
 
   private _getFilmFromModel(): Film {
     return this._model.getFilmById(this._filmId);
+  }
+
+  private static _getCommentsCountText(count: number): string {
+    return `${count} ${count === 1 ? 'comment' : 'comments'}`;
+  }
+
+  private static _toggleButtonSelection(element: Element): void {
+    element.classList.toggle(BUTTON_ACTIVE_CLASSNAME);
   }
 }

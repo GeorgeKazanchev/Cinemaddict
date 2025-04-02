@@ -82,13 +82,12 @@ export default class StatisticsScreen {
   private _onMainScreenOpen(): void {
     this._model.setFilter(Filter.All);
     this._model.setSortType(SortType.Default);
-    Application.showFilmsScreen(this._model.state);
-    window.scrollTo(0, 0);
+    this._openFilmsScreen();
   }
 
   private _onFiltration(selectedFilter: Filter): void {
     this._model.setFilter(selectedFilter);
-    Application.showFilmsScreen(this._model.state);
+    this._openFilmsScreen();
   }
 
   private _onPeriodChange(selectedPeriod: StatisticsPeriod): void {
@@ -100,5 +99,10 @@ export default class StatisticsScreen {
       this._chartView.updateChart();
       this._genresView.updateGenres();
     }
+  }
+
+  private _openFilmsScreen(): void {
+    Application.showFilmsScreen(this._model.state);
+    window.scrollTo(0, 0);
   }
 }
