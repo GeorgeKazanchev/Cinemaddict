@@ -526,10 +526,7 @@ $opacity-disabled: 0.5;
 .film-details__new-comment-text-wrapper {
   display: flex;
   align-items: center;
-
-  @media (min-width: var.$tablet-min-width) {
-    display: block;
-  }
+  width: 100%;
 }
 
 .film-details__add-emoji-label {
