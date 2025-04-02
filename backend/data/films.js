@@ -1,5 +1,158 @@
 const films = [
   {
+    id: 'c9d3a11c-a506-4ae6-b48b-920497168a23',
+    comments: [],
+    film_info: {
+      title: 'Band of Outsiders',
+      alternative_title: 'Bande à part',
+      total_rating: 7.6,
+      poster: '/img/band-of-outsiders.jpg',
+      age_rating: 12,
+      director: 'Jean-Luc Godard',
+      writers: [
+        'Dolores Hitchens',
+        'Jean-Luc Godard',
+      ],
+      actors: [
+        'Anna Karina',
+        'Claude Brasseur',
+        'Danièle Girard',
+      ],
+      release: {
+        date: '1964-08-05T00:00:00.000Z',
+        release_country: 'France',
+      },
+      runtime: 97,
+      genre: [
+        'Crime',
+        'Drama',
+      ],
+      description: 'Two crooks with a fondness for old Hollywood B-movies convince a languages student to help them commit a robbery.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2023-08-15',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '732e9a63-b4cb-423e-8238-cfe53446cffd',
+    comments: [],
+    film_info: {
+      title: 'Breathless',
+      alternative_title: 'À bout de souffle',
+      total_rating: 7.7,
+      poster: '/img/breathless.jpg',
+      age_rating: 12,
+      director: 'Jean-Luc Godard',
+      writers: [
+        'Claude Chabrol',
+        'Jean-Luc Godard',
+        'François Truffaut',
+      ],
+      actors: [
+        'Jean-Paul Belmondo',
+        'Jean Seberg',
+        'Van Doude',
+      ],
+      release: {
+        date: '1960-03-16T00:00:00.000Z',
+        release_country: 'France',
+      },
+      runtime: 90,
+      genre: [
+        'Crime',
+      ],
+      description: 'A small-time crook, hunted by the authorities for a car theft and the murder of a police officer, attempts to persuade a hip American journalism student to run away with him to Italy.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2023-08-16',
+      favorite: true,
+    },
+  },
+
+  {
+    id: 'c1e755b6-1618-4b10-8114-ff1419b749c1',
+    comments: [],
+    film_info: {
+      title: 'M',
+      alternative_title: 'M - Eine Stadt sucht einen Mörder',
+      total_rating: 8.3,
+      poster: '/img/m.jpg',
+      age_rating: 16,
+      director: 'Fritz Lang',
+      writers: [
+        'Thea von Harbou',
+        'Fritz Lang',
+        'Egon Jacobsohn',
+      ],
+      actors: [
+        'Peter Lorre',
+        'Ellen Widmann',
+        'Inge Landgut',
+      ],
+      release: {
+        date: '1931-05-11T00:00:00.000Z',
+        release_country: 'Germany',
+      },
+      runtime: 111,
+      genre: [
+        'Thriller',
+        'Crime',
+      ],
+      description: 'When the police in a German city are unable to catch a child-murderer, other criminals join in the manhunt.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2025-01-29',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '3afaa263-1f76-4abf-ae89-4e47d5521fc9',
+    comments: [],
+    film_info: {
+      title: 'Broken Blossoms',
+      alternative_title: 'Broken Blossoms',
+      total_rating: 7.2,
+      poster: '/img/broken-blossoms.jpg',
+      age_rating: 6,
+      director: 'D.W. Griffith',
+      writers: [
+        'Thomas Burke',
+        'D.W. Griffith',
+      ],
+      actors: [
+        'Lillian Gish',
+        'Richard Barthelmess',
+        'Donald Crisp',
+      ],
+      release: {
+        date: '1919-05-13T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 90,
+      genre: [
+        'Drama',
+        'Romance',
+      ],
+      description: 'A frail waif, abused by her brutal boxer father in London\'s seedy Limehouse District, is befriended by a sensitive Chinese immigrant with tragic consequences.',
+    },
+    user_details: {
+      watchlist: false,
+      already_watched: true,
+      watching_date: '2024-07-24',
+      favorite: true,
+    },
+  },
+
+  {
     id: '841c7b78-f1f0-4635-9b67-82b9fcfb2675',
     comments: [
       '50a689fb-90e9-48f8-937e-8028029b8fe8',
@@ -1060,6 +1213,653 @@ const films = [
       already_watched: true,
       watching_date: '2017-01-02',
       favorite: true,
+    },
+  },
+
+  {
+    id: 'b657e809-a0ef-4df0-af8c-4d170f999b90',
+    comments: [],
+    film_info: {
+      title: 'The Cabinet of Dr. Caligari',
+      alternative_title: 'Das Cabinet des Dr. Caligari',
+      total_rating: 8.0,
+      poster: '/img/cabinet-of-dr-caligari.jpg',
+      age_rating: 12,
+      director: 'Robert Wiene',
+      writers: [
+        'Carl Mayer',
+        'Hans Janowitz',
+      ],
+      actors: [
+        'Werner Krauss',
+        'Conrad Veidt',
+        'Friedrich Feher',
+      ],
+      release: {
+        date: '1920-02-26T00:00:00.000Z',
+        release_country: 'Germany',
+      },
+      runtime: 74,
+      genre: [
+        'Thriller',
+        'Horror',
+      ],
+      description: 'Hypnotist Dr. Caligari uses a somnambulist, Cesare, to commit murders.',
+    },
+    user_details: {
+      watchlist: false,
+      already_watched: true,
+      watching_date: '2023-06-10',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '83674597-97f4-41a1-95e1-51663b139deb',
+    comments: [],
+    film_info: {
+      title: 'Nanook of the North',
+      alternative_title: 'Nanook of the North',
+      total_rating: 7.6,
+      poster: '/img/nanook-of-the-north.jpg',
+      age_rating: 6,
+      director: 'Robert J. Flaherty',
+      writers: [
+        'Frances H. Flaherty',
+        'Robert J. Flaherty',
+      ],
+      actors: [
+        'Allakariallak',
+        'Alice Nevalinga',
+        'Cunayou',
+      ],
+      release: {
+        date: '1922-06-11T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 79,
+      genre: [
+        'Documentary',
+      ],
+      description: 'In this silent predecessor to the modern documentary, film-maker Robert J. Flaherty spends one year following the lives of Nanook and his family, Inuits living in the Arctic Circle.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: 'a86e57d1-ddf6-48f5-82b9-7631f574badb',
+    comments: [],
+    film_info: {
+      title: 'Greed',
+      alternative_title: 'Greed',
+      total_rating: 8.0,
+      poster: '/img/greed.jpg',
+      age_rating: 12,
+      director: 'Erich von Stroheim',
+      writers: [
+        'June Mathis',
+        'Erich von Stroheim',
+        'Frank Norris',
+      ],
+      actors: [
+        'Gibson Gowland',
+        'Zasu Pitts',
+        'Jean Hersholt',
+      ],
+      release: {
+        date: '1924-12-04T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 239,
+      genre: [
+        'Drama',
+        'Western',
+        'Thriller',
+      ],
+      description: 'The sudden fortune won from a lottery fans such destructive greed that it ruins the lives of the three people involved.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: true,
+    },
+  },
+
+  {
+    id: 'a6f8e5b7-22b6-48cb-a0c0-182d83d75d6f',
+    comments: [],
+    film_info: {
+      title: 'The Extraordinary Adventures of Mr. West in the Land of the Bolsheviks',
+      alternative_title: 'Neobychainye priklyucheniya mistera Vesta v strane bolshevikov',
+      total_rating: 6.4,
+      poster: '/img/adventures-of-mr-west.jpg',
+      age_rating: 12,
+      director: 'Lev Kuleshov',
+      writers: [
+        'Nikolay Aseev',
+        'Vsevolod Pudovkin',
+      ],
+      actors: [
+        'Porfiri Podobed',
+        'Boris Barnet',
+        'Aleksandra Khokhlova',
+      ],
+      release: {
+        date: '1924-04-27T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 86,
+      genre: [
+        'Comedy',
+        'Fantasy',
+      ],
+      description: 'Experience the chronicle adventures of Mr. West and his faithful bodyguard and servant Jeddie, as they visit the land of the horrible and evil Bolsheviks.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: true,
+    },
+  },
+
+  {
+    id: '4103151b-7eaa-43a4-b2e5-254dfd5fd1fc',
+    comments: [],
+    film_info: {
+      title: 'Battleship Potemkin',
+      alternative_title: 'Bronenosets Potyomkin',
+      total_rating: 7.9,
+      poster: '/img/bronenosets-potyomkin.jpg',
+      age_rating: 12,
+      director: 'Sergei Eisenstein',
+      writers: [
+        'Nina Agadzhanova',
+        'Sergei Eisenstein',
+        'Grigoriy Aleksandrov',
+      ],
+      actors: [
+        'Aleksandr Antonov',
+        'Vladimir Barskiy',
+        'Grigoriy Aleksandrov',
+      ],
+      release: {
+        date: '1925-12-21T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 74,
+      genre: [
+        'Drama',
+        'War',
+      ],
+      description: 'In the midst of the Russian Revolution of 1905, the crew of the battleship Potemkin mutiny against the brutal, tyrannical regime of the vessel\'s officers. The resulting street demonstration in Odessa brings on a police massacre.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: true,
+    },
+  },
+
+  {
+    id: '216be8a5-8690-4cef-b1c9-4da8fc8b3770',
+    comments: [],
+    film_info: {
+      title: 'The Jazz Singer',
+      alternative_title: 'The Jazz Singer',
+      total_rating: 6.4,
+      poster: '/img/jazz-singer.jpg',
+      age_rating: 6,
+      director: 'Alan Crosland',
+      writers: [
+        'Samson Raphaelson',
+        'Alfred A. Cohn',
+        'Jack Jarmuth',
+      ],
+      actors: [
+        'Al Jolson',
+        'May McAvoy',
+        'Warner Oland',
+      ],
+      release: {
+        date: '1927-10-06T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 96,
+      genre: [
+        'Musical',
+        'Romance',
+        'Drama',
+      ],
+      description: 'The son of a Jewish Cantor must defy the traditions of his religious father in order to pursue his dream of becoming a jazz singer.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: true,
+    },
+  },
+
+  {
+    id: 'ec1258d0-343e-4b28-948c-56fa297ec174',
+    comments: [],
+    film_info: {
+      title: 'Un chien andalou',
+      alternative_title: 'Un chien andalou',
+      total_rating: 7.6,
+      poster: '/img/un-chien-andalou.jpg',
+      age_rating: 16,
+      director: 'Luis Buñuel',
+      writers: [
+        'Salvador Dalí',
+        'Luis Buñuel',
+      ],
+      actors: [
+        'Pierre Batcheff',
+        'Simone Mareuil',
+        'Luis Buñuel',
+      ],
+      release: {
+        date: '1929-06-06T00:00:00.000Z',
+        release_country: 'France',
+      },
+      runtime: 21,
+      genre: [
+        'Fantasy',
+        'Horror',
+      ],
+      description: 'Luis Buñuel and Salvador Dalí present 16 minutes of bizarre, surreal imagery.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2024-09-16',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '02efc5e8-b5c5-4a4c-839b-1303cf66580d',
+    comments: [],
+    film_info: {
+      title: 'The Passion of Joan of Arc',
+      alternative_title: 'La passion de Jeanne d\'Arc',
+      total_rating: 8.1,
+      poster: '/img/passion-of-joan-of-arc.jpg',
+      age_rating: 12,
+      director: 'Carl Theodor Dreyer',
+      writers: [
+        'Joseph Delteil',
+        'Carl Theodor Dreyer',
+      ],
+      actors: [
+        'Maria Falconetti',
+        'Eugene Silvain',
+        'André Berley',
+      ],
+      release: {
+        date: '1928-10-25T00:00:00.000Z',
+        release_country: 'France',
+      },
+      runtime: 82,
+      genre: [
+        'Drama',
+        'History',
+      ],
+      description: 'In 1431, Jeanne d\'Arc is placed on trial on charges of heresy. The ecclesiastical jurists attempt to force Jeanne to recant her claims of holy visions.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2024-08-14',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '96ce3eae-decf-471f-8edf-797478fe16c0',
+    comments: [],
+    film_info: {
+      title: 'Man with a Movie Camera',
+      alternative_title: 'Chelovek s kino-apparatom',
+      total_rating: 8.3,
+      poster: '/img/man-with-movie-camera.jpg',
+      age_rating: 6,
+      director: 'Dziga Vertov',
+      writers: [
+        'Dziga Vertov',
+      ],
+      actors: [
+        'Mikhail Kaufman',
+        'Elizaveta Svilova',
+      ],
+      release: {
+        date: '1929-01-07T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 68,
+      genre: [
+        'Documentary',
+      ],
+      description: 'A man travels around a city with a camera slung over his shoulder, documenting urban life with dazzling invention.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: true,
+    },
+  },
+
+  {
+    id: '28468a9c-2de6-4558-ab09-77962872e3bb',
+    comments: [],
+    film_info: {
+      title: 'King Kong',
+      alternative_title: 'King Kong',
+      total_rating: 7.9,
+      poster: '/img/king-kong.jpg',
+      age_rating: 12,
+      director: 'Merian C. Cooper',
+      writers: [
+        'James Ashmore Creelman',
+        'Ruth Rose',
+        'Merian C. Cooper',
+      ],
+      actors: [
+        'Fay Wray',
+        'Robert Armstrong',
+        'Bruce Cabot',
+      ],
+      release: {
+        date: '1933-04-07T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 100,
+      genre: [
+        'Adventure',
+        'Horror',
+      ],
+      description: 'A film crew goes to a tropical island for a location shoot, where they capture a colossal ape who takes a shine to their blonde starlet, and bring him back to New York City.',
+    },
+    user_details: {
+      watchlist: false,
+      already_watched: true,
+      watching_date: '2025-01-05',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '62fe052e-ff8b-4975-b6e5-4895275e9799',
+    comments: [],
+    film_info: {
+      title: 'Citizen Kane',
+      alternative_title: 'Citizen Kane',
+      total_rating: 8.3,
+      poster: '/img/citizen-kane.jpg',
+      age_rating: 12,
+      director: 'Orson Welles',
+      writers: [
+        'Herman J. Mankiewicz',
+        'Orson Welles',
+        'John Houseman',
+      ],
+      actors: [
+        'Orson Welles',
+        'Joseph Cotten',
+        'Dorothy Comingore',
+      ],
+      release: {
+        date: '1941-09-05T00:00:00.000Z',
+        release_country: 'United States',
+      },
+      runtime: 114,
+      genre: [
+        'Epic',
+        'Drama',
+      ],
+      description: 'Following the death of publishing tycoon Charles Foster Kane, reporters scramble to uncover the meaning of his final utterance: \'Rosebud.\'',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: true,
+      watching_date: '2023-07-23',
+      favorite: true,
+    },
+  },
+
+  {
+    id: '587d9620-3ade-4e19-ae04-6de1c69004ec',
+    comments: [],
+    film_info: {
+      title: 'Earth',
+      alternative_title: 'Zemlya',
+      total_rating: 7.2,
+      poster: '/img/earth.jpg',
+      age_rating: 6,
+      director: 'Aleksandr Dovzhenko',
+      writers: [
+        'Aleksandr Dovzhenko',
+      ],
+      actors: [
+        'Stepan Shkurat',
+        'Semyon Svashenko',
+        'Yuliya Solntseva',
+      ],
+      release: {
+        date: '1930-04-08T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 76,
+      genre: [
+        'Drama',
+      ],
+      description: 'In the peaceful countryside, Vassily opposes the rich kulaks over the coming of collective farming.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: '8bb8e2b0-5c60-4e31-ab79-f83afbc8aa4f',
+    comments: [],
+    film_info: {
+      title: 'Road to Life',
+      alternative_title: 'Putyovka v zhizn',
+      total_rating: 6.8,
+      poster: '/img/road-to-life.jpg',
+      age_rating: 6,
+      director: 'Nikolai Ekk',
+      writers: [
+        'Osip Brik',
+        'Nikolai Ekk',
+        'Anton Makarenko',
+      ],
+      actors: [
+        'Nikolay Batalov',
+        'Yvan Kyrlya',
+        'Mikhail Dzhagofarov',
+      ],
+      release: {
+        date: '1931-09-30T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 119,
+      genre: [
+        'Drama',
+        'Crime',
+      ],
+      description: 'Young hobos are brought to a new camp to become good Soviet citizens. This camp works without any guards. But crooks kill one of the young people when they try to damage the newly build railroad to that camp.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: '2086c16d-a820-494a-b3b9-74347e663beb',
+    comments: [],
+    film_info: {
+      title: 'Outskirts',
+      alternative_title: 'Okraina',
+      total_rating: 7.0,
+      poster: '/img/outskirts.jpg',
+      age_rating: 12,
+      director: 'Boris Barnet',
+      writers: [
+        'Konstantin Finn',
+        'Boris Barnet',
+      ],
+      actors: [
+        'Yelena Kuzmina',
+        'Mikhail Zharov',
+        'Nikolay Bogolyubov',
+      ],
+      release: {
+        date: '1933-03-25T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 98,
+      genre: [
+        'Drama',
+        'War',
+      ],
+      description: 'Outskirts is an internationally renowned masterpiece of early sound cinema. In a remote Russian village during World War I, colorful and nuanced characters experience divided loyalties: family loyalty vs. personal desire, nationalism vs. transcendent humanism.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: '21232c79-2404-4557-b6a6-102afdea533c',
+    comments: [],
+    film_info: {
+      title: 'Loss of Feeling',
+      alternative_title: 'Gibel sensatsii',
+      total_rating: 6.5,
+      poster: '/img/loss-of-feeling.jpg',
+      age_rating: 12,
+      director: 'Aleksandr Andriyevsky',
+      writers: [
+        'Georgiy Grebner',
+        'Karel Capek',
+      ],
+      actors: [
+        'Sergei Vecheslov',
+        'Vladimir Gardin',
+        'Mariya Volgina',
+      ],
+      release: {
+        date: '1935-04-17T00:00:00.000Z',
+        release_country: 'Soviet Union',
+      },
+      runtime: 85,
+      genre: [
+        'Fantasy',
+        'Sci-Fi',
+      ],
+      description: 'In an unnamed English-speaking capitalist land, a young engineer invents inexhaustible giant robots to replace the fragile human workers on high-volume assembly-lines, and soon finds his invention co-opted by the military-industrial complex.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: 'd7be0101-93fe-4191-a27d-539668d12266',
+    comments: [],
+    film_info: {
+      title: 'The Grand Illusion',
+      alternative_title: 'La grande illusion',
+      total_rating: 8.1,
+      poster: '/img/grand-illusion.jpg',
+      age_rating: 16,
+      director: 'Jean Renoir',
+      writers: [
+        'Charles Spaak',
+        'Jean Renoir',
+      ],
+      actors: [
+        'Jean Gabin',
+        'Dita Parlo',
+        'Pierre Fresnay',
+      ],
+      release: {
+        date: '1937-06-08T00:00:00.000Z',
+        release_country: 'France',
+      },
+      runtime: 114,
+      genre: [
+        'War',
+        'Drama',
+      ],
+      description: 'During WWI, two French soldiers are captured and imprisoned in a German P.O.W. camp. Several escape attempts follow until they are eventually sent to a seemingly inescapable fortress.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
+    },
+  },
+
+  {
+    id: '2f6b2c15-b5ac-446c-bb72-e331135d83b1',
+    comments: [],
+    film_info: {
+      title: 'Olympia',
+      alternative_title: 'Olympia',
+      total_rating: 7.7,
+      poster: '/img/olympia.jpg',
+      age_rating: 16,
+      director: 'Leni Riefenstahl',
+      writers: [
+        'Leni Riefenstahl',
+      ],
+      actors: [
+        'David Albritton',
+        'Arvo Askola',
+        'Jack Beresford',
+      ],
+      release: {
+        date: '1938-04-20T00:00:00.000Z',
+        release_country: 'Germany',
+      },
+      runtime: 226,
+      genre: [
+        'Documentary',
+        'Sport',
+      ],
+      description: 'The document of the 1936 Olympics at Berlin.',
+    },
+    user_details: {
+      watchlist: true,
+      already_watched: false,
+      watching_date: null,
+      favorite: false,
     },
   },
 ];
